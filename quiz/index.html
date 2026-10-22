@@ -392,7 +392,17 @@ h1,h2{line-height:1.04}
 .hook-h .tag{display:inline-block;vertical-align:.3em;font-family:var(--sans);font-size:.36em;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:var(--danger);color:#FFFFFF;border-radius:999px;padding:.35em .9em;margin-right:.3em}
 .hook-h em{color:var(--danger)}
 /* aviso e evidência */
-.warn{font-family:var(--serif);font-size:clamp(1.625rem,7vw,2rem);line-height:1.12;text-align:center;text-wrap:balance}
+.warn{font-family:var(--sans);font-weight:500;font-size:clamp(1.375rem,6vw,1.625rem);line-height:1.25;letter-spacing:-.01em;text-align:center;text-wrap:balance}
+.warn .r{font-weight:700}
+.warn .gg{font-weight:700}
+.hl{background:var(--danger);color:#FFFFFF;font-weight:700;font-style:normal;padding:0 .22em;border-radius:6px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+h2.sans,h1.sans{font-family:var(--sans);font-weight:500;letter-spacing:-.015em;line-height:1.22;font-size:clamp(1.5rem,6.6vw,1.875rem)}
+.hook-h.sans{font-size:clamp(1.75rem,7.6vw,2.125rem);line-height:1.22}
+.hook-h.sans i{font-style:italic}
+.logo{flex-direction:column;gap:3px}
+.logo .kick{font-family:var(--sans);font-size:.625rem;font-weight:700;letter-spacing:.26em;color:var(--argila-ink)}
+.logo .lrow{display:flex;align-items:center;gap:8px}
+.count{justify-self:end;font-size:.8125rem;font-weight:600;color:var(--musgo);font-variant-numeric:tabular-nums;white-space:nowrap}
 .warn .r{color:var(--danger)}
 .warn .gg{color:var(--argila-ink);font-style:italic}
 .see{text-align:center;font-weight:600;text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--argila)}
@@ -497,6 +507,7 @@ h1,h2{line-height:1.04}
         <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
       </button>
       <div class="logo" id="logo"></div>
+      <span class="count" id="count" aria-label="Página atual"></span>
     </div>
     <div class="progress" id="progress" hidden>
       <span class="track"></span><span class="fill" id="progressFill"></span>
@@ -577,7 +588,7 @@ const CONFIG = {
 
 /* ===================================================================== */
 const SETUP = !CONFIG.checkoutUrl;
-const VERSAO = 'v8';
+const VERSAO = 'v9';
 const fmtBRL = (v) => new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(v);
 const $ = (s, r = document) => r.querySelector(s);
 const el = (tag, attrs = {}, ...kids) => {
@@ -741,7 +752,7 @@ const mirrorArt = () => `<svg viewBox="0 0 360 225" preserveAspectRatio="xMidYMi
   <path d="M40 200 H118 C136 200 150 192 160 182" style="fill:none;stroke:#B8744F" stroke-width="3" stroke-linecap="round"/>
 </svg>`;
 
-$('#logo').innerHTML = capsuleSvg('mark') + `<span class="word"><i>${CONFIG.marca.nome.split(' ')[0]}</i> ${CONFIG.marca.nome.split(' ').slice(1).join(' ')}</span>`;
+$('#logo').innerHTML = `<span class="kick">O TESTE</span><span class="lrow">${capsuleSvg('mark')}<span class="word"><i>${CONFIG.marca.nome.split(' ')[0]}</i> ${CONFIG.marca.nome.split(' ').slice(1).join(' ')}</span></span>`;
 
 /* ---------- Backend, Pixel e checkout ---------- */
 // Os nomes dos eventos do Pixel não citam saúde e nenhuma resposta vai para o Meta.
@@ -790,12 +801,12 @@ const STEPS = [
   {id: 'caneta', type: 'buttons', art: () => foto(CONFIG.imagens.caneta, penArt()), q: 'Há quanto tempo você <em>usa a caneta?</em>', hint: 'Mounjaro, Ozempic, Wegovy, Saxenda ou outra.', opts: [
     {v: 'c0', l: 'Comecei há menos de 1 mês', ic: 'broto'}, {v: 'c1', l: 'De 1 a 3 meses', ic: 'cal'},
     {v: 'c3', l: 'De 3 a 6 meses', ic: 'ampulheta'}, {v: 'c6', l: 'Mais de 6 meses', ic: 'calok'}, {v: 'parei', l: 'Já usei e parei', ic: 'pausa'}]},
-  {id: 'barriga', type: 'cards', q: 'Qual tipo de barriga <em>mais te incomoda</em> hoje?', opts: [
+  {id: 'barriga', type: 'cards', q: 'Qual tipo de barriga <span class="hl">mais te incomoda</span> hoje?', sans: true, opts: [
     {v: 'pochete', l: 'Pochete', sub: 'a barriga de baixo', nome: 'a pochete', img: () => foto(CONFIG.imagens.barriga.pochete, torso(14))},
     {v: 'pneuzinho', l: 'Pneuzinho', sub: 'as laterais', nome: 'o pneuzinho', img: () => foto(CONFIG.imagens.barriga.pneuzinho, frenteArt(9))},
     {v: 'alta', l: 'Barriga alta', sub: 'estufada em cima', nome: 'a barriga alta', img: () => foto(CONFIG.imagens.barriga.alta, torso(12, {alta: true}))},
     {v: 'flacida', l: 'Barriga flácida', sub: 'mole, caída', nome: 'a barriga flácida', img: () => foto(CONFIG.imagens.barriga.flacida, torso(12, {flacida: true}))}]},
-  {id: 'sonho', type: 'cards', q: 'E como você quer que a sua <em>barriga</em> fique?', hint: 'Escolha a que mais combina com você.', opts: [
+  {id: 'sonho', type: 'cards', q: 'E como você quer que <span class="hl">a sua barriga</span> fique?', sans: true, hint: 'Escolha a que mais combina com você.', opts: [
     {v: 'lisa', l: 'Lisinha', img: () => foto(CONFIG.imagens.sonho.lisa, torso(0))}, {v: 'firme', l: 'Firme e definida', img: () => foto(CONFIG.imagens.sonho.firme, torso(0, {define: true}))},
     {v: 'roupa', l: 'Caber na roupa de antes', img: () => foto(CONFIG.imagens.sonho.roupa, torso(2, {jeans: true}))}, {v: 'leve', l: 'Só sumir com essa barriga', img: () => foto(CONFIG.imagens.sonho.leve, torso(3))}]},
   {id: 'porque', type: 'insight'},
@@ -813,7 +824,7 @@ const STEPS = [
   {id: 'solucao', type: 'solution'},
   {id: 'tempo', type: 'buttons', q: 'Quanto tempo você tem <em>para preparar?</em>', opts: [
     {v: 't5', l: 'Até 5 minutos, coisa de liquidificador', ic: 'raio'}, {v: 't20', l: 'Uns 15 a 20 minutos', ic: 'panela'}, {v: 't40', l: 'Gosto de cozinhar com calma', ic: 'relogio'}]},
-  {id: 'compromisso', type: 'buttons', q: 'Se existisse um jeito de comer o que você gosta e ainda ver a barriga diminuir, <em>você tentaria por 7 dias?</em>', qf: () => `Se existisse um jeito de comer o que você gosta e ficar mais perto da barriga <b>${sonhoLabel().toLowerCase()}</b>, <em>você tentaria por 7 dias?</em>`, opts: [
+  {id: 'compromisso', type: 'buttons', q: 'Se existisse um jeito de comer o que você gosta e ainda ver a barriga diminuir, você tentaria por 7 dias?', sans: true, qf: () => `Se existisse um jeito de comer o que você gosta e ficar mais perto ${SONHO_FRASE[state.a.sonho] || SONHO_FRASE.lisa}, você tentaria por 7 dias?`, opts: [
     {v: 'sim', l: 'Sim, eu tentaria!', ic: 'saiu'}, {v: 'tentar', l: 'Talvez', ic: 'sorriso'}]},
   {id: 'loading', type: 'loading'},
   {id: 'resultado', type: 'result'}
@@ -826,6 +837,9 @@ const sentimentoLabel = () => (STEPS[0].opts.find((o) => o.v === state.a.sentime
 const BARRIGA = Object.fromEntries(STEPS.find((x) => x.id === 'barriga').opts.map((o) => [o.v, o]));
 const barrigaNome = () => (BARRIGA[state.a.barriga] || BARRIGA.pochete).nome;
 const cap1 = (t) => t.charAt(0).toUpperCase() + t.slice(1);
+// Como cada desejo entra na frase do compromisso ("ficar mais perto ...").
+const SONHO_FRASE = {lisa: 'da <span class="hl">barriga lisinha</span>', firme: 'da <span class="hl">barriga firme e definida</span>',
+  roupa: 'de <span class="hl">caber na roupa de antes</span>', leve: 'de <span class="hl">sumir com essa barriga</span>'};
 const sonhoLabel = () => (SONHO[state.a.sonho] || SONHO.lisa).l;
 
 const state = {i: 0, a: {}};
@@ -901,7 +915,7 @@ const renderHook = (s) => {
   });
   return [
     H('div', foto(CONFIG.imagens.gancho, mirrorArt(), 'Mulher diante do espelho'), 'hook-pic'),
-    H('h1', '<span class="tag">Atenção:</span> você toma a caneta, quase não come… e a barriga <em>não sai</em>?', 'hook-h'),
+    H('h1', '<span class="tag">Atenção:</span> você toma a caneta, <i>quase não</i> come… e <span class="hl">a barriga não sai?</span>', 'hook-h sans'),
     H('p', 'Não é falta de esforço. <b>O motivo está no seu prato</b>, e quase ninguém te contou.', 'lead c'),
     el('p', {class: 'hook-ask'}, 'Seja sincera: quando você se olha no espelho, o que sente?'),
     wrap,
@@ -984,12 +998,12 @@ const renderButtons = (s) => {
     b.addEventListener('click', () => pick(s, o.v, wrap, b));
     wrap.append(b);
   });
-  return [s.art ? H('div', s.art(), 'qpic') : null, H('h2', s.qf ? s.qf() : s.q), s.hint ? el('p', {class: 'hint'}, s.hint) : null, wrap];
+  return [s.art ? H('div', s.art(), 'qpic') : null, H('h2', s.qf ? s.qf() : s.q, s.sans ? 'sans' : null), s.hint ? el('p', {class: 'hint'}, s.hint) : null, wrap];
 };
 const renderCards = (s) => {
   const wrap = el('div', {class: 'icards', role: 'group'});
   s.opts.forEach((o) => { const b = cardBtn(s, o); b.addEventListener('click', () => pick(s, o.v, wrap, b)); wrap.append(b); });
-  return [H('h2', s.q), s.hint ? el('p', {class: 'hint'}, s.hint) : null, wrap];
+  return [H('h2', s.q, s.sans ? 'sans' : null), s.hint ? el('p', {class: 'hint'}, s.hint) : null, wrap];
 };
 
 const renderMulti = (s) => {
@@ -1243,6 +1257,11 @@ const renderResult = () => {
     H('h1', 'O seu plano exclusivo <em>está pronto.</em>'),
     el('p', {}, `Montado a partir das suas respostas, para ${barrigaNome()} e para o seu apetite com a caneta.`),
     H('span', `<span>${ic('arrow')}</span>Veja o seu resultado`, 'go')));
+  const vsNo = ['Come pouco e a proteína não fecha', 'Doce e gelado sem nada de proteína', 'Cansaço e zero pique para treinar', `${cap1(barrigaNome())} continua lá`];
+  const vsYes = ['Porção pequena que alimenta', 'Gelado e doce que seguram a vontade', 'Mais energia ao longo do dia', 'O corpo queima gordura, não músculo'];
+  out.push(el('div', {class: 'vs'},
+    el('div', {class: 'col no'}, el('div', {class: 'hd'}, 'Como está hoje'), vsNo.map((t) => H('div', ic('x') + `<span>${t}</span>`, 'it'))),
+    el('div', {class: 'col yes'}, H('div', 'Com as receitas <em>certas</em>', 'hd'), vsYes.map((t) => H('div', ic('check') + `<span>${t}</span>`, 'it')))));
   out.push(el('div', {class: 'ba'},
     el('div', {}, el('div', {class: 'card'}, el('h3', {}, 'ANTES'), H('span', avatar({...eu, mood: 'triste'}), 'pic')), el('p', {}, 'Esta é você hoje, fugindo do espelho.')),
     el('div', {}, el('div', {class: 'card'}, el('h3', {}, 'DEPOIS'), H('span', avatar({...eu, mood: 'feliz'}), 'pic')), el('p', {}, 'Esta é você voltando a gostar do que vê.'))));
@@ -1280,12 +1299,6 @@ const renderResult = () => {
       el('div', {}, H('h3', `Sua meta: <em>${min} a ${max} g</em> de proteína por dia`),
         el('p', {class: 'src', style: 'font-size:.875rem;margin-top:4px'}, `Em 4 momentos, cerca de ${porRefeicao} g por vez.`))),
     el('p', {}, 'Parece muito para quem quase não sente fome, e é por isso que as receitas são pensadas para caber em poucas garfadas.')));
-
-  const vsNo = ['Come pouco e a proteína não fecha', 'Doce e gelado sem nada de proteína', 'Cansaço e zero pique para treinar', `${cap1(barrigaNome())} continua lá`];
-  const vsYes = ['Porção pequena que alimenta', 'Gelado e doce que seguram a vontade', 'Mais energia ao longo do dia', 'O corpo queima gordura, não músculo'];
-  out.push(el('div', {class: 'vs'},
-    el('div', {class: 'col no'}, el('div', {class: 'hd'}, 'Como está hoje'), vsNo.map((t) => H('div', ic('x') + `<span>${t}</span>`, 'it'))),
-    el('div', {class: 'col yes'}, H('div', 'Com as receitas <em>certas</em>', 'hd'), vsYes.map((t) => H('div', ic('check') + `<span>${t}</span>`, 'it')))));
 
   const rapido = a.tempo === 't5';
   const gel = s.includes('gelado') || a.come === 'gelado';
@@ -1415,6 +1428,7 @@ const render = () => {
   progressCap.style.left = `calc(${w}% - ${(w * 0.24).toFixed(1)}px)`;
   // Como na referência: nas perguntas só aparecem o voltar e o progresso; a marca fica na abertura e no resultado.
   topBar.classList.toggle('quiz', state.i > 0 && s.type !== 'result');
+  $('#count').textContent = `${state.i + 1}/${STEPS.length}`;
   if (s.type !== 'result') sticky.hidden = true;
   screen.replaceChildren(...RENDER[s.type](s).filter(Boolean));
   screen.style.animation = 'none';
