@@ -16,16 +16,16 @@ backend/
   testes/validar.test.ts            npm run test:backend
 ```
 
-- **`quiz_sessoes`**: uma linha por pessoa que abriu o quiz, com respostas (códigos curtos), peso, perfil, UTMs, hora em que concluiu e hora em que clicou no checkout.
+- **`quiz_sessoes`**: uma linha por pessoa que abriu o quiz, com respostas (códigos curtos), peso, altura, perfil, UTMs, hora em que concluiu e hora em que clicou no checkout.
 - **`quiz_eventos`**: linha do tempo (`inicio`, `etapa`, `concluido`, `checkout`).
 - **Views**: `quiz_funil` (pessoas por etapa e % do início), `quiz_resumo_diario`, `quiz_por_perfil` e `quiz_por_campanha`.
 
 ## Privacidade e segurança
 
 - Não guardamos nome, e-mail, telefone nem IP. O IP vira `sha256(sal + IP)`, usado só para limitar sessões novas (40 por IP por hora). Cada sessão aceita até 80 eventos.
-- As respostas incluem peso e sintomas, que são dados de saúde para a LGPD. Mesmo anônimos, trate como sensíveis: não exporte para planilhas abertas e não mande para o Pixel do Meta. As sessões com mais de 180 dias são apagadas por `quiz_limpar_antigos()`.
+- As respostas incluem peso, altura e sintomas, que são dados de saúde para a LGPD. Mesmo anônimos, trate como sensíveis: não exporte para planilhas abertas e não mande para o Pixel do Meta. As sessões com mais de 180 dias são apagadas por `quiz_limpar_antigos()`.
 - RLS ligada e forçada, sem policy: só o `service_role` (a Edge Function) lê e escreve. `anon` e `authenticated` não têm acesso nem às tabelas nem às views.
-- A função valida tudo: sessão em UUID, tipo de evento, etapa de 0 a 40, respostas só como códigos `a-z0-9_`, peso de 30 a 300 kg, perfil numa lista fixa, corpo de até 8 KB. UTMs desconhecidas são descartadas.
+- A função valida tudo: sessão em UUID, tipo de evento, etapa de 0 a 40, respostas só como códigos `a-z0-9_`, peso de 30 a 300 kg, altura de 120 a 230 cm, perfil numa lista fixa, corpo de até 8 KB. UTMs desconhecidas são descartadas.
 
 ## Subir
 

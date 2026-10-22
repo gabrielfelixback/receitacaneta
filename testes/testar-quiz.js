@@ -51,7 +51,7 @@ const run = (sc) => new Promise((resolve) => {
       snap(); click('cont-porque'); await wait(50);
       snap(); sc.sintomas.forEach((v) => click('opt-sintomas-' + v)); click('cont-sintomas'); await wait(50);
       snap(); click('opt-come-' + sc.come); await wait(300);
-      snap(); click('peso-mais'); click('peso-mais'); click('cont-peso'); await wait(50);
+      snap(); click('peso-mais'); click('peso-mais'); click('altura-menos'); click('cont-peso'); await wait(50);
       snap(); click('cont-espelho'); await wait(50);
       snap(); click('cont-solucao'); await wait(50);
       snap(); click('opt-tempo-' + sc.tempo); await wait(300);
@@ -75,6 +75,9 @@ const run = (sc) => new Promise((resolve) => {
     const perfil = (result.match(/Seu perfil: (.+?)(A caneta|Com a caneta|Com a fome|Você come|A vontade)/) || [])[1];
     check(!!perfil, `[${sc.nome}] resultado com perfil "${(perfil || '?').trim()}"`);
     check(result.includes('82 kg') || all.includes('82 kg'), `[${sc.nome}] peso ajustado no + aparece (82 kg)`);
+    // 82 kg e 1,64 m: IMC 30,5, obesidade grau I; proteína pelo peso ajustado (~70,9 kg) = 85 a 113 g
+    check(result.includes('30,5') && all.includes('Obesidade grau I'), `[${sc.nome}] IMC calculado com a altura (30,5)`);
+    check(result.includes('85 a 113 g'), `[${sc.nome}] proteína pelo peso ajustado (85 a 113 g)`);
     check(result.includes('Dia 1') && result.includes('Garantia'), `[${sc.nome}] resultado tem Dia 1 e oferta`);
     const tipos = sent.map((e) => e.tipo);
     check(tipos[0] === 'inicio' && tipos.includes('concluido'), `[${sc.nome}] backend recebeu início e conclusão (${sent.length} eventos)`);
@@ -84,7 +87,7 @@ const run = (sc) => new Promise((resolve) => {
     check(conc.perfil === sc.come, `[${sc.nome}] perfil enviado ao backend: ${conc.perfil}`);
     const etapas = sent.filter((e) => e.tipo === 'etapa');
     const resp = Object.assign({}, ...etapas.map((e) => e.respostas));
-    check(resp.idade === sc.idade && resp.come === sc.come && resp.peso === 82 && Array.isArray(resp.sintomas), `[${sc.nome}] respostas chegam ao backend (${Object.keys(resp).join(', ')})`);
+    check(resp.idade === sc.idade && resp.come === sc.come && resp.peso === 82 && resp.altura === 164 && Array.isArray(resp.sintomas), `[${sc.nome}] respostas chegam ao backend (${Object.keys(resp).join(', ')})`);
     check(new Set(sent.map((e) => e.sessao)).size === 1, `[${sc.nome}] uma sessão só`);
     // checkout: sem link mostra o aviso; com link manda o evento e repassa UTMs
     d.getElementById('cta').click();

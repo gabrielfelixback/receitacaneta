@@ -194,15 +194,31 @@ b,strong{font-weight:600}
 .rules span{font-size:.9rem;color:var(--musgo)}
 
 /* peso */
-.weight{display:flex;flex-direction:column;align-items:center;gap:16px;padding:22px 16px 18px;background:var(--branco);border-radius:24px;box-shadow:var(--shadow)}
-.weight .val{font-family:var(--serif);font-size:4.5rem;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.measures{display:flex;flex-direction:column;gap:10px}
+.weight{display:flex;flex-direction:column;align-items:center;gap:10px;padding:14px 16px 12px;background:var(--branco);border-radius:24px;box-shadow:var(--shadow)}
+.weight .lbl{align-self:flex-start;font-size:.8125rem;font-weight:600;color:var(--musgo);margin-bottom:-14px}
+.weight .val{font-family:var(--serif);font-size:3.25rem;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
 .weight .val small{font-family:var(--sans);font-size:1.125rem;color:var(--musgo);margin-left:6px;letter-spacing:0}
 .weight .row{display:flex;align-items:center;gap:12px;width:100%}
 .step{all:unset;cursor:pointer;flex:none;width:52px;height:52px;border-radius:50%;background:var(--creme);display:grid;place-items:center;color:var(--floresta);transition:background .2s}
 .step:hover{background:var(--linho)}
 .step .ic{width:22px;height:22px}
 input[type=range]{flex:1;min-width:0;height:36px;accent-color:var(--floresta);background:transparent}
-.ruler{display:flex;justify-content:space-between;width:100%;padding:0 64px;font-size:.75rem;color:var(--musgo);font-variant-numeric:tabular-nums;margin-top:-10px}
+.ruler{display:flex;justify-content:space-between;width:100%;padding:0 64px;font-size:.75rem;color:var(--musgo);font-variant-numeric:tabular-nums;margin-top:-8px}
+.imc-live{align-self:center;display:flex;align-items:baseline;gap:8px;background:var(--floresta);color:var(--creme);border-radius:999px;padding:8px 16px;font-size:.875rem}
+.imc-live b{font-family:var(--serif);font-weight:400;font-size:1.375rem;line-height:1;color:var(--argila-on-dark);font-variant-numeric:tabular-nums}
+.imc-live span{color:var(--on-dark-muted)}
+.bmi{display:flex;flex-direction:column;gap:8px}
+.bmi .bhead{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.bmi .bhead b{font-family:var(--serif);font-weight:400;font-size:2.5rem;line-height:1;font-variant-numeric:tabular-nums}
+.bmi .bhead small{font-family:var(--sans);font-size:.875rem;font-weight:600;color:var(--musgo);margin-right:6px}
+.bmi .bhead span{font-size:.9375rem;font-weight:600;text-align:right}
+.bmi .scale{position:relative;padding-top:12px}
+.bmi .bands{display:flex;height:10px;border-radius:99px;overflow:hidden;gap:2px}
+.bmi .bands i{display:block;height:100%}
+.bmi .pin{position:absolute;top:0;width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-top:9px solid var(--floresta);margin-left:-7px}
+.bmi .ticks{position:relative;height:16px;font-size:.72rem;color:var(--musgo);font-variant-numeric:tabular-nums}
+.bmi .ticks span{position:absolute;transform:translateX(-50%)}
 
 /* carregamento */
 .loader{display:flex;flex-direction:column;align-items:center;gap:22px;padding-top:6px}
@@ -232,6 +248,7 @@ input[type=range]{flex:1;min-width:0;height:36px;accent-color:var(--floresta);ba
 .rhead .facts div{background:rgba(244,240,232,.08);border:1px solid rgba(244,240,232,.12);border-radius:14px;padding:10px 8px;text-align:center;display:flex;flex-direction:column;gap:2px}
 .rhead .facts b{font-family:var(--serif);font-weight:400;font-size:1.5rem;line-height:1;color:var(--creme);font-variant-numeric:tabular-nums}
 .rhead .facts span{font-size:.72rem;color:var(--on-dark-muted);line-height:1.25}
+.rhead .facts b.bmiv{color:var(--argila-on-dark)}
 .scores{display:flex;flex-direction:column;gap:14px}
 .score .row{display:flex;justify-content:space-between;align-items:baseline;font-size:.9375rem;gap:10px}
 .score .row b{font-variant-numeric:tabular-nums}
@@ -388,7 +405,7 @@ const CONFIG = {
 
 /* ===================================================================== */
 const SETUP = !CONFIG.checkoutUrl;
-const VERSAO = 'v2';
+const VERSAO = 'v3';
 const fmtBRL = (v) => new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(v);
 const $ = (s, r = document) => r.querySelector(s);
 const el = (tag, attrs = {}, ...kids) => {
@@ -517,7 +534,7 @@ const STEPS = [
     {v: 'economia', l: 'Quase nada, vou beliscando', ic: 'belisco'}, {v: 'gelado', l: 'Gelados: iogurte, açaí, sorvete, shake', ic: 'gelado'},
     {v: 'doce', l: 'Doces: chocolate, bolo, biscoito', ic: 'bolo'}, {v: 'lanche', l: 'Lanches: hambúrguer, pizza, salgado', ic: 'pizza'},
     {v: 'prato_pequeno', l: 'Comida normal, só que bem menos', ic: 'bowl'}]},
-  {id: 'peso', type: 'weight', q: 'Qual é o seu <em>peso hoje?</em>', hint: 'Só para calcular a proteína que o seu corpo precisa.'},
+  {id: 'peso', type: 'weight', also: ['altura'], q: 'Qual é o seu <em>peso e altura?</em>', hint: 'Para calcular o seu IMC e a proteína que o seu corpo precisa.'},
   {id: 'espelho', type: 'mirror'},
   {id: 'solucao', type: 'solution'},
   {id: 'tempo', type: 'buttons', q: 'Quanto tempo você tem <em>para preparar?</em>', opts: [
@@ -551,7 +568,9 @@ const next = () => {
   if (QUESTION_IDX.includes(state.i)) {
     const etapa = QUESTION_IDX.indexOf(state.i) + 1;
     track('QuizEtapa', {etapa}, true);
-    send('etapa', {etapa, respostas: s.id in state.a ? {[s.id]: state.a[s.id]} : {}});
+    const respostas = {};
+    [s.id, ...(s.also || [])].forEach((k) => { if (k in state.a) respostas[k] = state.a[k]; });
+    send('etapa', {etapa, respostas});
   }
   go(state.i + 1);
 };
@@ -568,8 +587,23 @@ const pick = (s, v, group, btn) => {
 const sint = () => (state.a.sintomas || []).filter((v) => v !== 'nenhum');
 const idadeLabel = () => (IDADES.find((x) => x.v === state.a.idade) || IDADES[2]).l;
 const peso = () => state.a.peso || 80;
-// Proteína de referência: 1,2 a 1,6 g/kg/dia. Acima de 100 kg usa 100 kg (sem altura não dá para ajustar melhor).
-const protMeta = () => { const p = Math.min(peso(), 100); return [Math.round(p * 1.2), Math.round(p * 1.6)]; };
+const altura = () => state.a.altura || 165;
+const imc = () => peso() / (altura() / 100) ** 2;
+const fmt1 = (v) => v.toFixed(1).replace('.', ',');
+// Faixas de IMC da OMS. As cores seguem as faixas do app (dessaturadas, coerentes com a paleta).
+const IMC_FAIXAS = [
+  {ate: 18.5, nome: 'Abaixo do peso', cor: '#8FA3AE'}, {ate: 25, nome: 'Peso adequado', cor: '#6F8F74'},
+  {ate: 30, nome: 'Sobrepeso', cor: '#C9975F'}, {ate: 35, nome: 'Obesidade grau I', cor: '#B8744F'},
+  {ate: 40, nome: 'Obesidade grau II', cor: '#A4552F'}, {ate: Infinity, nome: 'Obesidade grau III', cor: '#8A4426'}];
+const imcFaixa = () => IMC_FAIXAS.find((f) => imc() < f.ate);
+// Proteína de referência: 1,2 a 1,6 g/kg/dia. Com IMC de 30 ou mais, a conta usa o peso ajustado
+// (peso no IMC 25 + 25% do que passa dele), como no app, para não superestimar a meta.
+const pesoRef = () => {
+  if (imc() < 30) return peso();
+  const p25 = 25 * (altura() / 100) ** 2;
+  return p25 + 0.25 * (peso() - p25);
+};
+const protMeta = () => { const p = pesoRef(); return [Math.round(p * 1.2), Math.round(p * 1.6)]; };
 const contBtn = (id, label, onclick = next) => el('button', {type: 'button', class: 'btn', id, onclick}, label, icon('arrow'));
 const markSvg = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 
@@ -707,24 +741,49 @@ const renderInsight = () => {
   ];
 };
 
-const renderWeight = (s) => {
-  if (!state.a.peso) state.a.peso = 80;
+// Peso e altura na mesma tela, com o IMC mudando ao vivo.
+const medida = (id, label, unid, min, max, def, passo, fmtv) => {
+  if (!state.a[id]) state.a[id] = def;
   const val = el('div', {class: 'val', 'aria-live': 'polite'});
-  const range = el('input', {type: 'range', min: '40', max: '180', step: '1', value: String(state.a.peso), id: 'peso-range', 'aria-label': 'Peso em quilos'});
-  const set = (v) => { state.a.peso = clamp(Math.round(v), 40, 180); range.value = String(state.a.peso); val.innerHTML = `${state.a.peso}<small>kg</small>`; };
+  const range = el('input', {type: 'range', min: String(min), max: String(max), step: '1', value: String(state.a[id]), id: `${id}-range`, 'aria-label': `${label} em ${unid === 'kg' ? 'quilos' : 'centímetros'}`});
+  const box = el('div', {class: 'weight'});
+  const set = (v) => { state.a[id] = clamp(Math.round(v), min, max); range.value = String(state.a[id]); val.innerHTML = `${fmtv(state.a[id])}<small>${unid}</small>`; box.dispatchEvent(new Event('medida')); };
   range.addEventListener('input', () => set(Number(range.value)));
-  set(state.a.peso);
+  box.append(el('span', {class: 'lbl'}, label), val,
+    el('div', {class: 'row'},
+      el('button', {type: 'button', class: 'step', id: `${id}-menos`, 'aria-label': `Diminuir ${passo}`, onclick: () => set(state.a[id] - 1), html: ic('minus')}),
+      range,
+      el('button', {type: 'button', class: 'step', id: `${id}-mais`, 'aria-label': `Aumentar ${passo}`, onclick: () => set(state.a[id] + 1), html: ic('plus')})),
+    el('div', {class: 'ruler', 'aria-hidden': 'true'}, el('span', {}, fmtv(min)), el('span', {}, fmtv(Math.round((min + max) / 2))), el('span', {}, fmtv(max))));
+  return {box, set};
+};
+const renderWeight = (s) => {
+  const p = medida('peso', 'Peso', 'kg', 40, 180, 80, '1 kg', (v) => String(v));
+  const h = medida('altura', 'Altura', 'm', 140, 200, 165, '1 cm', (v) => (v / 100).toFixed(2).replace('.', ','));
+  const live = el('div', {class: 'imc-live', 'aria-live': 'polite'});
+  const upd = () => { live.innerHTML = `<span>Seu IMC</span><b>${fmt1(imc())}</b><span>${imcFaixa().nome.toLowerCase()}</span>`; };
+  [p, h].forEach((m) => { m.box.addEventListener('medida', upd); m.set(state.a[m === p ? 'peso' : 'altura']); });
   return [
     H('h2', s.q), el('p', {class: 'hint'}, s.hint),
-    el('div', {class: 'weight'}, val,
-      el('div', {class: 'row'},
-        el('button', {type: 'button', class: 'step', id: 'peso-menos', 'aria-label': 'Diminuir 1 kg', onclick: () => set(state.a.peso - 1), html: ic('minus')}),
-        range,
-        el('button', {type: 'button', class: 'step', id: 'peso-mais', 'aria-label': 'Aumentar 1 kg', onclick: () => set(state.a.peso + 1), html: ic('plus')})),
-      el('div', {class: 'ruler', 'aria-hidden': 'true'}, el('span', {}, '40'), el('span', {}, '110'), el('span', {}, '180'))),
+    el('div', {class: 'measures'}, p.box, h.box),
+    live,
     el('p', {class: 'fine'}, 'Fica só neste teste. Não pedimos nome nem e-mail.'),
     contBtn('cont-peso', 'Continuar')
   ];
+};
+
+// Régua da OMS de 15 a 45, com a marca no IMC da pessoa.
+const bmiBlock = () => {
+  const lo = 15, hi = 45, pos = (v) => ((clamp(v, lo, hi) - lo) / (hi - lo)) * 100;
+  const f = imcFaixa();
+  let ini = lo;
+  const bands = IMC_FAIXAS.map((x) => { const fim = Math.min(x.ate, hi); const w = fim - ini; ini = fim; return el('i', {style: `flex:${w};background:${x.cor}`}); });
+  return el('div', {class: 'sheet bmi'},
+    el('div', {class: 'bhead'}, H('b', `<small>IMC</small>${fmt1(imc())}`), el('span', {style: `color:${f.cor === '#6F8F74' ? 'var(--floresta)' : 'var(--argila-ink)'}`}, f.nome)),
+    el('div', {class: 'scale', role: 'img', 'aria-label': `IMC ${fmt1(imc())}, faixa ${f.nome} pela OMS`},
+      el('span', {class: 'pin', style: `left:${pos(imc())}%`}), el('div', {class: 'bands'}, bands)),
+    el('div', {class: 'ticks', 'aria-hidden': 'true'}, [18.5, 25, 30, 35, 40].map((t) => el('span', {style: `left:${pos(t)}%`}, String(t).replace('.', ',')))),
+    H('p', 'O IMC olha só o peso e a altura: <b>não diferencia músculo de gordura.</b> Duas pessoas com o mesmo IMC podem ter barrigas bem diferentes, e é a proteína que decide se o que sai é gordura ou músculo.', 'src'));
 };
 
 // Proteína de um dia típico para cada hábito: estimativa ilustrativa para a comparação.
@@ -748,15 +807,16 @@ const renderMirror = () => {
   } else {
     out.push(el('p', {class: 'c lead'}, 'Você não marcou nenhum sinal. Mesmo assim, com a fome baixa, o mais comum é a proteína do dia ficar abaixo do que o corpo precisa.'));
   }
+  out.push(bmiBlock());
   const pct = clamp(Math.round((tipica / min) * 100), 8, 100);
   const bars = [el('i', {style: 'background:var(--argila-cta)', 'data-w': pct}), el('i', {style: 'background:var(--floresta)', 'data-w': 100})];
   out.push(el('div', {class: 'sheet gauge'},
-    H('h3', `Com ${peso()} kg, o seu corpo pede <em>${min} a ${max} g de proteína</em> por dia`),
+    H('h3', `Com ${peso()} kg e ${(altura() / 100).toFixed(2).replace('.', ',')} m, o seu corpo pede <em>${min} a ${max} g de proteína</em> por dia`),
     el('div', {class: 'row'}, el('span', {}, 'Um dia típico como o seu'), el('b', {}, `~${tipica} g`)),
     el('div', {class: 'track'}, bars[0]),
     el('div', {class: 'row'}, el('span', {}, 'O que o corpo pede'), el('b', {}, `${min} g+`)),
     el('div', {class: 'track'}, bars[1]),
-    el('p', {class: 'src'}, 'Referência de 1,2 a 1,6 g/kg/dia para quem está emagrecendo. O dia típico é uma estimativa pelo que você marcou, não uma medida.')));
+    el('p', {class: 'src'}, `Referência de 1,2 a 1,6 g/kg/dia para quem está emagrecendo${imc() >= 30 ? ', calculada sobre o peso ajustado (o usado quando o IMC passa de 30)' : ''}. O dia típico é uma estimativa pelo que você marcou, não uma medida.`)));
   setTimeout(() => bars.forEach((b) => { b.style.width = b.dataset.w + '%'; }), reduceMotion ? 0 : 150);
   out.push(H('p', 'Não é falta de disciplina. É que <b>o cardápio comum não foi feito para o apetite da caneta.</b>', 'c'));
   out.push(contBtn('cont-espelho', 'E o que eu faço?'));
@@ -858,7 +918,7 @@ const renderResult = () => {
     H('h1', `Seu perfil: <em>${perfil.nome}</em>`),
     el('p', {}, perfil.txt),
     el('div', {class: 'facts'},
-      H('div', `<b>${idadeLabel()}</b><span>anos</span>`),
+      H('div', `<b class="bmiv">${fmt1(imc())}</b><span>IMC · ${imcFaixa().nome.toLowerCase()}</span>`),
       H('div', `<b>${peso()} kg</b><span>peso hoje</span>`),
       H('div', `<b>${min} g</b><span>proteína mínima/dia</span>`))));
 

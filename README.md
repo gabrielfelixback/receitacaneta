@@ -13,8 +13,8 @@ Quiz de 14 telas (8 perguntas) que leva quem usa caneta emagrecedora a entender 
 | 5 | Por que a pochete não sai | Consciência do problema (músculo × gordura, STEP 1) |
 | 6 | O que acontece desde a caneta | Dores: sem fome, doce, gelado, hambúrguer, cansaço, academia, enjoo |
 | 7 | O que mais entra no prato | Define o perfil |
-| 8 | Peso | Calcula a proteína do dia |
-| 9 | Espelho | Devolve as dores marcadas com a causa + proteína que precisa × dia típico |
+| 8 | Peso e altura | Mostra o IMC na hora e calcula a proteína do dia |
+| 9 | Espelho | Devolve as dores marcadas com a causa + régua do IMC (OMS) + proteína que precisa × dia típico |
 | 10 | Solução | "Cada garfada conta": troca de receita pelo hábito marcado |
 | 11 | Tempo para preparar | Personaliza o Dia 1 |
 | 12 | Microcompromisso | "Você testa por 7 dias?" |

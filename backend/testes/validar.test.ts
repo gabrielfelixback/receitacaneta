@@ -38,6 +38,13 @@ test('não aceita texto livre nas respostas', () => {
   assert.equal(validarRegistro({ sessao, tipo: 'etapa', etapa: 1, respostas: { idade: 45 } }).ok, false);
 });
 
+test('altura só entre 120 e 230 cm', () => {
+  assert.equal(validarRegistro({ sessao, tipo: 'etapa', etapa: 1, respostas: { altura: 100 } }).ok, false);
+  assert.equal(validarRegistro({ sessao, tipo: 'etapa', etapa: 1, respostas: { altura: 231 } }).ok, false);
+  assert.equal(validarRegistro({ sessao, tipo: 'etapa', etapa: 1, respostas: { peso: 82, altura: 165 } }).ok, true);
+  assert.equal(validarRegistro({ sessao, tipo: 'etapa', etapa: 1, respostas: { idade: 165 } }).ok, false);
+});
+
 test('peso só entre 30 e 300 kg', () => {
   assert.equal(validarRegistro({ sessao, tipo: 'etapa', etapa: 1, respostas: { peso: 10 } }).ok, false);
   assert.equal(validarRegistro({ sessao, tipo: 'etapa', etapa: 1, respostas: { peso: 301 } }).ok, false);
