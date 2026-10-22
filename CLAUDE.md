@@ -2,6 +2,8 @@
 
 Funil de quiz para vender um infoproduto low ticket de **receitas para quem usa caneta emagrecedora** (Mounjaro, Ozempic, Wegovy, Saxenda). Tráfego do Meta (Facebook e Instagram). O quiz deixa a pessoa consciente do problema (pouca proteína com a fome baixa → perde músculo, cansaço, a pochete não sai) e da solução (receitas pequenas, geladas, doces e de lanche que fecham a proteína) e só no fim mostra a oferta.
 
+O quiz é uma venda implícita: não pode parecer venda até o final. O resultado é o "plano personalizado" e o preço aparece como acesso ao plano completo.
+
 O dono do projeto fala português. Responda e escreva os textos do quiz em português do Brasil, com linguagem simples.
 
 ## Estrutura
@@ -9,13 +11,13 @@ O dono do projeto fala português. Responda e escreva os textos do quiz em portu
 - `backend/`: Supabase. Migração com tabelas, função de registro e views do funil; Edge Function pública `quiz`; validação em `functions/_shared/validar.ts`. Detalhes em `backend/README.md`.
 - `quiz/index.html`: o quiz inteiro em um arquivo (HTML, CSS e JS, sem build). É o que vai para a hospedagem.
 - `DESIGN.md`: o visual (identidade além da caneta: cores, fontes, símbolo da cápsula, ícones). Leia antes de mexer no CSS.
-- `testes/testar-quiz.js`: percorre as 14 telas no jsdom em 3 cenários, confere resultado, eventos do backend (validados com o mesmo `validar.ts`) e checkout.
+- `testes/testar-quiz.js`: percorre as 15 telas no jsdom em 3 cenários, confere resultado, eventos do backend (validados com o mesmo `validar.ts`) e checkout.
 
 ## Como o `quiz/index.html` está organizado
 
 - `CONFIG`: marca, preço, checkout, URL do backend, Pixel, garantia, prova social, `provaIdade` (quebra da idade), autor, depoimentos e entregáveis. Quase toda mudança de conteúdo começa aqui.
-- `STEPS`: a ordem das telas. Ordem psicológica: idade (na abertura) → quebra da idade → tempo de caneta → pochete → por que não sai (consciência do problema) → sintomas → o que mais come (define o perfil) → peso e altura (IMC ao vivo) → espelho personalizado com a proteína → solução (troca de receita) → tempo para cozinhar → microcompromisso → carregamento → resultado.
-- Tipos de tela: `intro`, `age`, `buttons`, `multi`, `insight`, `weight`, `mirror`, `solution`, `loading`, `result`. Em `opts`, `ic` é o ícone (objeto `ICON`, SVG de traço; não use emoji) e `v` é o código enviado ao backend: não renomeie sem atualizar `PERFIS`, `TROCA`, `ESPELHO`, `PROT_TIPICA` e `backend/.../validar.ts` (lista `PERFIS`).
+- `STEPS`: a ordem das telas. Ordem psicológica: idade (na abertura, cartões com ilustração) → quebra da idade (prova da base em `provaIdade`, ou dado de pesquisa) → tempo de caneta → pochete (cartões com silhueta) → como quer que a barriga fique (`sonho`, desejo) → por que não sai (consciência do problema) → sintomas → o que mais come (define o perfil) → peso e altura (IMC ao vivo) → espelho personalizado com a proteína → solução (troca de receita) → tempo para cozinhar → microcompromisso → carregamento → resultado.
+- Tipos de tela: `intro`, `age`, `buttons`, `cards` (opções com imagem, `img`), `multi`, `insight`, `weight`, `mirror`, `solution`, `loading`, `result`. Em `opts`, `ic` é o ícone (objeto `ICON`, SVG de traço; não use emoji) e `v` é o código enviado ao backend: não renomeie sem atualizar `PERFIS`, `TROCA`, `ESPELHO`, `PROT_TIPICA` e `backend/.../validar.ts` (lista `PERFIS`).
 - O perfil vem da pergunta `come`: `economia`, `gelado`, `doce`, `lanche`, `prato_pequeno`.
 
 ## Regras de conteúdo (não negociáveis)

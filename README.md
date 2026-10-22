@@ -1,6 +1,6 @@
 # Receita Caneta · quiz
 
-Quiz de 14 telas (8 perguntas) que leva quem usa caneta emagrecedora a entender por que a pochete não sai e termina num plano de receitas personalizado com a oferta.
+Quiz de 15 telas (9 perguntas) que leva quem usa caneta emagrecedora a entender por que a pochete não sai e termina num plano de receitas personalizado com a oferta.
 
 ## Fluxo
 
@@ -10,6 +10,7 @@ Quiz de 14 telas (8 perguntas) que leva quem usa caneta emagrecedora a entender 
 | 2 | Quebra da idade | "Você está no lugar certo": texto por faixa + % real da sua base (`CONFIG.provaIdade`) ou dado de pesquisa |
 | 3 | Há quanto tempo usa a caneta | Situação |
 | 4 | Como está a pochete | Dor principal |
+| 4b | Como quer que a barriga fique | Desejo: cartões com silhueta, volta no resultado e no compromisso |
 | 5 | Por que a pochete não sai | Consciência do problema (músculo × gordura, STEP 1) |
 | 6 | O que acontece desde a caneta | Dores: sem fome, doce, gelado, hambúrguer, cansaço, academia, enjoo |
 | 7 | O que mais entra no prato | Define o perfil |

@@ -50,13 +50,16 @@ svg{display:block}
 /* topo: marca, voltar, contador e a linha argila como progresso */
 .top{position:sticky;top:0;z-index:4;background:var(--creme);padding-top:6px;padding-bottom:10px;margin-bottom:6px}
 .bar{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;min-height:48px}
+.top.quiz .bar{min-height:0}
+.top.quiz .logo{display:none}
+.top.quiz{display:grid;grid-template-columns:44px 1fr;align-items:center;gap:6px;padding-top:8px}
+.top.quiz .bar{grid-template-columns:44px}
 .back{all:unset;cursor:pointer;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:var(--musgo);transition:background .2s}
 .back:hover{background:var(--linho);color:var(--floresta)}
 .logo{grid-column:2;justify-self:center;display:flex;align-items:center;gap:8px;color:var(--floresta);line-height:1}
 .logo .mark{width:40px;height:18px}
 .logo .word{font-family:var(--serif);font-size:1.375rem;letter-spacing:-.005em;white-space:nowrap}
 .logo .word i{font-style:italic}
-.count{justify-self:end;font-size:.8125rem;font-weight:600;color:var(--musgo);font-variant-numeric:tabular-nums;white-space:nowrap}
 .progress{position:relative;height:16px;display:flex;align-items:center}
 .progress .track{position:absolute;left:0;right:0;height:3px;border-radius:3px;background:var(--line)}
 .progress .fill{position:absolute;left:0;height:3px;border-radius:3px;background:var(--argila);width:0;transition:width .6s var(--ease)}
@@ -86,7 +89,8 @@ b,strong{font-weight:600}
 .btn:hover{transform:translateY(-1px)}
 .btn:active{transform:translateY(1px);box-shadow:0 1px 0 rgba(0,0,0,.18),0 4px 10px rgba(23,51,43,.18)}
 .btn .ic{width:20px;height:20px}
-.btn.stick{position:sticky;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:3}
+.btn.stick{position:sticky;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:3;margin-top:auto}
+.screen{min-height:calc(100svh - 96px)}
 .btn[aria-disabled="true"]{opacity:.38;cursor:not-allowed;transform:none}
 .btn.buy{background:var(--argila-cta);color:var(--branco);min-height:64px;font-size:1.125rem;font-weight:700;box-shadow:0 3px 0 var(--argila-dark),0 12px 26px rgba(166,94,58,.32)}
 .btn.buy:active{box-shadow:0 1px 0 var(--argila-dark),0 4px 10px rgba(166,94,58,.3)}
@@ -102,37 +106,50 @@ b,strong{font-weight:600}
 .opt .lbl{flex:1}
 .opt .mark{flex:none;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;transition:background .2s,border-color .2s}
 .opt.sq .mark{border-radius:7px}
-.opt .mark svg{width:12px;height:12px;stroke:var(--branco);stroke-width:3;fill:none;opacity:0;transform:scale(.4);transition:opacity .2s,transform .3s var(--ease)}
-.opt[aria-pressed="true"]{border-color:var(--floresta);background:var(--salvia-soft)}
-.opt[aria-pressed="true"] .tile{background:var(--floresta);color:var(--creme)}
-.opt[aria-pressed="true"] .mark{background:var(--floresta);border-color:var(--floresta)}
+.opt .mark svg{width:12px;height:12px;stroke:var(--floresta);stroke-width:3;fill:none;opacity:0;transform:scale(.4);transition:opacity .2s,transform .3s var(--ease)}
+.opt[aria-pressed="true"]{border-color:var(--floresta);background:var(--floresta);color:var(--creme)}
+.opt[aria-pressed="true"] .tile{background:rgba(244,240,232,.12);color:var(--argila-on-dark)}
+.opt[aria-pressed="true"] .mark{background:var(--argila-on-dark);border-color:var(--argila-on-dark)}
 .opt[aria-pressed="true"] .mark svg{opacity:1;transform:none}
 .opt.plain{min-height:56px;padding-left:16px}
-.btn:focus-visible,.opt:focus-visible,.age:focus-visible,.back:focus-visible,summary:focus-visible,.step:focus-visible,input[type=range]:focus-visible{outline:2.5px solid var(--argila);outline-offset:3px}
+.btn:focus-visible,.opt:focus-visible,.icard:focus-visible,.back:focus-visible,summary:focus-visible,.step:focus-visible,input[type=range]:focus-visible{outline:2.5px solid var(--argila);outline-offset:3px}
 
 /* abertura */
-.hero{background:var(--floresta);color:var(--creme);border-radius:28px;padding:26px 22px 24px;display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden}
-.hero h1{color:var(--creme)}
-.hero h1 em{color:var(--argila-on-dark)}
-.hero p{color:var(--on-dark-muted);font-size:1.0625rem}
-.hero p b{color:var(--creme)}
-.hero .curve{position:absolute;right:-8px;top:18px;width:150px;height:80px;opacity:.9}
-.hero .tags{display:flex;flex-wrap:wrap;gap:6px}
-.hero .tags span{font-size:.8125rem;font-weight:500;border-radius:999px;padding:5px 11px;background:rgba(244,240,232,.1);color:var(--creme);border:1px solid rgba(244,240,232,.16)}
-.ask{font-family:var(--serif);font-size:1.75rem;line-height:1.1;text-align:center;margin-top:4px}
-.ask em{font-style:italic;color:var(--argila-ink)}
-.ages{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.age{all:unset;box-sizing:border-box;cursor:pointer;background:var(--branco);border:1.5px solid var(--line-soft);border-radius:20px;padding:14px 14px 12px;display:flex;flex-direction:column;gap:6px;box-shadow:var(--shadow);transition:border-color .2s,background .2s,transform .15s var(--ease)}
-.age:hover{border-color:var(--salvia)}
-.age:active{transform:scale(.98)}
-.age .n{font-family:var(--serif);font-size:2rem;line-height:1;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
-.age .row{display:flex;align-items:center;justify-content:space-between;color:var(--musgo);font-size:.875rem;font-weight:500}
-.age .go{width:28px;height:28px;border-radius:50%;background:var(--creme);display:grid;place-items:center;color:var(--floresta);transition:background .2s,color .2s}
-.age .go .ic{width:16px;height:16px}
-.age[aria-pressed="true"]{border-color:var(--floresta);background:var(--salvia-soft)}
-.age[aria-pressed="true"] .go{background:var(--floresta);color:var(--creme)}
-.age:last-child:nth-child(odd){grid-column:1/-1;flex-direction:row;align-items:center;justify-content:space-between}
-.age:last-child:nth-child(odd) .row{gap:12px}
+.pill{align-self:stretch;text-align:center;font-size:.9375rem;font-weight:600;color:var(--argila-ink);background:var(--argila-soft);border:1px solid #EBD6C6;border-radius:16px;padding:11px 14px;display:flex;align-items:center;justify-content:center;gap:8px}
+.pill .ic{width:18px;height:18px}
+.intro-h{text-align:center;font-size:clamp(2.125rem,9.6vw,2.75rem)}
+.intro-h em{color:var(--argila-ink)}
+.ask{font-size:1rem;font-weight:600;text-align:center;color:var(--musgo);margin-top:2px}
+.icards{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.icard{all:unset;box-sizing:border-box;cursor:pointer;background:var(--branco);border:1.5px solid var(--line-soft);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow);transition:border-color .2s,transform .15s var(--ease)}
+.icard:hover{border-color:var(--salvia)}
+.icard:active{transform:scale(.98)}
+.icard .pic{display:block;aspect-ratio:1/.92;background:var(--linho);overflow:hidden}
+.icard .pic svg{width:100%;height:100%}
+.icard .cap{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px;font-weight:600;font-size:1rem;line-height:1.25;transition:background .2s,color .2s}
+.icard .cap .ic{width:18px;height:18px;color:var(--argila-ink);flex:none}
+.icard[aria-pressed="true"]{border-color:var(--floresta)}
+.icard[aria-pressed="true"] .cap{background:var(--floresta);color:var(--creme)}
+.icard[aria-pressed="true"] .cap .ic{color:var(--argila-on-dark)}
+.icards.ages .pic{aspect-ratio:4/3.3}
+.icard.wide{grid-column:1/-1;flex-direction:row}
+.icard.wide .pic{width:42%;aspect-ratio:auto;min-height:110px}
+.icard.wide .cap{flex:1}
+.icard .cap small{display:block;font-weight:500;font-size:.8125rem;color:var(--musgo);transition:color .2s}
+.icard[aria-pressed="true"] .cap small{color:var(--on-dark-muted)}
+.qpic{border-radius:24px;overflow:hidden;background:var(--salvia-soft)}
+.qpic svg{width:100%;height:auto}
+/* quebra: prova social e botão fixo */
+.okay{text-align:center;font-size:.9375rem;font-weight:600;color:var(--musgo)}
+.okay b{color:var(--argila-ink);font-weight:700}
+.crowd{display:flex;justify-content:center;padding:4px 0}
+.crowd span{width:74px;height:74px;border-radius:50%;overflow:hidden;border:3px solid var(--creme);margin-left:-14px;background:var(--linho)}
+.crowd span:first-child{margin-left:0}
+.crowd span svg{width:100%;height:100%}
+.proof{font-family:var(--serif);font-size:clamp(1.75rem,7.6vw,2.125rem);line-height:1.08;text-align:center;text-wrap:balance}
+.proof em{color:var(--argila-ink)}
+.proof .big{display:block;font-size:1.9em;line-height:1;color:var(--argila-ink);font-style:normal}
+.infobox{background:var(--salvia-soft);border:1px solid #D3DCCD;border-radius:16px;padding:13px 16px;text-align:center;font-weight:600;color:var(--floresta)}
 .trust{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;color:var(--musgo);font-size:.8125rem;font-weight:500}
 .trust span{display:flex;align-items:center;gap:5px}
 .trust .ic{width:15px;height:15px}
@@ -244,6 +261,12 @@ input[type=range]{flex:1;min-width:0;height:36px;accent-color:var(--floresta);ba
 .rhead h1{color:var(--creme);font-size:clamp(2rem,9vw,2.5rem)}
 .rhead h1 em{color:var(--argila-on-dark)}
 .rhead p{color:var(--on-dark-muted)}
+.rhead .goal{display:flex;align-items:center;gap:12px;background:rgba(244,240,232,.08);border:1px solid rgba(244,240,232,.12);border-radius:16px;padding:8px 14px 8px 8px}
+.rhead .goal .pic{flex:none;width:56px;height:56px;border-radius:12px;overflow:hidden;background:var(--linho)}
+.rhead .goal .pic svg{width:100%;height:100%}
+.rhead .goal span{font-size:.8125rem;color:var(--on-dark-muted);display:block}
+.rhead .goal b{font-family:var(--serif);font-weight:400;font-size:1.375rem;line-height:1.1;color:var(--creme)}
+.offer .acc{font-size:.8125rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--musgo);margin-bottom:-6px}
 .rhead .facts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:4px}
 .rhead .facts div{background:rgba(244,240,232,.08);border:1px solid rgba(244,240,232,.12);border-radius:14px;padding:10px 8px;text-align:center;display:flex;flex-direction:column;gap:2px}
 .rhead .facts b{font-family:var(--serif);font-weight:400;font-size:1.5rem;line-height:1;color:var(--creme);font-variant-numeric:tabular-nums}
@@ -300,7 +323,7 @@ input[type=range]{flex:1;min-width:0;height:36px;accent-color:var(--floresta);ba
 .offer h2{font-size:1.875rem}
 .offer .for{color:var(--musgo);font-size:.9375rem}
 .offer .de{color:var(--musgo);text-decoration:line-through;font-size:.9375rem}
-.offer .por{font-family:var(--serif);font-size:4rem;line-height:.9;color:var(--floresta);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.offer .por{font-family:var(--serif);font-size:3.25rem;line-height:.9;color:var(--floresta);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
 .offer .por small{font-family:var(--sans);font-size:1.125rem;font-weight:600;vertical-align:.95em;margin-right:4px;letter-spacing:0}
 .offer .sub{color:var(--musgo);font-size:.875rem}
 .pay{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
@@ -341,13 +364,12 @@ details p{margin-top:8px;color:var(--musgo);font-size:.9375rem}
 <body>
 
 <div class="shell">
-  <header class="top">
+  <header class="top" id="top">
     <div class="bar">
       <button type="button" class="back" id="back" aria-label="Voltar para a pergunta anterior" hidden>
         <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
       </button>
       <div class="logo" id="logo"></div>
-      <span class="count" id="count"></span>
     </div>
     <div class="progress" id="progress" hidden>
       <span class="track"></span><span class="fill" id="progressFill"></span>
@@ -359,8 +381,8 @@ details p{margin-top:8px;color:var(--musgo);font-size:.9375rem}
 
 <div class="sticky" id="sticky" hidden>
   <div class="in">
-    <span class="p"><b id="stickyPrice"></b><small>pagamento único</small></span>
-    <a class="btn buy" id="stickyCta" href="#">Quero minhas receitas</a>
+    <span class="p"><b id="stickyPrice"></b><small>plano completo</small></span>
+    <a class="btn buy" id="stickyCta" href="#">Acessar meu plano</a>
   </div>
 </div>
 
@@ -405,7 +427,7 @@ const CONFIG = {
 
 /* ===================================================================== */
 const SETUP = !CONFIG.checkoutUrl;
-const VERSAO = 'v3';
+const VERSAO = 'v4';
 const fmtBRL = (v) => new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(v);
 const $ = (s, r = document) => r.querySelector(s);
 const el = (tag, attrs = {}, ...kids) => {
@@ -475,6 +497,64 @@ const icon = (name) => el('span', {html: ic(name), style: 'display:contents'});
 const capsuleSvg = (cls, fg = '#17332B', ac = '#B8744F', progress = 1) =>
   `<svg class="${cls}" viewBox="0 0 88 40" aria-hidden="true"><rect x="2" y="17" width="26" height="14" rx="7" style="fill:none;stroke:${fg}" stroke-width="2.6"/><line x1="15" y1="17" x2="15" y2="31" style="stroke:${fg}" stroke-width="2.6"/><path d="M28 24 H50 C62 24 72 18 84 6" style="fill:none;stroke:${ac}" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="62" stroke-dashoffset="${62 * (1 - progress)}"/></svg>`;
 
+/* ---------- Ilustrações próprias (SVG), no lugar de fotos ----------
+   Retrato sem rosto por faixa de idade, tronco de perfil (mostra a pochete) e a caneta. */
+let svgId = 0;
+const avatar = ({skin, hair, top, bg, gray, glasses, short}) => {
+  const hairBack = short
+    ? 'M54 66 C50 36 64 22 80 22 C96 22 110 36 106 66 C106 76 104 84 100 90 L60 90 C56 84 54 76 54 66 Z'
+    : 'M52 66 C46 30 64 20 80 20 C96 20 114 30 108 66 C110 92 118 110 128 128 C112 136 98 128 94 114 L66 114 C62 128 48 136 32 128 C42 110 50 92 52 66 Z';
+  return `<svg viewBox="0 0 160 160" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+  <rect width="160" height="160" style="fill:${bg}"/>
+  <path d="${hairBack}" style="fill:${hair}"/>
+  <path d="M18 160 C20 128 44 112 80 112 C116 112 140 128 142 160 Z" style="fill:${top}"/>
+  <rect x="70" y="86" width="20" height="30" rx="9" style="fill:${skin}"/>
+  <path d="M68 112 L80 130 L92 112 Z" style="fill:${skin}"/>
+  <ellipse cx="80" cy="65" rx="24" ry="27" style="fill:${skin}"/>
+  <path d="M56 58 C54 38 68 29 82 29 C97 29 107 40 105 57 C99 46 91 40 81 40 C73 43 63 49 56 58 Z" style="fill:${hair}"/>
+  ${gray ? `<path d="M60 52 C66 40 76 34 88 33" style="fill:none;stroke:${gray}" stroke-width="4" stroke-linecap="round"/>` : ''}
+  ${glasses ? '<g style="fill:none;stroke:#17332B" stroke-width="2"><circle cx="70" cy="68" r="7"/><circle cx="90" cy="68" r="7"/><path d="M77 68h6"/></g>' : ''}
+</svg>`;
+};
+const AVATAR = {
+  i18: {skin: '#E9C4A6', hair: '#3B2A21', top: '#B8744F', bg: '#E4DDCF'},
+  i30: {skin: '#C99272', hair: '#2A1E18', top: '#4A5E52', bg: '#E8ECE3'},
+  i40: {skin: '#E2B595', hair: '#6B4430', top: '#17332B', bg: '#F3E6DC'},
+  i50: {skin: '#A86F4F', hair: '#6E6158', top: '#B8744F', bg: '#E4DDCF', short: true},
+  i60: {skin: '#EBC9AE', hair: '#B9B2A6', top: '#4A5E52', bg: '#E8ECE3', glasses: true, short: true}
+};
+// Tronco de perfil virado para a direita; b é o quanto a barriga de baixo sai para a frente.
+const torso = (b, {jeans, define, pausa} = {}) => {
+  const id = 'tc' + (++svgId);
+  const d = `M58 6 C56 16 44 20 42 32 C40 54 46 70 44 86 C42 100 34 112 38 160 L80 160 C79 146 76 134 72 124 C${74 + b} 118 ${72 + b} 108 ${68 + b * 0.7} 100 C${66 + b * 0.3} 92 64 86 65 78 C66 70 68 64 72 60 C80 54 84 44 76 34 C70 28 66 18 66 6 Z`;
+  return `<svg viewBox="0 0 120 160" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+  <rect width="120" height="160" style="fill:#E4DDCF"/>
+  <defs><clipPath id="${id}"><path d="${d}"/></clipPath></defs>
+  <path d="${d}" style="fill:#D9A98A"/>
+  <g clip-path="url(#${id})">
+    <rect x="0" y="26" width="120" height="${define ? 26 : 30}" style="fill:#17332B"/>
+    <rect x="0" y="${jeans ? 120 : 118}" width="120" height="50" style="fill:${jeans ? '#5D7A94' : '#4A5E52'}"/>
+    ${jeans ? '<path d="M0 124h120" style="stroke:#40576D" stroke-width="2"/><circle cx="76" cy="128" r="2.6" style="fill:#C9A66B"/>' : ''}
+    ${define ? '<path d="M62 66 C61 78 61 92 63 106" style="fill:none;stroke:#B98868" stroke-width="2" stroke-linecap="round"/>' : ''}
+    <path d="M${65 + b * 0.45} 92 h.01" style="stroke:#9C6E52" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  ${pausa ? '<g><circle cx="100" cy="24" r="13" style="fill:#FFFDF9"/><path d="M96 18v12M104 18v12" style="stroke:#A4442C" stroke-width="3" stroke-linecap="round"/></g>' : ''}
+</svg>`;
+};
+const penArt = () => `<svg viewBox="0 0 360 170" role="img" aria-label="Ilustração de uma caneta de aplicação">
+  <rect width="360" height="170" style="fill:#E8ECE3"/>
+  <circle cx="300" cy="34" r="70" style="fill:#DCE3D6"/>
+  <g transform="rotate(-14 180 92)">
+    <rect x="52" y="74" width="196" height="38" rx="19" style="fill:#B7C4B1"/>
+    <rect x="32" y="78" width="30" height="30" rx="9" style="fill:#B8744F"/>
+    <rect x="110" y="82" width="70" height="22" rx="7" style="fill:#FFFDF9"/>
+    <path d="M122 88v10M134 88v6M146 88v10M158 88v6M170 88v10" style="stroke:#4A5E52" stroke-width="2" stroke-linecap="round"/>
+    <rect x="232" y="76" width="78" height="34" rx="17" style="fill:#17332B"/>
+    <path d="M310 93h18" style="stroke:#17332B" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <path d="M40 150 H130 C150 150 166 140 184 124" style="fill:none;stroke:#B8744F" stroke-width="3" stroke-linecap="round"/>
+</svg>`;
+
 $('#logo').innerHTML = capsuleSvg('mark') + `<span class="word"><i>${CONFIG.marca.nome.split(' ')[0]}</i> ${CONFIG.marca.nome.split(' ').slice(1).join(' ')}</span>`;
 
 /* ---------- Backend, Pixel e checkout ---------- */
@@ -518,12 +598,15 @@ const IDADES = [
 const STEPS = [
   {id: 'idade', type: 'intro'},
   {id: 'quebra', type: 'age'},
-  {id: 'caneta', type: 'buttons', q: 'Há quanto tempo você <em>usa a caneta?</em>', hint: 'Mounjaro, Ozempic, Wegovy, Saxenda ou outra.', opts: [
+  {id: 'caneta', type: 'buttons', art: penArt, q: 'Há quanto tempo você <em>usa a caneta?</em>', hint: 'Mounjaro, Ozempic, Wegovy, Saxenda ou outra.', opts: [
     {v: 'c0', l: 'Comecei há menos de 1 mês', ic: 'broto'}, {v: 'c1', l: 'De 1 a 3 meses', ic: 'cal'},
     {v: 'c3', l: 'De 3 a 6 meses', ic: 'ampulheta'}, {v: 'c6', l: 'Mais de 6 meses', ic: 'calok'}, {v: 'parei', l: 'Já usei e parei', ic: 'pausa'}]},
-  {id: 'pochete', type: 'buttons', q: 'E a barriga de baixo, a famosa <em>pochete</em>, como está?', opts: [
-    {v: 'nada', l: 'Não saiu nada ainda', ic: 'nada'}, {v: 'pouco', l: 'Diminuiu bem pouco', ic: 'pouco'},
-    {v: 'travou', l: 'Diminuiu e depois travou', ic: 'travou'}, {v: 'saiu', l: 'Já diminuiu bem', ic: 'saiu'}]},
+  {id: 'pochete', type: 'cards', q: 'E a barriga de baixo, a famosa <em>pochete</em>, como está?', opts: [
+    {v: 'nada', l: 'Não saiu nada ainda', img: () => torso(14)}, {v: 'pouco', l: 'Diminuiu bem pouco', img: () => torso(9)},
+    {v: 'travou', l: 'Diminuiu e travou', img: () => torso(9, {pausa: true})}, {v: 'saiu', l: 'Já diminuiu bem', img: () => torso(4)}]},
+  {id: 'sonho', type: 'cards', q: 'E como você quer que a sua <em>barriga</em> fique?', hint: 'Escolha a que mais combina com você.', opts: [
+    {v: 'lisa', l: 'Lisinha', img: () => torso(0)}, {v: 'firme', l: 'Firme e definida', img: () => torso(0, {define: true})},
+    {v: 'roupa', l: 'Caber na roupa de antes', img: () => torso(2, {jeans: true})}, {v: 'leve', l: 'Sem a pochete, só isso', img: () => torso(3)}]},
   {id: 'porque', type: 'insight'},
   {id: 'sintomas', type: 'multi', q: 'Desde a caneta, <em>o que acontece</em> com você?', hint: 'Marque tudo o que for verdade.', opts: [
     {v: 'fome', l: 'Quase não sinto fome, esqueço de comer', ic: 'prato'}, {v: 'doce', l: 'Vontade forte de doce', ic: 'doce'},
@@ -539,7 +622,7 @@ const STEPS = [
   {id: 'solucao', type: 'solution'},
   {id: 'tempo', type: 'buttons', q: 'Quanto tempo você tem <em>para preparar?</em>', opts: [
     {v: 't5', l: 'Até 5 minutos, coisa de liquidificador', ic: 'raio'}, {v: 't20', l: 'Uns 15 a 20 minutos', ic: 'panela'}, {v: 't40', l: 'Gosto de cozinhar com calma', ic: 'relogio'}]},
-  {id: 'compromisso', type: 'buttons', q: 'Se as receitas couberem no seu apetite e matarem a vontade de doce, <em>você testa por 7 dias?</em>', opts: [
+  {id: 'compromisso', type: 'buttons', q: 'Se as receitas couberem no seu apetite e matarem a vontade de doce, <em>você testa por 7 dias?</em>', qf: () => `Se as receitas couberem no seu apetite e te deixarem mais perto da barriga <b>${sonhoLabel().toLowerCase()}</b>, <em>você testa por 7 dias?</em>`, opts: [
     {v: 'sim', l: 'Sim, quero testar!', ic: 'saiu'}, {v: 'tentar', l: 'Vou tentar', ic: 'sorriso'}]},
   {id: 'loading', type: 'loading'},
   {id: 'resultado', type: 'result'}
@@ -547,7 +630,8 @@ const STEPS = [
 // Etapas contadas no progresso e enviadas ao backend.
 const QUESTION_IDX = STEPS.map((s, i) => (['loading', 'result'].includes(s.type) ? -1 : i)).filter((i) => i >= 0);
 // Só as perguntas de verdade entram no contador "3/8".
-const ASK_IDX = STEPS.map((s, i) => (['intro', 'buttons', 'multi', 'weight'].includes(s.type) ? i : -1)).filter((i) => i >= 0);
+const SONHO = Object.fromEntries(STEPS.find((x) => x.id === 'sonho').opts.map((o) => [o.v, o]));
+const sonhoLabel = () => (SONHO[state.a.sonho] || SONHO.lisa).l;
 
 const state = {i: 0, a: {}};
 const screen = $('#screen');
@@ -555,7 +639,7 @@ const back = $('#back');
 const progress = $('#progress');
 const progressFill = $('#progressFill');
 const progressCap = $('#progressCap');
-const count = $('#count');
+const topBar = $('#top');
 const sticky = $('#sticky');
 
 const go = (i) => {
@@ -604,15 +688,16 @@ const pesoRef = () => {
   return p25 + 0.25 * (peso() - p25);
 };
 const protMeta = () => { const p = pesoRef(); return [Math.round(p * 1.2), Math.round(p * 1.6)]; };
-const contBtn = (id, label, onclick = next) => el('button', {type: 'button', class: 'btn', id, onclick}, label, icon('arrow'));
+const contBtn = (id, label, onclick = next) => el('button', {type: 'button', class: 'btn stick', id, onclick}, label, icon('arrow'));
 const markSvg = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 
 /* ---------- Telas ---------- */
+const cardBtn = (s, o, wide) => el('button', {type: 'button', class: `icard${wide ? ' wide' : ''}`, id: `opt-${s.id}-${o.v}`, 'aria-pressed': String(state.a[s.id] === o.v)},
+  H('span', o.img(), 'pic'), el('span', {class: 'cap'}, o.sub ? el('span', {}, o.l, el('small', {}, o.sub)) : el('span', {}, o.l), icon('arrow')));
 const renderIntro = (s) => {
-  const wrap = el('div', {class: 'ages', role: 'group', 'aria-label': 'Sua idade'});
-  IDADES.forEach((o) => {
-    const b = el('button', {type: 'button', class: 'age', id: `opt-idade-${o.v}`, 'aria-pressed': String(state.a.idade === o.v)},
-      el('span', {class: 'n'}, o.l), el('span', {class: 'row'}, o.s, H('span', ic('arrow'), 'go')));
+  const wrap = el('div', {class: 'icards ages', role: 'group', 'aria-label': 'Sua idade'});
+  IDADES.forEach((o, k) => {
+    const b = cardBtn(s, {...o, l: o.l, sub: o.s, img: () => avatar(AVATAR[o.v])}, k === IDADES.length - 1 && IDADES.length % 2 === 1);
     b.addEventListener('click', () => {
       if (!state.started) { state.started = true; track('QuizInicio', {}, true); send('inicio', {etapa: 0}); }
       pick(s, o.v, wrap, b);
@@ -620,14 +705,13 @@ const renderIntro = (s) => {
     wrap.append(b);
   });
   return [
-    el('section', {class: 'hero'},
-      H('h1', 'Usando a caneta e a <em>pochete</em> ainda não saiu?'),
-      H('p', 'Faça o teste de 1 minuto e descubra o que está travando o seu resultado e <b>o que comer quando a fome some</b>.'),
-      el('div', {class: 'tags', 'aria-hidden': 'true'}, ['sem fome', 'vontade de doce', 'só desce gelado', 'cansaço'].map((t) => el('span', {}, t)))),
-    H('p', 'Para começar, <em>qual é a sua idade?</em>', 'ask'),
+    H('div', ic('relogio') + 'Teste rápido de 1 minuto', 'pill'),
+    H('h1', 'Usando a caneta e a <em>pochete</em> ainda não saiu?', 'intro-h'),
+    H('p', 'Responda o teste e descubra o que está travando o seu resultado. No final, você recebe um <b>plano de receitas montado para você</b>.', 'lead'),
+    el('p', {class: 'ask'}, 'Para começar, qual é a sua idade?'),
     wrap,
     el('div', {class: 'trust'},
-      H('span', ic('relogio') + '1 minuto'), H('span', ic('anonimo') + 'sem cadastro'), H('span', ic('check') + 'resultado na hora')),
+      H('span', ic('anonimo') + 'sem cadastro'), H('span', ic('check') + 'resultado na hora')),
     CONFIG.provaSocial ? el('p', {class: 'fine'}, CONFIG.provaSocial) : null
   ];
 };
@@ -658,21 +742,26 @@ const muscleChart = (faixa) => {
 const renderAge = () => {
   const [titulo, txt] = IDADE_TXT[state.a.idade] || IDADE_TXT.i40;
   const prova = CONFIG.provaIdade[state.a.idade];
+  const faixa = `${idadeLabel().replace('+', ' anos ou mais')}${idadeLabel().includes('+') ? '' : ' anos'}`;
   const out = [
-    H('span', ic('check') + `${idadeLabel()} anos`, 'stamp'),
-    H('h2', `<em>Você está no lugar certo.</em> ${titulo}`),
-    el('p', {class: 'c lead'}, txt)
+    H('p', '<b>Você está no lugar certo!</b>', 'okay'),
+    el('div', {class: 'crowd', 'aria-hidden': 'true'}, ['i18', 'i30', 'i40', 'i50', 'i60'].map((k) => H('span', avatar(AVATAR[k]))))
   ];
   if (prova && prova.pct) {
-    out.push(el('div', {class: 'sheet dark'}, el('div', {class: 'stat'}, el('b', {}, prova.pct + '%'), el('span', {}, prova.texto))));
+    // Prova real da base, no formato pedido: "X% das alunas dessa idade disseram que funcionou".
+    out.push(H('p', `<span class="big">${prova.pct}%</span> das nossas alunas de ${faixa} ${prova.texto}`, 'proof'));
+    out.push(el('p', {class: 'c lead'}, titulo));
   } else {
+    out.push(H('h2', titulo));
+    out.push(el('p', {class: 'c lead'}, txt));
     out.push(el('div', {class: 'sheet dark'},
       el('div', {class: 'stat'}, el('b', {}, '3–8%'), el('span', {}, 'da massa muscular se perde a cada década depois dos 30, se nada for feito.')),
       H('div', muscleChart(state.a.idade)),
       el('p', {class: 'src'}, 'Volpi E. et al., Curr Opin Clin Nutr Metab Care, 2004. Curva ilustrativa da faixa citada.')));
   }
+  out.push(el('div', {class: 'infobox'}, 'Vamos ver mais algumas coisas para montar o seu plano personalizado…'));
+  if (SETUP && !(prova && prova.pct)) out.push(el('div', {class: 'setup', role: 'note'}, el('strong', {}, 'Espaço para a prova da sua base'), H('span', 'Preencha <code>CONFIG.provaIdade</code> com a % real de alunas dessa faixa que disseram que funcionou. Aparece em destaque aqui. Sem número real, fica o dado de pesquisa.')));
   out.push(contBtn('cont-quebra', 'Continuar'));
-  if (SETUP && !(prova && prova.pct)) out.push(el('div', {class: 'setup', role: 'note'}, el('strong', {}, 'Espaço para a prova da sua base'), H('span', 'Preencha <code>CONFIG.provaIdade</code> com a % real de alunos dessa faixa que tiveram resultado. Sem número real, aparece o dado de pesquisa acima.')));
   return out;
 };
 
@@ -687,6 +776,11 @@ const renderButtons = (s) => {
     b.addEventListener('click', () => pick(s, o.v, wrap, b));
     wrap.append(b);
   });
+  return [s.art ? H('div', s.art(), 'qpic') : null, H('h2', s.qf ? s.qf() : s.q), s.hint ? el('p', {class: 'hint'}, s.hint) : null, wrap];
+};
+const renderCards = (s) => {
+  const wrap = el('div', {class: 'icards', role: 'group'});
+  s.opts.forEach((o) => { const b = cardBtn(s, o); b.addEventListener('click', () => pick(s, o.v, wrap, b)); wrap.append(b); });
   return [H('h2', s.q), s.hint ? el('p', {class: 'hint'}, s.hint) : null, wrap];
 };
 
@@ -694,7 +788,6 @@ const renderMulti = (s) => {
   const sel = new Set(state.a[s.id] || []);
   const opts = s.opts.map(norm);
   const cont = contBtn(`cont-${s.id}`, 'Continuar', null);
-  cont.classList.add('stick');
   const wrap = el('div', {class: 'opts', role: 'group'});
   const sync = () => {
     wrap.querySelectorAll('.opt').forEach((x) => x.setAttribute('aria-pressed', String(sel.has(x.dataset.v))));
@@ -914,9 +1007,11 @@ const renderResult = () => {
   const out = [];
 
   out.push(el('section', {class: 'rhead'},
-    H('span', ic('saiu') + 'Seu resultado está pronto', 'ok'),
+    H('span', ic('saiu') + 'Seu plano personalizado está pronto', 'ok'),
     H('h1', `Seu perfil: <em>${perfil.nome}</em>`),
     el('p', {}, perfil.txt),
+    el('div', {class: 'goal'}, H('span', torso(state.a.sonho === 'firme' ? 0 : 1, {define: state.a.sonho === 'firme', jeans: state.a.sonho === 'roupa'}), 'pic'),
+      el('div', {}, el('span', {}, 'Seu objetivo'), el('b', {}, `Barriga: ${sonhoLabel().toLowerCase()}`))),
     el('div', {class: 'facts'},
       H('div', `<b class="bmiv">${fmt1(imc())}</b><span>IMC · ${imcFaixa().nome.toLowerCase()}</span>`),
       H('div', `<b>${peso()} kg</b><span>peso hoje</span>`),
@@ -979,7 +1074,7 @@ const renderResult = () => {
       el('span', {}, 'As receitas cuidam do prato. Dose, troca de medicamento e efeitos colaterais fortes são sempre com o seu médico.'))));
 
   out.push(el('div', {class: 'sheet'},
-    H('h3', `O que vem no <em>${CONFIG.produto}</em>`),
+    H('h3', 'O que tem no seu <em>plano completo</em>'),
     el('div', {class: 'covers', 'aria-hidden': 'true'}, COVERS.map(([bg, fg, ac, t1, t2]) =>
       el('div', {class: 'cover', style: `background:${bg};color:${fg}`}, H('span', capsuleSvg('cm', fg, ac)), H('b', `${t1}<i>${t2}</i>`), el('hr', {style: `background:${ac}`})))),
     el('ul', {class: 'deliv'}, CONFIG.entregaveis.map(([i, t, d]) => el('li', {}, H('span', ic(i), 'tile'), el('div', {}, el('b', {}, t), el('span', {}, d))))),
@@ -998,12 +1093,13 @@ const renderResult = () => {
   };
   const [reais, cents] = CONFIG.preco.toFixed(2).split('.');
   out.push(el('div', {class: 'offer', id: 'oferta'},
-    H('h2', 'Seu plano de receitas <em>está pronto</em>'),
-    el('p', {class: 'for'}, `Receitas para o perfil ${perfil.nome}, com as opções que você marcou.`),
+    H('h2', 'Libere o seu <em>plano completo</em>'),
+    el('p', {class: 'for'}, `O Dia 1 é só o começo. O plano completo traz todas as receitas para o perfil ${perfil.nome}, para chegar na barriga ${sonhoLabel().toLowerCase()} sem forçar comida.`),
+    el('span', {class: 'acc'}, 'Acesso completo'),
     CONFIG.precoDe ? el('span', {class: 'de'}, `De ${fmtBRL(CONFIG.precoDe)}`) : null,
     H('span', `<small>R$</small>${reais},${cents}`, 'por'),
     el('span', {class: 'sub'}, 'Pagamento único · acesso imediato no seu e-mail'),
-    el('a', {class: 'btn buy pulse', id: 'cta', href, onclick: onBuy}, 'Quero minhas receitas', icon('arrow')),
+    el('a', {class: 'btn buy pulse', id: 'cta', href, onclick: onBuy}, 'Acessar meu plano completo', icon('arrow')),
     el('div', {class: 'pay', 'aria-label': 'Formas de pagamento'}, H('span', ic('pix') + 'Pix'), H('span', ic('cartao') + 'Cartão'), H('span', ic('cadeado') + 'Compra segura')),
     el('div', {class: 'guarantee'}, H('span', sealSvg(CONFIG.garantiaDias)), el('span', {}, el('b', {}, `Garantia de ${CONFIG.garantiaDias} dias. `), 'Se não gostar, devolvemos 100% do valor.')),
     setupMsg));
@@ -1034,7 +1130,7 @@ const renderResult = () => {
     ['E se eu não gostar?', `Você tem ${CONFIG.garantiaDias} dias de garantia. É só pedir o reembolso e devolvemos 100% do valor.`]
   ];
   out.push(el('div', {class: 'sheet faq'}, H('h3', 'Perguntas <em>frequentes</em>'), faq.map(([q, r]) => el('details', {}, H('summary', `<span>${q}</span>${ic('plus')}`), el('p', {}, r)))));
-  out.push(el('a', {class: 'btn buy', id: 'cta-2', href, onclick: onBuy}, 'Quero minhas receitas', icon('arrow')));
+  out.push(el('a', {class: 'btn buy', id: 'cta-2', href, onclick: onBuy}, 'Acessar meu plano completo', icon('arrow')));
   out.push(el('p', {class: 'fine'}, 'Material educativo. Não substitui consulta médica ou com nutricionista. Os resultados variam de pessoa para pessoa.'));
 
   $('#stickyPrice').textContent = fmtBRL(CONFIG.preco);
@@ -1057,7 +1153,7 @@ const renderResult = () => {
 };
 
 /* ---------- Render ---------- */
-const RENDER = {intro: renderIntro, age: renderAge, buttons: renderButtons, multi: renderMulti, insight: renderInsight,
+const RENDER = {intro: renderIntro, age: renderAge, buttons: renderButtons, cards: renderCards, multi: renderMulti, insight: renderInsight,
   weight: renderWeight, mirror: renderMirror, solution: renderSolution, loading: renderLoading, result: renderResult};
 const render = () => {
   const s = STEPS[state.i];
@@ -1067,9 +1163,8 @@ const render = () => {
   const w = s.type === 'loading' ? 100 : Math.round(((qi + 1) / (QUESTION_IDX.length + 1)) * 100);
   progressFill.style.width = w + '%';
   progressCap.style.left = `calc(${w}% - ${(w * 0.24).toFixed(1)}px)`;
-  // Contador de perguntas: na pergunta mostra a posição dela; nas telas de explicação mantém a última respondida.
-  const feitas = ASK_IDX.filter((k) => k <= state.i).length;
-  count.textContent = state.i === 0 || ['loading', 'result'].includes(s.type) ? '' : `${feitas}/${ASK_IDX.length}`;
+  // Como na referência: nas perguntas só aparecem o voltar e o progresso; a marca fica na abertura e no resultado.
+  topBar.classList.toggle('quiz', state.i > 0 && s.type !== 'result');
   if (s.type !== 'result') sticky.hidden = true;
   screen.replaceChildren(...RENDER[s.type](s).filter(Boolean));
   screen.style.animation = 'none';

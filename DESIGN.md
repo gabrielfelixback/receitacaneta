@@ -27,4 +27,5 @@ O botão Floresta avança no quiz e o botão Argila compra: cada cor tem uma fun
 - Símbolo: a cápsula com a linha curva em argila (`capsuleSvg`). Aparece no logo, nas capas dos materiais e no carregamento, onde a linha se desenha conforme a porcentagem.
 - Progresso: linha argila com a cápsula correndo na ponta e o contador `3/8` (só perguntas).
 - Ícones: traço único de 1,8 em grade de 24 (`ICON`). Nada de emoji no lugar de ícone.
-- Imagens: só SVG desenhado no código, sem foto. Assim carrega na hora e não inventa pessoa nem resultado.
+- Imagens: só SVG desenhado no código, sem foto. Assim carrega na hora e não inventa pessoa nem resultado. `avatar()` faz os retratos sem rosto por idade, `torso()` a silhueta de perfil (o parâmetro é o quanto a pochete sai) e `penArt()` a caneta.
+- Estrutura de quiz de funil: nas perguntas só aparecem o voltar e o progresso; a marca fica na abertura e no resultado. Opção escolhida fica preenchida em Floresta. Telas de explicação têm o Continuar preso no fim da tela.
