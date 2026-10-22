@@ -128,7 +128,7 @@ b,strong{font-weight:600}
 .said span{font-size:.8125rem;color:var(--on-dark-muted);font-weight:600}
 .said b{font-family:var(--serif);font-weight:400;font-size:1.5rem;line-height:1.1;color:var(--argila-on-dark)}
 .said p{font-size:.9375rem;color:var(--creme)}
-.icard .pic img{width:100%;height:100%;object-fit:cover;display:block}
+.icard .pic img{width:100%;height:100%;object-fit:cover;object-position:center 62%;display:block}
 .icards.ages .pic img{object-position:center 22%}
 .crowd span img{width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block}
 .pill{align-self:stretch;text-align:center;font-size:.9375rem;font-weight:600;color:var(--argila-ink);background:var(--argila-soft);border:1px solid #EBD6C6;border-radius:16px;padding:11px 14px;display:flex;align-items:center;justify-content:center;gap:8px}
@@ -556,7 +556,7 @@ const CONFIG = {
     quebra: '',             // "Você está no caminho certo!": grupo de mulheres
     caneta: '',             // pergunta da caneta
     idade: {i18: 'img/idade-18.webp', i30: 'img/idade-30.webp', i40: 'img/idade-40.webp', i50: 'img/idade-50.webp', i60: 'img/idade-60.webp'},
-    barriga: {pochete: '', pneuzinho: '', alta: '', flacida: ''},
+    barriga: {pochete: 'img/barriga-pochete.webp', pneuzinho: 'img/barriga-pneuzinho.webp', alta: 'img/barriga-alta.webp', flacida: 'img/barriga-flacida.webp'},
     sonho: {lisa: '', firme: '', roupa: '', leve: ''}
   },
   // Quebra de objeção da idade (tela logo depois da idade). Preencha só com números reais da sua base.
@@ -1445,8 +1445,8 @@ const render = () => {
   if (first && state.i > 0) { first.setAttribute('tabindex', '-1'); try { first.focus({preventScroll: true}); } catch (e) {} }
 };
 render();
-// As fotos da idade aparecem logo depois da primeira tela: já começam a baixar agora.
-const preload = () => Object.values(CONFIG.imagens.idade).filter(Boolean).forEach((u) => { const i = new Image(); i.src = u; });
+// As fotos da idade e dos tipos de barriga já começam a baixar na primeira tela.
+const preload = () => [...Object.values(CONFIG.imagens.idade), ...Object.values(CONFIG.imagens.barriga)].filter(Boolean).forEach((u) => { const i = new Image(); i.src = u; });
 if ('requestIdleCallback' in window) requestIdleCallback(preload); else setTimeout(preload, 800);
 </script>
 </body>
