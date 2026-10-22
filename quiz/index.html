@@ -116,7 +116,7 @@ b,strong{font-weight:600}
 
 /* abertura */
 .hook-pic{border-radius:24px;overflow:hidden;background:var(--linho);aspect-ratio:16/9}
-.hook-pic > svg,.hook-pic > img,.qpic > img,.crowd-pic > img{width:100%;height:100%;object-fit:cover;display:block}
+.hook-pic > svg,.hook-pic > img,.hook-pic > video,.qpic > img,.crowd-pic > img{width:100%;height:100%;object-fit:cover;display:block}
 .hook-h{text-align:center;font-size:clamp(2rem,9vw,2.625rem);line-height:1.04}
 .hook-h em{color:var(--argila-ink)}
 .hook-ask{font-weight:700;text-align:center;font-size:1.0625rem;margin-top:2px}
@@ -596,6 +596,9 @@ const CONFIG = {
   // Fotos (URL ou caminho do arquivo, ex.: 'img/gancho.jpg'). Vazio = usa a ilustração.
   imagens: {
     gancho: '',             // primeira tela: mulher diante do espelho, barriga, emoção
+    // Vídeo da primeira tela (no lugar da foto). Toca sozinho, sem som e em loop, como um GIF.
+    // mp4 = arquivo do vídeo (ex.: 'video/gancho.mp4'); webm = versão menor opcional; capa = imagem mostrada enquanto carrega.
+    ganchoVideo: {mp4: '', webm: '', capa: ''},
     quebra: '',             // "Você está no caminho certo!": grupo de mulheres
     caneta: 'img/caneta.webp', // pergunta da caneta
     idade: {i18: 'img/idade-18.webp', i30: 'img/idade-30.webp', i40: 'img/idade-40.webp', i50: 'img/idade-50.webp', i60: 'img/idade-60.webp'},
@@ -953,6 +956,12 @@ const markSvg = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.
 /* ---------- Telas ---------- */
 const cardBtn = (s, o, wide) => el('button', {type: 'button', class: `icard${wide ? ' wide' : ''}`, id: `opt-${s.id}-${o.v}`, 'aria-pressed': String(state.a[s.id] === o.v)},
   H('span', o.img(), 'pic'), el('span', {class: 'cap'}, o.sub ? el('span', {}, o.l, el('small', {}, o.sub)) : el('span', {}, o.l), icon('arrow')));
+// Primeira tela: vídeo (se tiver), senão foto, senão a ilustração do espelho.
+const midiaGancho = () => {
+  const v = CONFIG.imagens.ganchoVideo || {};
+  if (v.mp4 || v.webm) return `<video autoplay muted loop playsinline preload="auto"${v.capa ? ` poster="${v.capa}"` : ''} aria-hidden="true">${v.webm ? `<source src="${v.webm}" type="video/webm">` : ''}${v.mp4 ? `<source src="${v.mp4}" type="video/mp4">` : ''}</video>`;
+  return foto(CONFIG.imagens.gancho, mirrorArt(), 'Mulher diante do espelho');
+};
 const comecar = () => { if (!state.started) { state.started = true; track('QuizInicio', {}, true); send('inicio', {etapa: 0}); } };
 // Primeira tela: gancho emocional na autoestima, com o primeiro clique já na capa.
 const renderHook = (s) => {
@@ -964,7 +973,7 @@ const renderHook = (s) => {
     wrap.append(b);
   });
   return [
-    H('div', foto(CONFIG.imagens.gancho, mirrorArt(), 'Mulher diante do espelho'), 'hook-pic'),
+    H('div', midiaGancho(), 'hook-pic'),
     H('h1', '<span class="tag">Atenção:</span> você toma a caneta, <i>quase não</i> come… e <span class="hl">a barriga não sai?</span>', 'hook-h sans'),
     H('p', 'Não é falta de esforço. <b>O motivo está no seu prato</b>, e quase ninguém te contou.', 'lead c'),
     el('p', {class: 'hook-ask'}, 'Seja sincera: quando você se olha no espelho, o que sente?'),

@@ -35,3 +35,29 @@ Quiz de 16 telas (10 perguntas) que leva quem usa caneta emagrecedora a entender
 - Nome, registro e foto de quem montou as receitas (`CONFIG.autor`).
 - O produto em si: as receitas prometidas em `CONFIG.entregaveis` e no Dia 1 do resultado.
 - Criativos de anúncio que conversem com a abertura.
+
+## Vídeo na primeira página
+
+O espaço da imagem da abertura aceita um vídeo curto, que toca sozinho, sem som e em loop, como um GIF.
+
+1. Grave ou edite um vídeo de 5 a 10 segundos, na horizontal (16:9) ou quadrado. Ele fica cortado em 16:9, então mantenha o principal no centro. Sem som: no celular, vídeo automático sempre começa mudo.
+2. Comprima para a página continuar rápida (o ideal é ficar abaixo de 1,5 MB):
+
+```bash
+# MP4 (toca em todo lugar, inclusive iPhone e no navegador do Instagram)
+ffmpeg -i original.mov -t 10 -an -vf "scale=960:-2" -c:v libx264 -crf 28 -preset slow -pix_fmt yuv420p -movflags +faststart quiz/video/gancho.mp4
+# WebM (opcional, fica menor no Android/Chrome)
+ffmpeg -i original.mov -t 10 -an -vf "scale=960:-2" -c:v libvpx-vp9 -crf 38 -b:v 0 quiz/video/gancho.webm
+# Capa (primeiro quadro, aparece enquanto o vídeo carrega)
+ffmpeg -i quiz/video/gancho.mp4 -frames:v 1 -vf "scale=960:-2" -c:v libwebp -quality 75 quiz/video/gancho-capa.webp
+```
+
+3. No `CONFIG` do `quiz/index.html`:
+
+```js
+ganchoVideo: {mp4: 'video/gancho.mp4', webm: 'video/gancho.webm', capa: 'video/gancho-capa.webp'},
+```
+
+4. Suba a pasta `quiz/` inteira (com `video/` e `img/`).
+
+Sem vídeo, aparece a foto de `imagens.gancho`; sem foto, a ilustração do espelho.
