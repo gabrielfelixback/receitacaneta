@@ -471,6 +471,16 @@ h2.sans,h1.sans{font-family:var(--sans);font-weight:500;letter-spacing:-.015em;l
 .ready .go span{width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(244,240,232,.4);display:grid;place-items:center;animation:bob 1.8s var(--ease) infinite}
 .ready .go .ic{width:16px;height:16px;transform:rotate(90deg)}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+.goalpic{margin:0;display:flex;flex-direction:column;gap:10px}
+.goalpic .gp-img{position:relative;border-radius:24px;overflow:hidden;aspect-ratio:1428/1101;background:var(--linho)}
+.goalpic .gp-img img{width:100%;height:100%;object-fit:cover;display:block}
+.goalpic .gp-tag{position:absolute;left:12px;bottom:12px;background:var(--floresta);color:var(--creme);font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:6px 12px}
+.goalpic figcaption{display:flex;flex-direction:column;gap:4px;text-align:center}
+.goalpic figcaption b{font-family:var(--serif);font-weight:400;font-size:1.625rem;line-height:1.1}
+.goalpic figcaption b em{font-style:italic;color:var(--argila-ink)}
+.goalpic figcaption small{font-size:.75rem;color:var(--musgo)}
+.goalpic.rv .gp-img img{transform:scale(1.12);transition:transform 1.6s var(--ease) .2s}
+.goalpic.rv.in .gp-img img{transform:none}
 .ba{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .ba > div{display:flex;flex-direction:column;gap:8px;text-align:center}
 .ba .card{border-radius:20px;overflow:hidden;background:var(--linho)}
@@ -572,6 +582,15 @@ const CONFIG = {
   // Frase grande da tela "Você está no caminho certo!". {idade} vira a faixa escolhida.
   // Ex.: '+ 3.200 mulheres de {idade} que usam a caneta já fizeram este teste'. Use o número real do seu backend.
   provaQuebra: '',
+  // Foto grande logo abaixo do "como está hoje / com as receitas certas". Vazio = antes e depois ilustrado.
+  // Se for foto de banco ou feita por IA, mantenha a legenda; se for de cliente real com autorização, troque a legenda.
+  fotoObjetivo: {
+    url: 'img/objetivo.webp',
+    alt: 'Mulher sorrindo segurando a cintura de uma saia que ficou larga',
+    selo: 'Onde você quer chegar',
+    titulo: 'Imagine a roupa de hoje <em>sobrando assim.</em>',
+    legenda: 'Imagem ilustrativa. Não é resultado de cliente.'
+  },
   // Áudio de explicação (mensagem de voz na tela do espelho). Grave você mesma. Vazio = some.
   audio: {url: '', nome: '', foto: ''},   // ex.: {url: 'audio/explicacao.mp3', nome: 'Ana, do Além da Caneta', foto: 'img/ana.jpg'}
   // Fotos (URL ou caminho do arquivo, ex.: 'img/gancho.jpg'). Vazio = usa a ilustração.
@@ -1293,9 +1312,16 @@ const renderResult = () => {
   out.push(el('div', {class: 'vs'},
     el('div', {class: 'col no'}, el('div', {class: 'hd'}, 'Como está hoje'), vsNo.map((t) => H('div', ic('x') + `<span>${t}</span>`, 'it'))),
     el('div', {class: 'col yes'}, H('div', 'Com as receitas <em>certas</em>', 'hd'), vsYes.map((t) => H('div', ic('check') + `<span>${t}</span>`, 'it')))));
-  out.push(el('div', {class: 'ba'},
-    el('div', {}, el('div', {class: 'card'}, el('h3', {}, 'ANTES'), H('span', avatar({...eu, mood: 'triste'}), 'pic')), el('p', {}, 'Esta é você hoje, fugindo do espelho.')),
-    el('div', {}, el('div', {class: 'card'}, el('h3', {}, 'DEPOIS'), H('span', avatar({...eu, mood: 'feliz'}), 'pic')), el('p', {}, 'Esta é você voltando a gostar do que vê.'))));
+  const fr = CONFIG.fotoObjetivo || {};
+  if (fr.url) {
+    out.push(el('figure', {class: 'goalpic'},
+      el('div', {class: 'gp-img'}, el('img', {src: fr.url, alt: fr.alt || '', loading: 'lazy', decoding: 'async'}), el('span', {class: 'gp-tag'}, fr.selo || 'Onde você quer chegar')),
+      el('figcaption', {}, H('b', fr.titulo || 'Imagine a roupa de hoje <em>sobrando assim.</em>'), fr.legenda ? el('small', {}, fr.legenda) : null)));
+  } else {
+    out.push(el('div', {class: 'ba'},
+      el('div', {}, el('div', {class: 'card'}, el('h3', {}, 'ANTES'), H('span', avatar({...eu, mood: 'triste'}), 'pic')), el('p', {}, 'Esta é você hoje, fugindo do espelho.')),
+      el('div', {}, el('div', {class: 'card'}, el('h3', {}, 'DEPOIS'), H('span', avatar({...eu, mood: 'feliz'}), 'pic')), el('p', {}, 'Esta é você voltando a gostar do que vê.'))));
+  }
   out.push(el('section', {class: 'rhead'},
     H('h1', `Seu perfil: <em>${perfil.nome}</em>`),
     el('p', {}, perfil.txt),
@@ -1469,6 +1495,7 @@ const animarResultado = (barras) => {
   });
   marcar('#screen > *');
   marcar('.ba > div:first-child', 'l', 0, .1); marcar('.ba > div:last-child', 'r', 0, .25);
+  marcar('.goalpic figcaption', 'up', 0, .35);
   marcar('.vs .col.no .it', 'l', .09, .15); marcar('.vs .col.yes .it', 'r', .09, .3);
   marcar('.rhead .goal', 'up', 0, .2); marcar('.rhead .facts div', 'pop', .1, .3);
   marcar('.scores .score', 'l', .12, .1);
