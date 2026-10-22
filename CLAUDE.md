@@ -8,13 +8,14 @@ O dono do projeto fala português. Responda e escreva os textos do quiz em portu
 
 - `backend/`: Supabase. Migração com tabelas, função de registro e views do funil; Edge Function pública `quiz`; validação em `functions/_shared/validar.ts`. Detalhes em `backend/README.md`.
 - `quiz/index.html`: o quiz inteiro em um arquivo (HTML, CSS e JS, sem build). É o que vai para a hospedagem.
+- `DESIGN.md`: o visual (identidade além da caneta: cores, fontes, símbolo da cápsula, ícones). Leia antes de mexer no CSS.
 - `testes/testar-quiz.js`: percorre as 14 telas no jsdom em 3 cenários, confere resultado, eventos do backend (validados com o mesmo `validar.ts`) e checkout.
 
 ## Como o `quiz/index.html` está organizado
 
-- `CONFIG`: preço, checkout, URL do backend, Pixel, garantia, prova social, `provaIdade` (quebra da idade), autor, depoimentos e entregáveis. Quase toda mudança de conteúdo começa aqui.
+- `CONFIG`: marca, preço, checkout, URL do backend, Pixel, garantia, prova social, `provaIdade` (quebra da idade), autor, depoimentos e entregáveis. Quase toda mudança de conteúdo começa aqui.
 - `STEPS`: a ordem das telas. Ordem psicológica: idade (na abertura) → quebra da idade → tempo de caneta → pochete → por que não sai (consciência do problema) → sintomas → o que mais come (define o perfil) → peso → espelho personalizado com a proteína → solução (troca de receita) → tempo para cozinhar → microcompromisso → carregamento → resultado.
-- Tipos de tela: `intro`, `age`, `buttons`, `multi`, `insight`, `weight`, `mirror`, `solution`, `loading`, `result`. Em `opts`, `v` é o código enviado ao backend: não renomeie sem atualizar `PERFIS`, `TROCA`, `ESPELHO`, `PROT_TIPICA` e `backend/.../validar.ts` (lista `PERFIS`).
+- Tipos de tela: `intro`, `age`, `buttons`, `multi`, `insight`, `weight`, `mirror`, `solution`, `loading`, `result`. Em `opts`, `ic` é o ícone (objeto `ICON`, SVG de traço; não use emoji) e `v` é o código enviado ao backend: não renomeie sem atualizar `PERFIS`, `TROCA`, `ESPELHO`, `PROT_TIPICA` e `backend/.../validar.ts` (lista `PERFIS`).
 - O perfil vem da pergunta `come`: `economia`, `gelado`, `doce`, `lanche`, `prato_pequeno`.
 
 ## Regras de conteúdo (não negociáveis)

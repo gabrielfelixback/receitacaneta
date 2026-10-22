@@ -4,226 +4,346 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
-<title>Teste da Caneta</title>
+<meta name="theme-color" content="#17332B">
+<title>Teste da Caneta · além da caneta</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&family=DM+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap">
 <style>
-/* Funil de quiz de celular: fundo claro, uma pergunta por tela, manchetes pesadas com palavras marcadas, botões em relevo. Tema claro único, de propósito, como os funis do nicho. */
+/* Identidade "além da caneta": Creme/Linho de base, Floresta/Sálvia/Musgo de apoio, Argila só como acento.
+   Instrument Serif nos títulos (itálico só na palavra-chave) e Instrument Sans no resto. Tema claro único, de propósito. */
 :root{
   color-scheme:light;
-  --bg:#FFFFFF;
-  --panel:#F6F7F4;
-  --ink:#16201C;
-  --muted:#5D6A64;
-  --line:#E2E7E3;
-  --green:#1E9E45;
-  --green-deep:#13722F;
-  --green-soft:#E7F6EC;
-  --red:#D7342A;
-  --red-soft:#FDEBE9;
-  --amber:#C97800;
-  --amber-soft:#FFF3DF;
-  --marker:#FFE14D;
-  --font-display:"Archivo","Arial Black","Helvetica Neue",Arial,sans-serif;
-  --font-body:"Nunito Sans","Segoe UI",system-ui,-apple-system,sans-serif;
-  --font-data:"DM Mono",ui-monospace,Menlo,monospace;
+  --floresta:#17332B;
+  --creme:#F4F0E8;
+  --linho:#E4DDCF;
+  --salvia:#B7C4B1;
+  --salvia-soft:#E8ECE3;
+  --musgo:#4A5E52;
+  --argila:#B8744F;          /* traços e preenchimentos */
+  --argila-ink:#9A5A39;      /* texto argila sobre creme/branco (4,7:1) */
+  --argila-cta:#A65E3A;      /* fundo do botão de compra (4,8:1 com branco) */
+  --argila-dark:#7F4A2E;
+  --argila-on-dark:#D9A07E;  /* texto argila sobre floresta (6:1) */
+  --argila-soft:#F3E6DC;
+  --branco:#FFFDF9;
+  --on-dark-muted:#A9B8AC;
+  --line:#DCD4C4;
+  --line-soft:#ECE6DA;
+  --danger:#A4442C;
+  --serif:"Instrument Serif",Georgia,"Times New Roman",serif;
+  --sans:"Instrument Sans","Segoe UI",system-ui,-apple-system,sans-serif;
+  --shadow:0 1px 2px rgba(23,51,43,.06),0 4px 14px rgba(23,51,43,.05);
+  --shadow-lift:0 2px 4px rgba(23,51,43,.08),0 10px 24px rgba(23,51,43,.08);
+  --ease:cubic-bezier(.16,1,.3,1);
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:1.0625rem;line-height:1.5;-webkit-font-smoothing:antialiased;padding-top:env(safe-area-inset-top,0px)}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--creme);color:var(--floresta);font-family:var(--sans);font-size:1rem;line-height:1.5;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;padding-top:env(safe-area-inset-top,0px)}
+::selection{background:var(--salvia);color:var(--floresta)}
 [hidden]{display:none!important}
 img{max-width:100%}
-.shell{max-width:31rem;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:8px 128px;display:flex;flex-direction:column;gap:16px}
-.top{display:flex;flex-direction:column;gap:10px;align-items:center}
-.bar{display:grid;grid-template-columns:40px 1fr 40px;align-items:center;width:100%;min-height:44px}
-.back{all:unset;cursor:pointer;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:var(--muted)}
-.back:hover{background:var(--panel);color:var(--ink)}
-.logo{grid-column:2;justify-self:center;display:flex;flex-direction:column;align-items:center;line-height:1}
-.logo small{font-family:var(--font-display);font-weight:800;font-size:.56rem;letter-spacing:.2em;color:var(--green)}
-.logo b{font-family:var(--font-display);font-weight:900;font-size:1.35rem;letter-spacing:-.02em;color:var(--green);white-space:nowrap}
-.logo b span{color:var(--ink)}
-.progress{width:100%;height:7px;border-radius:99px;background:var(--line);overflow:hidden}
-.progress i{display:block;height:100%;width:0;background:var(--green);border-radius:99px;transition:width .4s ease}
-.screen{display:flex;flex-direction:column;gap:16px;animation:in .3s ease both}
-@keyframes in{from{opacity:.001;transform:translateY(10px)}to{opacity:1;transform:none}}
-h1,h2,h3{font-family:var(--font-display);margin:0;text-wrap:balance;letter-spacing:-.01em}
-h1{font-weight:900;font-size:clamp(1.65rem,7.4vw,2.15rem);line-height:1.08;text-transform:uppercase;text-align:center}
-h2{font-weight:800;font-size:clamp(1.35rem,5.8vw,1.65rem);line-height:1.14;text-align:center}
-h2.caps{text-transform:uppercase;font-weight:900}
-h3{font-weight:800;font-size:1.15rem;line-height:1.2}
-p{margin:0}
+svg{display:block}
+.ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.shell{max-width:30rem;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 120px}
+
+/* topo: marca, voltar, contador e a linha argila como progresso */
+.top{position:sticky;top:0;z-index:4;background:var(--creme);padding-top:6px;padding-bottom:10px;margin-bottom:6px}
+.bar{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;min-height:48px}
+.back{all:unset;cursor:pointer;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:var(--musgo);transition:background .2s}
+.back:hover{background:var(--linho);color:var(--floresta)}
+.logo{grid-column:2;justify-self:center;display:flex;align-items:center;gap:8px;color:var(--floresta);line-height:1}
+.logo .mark{width:40px;height:18px}
+.logo .word{font-family:var(--serif);font-size:1.375rem;letter-spacing:-.005em;white-space:nowrap}
+.logo .word i{font-style:italic}
+.count{justify-self:end;font-size:.8125rem;font-weight:600;color:var(--musgo);font-variant-numeric:tabular-nums;white-space:nowrap}
+.progress{position:relative;height:16px;display:flex;align-items:center}
+.progress .track{position:absolute;left:0;right:0;height:3px;border-radius:3px;background:var(--line)}
+.progress .fill{position:absolute;left:0;height:3px;border-radius:3px;background:var(--argila);width:0;transition:width .6s var(--ease)}
+.progress .cap{position:absolute;top:2px;width:24px;height:12px;left:0;transition:left .6s var(--ease)}
+
+.screen{display:flex;flex-direction:column;gap:18px;animation:in .45s var(--ease) both}
+@keyframes in{from{opacity:.001;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+/* tipografia */
+h1,h2,h3{margin:0;font-weight:400;text-wrap:balance}
+h1{font-family:var(--serif);font-size:clamp(2.25rem,10vw,2.875rem);line-height:1.02;letter-spacing:-.015em}
+h2{font-family:var(--serif);font-size:clamp(1.875rem,8.2vw,2.25rem);line-height:1.06;letter-spacing:-.01em;text-align:center}
+h3{font-family:var(--sans);font-weight:600;font-size:1.0625rem;line-height:1.3}
+h1 em,h2 em,h3 em{font-family:var(--serif);font-style:italic;color:var(--argila-ink)}
+h3 em{font-size:1.15em;font-weight:400}
+p{margin:0;text-wrap:pretty}
+b,strong{font-weight:600}
 .c{text-align:center}
-.lead{color:var(--muted);text-align:center;font-size:1.02rem}
-.hint{color:var(--muted);font-size:.92rem;text-align:center;margin-top:-6px}
-.g{color:var(--green)}
-.r{color:var(--red)}
-.mk{background:linear-gradient(transparent 12%,var(--marker) 12%,var(--marker) 88%,transparent 88%);padding:0 .12em;color:var(--ink)}
-.badge{align-self:center;font-family:var(--font-display);font-weight:800;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--green-deep);background:var(--green-soft);border-radius:99px;padding:6px 12px}
-.fine{font-size:.78rem;color:var(--muted);text-align:center}
-.src{font-size:.75rem;color:var(--muted);text-align:center}
+.lead{color:var(--musgo);text-align:center;font-size:1.0625rem}
+.hint{color:var(--musgo);font-size:.9375rem;text-align:center;margin-top:-8px}
+.fine{font-size:.8125rem;color:var(--musgo);text-align:center;line-height:1.45}
+.src{font-size:.75rem;color:var(--musgo);line-height:1.4}
+.num{font-variant-numeric:tabular-nums}
+
 /* botões */
-.btn{all:unset;box-sizing:border-box;cursor:pointer;width:100%;min-height:58px;padding:14px 18px;border-radius:12px;background:var(--green);color:#FFFFFF;font-family:var(--font-body);font-weight:800;font-size:1.08rem;text-align:center;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 0 var(--green-deep);text-decoration:none;line-height:1.25;transition:transform .08s,box-shadow .08s}
-.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--green-deep)}
-.btn[aria-disabled="true"]{opacity:.45;cursor:not-allowed}
-.btn.big{min-height:66px;font-size:1.15rem;text-transform:uppercase;font-family:var(--font-display);font-weight:900;letter-spacing:.01em}
-.btn.ghost{background:var(--bg);color:var(--ink);border:2px solid var(--line);box-shadow:0 3px 0 var(--line);justify-content:flex-start;text-align:left}
-.btn.ghost:hover{border-color:var(--green)}
-.btn.ghost[aria-pressed="true"]{border-color:var(--green);background:var(--green-soft)}
-.btn .em{font-size:1.3rem;line-height:1}
-.pulse{animation:pulse 1.8s ease-in-out infinite}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}
-.btns{display:flex;flex-direction:column;gap:12px}
-.opt{all:unset;box-sizing:border-box;cursor:pointer;width:100%;min-height:56px;padding:13px 16px;border:2px solid var(--line);border-radius:12px;background:var(--bg);display:flex;align-items:center;gap:12px;font-weight:700;font-size:1.03rem;line-height:1.3;transition:border-color .15s,background .15s}
-.opt:hover{border-color:var(--green)}
-.opt .box{flex:none;width:24px;height:24px;border-radius:7px;border:2px solid var(--line);display:grid;place-items:center;background:var(--bg)}
-.opt[aria-pressed="true"]{border-color:var(--green);background:var(--green-soft)}
-.opt[aria-pressed="true"] .box{background:var(--green);border-color:var(--green)}
-.opt[aria-pressed="true"] .box::after{content:"";width:10px;height:5px;border:3px solid #FFFFFF;border-top:0;border-right:0;transform:translateY(-1px) rotate(-45deg)}
-.opt .em{font-size:1.25rem;line-height:1}
-.btn:focus-visible,.opt:focus-visible,.age:focus-visible,.back:focus-visible,summary:focus-visible,.step:focus-visible,input[type=range]:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
-/* abertura: idade em cartões */
+.btn{all:unset;box-sizing:border-box;cursor:pointer;width:100%;min-height:58px;padding:15px 22px;border-radius:999px;background:var(--floresta);color:var(--creme);font-family:var(--sans);font-weight:600;font-size:1.0625rem;text-align:center;display:flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;line-height:1.25;box-shadow:0 2px 0 rgba(0,0,0,.18),0 10px 22px rgba(23,51,43,.18);transition:transform .15s var(--ease),box-shadow .15s,opacity .2s}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(1px);box-shadow:0 1px 0 rgba(0,0,0,.18),0 4px 10px rgba(23,51,43,.18)}
+.btn .ic{width:20px;height:20px}
+.btn.stick{position:sticky;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:3}
+.btn[aria-disabled="true"]{opacity:.38;cursor:not-allowed;transform:none}
+.btn.buy{background:var(--argila-cta);color:var(--branco);min-height:64px;font-size:1.125rem;font-weight:700;box-shadow:0 3px 0 var(--argila-dark),0 12px 26px rgba(166,94,58,.32)}
+.btn.buy:active{box-shadow:0 1px 0 var(--argila-dark),0 4px 10px rgba(166,94,58,.3)}
+.pulse{animation:pulse 2.2s var(--ease) infinite}
+@keyframes pulse{0%,100%{box-shadow:0 3px 0 var(--argila-dark),0 12px 26px rgba(166,94,58,.32),0 0 0 0 rgba(184,116,79,.45)}60%{box-shadow:0 3px 0 var(--argila-dark),0 12px 26px rgba(166,94,58,.32),0 0 0 12px rgba(184,116,79,0)}}
+
+/* opções */
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{all:unset;box-sizing:border-box;cursor:pointer;width:100%;min-height:66px;padding:11px 14px 11px 11px;border:1.5px solid var(--line-soft);border-radius:18px;background:var(--branco);display:flex;align-items:center;gap:13px;font-weight:500;font-size:1rem;line-height:1.3;box-shadow:var(--shadow);transition:border-color .2s,background .2s,transform .15s var(--ease)}
+.opt:hover{border-color:var(--salvia)}
+.opt:active{transform:scale(.985)}
+.opt .tile{flex:none;width:44px;height:44px;border-radius:13px;background:var(--creme);display:grid;place-items:center;color:var(--floresta);transition:background .2s,color .2s}
+.opt .lbl{flex:1}
+.opt .mark{flex:none;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;transition:background .2s,border-color .2s}
+.opt.sq .mark{border-radius:7px}
+.opt .mark svg{width:12px;height:12px;stroke:var(--branco);stroke-width:3;fill:none;opacity:0;transform:scale(.4);transition:opacity .2s,transform .3s var(--ease)}
+.opt[aria-pressed="true"]{border-color:var(--floresta);background:var(--salvia-soft)}
+.opt[aria-pressed="true"] .tile{background:var(--floresta);color:var(--creme)}
+.opt[aria-pressed="true"] .mark{background:var(--floresta);border-color:var(--floresta)}
+.opt[aria-pressed="true"] .mark svg{opacity:1;transform:none}
+.opt.plain{min-height:56px;padding-left:16px}
+.btn:focus-visible,.opt:focus-visible,.age:focus-visible,.back:focus-visible,summary:focus-visible,.step:focus-visible,input[type=range]:focus-visible{outline:2.5px solid var(--argila);outline-offset:3px}
+
+/* abertura */
+.hero{background:var(--floresta);color:var(--creme);border-radius:28px;padding:26px 22px 24px;display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden}
+.hero h1{color:var(--creme)}
+.hero h1 em{color:var(--argila-on-dark)}
+.hero p{color:var(--on-dark-muted);font-size:1.0625rem}
+.hero p b{color:var(--creme)}
+.hero .curve{position:absolute;right:-8px;top:18px;width:150px;height:80px;opacity:.9}
+.hero .tags{display:flex;flex-wrap:wrap;gap:6px}
+.hero .tags span{font-size:.8125rem;font-weight:500;border-radius:999px;padding:5px 11px;background:rgba(244,240,232,.1);color:var(--creme);border:1px solid rgba(244,240,232,.16)}
+.ask{font-family:var(--serif);font-size:1.75rem;line-height:1.1;text-align:center;margin-top:4px}
+.ask em{font-style:italic;color:var(--argila-ink)}
 .ages{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.age{all:unset;box-sizing:border-box;cursor:pointer;border:2px solid var(--line);border-radius:14px;padding:14px 12px;display:flex;flex-direction:column;align-items:center;gap:2px;background:var(--bg);box-shadow:0 3px 0 var(--line);transition:border-color .15s,background .15s}
-.age:hover{border-color:var(--green)}
-.age[aria-pressed="true"]{border-color:var(--green);background:var(--green-soft)}
-.age b{font-family:var(--font-display);font-weight:900;font-size:1.45rem;line-height:1.1}
-.age span{font-size:.8rem;color:var(--muted);font-weight:700}
-.age:last-child:nth-child(odd){grid-column:1/-1}
-.pains{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
-.pains span{font-size:.78rem;font-weight:800;border-radius:99px;padding:5px 10px;background:var(--red-soft);color:var(--red)}
-/* telas de explicação */
-.panel{background:var(--panel);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px}
-.panel.white{background:var(--bg);border:2px solid var(--line)}
-.big-stat{display:flex;align-items:center;gap:14px;background:var(--green-soft);border-radius:16px;padding:14px 16px}
-.big-stat b{flex:none;white-space:nowrap;font-family:var(--font-display);font-weight:900;font-size:2.2rem;line-height:1;color:var(--green-deep)}
-.big-stat span{font-weight:700;line-height:1.3}
-.split{display:flex;height:46px;border-radius:12px;overflow:hidden;font-weight:800;font-size:.85rem;color:#FFFFFF}
-.split div{display:grid;place-items:center;text-align:center;line-height:1.1;padding:0 6px}
-.split .fat{background:var(--green)}
-.split .lean{background:var(--red)}
-.mirror{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
-.mirror li{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;background:var(--panel);border-radius:12px;padding:12px}
-.mirror li .ic{font-size:1.3rem;line-height:1.2;text-align:center}
-.mirror li b{display:block;line-height:1.25}
-.mirror li span{font-size:.9rem;color:var(--muted);line-height:1.35}
-.gauge{display:flex;flex-direction:column;gap:8px}
-.gauge .row{display:flex;justify-content:space-between;font-weight:700;font-size:.92rem;gap:10px}
-.gauge .row b{font-family:var(--font-data);font-weight:500}
-.gauge .track{height:14px;border-radius:99px;background:var(--line);overflow:hidden}
-.gauge .track i{display:block;height:100%;border-radius:99px}
-.compare{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.compare > div{border-radius:14px;padding:14px 12px;display:flex;flex-direction:column;gap:6px;text-align:center;align-items:center}
-.compare .no{background:var(--red-soft)}
-.compare .yes{background:var(--green-soft);border:2px solid var(--green)}
-.compare .em{font-size:2rem;line-height:1}
-.compare b{font-size:.92rem;line-height:1.25}
-.compare .num{font-family:var(--font-display);font-weight:900;font-size:1.6rem;line-height:1}
-.compare .no .num{color:var(--red)}
-.compare .yes .num{color:var(--green-deep)}
-.compare small{font-size:.75rem;color:var(--muted);font-weight:700}
+.age{all:unset;box-sizing:border-box;cursor:pointer;background:var(--branco);border:1.5px solid var(--line-soft);border-radius:20px;padding:14px 14px 12px;display:flex;flex-direction:column;gap:6px;box-shadow:var(--shadow);transition:border-color .2s,background .2s,transform .15s var(--ease)}
+.age:hover{border-color:var(--salvia)}
+.age:active{transform:scale(.98)}
+.age .n{font-family:var(--serif);font-size:2rem;line-height:1;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.age .row{display:flex;align-items:center;justify-content:space-between;color:var(--musgo);font-size:.875rem;font-weight:500}
+.age .go{width:28px;height:28px;border-radius:50%;background:var(--creme);display:grid;place-items:center;color:var(--floresta);transition:background .2s,color .2s}
+.age .go .ic{width:16px;height:16px}
+.age[aria-pressed="true"]{border-color:var(--floresta);background:var(--salvia-soft)}
+.age[aria-pressed="true"] .go{background:var(--floresta);color:var(--creme)}
+.age:last-child:nth-child(odd){grid-column:1/-1;flex-direction:row;align-items:center;justify-content:space-between}
+.age:last-child:nth-child(odd) .row{gap:12px}
+.trust{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;color:var(--musgo);font-size:.8125rem;font-weight:500}
+.trust span{display:flex;align-items:center;gap:5px}
+.trust .ic{width:15px;height:15px}
+
+/* folhas (telas de explicação) */
+.sheet{background:var(--branco);border-radius:24px;padding:20px 18px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow)}
+.sheet.dark{background:var(--floresta);color:var(--creme)}
+.sheet.dark .src,.sheet.dark .fine{color:var(--on-dark-muted)}
+.sheet.dark h3 em{color:var(--argila-on-dark)}
+.sheet.linho{background:var(--linho);box-shadow:none}
+.stamp{align-self:center;display:inline-flex;align-items:center;gap:7px;font-size:.875rem;font-weight:600;color:var(--floresta);background:var(--salvia-soft);border-radius:999px;padding:7px 14px 7px 10px}
+.stamp .ic{width:17px;height:17px;color:var(--argila-ink)}
+.stat{display:flex;align-items:baseline;gap:12px}
+.stat b{font-family:var(--serif);font-weight:400;font-size:3.25rem;line-height:.9;color:var(--argila-on-dark);white-space:nowrap;letter-spacing:-.02em}
+.stat span{font-size:.9375rem;line-height:1.35}
+.chart{width:100%;height:auto}
+.chart text{font-family:var(--sans);font-size:11px;font-weight:500}
+.split{display:flex;height:54px;border-radius:14px;overflow:hidden;font-weight:600;font-size:.875rem}
+.split div{display:flex;flex-direction:column;justify-content:center;padding:0 12px;line-height:1.15}
+.split div small{font-weight:500;font-size:.75rem;opacity:.85}
+.split .fat{background:var(--salvia);color:var(--floresta)}
+.split .lean{background:var(--argila-cta);color:var(--branco)}
+.legend{display:flex;gap:14px;font-size:.8125rem;color:var(--musgo)}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:3px;display:block}
+
+.mirror{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.mirror li{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start;padding:12px 0;border-top:1px solid var(--line-soft)}
+.mirror li:first-child{border-top:0;padding-top:0}
+.mirror li:last-child{padding-bottom:0}
+.mirror .tile{width:40px;height:40px;border-radius:12px;background:var(--argila-soft);color:var(--argila-ink);display:grid;place-items:center}
+.mirror b{display:block;line-height:1.3}
+.mirror span{font-size:.9rem;color:var(--musgo);line-height:1.4}
+.gauge{display:flex;flex-direction:column;gap:7px}
+.gauge .row{display:flex;justify-content:space-between;align-items:baseline;font-size:.9rem;gap:10px}
+.gauge .row b{font-variant-numeric:tabular-nums}
+.gauge .track{height:12px;border-radius:99px;background:var(--line-soft);overflow:hidden}
+.gauge .track i{display:block;height:100%;border-radius:99px;width:0;transition:width 1.1s var(--ease)}
+
+.swap{display:grid;grid-template-columns:1fr 34px 1fr;align-items:stretch;gap:0}
+.swap .card{border-radius:20px;padding:16px 12px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px}
+.swap .no{background:var(--linho)}
+.swap .yes{background:var(--floresta);color:var(--creme)}
+.swap .tile{width:52px;height:52px;border-radius:16px;display:grid;place-items:center}
+.swap .no .tile{background:var(--creme);color:var(--musgo)}
+.swap .yes .tile{background:rgba(244,240,232,.1);color:var(--argila-on-dark)}
+.swap .tile .ic{width:28px;height:28px}
+.swap .name{font-size:.875rem;font-weight:500;line-height:1.3;min-height:3.4em}
+.swap .g{font-family:var(--serif);font-size:2.25rem;line-height:1;font-variant-numeric:tabular-nums}
+.swap .no .g{color:var(--musgo)}
+.swap .yes .g{color:var(--argila-on-dark)}
+.swap small{font-size:.75rem;opacity:.8}
+.swap .arrow{display:grid;place-items:center;color:var(--argila)}
+.swap .arrow .ic{width:20px;height:20px}
+.rules{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.rules li{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start}
+.rules .n{width:30px;height:30px;border-radius:50%;background:var(--floresta);color:var(--creme);display:grid;place-items:center;font-family:var(--serif);font-size:1.125rem;line-height:1}
+.rules b{display:block}
+.rules span{font-size:.9rem;color:var(--musgo)}
+
 /* peso */
-.weight{display:flex;flex-direction:column;align-items:center;gap:14px;padding:8px 0}
-.weight .val{font-family:var(--font-display);font-weight:900;font-size:3.4rem;line-height:1}
-.weight .val small{font-size:1.2rem;color:var(--muted);margin-left:4px}
-.weight .row{display:flex;align-items:center;gap:14px;width:100%}
-.step{all:unset;cursor:pointer;flex:none;width:52px;height:52px;border-radius:50%;background:var(--panel);border:2px solid var(--line);display:grid;place-items:center;font-family:var(--font-display);font-weight:900;font-size:1.5rem}
-.weight input[type=range]{flex:1;min-width:0;accent-color:var(--green);height:32px}
-/* loading */
-.loader{display:flex;flex-direction:column;align-items:center;gap:18px;padding-top:12px}
-.ring{width:150px;height:150px}
-.ring .pct{font-family:var(--font-display);font-weight:900;font-size:30px;fill:var(--ink)}
-.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;width:100%}
-.steps li{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--muted)}
-.steps li .t{width:24px;height:24px;border-radius:50%;border:2px solid var(--line);flex:none;display:grid;place-items:center;color:#FFFFFF;font-size:.8rem}
-.steps li.done{color:var(--ink)}
-.steps li.done .t{background:var(--green);border-color:var(--green)}
+.weight{display:flex;flex-direction:column;align-items:center;gap:16px;padding:22px 16px 18px;background:var(--branco);border-radius:24px;box-shadow:var(--shadow)}
+.weight .val{font-family:var(--serif);font-size:4.5rem;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.weight .val small{font-family:var(--sans);font-size:1.125rem;color:var(--musgo);margin-left:6px;letter-spacing:0}
+.weight .row{display:flex;align-items:center;gap:12px;width:100%}
+.step{all:unset;cursor:pointer;flex:none;width:52px;height:52px;border-radius:50%;background:var(--creme);display:grid;place-items:center;color:var(--floresta);transition:background .2s}
+.step:hover{background:var(--linho)}
+.step .ic{width:22px;height:22px}
+input[type=range]{flex:1;min-width:0;height:36px;accent-color:var(--floresta);background:transparent}
+.ruler{display:flex;justify-content:space-between;width:100%;padding:0 64px;font-size:.75rem;color:var(--musgo);font-variant-numeric:tabular-nums;margin-top:-10px}
+
+/* carregamento */
+.loader{display:flex;flex-direction:column;align-items:center;gap:22px;padding-top:6px}
+.loader .big{width:200px;height:92px}
+.loader .pct{font-family:var(--serif);font-size:3.5rem;line-height:1;font-variant-numeric:tabular-nums;margin-top:-6px}
+.checks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;width:100%;background:var(--branco);border-radius:22px;padding:18px;box-shadow:var(--shadow)}
+.checks li{display:flex;align-items:center;gap:12px;font-weight:500;color:var(--musgo);transition:color .3s}
+.checks .t{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--line);flex:none;display:grid;place-items:center;transition:background .3s,border-color .3s}
+.checks .t svg{width:12px;height:12px;stroke:var(--branco);stroke-width:3;fill:none;opacity:0;transition:opacity .3s}
+.checks li.done{color:var(--floresta)}
+.checks li.done .t{background:var(--floresta);border-color:var(--floresta)}
+.checks li.done .t svg{opacity:1}
+.tip{width:100%;background:var(--linho);border-radius:22px;padding:16px 18px;display:flex;flex-direction:column;gap:4px;min-height:104px}
+.tip b{font-family:var(--serif);font-size:1.25rem;font-weight:400;line-height:1.15}
+.tip b em{color:var(--argila-ink)}
+.tip span{font-size:.9375rem;color:var(--musgo)}
+.tip.swapin{animation:in .5s var(--ease) both}
+
 /* resultado */
-.scores{display:flex;flex-direction:column;gap:12px}
-.score .row{display:flex;justify-content:space-between;font-weight:700;font-size:.95rem;gap:10px}
-.score .row b{font-family:var(--font-data);font-weight:500}
-.score .track{height:12px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:6px}
-.score .track i{display:block;height:100%;border-radius:99px;width:0;transition:width 1s ease}
-.vs{display:grid;grid-template-columns:1fr 1fr;border:2px solid var(--line);border-radius:16px;overflow:hidden}
+.rhead{background:var(--floresta);color:var(--creme);border-radius:28px;padding:24px 20px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden}
+.rhead .ok{display:flex;align-items:center;gap:8px;font-size:.875rem;font-weight:600;color:var(--salvia)}
+.rhead .ok .ic{width:18px;height:18px}
+.rhead h1{color:var(--creme);font-size:clamp(2rem,9vw,2.5rem)}
+.rhead h1 em{color:var(--argila-on-dark)}
+.rhead p{color:var(--on-dark-muted)}
+.rhead .facts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:4px}
+.rhead .facts div{background:rgba(244,240,232,.08);border:1px solid rgba(244,240,232,.12);border-radius:14px;padding:10px 8px;text-align:center;display:flex;flex-direction:column;gap:2px}
+.rhead .facts b{font-family:var(--serif);font-weight:400;font-size:1.5rem;line-height:1;color:var(--creme);font-variant-numeric:tabular-nums}
+.rhead .facts span{font-size:.72rem;color:var(--on-dark-muted);line-height:1.25}
+.scores{display:flex;flex-direction:column;gap:14px}
+.score .row{display:flex;justify-content:space-between;align-items:baseline;font-size:.9375rem;gap:10px}
+.score .row b{font-variant-numeric:tabular-nums}
+.score .track{height:10px;border-radius:99px;background:var(--line-soft);overflow:hidden;margin-top:7px}
+.score .track i{display:block;height:100%;border-radius:99px;width:0;transition:width 1.2s var(--ease)}
+.meta{display:flex;align-items:center;gap:14px}
+.meta .ring{flex:none;width:76px;height:76px}
+.vs{display:grid;grid-template-columns:1fr 1fr;border-radius:22px;overflow:hidden;box-shadow:var(--shadow)}
 .vs .col{display:flex;flex-direction:column;min-width:0}
-.vs .hd{padding:12px 10px;text-align:center;font-family:var(--font-display);font-weight:900;font-size:.95rem;text-transform:uppercase;line-height:1.15}
-.vs .no .hd{background:var(--red-soft);color:var(--red)}
-.vs .yes .hd{background:var(--green);color:#FFFFFF}
-.vs .it{padding:10px;font-size:.88rem;line-height:1.3;border-top:1px solid var(--line);display:flex;gap:6px;align-items:flex-start;min-height:62px}
-.vs .no .it::before{content:"✕";color:var(--red);font-weight:900}
-.vs .yes .it::before{content:"✓";color:var(--green);font-weight:900}
-.vs .yes{border-left:2px solid var(--line)}
-.day{display:flex;flex-direction:column;border:2px solid var(--green);border-radius:16px;overflow:hidden}
-.day .hd{background:var(--green);color:#FFFFFF;padding:10px 14px;font-family:var(--font-display);font-weight:900;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;gap:8px}
-.day .hd small{font-family:var(--font-body);font-weight:700;text-transform:none;font-size:.8rem;opacity:.9}
-.meal{display:grid;grid-template-columns:44px 1fr;gap:10px;padding:12px 14px;border-top:1px solid var(--line);align-items:start}
-.meal:first-of-type{border-top:0}
-.meal .ic{font-size:1.5rem;line-height:1;text-align:center}
-.meal b{display:block;font-size:.78rem;font-family:var(--font-data);color:var(--green-deep);letter-spacing:.04em;text-transform:uppercase}
-.meal .pt{display:inline-block;margin-top:4px;font-size:.75rem;font-weight:800;color:var(--green-deep);background:var(--green-soft);border-radius:99px;padding:2px 8px}
+.vs .hd{padding:13px 10px;text-align:center;font-family:var(--serif);font-size:1.25rem;line-height:1.1}
+.vs .no{background:var(--branco)}
+.vs .no .hd{background:var(--linho);color:var(--musgo)}
+.vs .yes{background:var(--salvia-soft)}
+.vs .yes .hd{background:var(--floresta);color:var(--creme)}
+.vs .yes .hd em{color:var(--argila-on-dark)}
+.vs .it{padding:11px 10px;font-size:.875rem;line-height:1.3;border-top:1px solid var(--line-soft);display:flex;gap:7px;align-items:flex-start;min-height:62px}
+.vs .it .ic{width:16px;height:16px;margin-top:1px}
+.vs .no .it .ic{color:var(--danger)}
+.vs .yes .it .ic{color:var(--floresta)}
 .chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
-.chip{font-size:.78rem;font-weight:800;border-radius:99px;padding:4px 10px;background:var(--green-soft);color:var(--green-deep)}
-.note{border-radius:14px;padding:14px 16px;background:var(--amber-soft);display:flex;flex-direction:column;gap:4px;font-size:.96rem}
-.note strong{color:var(--amber)}
-.deliv{display:flex;flex-direction:column;gap:10px}
-.deliv > div{display:grid;grid-template-columns:40px 1fr;gap:10px;align-items:center}
-.deliv .ic{width:40px;height:40px;border-radius:10px;background:var(--green-soft);display:grid;place-items:center;font-size:1.25rem}
-.deliv b{display:block;line-height:1.2}
-.deliv span{font-size:.85rem;color:var(--muted);line-height:1.3}
-.offer{border:3px dashed var(--green);border-radius:18px;padding:18px 16px;display:flex;flex-direction:column;gap:12px;align-items:center;text-align:center}
-.offer .de{color:var(--red);text-decoration:line-through;font-weight:700}
-.offer .por{font-family:var(--font-display);font-weight:900;font-size:3rem;line-height:1;color:var(--green)}
-.offer .por small{font-size:1rem;color:var(--ink);font-weight:800;vertical-align:super;margin-right:4px}
-.offer .sub{color:var(--muted);font-size:.9rem}
-.pay{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
-.pay span{font-size:.75rem;font-weight:800;border:1.5px solid var(--line);border-radius:6px;padding:3px 8px;color:var(--muted)}
-.guarantee{display:flex;gap:12px;align-items:center;text-align:left;font-size:.92rem}
-.seal{flex:none;width:64px;height:64px}
+.chip{display:flex;align-items:center;gap:5px;font-size:.8125rem;font-weight:600;border-radius:999px;padding:5px 11px;background:var(--salvia-soft);color:var(--floresta)}
+.chip .ic{width:14px;height:14px}
+.day{background:var(--branco);border-radius:24px;overflow:hidden;box-shadow:var(--shadow)}
+.day .hd{background:var(--floresta);color:var(--creme);padding:13px 18px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.day .hd b{font-family:var(--serif);font-weight:400;font-size:1.5rem;line-height:1}
+.day .hd small{font-size:.8125rem;color:var(--on-dark-muted)}
+.meal{display:grid;grid-template-columns:44px 1fr;gap:12px;padding:14px 18px;border-top:1px solid var(--line-soft);align-items:start}
+.day .meal:first-of-type{border-top:0}
+.meal .tile{width:44px;height:44px;border-radius:13px;background:var(--creme);display:grid;place-items:center;color:var(--floresta)}
+.meal .when{display:block;font-size:.75rem;font-weight:600;color:var(--argila-ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+.meal .pt{display:inline-block;margin-top:6px;font-size:.75rem;font-weight:600;color:var(--floresta);background:var(--salvia-soft);border-radius:999px;padding:3px 9px;font-variant-numeric:tabular-nums}
+.note{border-radius:20px;padding:14px 16px;background:var(--argila-soft);display:grid;grid-template-columns:22px 1fr;gap:10px;font-size:.9375rem}
+.note .ic{color:var(--argila-ink);margin-top:1px}
+.note strong{display:block}
+.covers{display:flex;gap:8px;padding:14px 2px 4px}
+.cover{flex:1;min-width:0;aspect-ratio:.72;border-radius:10px;padding:9px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 2px 4px rgba(23,51,43,.12),0 8px 16px rgba(23,51,43,.1)}
+.cover:nth-child(2){transform:translateY(-6px)}
+.cover:nth-child(3){transform:translateY(-10px)}
+.cover .cm{width:24px;height:11px}
+.cover b{font-family:var(--serif);font-weight:400;font-size:1rem;line-height:1.02}
+.cover b i{display:block}
+.cover hr{border:0;height:1.5px;width:40%;margin:0;border-radius:1px}
+.deliv{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.deliv li{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:center}
+.deliv .tile{width:40px;height:40px;border-radius:12px;background:var(--creme);display:grid;place-items:center;color:var(--floresta)}
+.deliv b{display:block;line-height:1.25}
+.deliv span{font-size:.875rem;color:var(--musgo);line-height:1.35}
+.offer{background:var(--branco);border:2px solid var(--floresta);border-radius:28px;padding:22px 18px;display:flex;flex-direction:column;gap:12px;align-items:center;text-align:center;box-shadow:var(--shadow-lift);scroll-margin-top:90px}
+.offer h2{font-size:1.875rem}
+.offer .for{color:var(--musgo);font-size:.9375rem}
+.offer .de{color:var(--musgo);text-decoration:line-through;font-size:.9375rem}
+.offer .por{font-family:var(--serif);font-size:4rem;line-height:.9;color:var(--floresta);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.offer .por small{font-family:var(--sans);font-size:1.125rem;font-weight:600;vertical-align:.95em;margin-right:4px;letter-spacing:0}
+.offer .sub{color:var(--musgo);font-size:.875rem}
+.pay{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.pay span{display:flex;align-items:center;gap:5px;font-size:.75rem;font-weight:600;border:1px solid var(--line);border-radius:8px;padding:4px 9px;color:var(--musgo)}
+.pay .ic{width:14px;height:14px}
+.guarantee{display:flex;gap:12px;align-items:center;text-align:left;font-size:.9rem;background:var(--creme);border-radius:18px;padding:12px 14px;width:100%}
+.seal{flex:none;width:58px;height:58px}
 .author{display:flex;gap:14px;align-items:center}
-.author .ph{flex:none;width:72px;height:72px;border-radius:50%;overflow:hidden;background:var(--green-soft);display:grid;place-items:center;font-family:var(--font-display);font-weight:900;color:var(--green);font-size:1.4rem;border:3px solid var(--green)}
+.author .ph{flex:none;width:68px;height:68px;border-radius:50%;overflow:hidden;background:var(--salvia-soft);display:grid;place-items:center;font-family:var(--serif);color:var(--floresta);font-size:1.6rem;border:2px solid var(--argila)}
 .author .ph img{width:100%;height:100%;object-fit:cover}
-.author .reg{font-family:var(--font-data);font-size:.78rem;color:var(--muted)}
-.chat{background:#E9E2D8;border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:10px}
-.bubble{background:#D9FDD3;align-self:flex-end;color:var(--ink);border-radius:14px 4px 14px 14px;padding:10px 12px;max-width:92%;font-size:.98rem;box-shadow:0 1px 1px rgba(0,0,0,.08)}
-.bubble .time{display:block;text-align:right;font-size:.68rem;color:#6B7570;margin-top:2px}
-details{border-bottom:1px solid var(--line);padding-block:12px}
-details:last-child{border-bottom:0}
-summary{cursor:pointer;font-weight:800;list-style:none;display:flex;justify-content:space-between;gap:12px}
+.author .reg{font-size:.8125rem;color:var(--musgo)}
+.chat{background:var(--linho);border-radius:22px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.bubble{background:var(--branco);align-self:flex-start;border-radius:4px 16px 16px 16px;padding:10px 13px;max-width:92%;font-size:.9375rem;box-shadow:var(--shadow)}
+.bubble .who{display:block;font-size:.75rem;color:var(--musgo);margin-top:4px;font-weight:600}
+.faq{display:flex;flex-direction:column}
+details{border-top:1px solid var(--line-soft);padding-block:14px}
+details:first-of-type{border-top:0;padding-top:4px}
+summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
 summary::-webkit-details-marker{display:none}
-summary::after{content:"+";color:var(--green);font-weight:900;font-size:1.2rem;line-height:1}
-details[open] summary::after{content:"−"}
-details p{margin-top:8px;color:var(--muted)}
-.setup{border:2px dashed var(--amber);background:var(--amber-soft);border-radius:14px;padding:12px 14px;font-size:.86rem;display:flex;flex-direction:column;gap:4px;text-align:left}
-.setup code{font-family:var(--font-data);font-size:.78rem}
-.sticky{position:fixed;left:0;right:0;bottom:0;background:var(--bg);border-top:1px solid var(--line);box-shadow:0 -6px 18px rgba(22,32,28,.08);padding-top:10px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));z-index:5}
-.sticky .in{max-width:31rem;margin-inline:auto;display:flex;align-items:center;gap:12px}
-.sticky .p{font-family:var(--font-display);font-weight:900;font-size:1.35rem;white-space:nowrap;color:var(--green)}
+summary .ic{width:18px;height:18px;color:var(--argila-ink);transition:transform .3s var(--ease)}
+details[open] summary .ic{transform:rotate(45deg)}
+details p{margin-top:8px;color:var(--musgo);font-size:.9375rem}
+.setup{border:1.5px dashed var(--argila);background:var(--argila-soft);border-radius:16px;padding:12px 14px;font-size:.875rem;display:flex;flex-direction:column;gap:4px;text-align:left;width:100%}
+.setup code{font-family:ui-monospace,Menlo,monospace;font-size:.8rem}
+.sticky{position:fixed;left:0;right:0;bottom:0;background:rgba(255,253,249,.94);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:1px solid var(--line-soft);box-shadow:0 -8px 20px rgba(23,51,43,.08);padding-top:10px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));z-index:5;animation:up .5s var(--ease) both}
+@keyframes up{from{transform:translateY(100%)}to{transform:none}}
+.sticky .in{max-width:30rem;margin-inline:auto;display:flex;align-items:center;gap:12px}
+.sticky .p{display:flex;flex-direction:column;line-height:1.05}
+.sticky .p b{font-family:var(--serif);font-weight:400;font-size:1.625rem;white-space:nowrap;font-variant-numeric:tabular-nums}
+.sticky .p small{font-size:.72rem;color:var(--musgo)}
 .sticky .btn{min-height:52px;font-size:1rem}
 @media (prefers-reduced-motion: reduce){
-  .screen,.pulse{animation:none}
-  .progress i,.score .track i{transition:none}
+  .screen,.pulse,.tip.swapin,.sticky{animation:none}
+  .progress .fill,.progress .cap,.score .track i,.gauge .track i{transition:none}
 }
 </style>
 </head>
 <body>
 
 <div class="shell">
-  <div class="top">
+  <header class="top">
     <div class="bar">
       <button type="button" class="back" id="back" aria-label="Voltar para a pergunta anterior" hidden>
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" style="stroke:currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
       </button>
       <div class="logo" id="logo"></div>
-      <span></span>
+      <span class="count" id="count"></span>
     </div>
-    <div class="progress" id="progress" hidden><i id="progressFill"></i></div>
-  </div>
+    <div class="progress" id="progress" hidden>
+      <span class="track"></span><span class="fill" id="progressFill"></span>
+      <svg class="cap" id="progressCap" viewBox="0 0 28 14" aria-hidden="true"><rect x="1" y="1" width="26" height="12" rx="6" style="fill:#FFFDF9;stroke:#17332B" stroke-width="1.6"/><line x1="14" y1="1" x2="14" y2="13" style="stroke:#17332B" stroke-width="1.6"/></svg>
+    </div>
+  </header>
   <main id="screen" class="screen" aria-live="polite"></main>
 </div>
 
 <div class="sticky" id="sticky" hidden>
   <div class="in">
-    <span class="p" id="stickyPrice"></span>
-    <a class="btn" id="stickyCta" href="#">VER MINHAS RECEITAS</a>
+    <span class="p"><b id="stickyPrice"></b><small>pagamento único</small></span>
+    <a class="btn buy" id="stickyCta" href="#">Quero minhas receitas</a>
   </div>
 </div>
 
@@ -232,8 +352,8 @@ details p{margin-top:8px;color:var(--muted)}
    CONFIGURAÇÃO: troque os valores abaixo antes de colocar no ar
    ===================================================================== */
 const CONFIG = {
-  marca: {sobre: 'RECEITAS PARA QUEM USA', nome: 'Receita', destaque: 'Caneta'},
-  produto: 'Receita Caneta',
+  marca: {nome: 'além da caneta'},
+  produto: 'Receitas Além da Caneta',
   preco: 27.90,
   precoDe: null,            // ex.: 67. Use só se o produto já foi vendido por esse valor.
   checkoutUrl: '',          // seu link de checkout (Kiwify, Hotmart, Payt...). UTMs e fbclid vão junto.
@@ -254,20 +374,21 @@ const CONFIG = {
     // Só depoimentos reais, com autorização. Formato:
     // { nome: 'Carla, 44 anos', texto: 'O sorvete de chocolate salvou minhas noites...' }
   ],
+  // [ícone, título, descrição]. Ícones disponíveis: veja ICON abaixo.
   entregaveis: [
-    ['🧊', 'Receitas geladas e líquidas', 'Shakes, sorvetes, picolés e smoothies com proteína, para quando só desce coisa gelada.'],
-    ['🍫', 'Doces que matam a vontade', 'Mousses, brigadeiros e bolos de caneca com proteína e pouco açúcar.'],
-    ['🍔', 'Fast-food de casa', 'Hambúrguer, pizza e salgado em versão caseira, com porção do tamanho do seu apetite.'],
-    ['🥣', 'Mini-refeições para dias sem fome', 'Porções pequenas que fecham a proteína mesmo quando você quase não come.'],
-    ['🍽️', 'Guia do prato com a caneta', 'O que comer primeiro, quanto e como evitar o enjoo.'],
-    ['🛒', 'Lista de compras', 'Tudo separado por semana, para ir ao mercado uma vez.']
+    ['gelado', 'Receitas geladas e líquidas', 'Shakes, sorvetes, picolés e smoothies com proteína, para quando só desce coisa gelada.'],
+    ['doce', 'Doces que matam a vontade', 'Mousses, brigadeiros e bolos de caneca com proteína e pouco açúcar.'],
+    ['lanche', 'Fast-food de casa', 'Hambúrguer, pizza e salgado em versão caseira, com porção do tamanho do seu apetite.'],
+    ['bowl', 'Mini-refeições para dias sem fome', 'Porções pequenas que fecham a proteína mesmo quando você quase não come.'],
+    ['prato', 'Guia do prato com a caneta', 'O que comer primeiro, quanto e como evitar o enjoo.'],
+    ['cart', 'Lista de compras', 'Tudo separado por semana, para ir ao mercado uma vez.']
   ],
   bonus: []
 };
 
 /* ===================================================================== */
 const SETUP = !CONFIG.checkoutUrl;
-const VERSAO = 'v1';
+const VERSAO = 'v2';
 const fmtBRL = (v) => new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(v);
 const $ = (s, r = document) => r.querySelector(s);
 const el = (tag, attrs = {}, ...kids) => {
@@ -287,7 +408,57 @@ const norm = (o) => (typeof o === 'string' ? {v: o, l: o} : o);
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
-$('#logo').append(el('small', {}, CONFIG.marca.sobre), el('b', {}, CONFIG.marca.nome + ' ', el('span', {}, CONFIG.marca.destaque)));
+/* ---------- Ícones: traço único de 1,8 em grade de 24 ---------- */
+const ICON = {
+  arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+  back: '<path d="M15 5l-7 7 7 7"/>',
+  check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  x: '<path d="M7 7l10 10M17 7L7 17"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  minus: '<path d="M5 12h14"/>',
+  broto: '<path d="M12 21v-9"/><path d="M12 12C12 8 9.5 6 5 6c0 4 2.5 6 7 6z"/><path d="M12 10c0-3.2 2-5 6.5-5 0 3.2-2 5-6.5 5z"/>',
+  cal: '<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
+  calok: '<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M9 15l2 2 4-4"/>',
+  ampulheta: '<path d="M6.5 3h11M6.5 21h11"/><path d="M7.5 3c0 5.5 9 5.5 9 9s-9 3.5-9 9M16.5 3c0 5.5-9 5.5-9 9s9 3.5 9 9"/>',
+  pausa: '<circle cx="12" cy="12" r="9"/><path d="M10 9v6M14 9v6"/>',
+  nada: '<circle cx="12" cy="12" r="9"/><path d="M8.5 15.5c1.8-1.6 5.2-1.6 7 0M9 9.5h.01M15 9.5h.01"/>',
+  pouco: '<path d="M3 7l6 6 4-4 8 8"/><path d="M21 12v5h-5"/>',
+  travou: '<path d="M3 18l6-7h12"/><path d="M17 7.5v7"/>',
+  saiu: '<circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.8 2.8L16.5 9.5"/>',
+  prato: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/>',
+  doce: '<rect x="6" y="3" width="12" height="18" rx="2"/><path d="M6 9h12M6 15h12M12 3v18"/>',
+  gelado: '<path d="M7 11a5 5 0 0 1 10 0"/><path d="M6 11h12l-6 10z"/><path d="M10.5 6.5c.5-1 1-1.6 1.5-2"/>',
+  floco: '<path d="M12 2.5v19M3.8 7.25l16.4 9.5M3.8 16.75l16.4-9.5"/><path d="M9.5 4.5L12 7l2.5-2.5M9.5 19.5L12 17l2.5 2.5"/>',
+  lanche: '<path d="M4 10.5C4 7 7.6 4.5 12 4.5s8 2.5 8 6z"/><path d="M3 14h18"/><path d="M4.5 17.5h15a1 1 0 0 1-1 2.5h-13a1 1 0 0 1-1-2.5z"/>',
+  bateria: '<rect x="2.5" y="7" width="16.5" height="10" rx="2.2"/><path d="M22 10.5v3M6 10.5v3"/>',
+  halter: '<path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/>',
+  enjoo: '<path d="M3 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 15c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/>',
+  belisco: '<circle cx="12" cy="12" r="9"/><path d="M9 9h.01M14.5 9.5h.01M10 14.5h.01M15 15h.01"/>',
+  bolo: '<path d="M4 21h16M5 21v-7.5h14V21"/><path d="M5 16.5c2.2 1.2 3.3 1.2 4.7 0s3.3-1.2 4.6 0 2.5 1.2 4.7 0"/><path d="M12 13.5V10M12 7v.01"/>',
+  pizza: '<path d="M12 21L3 6c5.8-3 12.2-3 18 0z"/><path d="M5.2 9.6c4.2-1.7 9.4-1.7 13.6 0"/><path d="M10.5 12.5h.01M13.5 15.5h.01"/>',
+  bowl: '<path d="M3 11.5h18a9 9 0 0 1-18 0z"/><path d="M8.5 8c-.6-1 .6-2 0-3M12 8c-.6-1 .6-2 0-3M15.5 8c-.6-1 .6-2 0-3"/>',
+  raio: '<path d="M13 2.5L4.5 14H11l-1 7.5L18.5 10H12z"/>',
+  panela: '<circle cx="10" cy="13" r="7"/><path d="M17 13h5"/>',
+  relogio: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/>',
+  sorriso: '<circle cx="12" cy="12" r="9"/><path d="M8 14c1.6 2 6.4 2 8 0M9 9.5h.01M15 9.5h.01"/>',
+  xicara: '<path d="M4 9h12.5v5a5 5 0 0 1-5 5h-2.5a5 5 0 0 1-5-5z"/><path d="M16.5 10.5h1.2a2.3 2.3 0 0 1 0 4.6h-1.2M8 3.5v2.5M12 3.5v2.5"/>',
+  shake: '<path d="M7 7h10l-1.2 13.5H8.2z"/><path d="M6 7h12M13 7l1.5-4.5"/>',
+  cart: '<circle cx="9" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/><path d="M2.5 3.5h3l2.5 12h10.5l2-8H6.3"/>',
+  escudo: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>',
+  cadeado: '<rect x="5" y="11" width="14" height="10" rx="2.2"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/>',
+  email: '<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7l8.5 6 8.5-6"/>',
+  pix: '<path d="M12 3l9 9-9 9-9-9z"/><path d="M7.5 7.5l4.5 4.5 4.5-4.5M7.5 16.5l4.5-4.5 4.5 4.5"/>',
+  cartao: '<rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19M6 15h4"/>',
+  info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',
+  anonimo: '<circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5"/>',
+  folha: '<path d="M5 19c0-8 5-14 15-14 0 10-6 15-14 15"/><path d="M5 19l8-8"/>'
+};
+const ic = (name, cls = 'ic') => `<svg class="${cls}" viewBox="0 0 24 24" aria-hidden="true">${ICON[name] || ''}</svg>`;
+const icon = (name) => el('span', {html: ic(name), style: 'display:contents'});
+const capsuleSvg = (cls, fg = '#17332B', ac = '#B8744F', progress = 1) =>
+  `<svg class="${cls}" viewBox="0 0 88 40" aria-hidden="true"><rect x="2" y="17" width="26" height="14" rx="7" style="fill:none;stroke:${fg}" stroke-width="2.6"/><line x1="15" y1="17" x2="15" y2="31" style="stroke:${fg}" stroke-width="2.6"/><path d="M28 24 H50 C62 24 72 18 84 6" style="fill:none;stroke:${ac}" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="62" stroke-dashoffset="${62 * (1 - progress)}"/></svg>`;
+
+$('#logo').innerHTML = capsuleSvg('mark') + `<span class="word"><i>${CONFIG.marca.nome.split(' ')[0]}</i> ${CONFIG.marca.nome.split(' ').slice(1).join(' ')}</span>`;
 
 /* ---------- Backend, Pixel e checkout ---------- */
 // Os nomes dos eventos do Pixel não citam saúde e nenhuma resposta vai para o Meta.
@@ -317,52 +488,57 @@ const checkoutHref = () => {
     return u.toString();
   } catch (e) { return CONFIG.checkoutUrl; }
 };
-const sealSvg = (d) => `<svg class="seal" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" style="fill:#FFE14D"/><circle cx="32" cy="32" r="24" style="fill:none;stroke:#16201C" stroke-width="1.5" stroke-dasharray="3 3"/><text x="32" y="33" text-anchor="middle" style="fill:#16201C;font-family:Archivo,Arial,sans-serif;font-weight:900;font-size:18px">${d}</text><text x="32" y="45" text-anchor="middle" style="fill:#16201C;font-family:Archivo,Arial,sans-serif;font-weight:800;font-size:8px;letter-spacing:1px">DIAS</text></svg>`;
+const sealSvg = (d) => `<svg class="seal" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" style="fill:#17332B"/><circle cx="32" cy="32" r="24.5" style="fill:none;stroke:#D9A07E" stroke-width="1.2" stroke-dasharray="2 3"/><text x="32" y="35" text-anchor="middle" style="fill:#F4F0E8;font-family:'Instrument Serif',Georgia,serif;font-size:24px">${d}</text><text x="32" y="46" text-anchor="middle" style="fill:#D9A07E;font-family:'Instrument Sans',Arial,sans-serif;font-weight:600;font-size:7px;letter-spacing:1.4px">DIAS</text></svg>`;
 
 /* ---------- Perguntas ----------
    Ordem psicológica: gancho (idade) → aceitação (idade não é problema) → situação com a caneta →
    dor principal (pochete) → consciência do problema → dores do dia a dia → hábito → peso →
-   espelho personalizado → consciência da solução → preferência → microcompromisso → resultado. */
+   espelho personalizado → consciência da solução → preferência → microcompromisso → resultado.
+   Em `opts`, `v` é o código enviado ao backend e `ic` é o ícone (ICON). */
 const IDADES = [
-  {v: 'i18', l: '18 a 29', s: 'anos'}, {v: 'i30', l: '30 a 39', s: 'anos'}, {v: 'i40', l: '40 a 49', s: 'anos'},
-  {v: 'i50', l: '50 a 59', s: 'anos'}, {v: 'i60', l: '60+', s: 'anos'}];
+  {v: 'i18', l: '18–29', s: 'anos'}, {v: 'i30', l: '30–39', s: 'anos'}, {v: 'i40', l: '40–49', s: 'anos'},
+  {v: 'i50', l: '50–59', s: 'anos'}, {v: 'i60', l: '60+', s: 'anos'}];
 const STEPS = [
   {id: 'idade', type: 'intro'},
   {id: 'quebra', type: 'age'},
-  {id: 'caneta', type: 'buttons', q: 'Há quanto tempo você <span class="g">usa a caneta?</span>', hint: 'Mounjaro, Ozempic, Wegovy, Saxenda ou outra.', opts: [
-    {v: 'c0', l: 'Comecei há menos de 1 mês', em: '🌱'}, {v: 'c1', l: 'De 1 a 3 meses', em: '📅'},
-    {v: 'c3', l: 'De 3 a 6 meses', em: '⏳'}, {v: 'c6', l: 'Mais de 6 meses', em: '🗓️'}, {v: 'parei', l: 'Já usei e parei', em: '⏸️'}]},
-  {id: 'pochete', type: 'buttons', q: 'E a barriga de baixo, <span class="mk">a famosa pochete</span>, como está?', opts: [
-    {v: 'nada', l: 'Não saiu nada ainda', em: '😩'}, {v: 'pouco', l: 'Diminuiu bem pouco', em: '😕'},
-    {v: 'travou', l: 'Diminuiu e depois travou', em: '🛑'}, {v: 'saiu', l: 'Já diminuiu bem', em: '🙂'}]},
+  {id: 'caneta', type: 'buttons', q: 'Há quanto tempo você <em>usa a caneta?</em>', hint: 'Mounjaro, Ozempic, Wegovy, Saxenda ou outra.', opts: [
+    {v: 'c0', l: 'Comecei há menos de 1 mês', ic: 'broto'}, {v: 'c1', l: 'De 1 a 3 meses', ic: 'cal'},
+    {v: 'c3', l: 'De 3 a 6 meses', ic: 'ampulheta'}, {v: 'c6', l: 'Mais de 6 meses', ic: 'calok'}, {v: 'parei', l: 'Já usei e parei', ic: 'pausa'}]},
+  {id: 'pochete', type: 'buttons', q: 'E a barriga de baixo, a famosa <em>pochete</em>, como está?', opts: [
+    {v: 'nada', l: 'Não saiu nada ainda', ic: 'nada'}, {v: 'pouco', l: 'Diminuiu bem pouco', ic: 'pouco'},
+    {v: 'travou', l: 'Diminuiu e depois travou', ic: 'travou'}, {v: 'saiu', l: 'Já diminuiu bem', ic: 'saiu'}]},
   {id: 'porque', type: 'insight'},
-  {id: 'sintomas', type: 'multi', q: 'Desde a caneta, <span class="g">o que acontece com você?</span>', hint: 'Marque tudo o que for verdade.', opts: [
-    {v: 'fome', l: 'Quase não sinto fome, esqueço de comer', em: '🍽️'}, {v: 'doce', l: 'Vontade forte de doce', em: '🍫'},
-    {v: 'gelado', l: 'Só desce coisa gelada ou líquida', em: '🧊'}, {v: 'lanche', l: 'Vontade de hambúrguer, pizza ou salgado', em: '🍔'},
-    {v: 'cansaco', l: 'Cansaço e desânimo', em: '🥱'}, {v: 'academia', l: 'Zero vontade de ir pra academia', em: '🏋️'},
-    {v: 'enjoo', l: 'Enjoo com comida pesada', em: '🤢'}, {v: 'nenhum', l: 'Nada disso', exclusive: true}]},
-  {id: 'come', type: 'buttons', q: 'Num dia comum, <span class="g">o que mais entra</span> no seu prato?', opts: [
-    {v: 'economia', l: 'Quase nada, vou beliscando', em: '🤏'}, {v: 'gelado', l: 'Gelados: iogurte, açaí, sorvete, shake', em: '🍦'},
-    {v: 'doce', l: 'Doces: chocolate, bolo, biscoito', em: '🍰'}, {v: 'lanche', l: 'Lanches: hambúrguer, pizza, salgado', em: '🍕'},
-    {v: 'prato_pequeno', l: 'Comida normal, só que bem menos', em: '🍛'}]},
-  {id: 'peso', type: 'weight', q: 'Qual é o seu <span class="g">peso hoje?</span>', hint: 'Só para calcular a proteína que o seu corpo precisa.'},
+  {id: 'sintomas', type: 'multi', q: 'Desde a caneta, <em>o que acontece</em> com você?', hint: 'Marque tudo o que for verdade.', opts: [
+    {v: 'fome', l: 'Quase não sinto fome, esqueço de comer', ic: 'prato'}, {v: 'doce', l: 'Vontade forte de doce', ic: 'doce'},
+    {v: 'gelado', l: 'Só desce coisa gelada ou líquida', ic: 'floco'}, {v: 'lanche', l: 'Vontade de hambúrguer, pizza ou salgado', ic: 'lanche'},
+    {v: 'cansaco', l: 'Cansaço e desânimo', ic: 'bateria'}, {v: 'academia', l: 'Zero vontade de ir pra academia', ic: 'halter'},
+    {v: 'enjoo', l: 'Enjoo com comida pesada', ic: 'enjoo'}, {v: 'nenhum', l: 'Nada disso', exclusive: true}]},
+  {id: 'come', type: 'buttons', q: 'Num dia comum, o que <em>mais entra</em> no seu prato?', opts: [
+    {v: 'economia', l: 'Quase nada, vou beliscando', ic: 'belisco'}, {v: 'gelado', l: 'Gelados: iogurte, açaí, sorvete, shake', ic: 'gelado'},
+    {v: 'doce', l: 'Doces: chocolate, bolo, biscoito', ic: 'bolo'}, {v: 'lanche', l: 'Lanches: hambúrguer, pizza, salgado', ic: 'pizza'},
+    {v: 'prato_pequeno', l: 'Comida normal, só que bem menos', ic: 'bowl'}]},
+  {id: 'peso', type: 'weight', q: 'Qual é o seu <em>peso hoje?</em>', hint: 'Só para calcular a proteína que o seu corpo precisa.'},
   {id: 'espelho', type: 'mirror'},
   {id: 'solucao', type: 'solution'},
-  {id: 'tempo', type: 'buttons', q: 'Quanto tempo você tem <span class="g">para preparar?</span>', opts: [
-    {v: 't5', l: 'Até 5 minutos, coisa de liquidificador', em: '⚡'}, {v: 't20', l: 'Uns 15 a 20 minutos', em: '🍳'}, {v: 't40', l: 'Gosto de cozinhar com calma', em: '👩‍🍳'}]},
-  {id: 'compromisso', type: 'buttons', q: 'Se as receitas couberem no seu apetite e matarem a vontade de doce, <span class="g">você testa por 7 dias?</span>', opts: [
-    {v: 'sim', l: 'Sim, quero testar!', em: '💪'}, {v: 'tentar', l: 'Vou tentar', em: '🙂'}]},
+  {id: 'tempo', type: 'buttons', q: 'Quanto tempo você tem <em>para preparar?</em>', opts: [
+    {v: 't5', l: 'Até 5 minutos, coisa de liquidificador', ic: 'raio'}, {v: 't20', l: 'Uns 15 a 20 minutos', ic: 'panela'}, {v: 't40', l: 'Gosto de cozinhar com calma', ic: 'relogio'}]},
+  {id: 'compromisso', type: 'buttons', q: 'Se as receitas couberem no seu apetite e matarem a vontade de doce, <em>você testa por 7 dias?</em>', opts: [
+    {v: 'sim', l: 'Sim, quero testar!', ic: 'saiu'}, {v: 'tentar', l: 'Vou tentar', ic: 'sorriso'}]},
   {id: 'loading', type: 'loading'},
   {id: 'resultado', type: 'result'}
 ];
 // Etapas contadas no progresso e enviadas ao backend.
 const QUESTION_IDX = STEPS.map((s, i) => (['loading', 'result'].includes(s.type) ? -1 : i)).filter((i) => i >= 0);
+// Só as perguntas de verdade entram no contador "3/8".
+const ASK_IDX = STEPS.map((s, i) => (['intro', 'buttons', 'multi', 'weight'].includes(s.type) ? i : -1)).filter((i) => i >= 0);
 
 const state = {i: 0, a: {}};
 const screen = $('#screen');
 const back = $('#back');
 const progress = $('#progress');
 const progressFill = $('#progressFill');
+const progressCap = $('#progressCap');
+const count = $('#count');
 const sticky = $('#sticky');
 
 const go = (i) => {
@@ -387,19 +563,22 @@ back.addEventListener('click', () => {
 const pick = (s, v, group, btn) => {
   state.a[s.id] = v;
   group.querySelectorAll('[aria-pressed]').forEach((x) => x.setAttribute('aria-pressed', String(x === btn)));
-  setTimeout(next, 230);
+  setTimeout(next, 260);
 };
 const sint = () => (state.a.sintomas || []).filter((v) => v !== 'nenhum');
 const idadeLabel = () => (IDADES.find((x) => x.v === state.a.idade) || IDADES[2]).l;
 const peso = () => state.a.peso || 80;
 // Proteína de referência: 1,2 a 1,6 g/kg/dia. Acima de 100 kg usa 100 kg (sem altura não dá para ajustar melhor).
 const protMeta = () => { const p = Math.min(peso(), 100); return [Math.round(p * 1.2), Math.round(p * 1.6)]; };
+const contBtn = (id, label, onclick = next) => el('button', {type: 'button', class: 'btn', id, onclick}, label, icon('arrow'));
+const markSvg = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 
 /* ---------- Telas ---------- */
 const renderIntro = (s) => {
   const wrap = el('div', {class: 'ages', role: 'group', 'aria-label': 'Sua idade'});
   IDADES.forEach((o) => {
-    const b = el('button', {type: 'button', class: 'age', id: `opt-idade-${o.v}`, 'aria-pressed': String(state.a.idade === o.v)}, el('b', {}, o.l), el('span', {}, o.s));
+    const b = el('button', {type: 'button', class: 'age', id: `opt-idade-${o.v}`, 'aria-pressed': String(state.a.idade === o.v)},
+      el('span', {class: 'n'}, o.l), el('span', {class: 'row'}, o.s, H('span', ic('arrow'), 'go')));
     b.addEventListener('click', () => {
       if (!state.started) { state.started = true; track('QuizInicio', {}, true); send('inicio', {etapa: 0}); }
       pick(s, o.v, wrap, b);
@@ -407,13 +586,15 @@ const renderIntro = (s) => {
     wrap.append(b);
   });
   return [
-    el('span', {class: 'badge'}, 'Teste rápido · 1 minuto'),
-    H('h1', 'Usando a caneta e a <span class="mk">pochete</span> ainda não saiu?'),
-    H('p', 'Descubra o que está travando o seu resultado e <b>o que comer quando a fome some</b>.', 'lead'),
-    el('div', {class: 'pains', 'aria-hidden': 'true'}, ['sem fome', 'vontade de doce', 'só gelado', 'cansaço'].map((t) => el('span', {}, t))),
-    H('h2', 'Para começar, <span class="g">qual é a sua idade?</span>'),
+    el('section', {class: 'hero'},
+      H('h1', 'Usando a caneta e a <em>pochete</em> ainda não saiu?'),
+      H('p', 'Faça o teste de 1 minuto e descubra o que está travando o seu resultado e <b>o que comer quando a fome some</b>.'),
+      el('div', {class: 'tags', 'aria-hidden': 'true'}, ['sem fome', 'vontade de doce', 'só desce gelado', 'cansaço'].map((t) => el('span', {}, t)))),
+    H('p', 'Para começar, <em>qual é a sua idade?</em>', 'ask'),
     wrap,
-    el('p', {class: 'fine'}, CONFIG.provaSocial || 'Anônimo · sem cadastro · resultado na hora')
+    el('div', {class: 'trust'},
+      H('span', ic('relogio') + '1 minuto'), H('span', ic('anonimo') + 'sem cadastro'), H('span', ic('check') + 'resultado na hora')),
+    CONFIG.provaSocial ? el('p', {class: 'fine'}, CONFIG.provaSocial) : null
   ];
 };
 
@@ -424,30 +605,51 @@ const IDADE_TXT = {
   i50: ['Depois dos 50 dá, sim. Só não dá para comer de qualquer jeito.', 'A perda de músculo acelera nessa idade. Se a caneta tira a fome e o pouco que você come tem pouca proteína, o corpo emagrece no lugar errado. Ajustando o prato, isso muda.'],
   i60: ['Depois dos 60, o prato vale ainda mais.', 'Nessa fase manter músculo é o que garante disposição, equilíbrio e barriga firme. Com a fome baixa da caneta, as receitas certas fazem toda a diferença.']
 };
+// Curva ilustrativa: faixa de 3 a 8% de perda por década a partir dos 30, com a faixa da pessoa marcada.
+const muscleChart = (faixa) => {
+  const dec = [30, 40, 50, 60, 70];
+  const x = (k) => 28 + k * 64;
+  const yA = (k) => 18 + k * 8;     // perda menor (3%)
+  const yB = (k) => 18 + k * 20;    // perda maior (8%)
+  const area = `M${x(0)} ${yA(0)} ${dec.map((_, k) => `L${x(k)} ${yA(k)}`).join(' ')} ${dec.slice().reverse().map((_, k) => `L${x(4 - k)} ${yB(4 - k)}`).join(' ')} Z`;
+  const mid = dec.map((_, k) => `${k ? 'L' : 'M'}${x(k)} ${(yA(k) + yB(k)) / 2}`).join(' ');
+  const hi = {i18: -1, i30: 0, i40: 1, i50: 2, i60: 3}[faixa] ?? 1;
+  const dot = hi >= 0 ? `<circle cx="${x(hi)}" cy="${(yA(hi) + yB(hi)) / 2}" r="6" style="fill:#D9A07E;stroke:#17332B" stroke-width="2.5"/><text x="${x(hi)}" y="${(yA(hi) + yB(hi)) / 2 - 12}" text-anchor="middle" style="fill:#F4F0E8">você</text>` : '';
+  return `<svg class="chart" viewBox="0 0 320 128" role="img" aria-label="Gráfico ilustrativo: a massa muscular cai entre 3 e 8% a cada década depois dos 30">
+    <path d="${area}" style="fill:rgba(217,160,126,.22)"/>
+    <path d="${mid}" style="fill:none;stroke:#D9A07E" stroke-width="2.5" stroke-linecap="round"/>
+    ${dec.map((d, k) => `<text x="${x(k)}" y="122" text-anchor="middle" style="fill:#A9B8AC">${d}</text>`).join('')}
+    ${dot}</svg>`;
+};
 const renderAge = () => {
   const [titulo, txt] = IDADE_TXT[state.a.idade] || IDADE_TXT.i40;
   const prova = CONFIG.provaIdade[state.a.idade];
   const out = [
-    el('span', {class: 'badge'}, `${idadeLabel()} anos`),
-    H('h2', `<span class="g">Você está no lugar certo.</span> ${titulo}`),
-    el('p', {class: 'c'}, txt)
+    H('span', ic('check') + `${idadeLabel()} anos`, 'stamp'),
+    H('h2', `<em>Você está no lugar certo.</em> ${titulo}`),
+    el('p', {class: 'c lead'}, txt)
   ];
   if (prova && prova.pct) {
-    out.push(el('div', {class: 'big-stat'}, el('b', {}, prova.pct + '%'), el('span', {}, prova.texto)));
+    out.push(el('div', {class: 'sheet dark'}, el('div', {class: 'stat'}, el('b', {}, prova.pct + '%'), el('span', {}, prova.texto))));
   } else {
-    out.push(el('div', {class: 'big-stat'}, el('b', {}, '3–8%'), el('span', {}, 'da massa muscular se perde a cada década depois dos 30, se nada for feito.')));
-    out.push(el('p', {class: 'src'}, 'Volpi E. et al., Curr Opin Clin Nutr Metab Care, 2004.'));
-    if (SETUP) out.push(el('div', {class: 'setup', role: 'note'}, el('strong', {}, 'Espaço para a prova da sua base'), H('span', 'Preencha <code>CONFIG.provaIdade</code> com a % real de alunos dessa faixa que tiveram resultado. Sem número real, aparece o dado de pesquisa acima.')));
+    out.push(el('div', {class: 'sheet dark'},
+      el('div', {class: 'stat'}, el('b', {}, '3–8%'), el('span', {}, 'da massa muscular se perde a cada década depois dos 30, se nada for feito.')),
+      H('div', muscleChart(state.a.idade)),
+      el('p', {class: 'src'}, 'Volpi E. et al., Curr Opin Clin Nutr Metab Care, 2004. Curva ilustrativa da faixa citada.')));
   }
-  out.push(el('button', {type: 'button', class: 'btn', id: 'cont-quebra', onclick: next}, 'Continuar ➜'));
+  out.push(contBtn('cont-quebra', 'Continuar'));
+  if (SETUP && !(prova && prova.pct)) out.push(el('div', {class: 'setup', role: 'note'}, el('strong', {}, 'Espaço para a prova da sua base'), H('span', 'Preencha <code>CONFIG.provaIdade</code> com a % real de alunos dessa faixa que tiveram resultado. Sem número real, aparece o dado de pesquisa acima.')));
   return out;
 };
 
+const optBtn = (s, o, sq) => el('button', {type: 'button', class: `opt${sq ? ' sq' : ''}${o.ic ? '' : ' plain'}`, id: `opt-${s.id}-${o.v}`, 'data-v': o.v, 'aria-pressed': 'false'},
+  o.ic ? H('span', ic(o.ic), 'tile') : null, el('span', {class: 'lbl'}, o.l), H('span', markSvg, 'mark'));
+
 const renderButtons = (s) => {
-  const wrap = el('div', {class: 'btns', role: 'group'});
+  const wrap = el('div', {class: 'opts', role: 'group'});
   s.opts.map(norm).forEach((o) => {
-    const b = el('button', {type: 'button', class: 'btn ghost', id: `opt-${s.id}-${o.v}`, 'aria-pressed': String(state.a[s.id] === o.v)},
-      o.em ? el('span', {class: 'em', 'aria-hidden': 'true'}, o.em) : null, el('span', {}, o.l));
+    const b = optBtn(s, o);
+    b.setAttribute('aria-pressed', String(state.a[s.id] === o.v));
     b.addEventListener('click', () => pick(s, o.v, wrap, b));
     wrap.append(b);
   });
@@ -457,15 +659,15 @@ const renderButtons = (s) => {
 const renderMulti = (s) => {
   const sel = new Set(state.a[s.id] || []);
   const opts = s.opts.map(norm);
-  const cont = el('button', {type: 'button', class: 'btn', id: `cont-${s.id}`}, 'Continuar ➜');
-  const wrap = el('div', {class: 'btns', role: 'group'});
+  const cont = contBtn(`cont-${s.id}`, 'Continuar', null);
+  cont.classList.add('stick');
+  const wrap = el('div', {class: 'opts', role: 'group'});
   const sync = () => {
     wrap.querySelectorAll('.opt').forEach((x) => x.setAttribute('aria-pressed', String(sel.has(x.dataset.v))));
     cont.setAttribute('aria-disabled', String(sel.size === 0));
   };
   opts.forEach((o) => {
-    const b = el('button', {type: 'button', class: 'opt', id: `opt-${s.id}-${o.v}`, 'data-v': o.v},
-      el('span', {class: 'box', 'aria-hidden': 'true'}), o.em ? el('span', {class: 'em', 'aria-hidden': 'true'}, o.em) : null, el('span', {}, o.l));
+    const b = optBtn(s, o, true);
     b.addEventListener('click', () => {
       if (sel.has(o.v)) sel.delete(o.v);
       else {
@@ -487,20 +689,21 @@ const renderMulti = (s) => {
 const renderInsight = () => {
   const p = state.a.pochete;
   const titulo = p === 'saiu'
-    ? 'Ótimo começo. Agora o cuidado é <span class="mk">não perder músculo</span> no caminho.'
+    ? 'Ótimo começo. Agora o cuidado é <em>não perder músculo</em> no caminho.'
     : p === 'travou'
-      ? 'Travou? <span class="mk">Não é falta de força de vontade.</span>'
-      : 'A pochete é uma das últimas a sair. <span class="mk">E tem um motivo.</span>';
+      ? 'Travou? <em>Não é falta de força de vontade.</em>'
+      : 'A pochete é uma das últimas a sair. <em>E tem um motivo.</em>';
   return [
     H('h2', titulo),
-    H('p', 'A caneta tira a fome. Mas se o pouco que você come tem pouca proteína, o corpo não queima só gordura: <b>ele também gasta músculo.</b>', 'c'),
-    el('div', {class: 'panel'},
+    H('p', 'A caneta tira a fome. Mas se o pouco que você come tem pouca proteína, o corpo não queima só gordura: <b>ele também gasta músculo.</b>', 'c lead'),
+    el('div', {class: 'sheet'},
       H('h3', 'Do peso perdido com a caneta, num estudo grande:'),
       el('div', {class: 'split', role: 'img', 'aria-label': 'Cerca de 60% do peso perdido foi gordura e cerca de 40% foi massa magra'},
-        el('div', {class: 'fat', style: 'flex:61'}, '~60% gordura'), el('div', {class: 'lean', style: 'flex:39'}, '~40% músculo e massa magra')),
+        el('div', {class: 'fat', style: 'flex:61', html: '~60%<small>gordura</small>'}), el('div', {class: 'lean', style: 'flex:39', html: '~40%<small>músculo e massa magra</small>'})),
       el('p', {class: 'src'}, 'Estudo STEP 1 (semaglutida), análise de composição corporal. Wilding J. et al., NEJM, 2021.')),
-    H('p', 'Músculo é o que mantém o metabolismo ligado e a barriga firme. Quando ele vai embora, vem o cansaço, a flacidez e <b>a pochete fica.</b>', 'c'),
-    el('button', {type: 'button', class: 'btn', id: 'cont-porque', onclick: next}, 'Faz sentido. Continuar ➜')
+    el('div', {class: 'sheet linho'},
+      H('p', 'Músculo é o que mantém o metabolismo ligado e a barriga firme. Quando ele vai embora, vem o cansaço, a flacidez e <b>a pochete fica.</b>')),
+    contBtn('cont-porque', 'Faz sentido. Continuar')
   ];
 };
 
@@ -515,85 +718,104 @@ const renderWeight = (s) => {
     H('h2', s.q), el('p', {class: 'hint'}, s.hint),
     el('div', {class: 'weight'}, val,
       el('div', {class: 'row'},
-        el('button', {type: 'button', class: 'step', id: 'peso-menos', 'aria-label': 'Diminuir 1 kg', onclick: () => set(state.a.peso - 1)}, '−'),
+        el('button', {type: 'button', class: 'step', id: 'peso-menos', 'aria-label': 'Diminuir 1 kg', onclick: () => set(state.a.peso - 1), html: ic('minus')}),
         range,
-        el('button', {type: 'button', class: 'step', id: 'peso-mais', 'aria-label': 'Aumentar 1 kg', onclick: () => set(state.a.peso + 1)}, '+'))),
-    el('button', {type: 'button', class: 'btn', id: 'cont-peso', onclick: next}, 'Continuar ➜')
+        el('button', {type: 'button', class: 'step', id: 'peso-mais', 'aria-label': 'Aumentar 1 kg', onclick: () => set(state.a.peso + 1), html: ic('plus')})),
+      el('div', {class: 'ruler', 'aria-hidden': 'true'}, el('span', {}, '40'), el('span', {}, '110'), el('span', {}, '180'))),
+    el('p', {class: 'fine'}, 'Fica só neste teste. Não pedimos nome nem e-mail.'),
+    contBtn('cont-peso', 'Continuar')
   ];
 };
 
 // Proteína de um dia típico para cada hábito: estimativa ilustrativa para a comparação.
 const PROT_TIPICA = {economia: 30, gelado: 35, doce: 25, lanche: 50, prato_pequeno: 45};
 const ESPELHO = {
-  fome: ['🍽️', 'Quase não sente fome', 'Comendo pouco, a proteína do dia não fecha, e o corpo tira do músculo.'],
-  doce: ['🍫', 'Vontade forte de doce', 'Doce entra fácil quando a fome está baixa, mas ocupa o espaço da proteína.'],
-  gelado: ['🧊', 'Só desce gelado ou líquido', 'Iogurte, açaí e sorvete descem bem, mas quase sempre têm pouca proteína.'],
-  lanche: ['🍔', 'Vontade de hambúrguer', 'Não precisa cortar. Na versão certa, o hambúrguer vira aliado.'],
-  cansaco: ['🥱', 'Cansaço e desânimo', 'Pouca comida e pouca proteína derrubam a energia do dia.'],
-  academia: ['🏋️', 'Sem pique para treinar', 'Sem energia não tem treino, e sem treino o músculo vai embora mais rápido.'],
-  enjoo: ['🤢', 'Enjoo com comida pesada', 'Porções pequenas, frias e leves costumam enjoar menos.']
+  fome: ['prato', 'Quase não sente fome', 'Comendo pouco, a proteína do dia não fecha, e o corpo tira do músculo.'],
+  doce: ['doce', 'Vontade forte de doce', 'Doce entra fácil quando a fome está baixa, mas ocupa o espaço da proteína.'],
+  gelado: ['floco', 'Só desce gelado ou líquido', 'Iogurte, açaí e sorvete descem bem, mas quase sempre têm pouca proteína.'],
+  lanche: ['lanche', 'Vontade de hambúrguer', 'Não precisa cortar. Na versão certa, o hambúrguer vira aliado.'],
+  cansaco: ['bateria', 'Cansaço e desânimo', 'Pouca comida e pouca proteína derrubam a energia do dia.'],
+  academia: ['halter', 'Sem pique para treinar', 'Sem energia não tem treino, e sem treino o músculo vai embora mais rápido.'],
+  enjoo: ['enjoo', 'Enjoo com comida pesada', 'Porções pequenas, frias e leves costumam enjoar menos.']
 };
 const renderMirror = () => {
   const [min, max] = protMeta();
   const tipica = PROT_TIPICA[state.a.come] || 35;
   const itens = sint().map((v) => ESPELHO[v]).filter(Boolean);
-  const out = [H('h2', 'Olha o que as suas respostas <span class="g">mostram</span>')];
+  const out = [H('h2', 'Olha o que as suas respostas <em>mostram</em>')];
   if (itens.length) {
-    out.push(el('ul', {class: 'mirror'}, itens.map(([ic, t, d]) => el('li', {}, el('span', {class: 'ic', 'aria-hidden': 'true'}, ic), el('div', {}, el('b', {}, t), el('span', {}, d))))));
+    out.push(el('div', {class: 'sheet'}, el('ul', {class: 'mirror'}, itens.map(([i, t, d]) => el('li', {}, H('span', ic(i), 'tile'), el('div', {}, el('b', {}, t), el('span', {}, d)))))));
   } else {
-    out.push(el('p', {class: 'c'}, 'Você não marcou nenhum sinal. Mesmo assim, com a fome baixa, o mais comum é a proteína do dia ficar abaixo do que o corpo precisa.'));
+    out.push(el('p', {class: 'c lead'}, 'Você não marcou nenhum sinal. Mesmo assim, com a fome baixa, o mais comum é a proteína do dia ficar abaixo do que o corpo precisa.'));
   }
   const pct = clamp(Math.round((tipica / min) * 100), 8, 100);
-  out.push(el('div', {class: 'panel white gauge'},
-    H('h3', `Com ${peso()} kg, o seu corpo pede <span class="g">${min} a ${max} g de proteína</span> por dia`),
+  const bars = [el('i', {style: 'background:var(--argila-cta)', 'data-w': pct}), el('i', {style: 'background:var(--floresta)', 'data-w': 100})];
+  out.push(el('div', {class: 'sheet gauge'},
+    H('h3', `Com ${peso()} kg, o seu corpo pede <em>${min} a ${max} g de proteína</em> por dia`),
     el('div', {class: 'row'}, el('span', {}, 'Um dia típico como o seu'), el('b', {}, `~${tipica} g`)),
-    el('div', {class: 'track'}, el('i', {style: `width:${pct}%;background:var(--red)`})),
+    el('div', {class: 'track'}, bars[0]),
     el('div', {class: 'row'}, el('span', {}, 'O que o corpo pede'), el('b', {}, `${min} g+`)),
-    el('div', {class: 'track'}, el('i', {style: 'width:100%;background:var(--green)'})),
-    el('p', {class: 'fine'}, 'Referência de 1,2 a 1,6 g/kg/dia para quem está emagrecendo. O dia típico é uma estimativa pelo que você marcou, não uma medida.')));
+    el('div', {class: 'track'}, bars[1]),
+    el('p', {class: 'src'}, 'Referência de 1,2 a 1,6 g/kg/dia para quem está emagrecendo. O dia típico é uma estimativa pelo que você marcou, não uma medida.')));
+  setTimeout(() => bars.forEach((b) => { b.style.width = b.dataset.w + '%'; }), reduceMotion ? 0 : 150);
   out.push(H('p', 'Não é falta de disciplina. É que <b>o cardápio comum não foi feito para o apetite da caneta.</b>', 'c'));
-  out.push(el('button', {type: 'button', class: 'btn', id: 'cont-espelho', onclick: next}, 'E o que eu faço? ➜'));
+  out.push(contBtn('cont-espelho', 'E o que eu faço?'));
   return out;
 };
 
 // Consciência da solução: mesma vontade, outra receita. O exemplo segue o hábito marcado.
 const TROCA = {
-  gelado: {de: ['🍦', 'Pote de sorvete comum', 4], para: ['🍫', 'Sorvete cremoso de chocolate proteico', 20]},
-  doce: {de: ['🍰', 'Fatia de bolo de chocolate', 4], para: ['🍮', 'Mousse de chocolate com proteína', 18]},
-  lanche: {de: ['🍔', 'Hambúrguer de lanchonete com batata', 25], para: ['🍔', 'Hambúrguer caseiro no tamanho certo', 30]},
-  economia: {de: ['🍪', 'Biscoito e café ao longo do dia', 3], para: ['🥤', 'Shake gelado de café com proteína', 22]},
-  prato_pequeno: {de: ['🍛', 'Meio prato de arroz, feijão e um pouco de carne', 15], para: ['🍲', 'Prato pequeno com a proteína primeiro', 30]}
+  gelado: {de: ['gelado', 'Pote de sorvete comum', 4], para: ['doce', 'Sorvete cremoso de chocolate proteico', 20]},
+  doce: {de: ['bolo', 'Fatia de bolo de chocolate', 4], para: ['doce', 'Mousse de chocolate com proteína', 18]},
+  lanche: {de: ['lanche', 'Hambúrguer de lanchonete com batata', 25], para: ['lanche', 'Hambúrguer caseiro no tamanho certo', 30]},
+  economia: {de: ['belisco', 'Biscoito e café ao longo do dia', 3], para: ['shake', 'Shake gelado de café com proteína', 22]},
+  prato_pequeno: {de: ['bowl', 'Meio prato de arroz, feijão e um pouco de carne', 15], para: ['prato', 'Prato pequeno com a proteína primeiro', 30]}
 };
 const renderSolution = () => {
   const t = TROCA[state.a.come] || TROCA.gelado;
-  const card = (cls, [em, nome, g]) => el('div', {class: cls}, el('span', {class: 'em', 'aria-hidden': 'true'}, em), el('b', {}, nome), el('span', {class: 'num'}, `~${g} g`), el('small', {}, 'de proteína'));
+  const card = (cls, [i, nome, g]) => el('div', {class: `card ${cls}`}, H('span', ic(i), 'tile'), el('span', {class: 'name'}, nome), el('span', {class: 'g'}, `~${g} g`), el('small', {}, 'de proteína'));
   return [
-    H('h2', 'Você não precisa comer mais. <span class="mk">Precisa que cada garfada conte.</span>'),
-    H('p', 'A saída não é forçar comida nem cortar o que você gosta. É <b>trocar a receita</b>, mantendo o gelado, o doce e o lanche que o seu corpo está pedindo.', 'c'),
-    el('div', {class: 'compare'}, card('no', t.de), card('yes', t.para)),
+    H('h2', 'Você não precisa comer mais. <em>Precisa que cada garfada conte.</em>'),
+    H('p', 'A saída não é forçar comida nem cortar o que você gosta. É <b>trocar a receita</b>, mantendo o gelado, o doce e o lanche que o seu corpo está pedindo.', 'c lead'),
+    el('div', {class: 'swap'}, card('no', t.de), H('span', ic('arrow'), 'arrow'), card('yes', t.para)),
     el('p', {class: 'fine'}, 'Valores aproximados por porção.'),
-    el('div', {class: 'panel'},
-      H('p', '✓ Porções pequenas, do tamanho do apetite da caneta<br>✓ Proteína primeiro, para o corpo queimar gordura e não músculo<br>✓ Gelado, doce e lanche continuam no cardápio')),
-    el('button', {type: 'button', class: 'btn', id: 'cont-solucao', onclick: next}, 'Quero ver como fica pra mim ➜')
+    el('div', {class: 'sheet'},
+      H('h3', 'As receitas seguem <em>3 regras</em>'),
+      el('ol', {class: 'rules'},
+        el('li', {}, el('span', {class: 'n'}, '1'), el('div', {}, el('b', {}, 'Proteína primeiro'), el('span', {}, 'Para o corpo queimar gordura e não músculo.'))),
+        el('li', {}, el('span', {class: 'n'}, '2'), el('div', {}, el('b', {}, 'Porção do tamanho do apetite'), el('span', {}, 'Pequeno e frequente rende mais que um prato que não desce.'))),
+        el('li', {}, el('span', {class: 'n'}, '3'), el('div', {}, el('b', {}, 'Prazer no cardápio'), el('span', {}, 'Gelado, doce e lanche continuam, na versão que alimenta.'))))),
+    contBtn('cont-solucao', 'Quero ver como fica pra mim')
   ];
 };
 
+const DICAS = [
+  ['Proteína <em>primeiro</em>', 'Comece o prato pela proteína. Se a fome acabar no meio, o mais importante já foi.'],
+  ['Cada garfada <em>conta</em>', 'Em dias sem apetite, iogurte proteico, ovos ou um shake garantem a base do dia.'],
+  ['Pequeno e <em>frequente</em>', 'Três refeições pequenas e dois lanches rendem mais do que uma refeição grande que não desce.'],
+  ['Deixe algo <em>pronto</em>', 'Ter algo proteico pronto na geladeira evita pular refeição nos dias de pouca fome.']
+];
 const renderLoading = () => {
   const items = ['Analisando as suas respostas', 'Calculando a sua proteína do dia', 'Separando receitas geladas e doces', 'Montando o seu Dia 1'];
-  const ul = el('ul', {class: 'steps'}, items.map((t) => el('li', {}, el('span', {class: 't', 'aria-hidden': 'true'}, '✓'), t)));
-  const C = 2 * Math.PI * 62;
-  const ring = el('div', {html: `<svg class="ring" viewBox="0 0 150 150" role="img" aria-label="Montando o seu plano"><circle cx="75" cy="75" r="62" style="fill:none;stroke:#E2E7E3" stroke-width="12"/><circle id="arc" cx="75" cy="75" r="62" style="fill:none;stroke:#1E9E45" stroke-width="12" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C}" transform="rotate(-90 75 75)"/><text id="pct" class="pct" x="75" y="86" text-anchor="middle">0%</text></svg>`});
-  const total = reduceMotion ? 1200 : 4200;
+  const ul = el('ul', {class: 'checks'}, items.map((t) => el('li', {}, H('span', markSvg, 't'), t)));
+  const mark = H('div', capsuleSvg('big', '#17332B', '#B8744F', 0));
+  const pct = el('div', {class: 'pct', 'aria-hidden': 'true'}, '0%');
+  const tip = el('div', {class: 'tip', role: 'note'});
+  let ti = -1;
+  const showTip = () => { ti = (ti + 1) % DICAS.length; tip.classList.remove('swapin'); void tip.offsetWidth; tip.classList.add('swapin'); tip.innerHTML = `<b>${DICAS[ti][0]}</b><span>${DICAS[ti][1]}</span>`; };
+  showTip();
+  const total = reduceMotion ? 1200 : 5200;
   const t0 = performance.now();
+  let lastTip = t0;
   const tick = (now) => {
     if (STEPS[state.i].type !== 'loading') return;
     const p = Math.min(1, (now - t0) / total);
     const v = Math.min(100, Math.round((p < 0.75 ? p * 1.05 : 0.7875 + (p - 0.75) * 0.85) * 100));
-    const arc = ring.querySelector('#arc');
-    const pct = ring.querySelector('#pct');
-    if (arc) arc.setAttribute('stroke-dashoffset', String(C * (1 - v / 100)));
-    if (pct) pct.textContent = v + '%';
+    const path = mark.querySelector('path');
+    if (path) path.setAttribute('stroke-dashoffset', String(62 * (1 - v / 100)));
+    pct.textContent = v + '%';
     [...ul.children].forEach((li, k) => li.classList.toggle('done', v >= (k + 1) * 24));
+    if (now - lastTip > 2400) { lastTip = now; showTip(); }
     if (p < 1) requestAnimationFrame(tick);
     else setTimeout(() => {
       if (STEPS[state.i].type !== 'loading') return;
@@ -603,7 +825,8 @@ const renderLoading = () => {
     }, 450);
   };
   requestAnimationFrame(tick);
-  return [H('h2', 'Montando o seu <span class="g">plano de receitas</span>'), el('p', {class: 'hint'}, 'Estamos cruzando as suas respostas.'), el('div', {class: 'loader'}, ring, ul)];
+  return [H('h2', 'Montando o seu <em>plano de receitas</em>'), el('p', {class: 'hint'}, 'Estamos cruzando as suas respostas.'),
+    el('div', {class: 'loader', role: 'status', 'aria-label': 'Montando o seu plano'}, mark, pct, ul, tip)];
 };
 
 /* ---------- Resultado ---------- */
@@ -615,6 +838,12 @@ const PERFIS = {
   prato_pequeno: {nome: 'Prato encolhido', txt: 'Você come comida de verdade, só que bem menos, e a parte que sobra no prato costuma ser a proteína. Seu plano muda a ordem e a proporção do prato para cada garfada contar.'}
 };
 const perfilId = () => (PERFIS[state.a.come] ? state.a.come : 'gelado');
+const COVERS = [
+  ['#17332B', '#F4F0E8', '#B8744F', 'Gelados', 'que nutrem'],
+  ['#B8744F', '#F4F0E8', '#F4F0E8', 'Doces', 'com proteína'],
+  ['#B7C4B1', '#17332B', '#B8744F', 'Lanches', 'de casa'],
+  ['#E4DDCF', '#17332B', '#B8744F', 'Mini', 'refeições']
+];
 
 const renderResult = () => {
   const a = state.a;
@@ -624,9 +853,14 @@ const renderResult = () => {
   const porRefeicao = Math.round(min / 4);
   const out = [];
 
-  out.push(el('span', {class: 'badge'}, 'Seu resultado está pronto'));
-  out.push(H('h1', `Seu perfil: <span class="g">${perfil.nome}</span>`));
-  out.push(el('p', {class: 'lead'}, perfil.txt));
+  out.push(el('section', {class: 'rhead'},
+    H('span', ic('saiu') + 'Seu resultado está pronto', 'ok'),
+    H('h1', `Seu perfil: <em>${perfil.nome}</em>`),
+    el('p', {}, perfil.txt),
+    el('div', {class: 'facts'},
+      H('div', `<b>${idadeLabel()}</b><span>anos</span>`),
+      H('div', `<b>${peso()} kg</b><span>peso hoje</span>`),
+      H('div', `<b>${min} g</b><span>proteína mínima/dia</span>`))));
 
   const musculo = clamp(30 + (s.includes('fome') ? 18 : 0) + ({economia: 22, doce: 18, gelado: 16, prato_pequeno: 10, lanche: 6}[a.come] || 10)
     + (['i40', 'i50', 'i60'].includes(a.idade) ? 10 : 0) + (s.includes('cansaco') ? 6 : 0) + (s.includes('academia') ? 6 : 0), 20, 94);
@@ -636,53 +870,60 @@ const renderResult = () => {
   const scoreRow = (lbl, v, color, id) => el('div', {class: 'score'},
     el('div', {class: 'row'}, el('span', {}, lbl), el('b', {}, v + '%')),
     el('div', {class: 'track'}, el('i', {id, 'data-w': v, style: `background:${color}`})));
-  out.push(el('div', {class: 'panel'},
-    H('h3', 'Análise das suas respostas 👇'),
+  out.push(el('div', {class: 'sheet'},
+    H('h3', 'Análise das suas respostas'),
     el('div', {class: 'scores'},
-      scoreRow('Risco de perder músculo junto com a gordura', musculo, '#D7342A', 'sc1'),
-      scoreRow('Força da vontade de doce, gelado ou lanche', vontade, '#C97800', 'sc2'),
-      scoreRow('Energia no dia a dia', energia, '#C97800', 'sc3'),
-      scoreRow('Chance de destravar a barriga com o prato certo', destravar, '#1E9E45', 'sc4')),
-    el('p', {class: 'fine'}, 'Pontuação do teste, calculada pelas suas respostas. Não é diagnóstico.')));
+      scoreRow('Risco de perder músculo junto com a gordura', musculo, 'var(--danger)', 'sc1'),
+      scoreRow('Força da vontade de doce, gelado ou lanche', vontade, 'var(--argila)', 'sc2'),
+      scoreRow('Energia no dia a dia', energia, 'var(--argila)', 'sc3'),
+      scoreRow('Chance de destravar a barriga com o prato certo', destravar, 'var(--floresta)', 'sc4')),
+    el('p', {class: 'src'}, 'Pontuação do teste, calculada pelas suas respostas. Não é diagnóstico.')));
 
-  out.push(el('div', {class: 'panel white'},
-    H('h3', `Sua meta: <span class="g">${min} a ${max} g de proteína por dia</span>`),
-    el('p', {}, `Dividido em 4 momentos, dá cerca de ${porRefeicao} g por vez. Parece muito para quem quase não sente fome, e é por isso que as receitas são pensadas para caber em poucas garfadas.`)));
+  const C = 2 * Math.PI * 32;
+  out.push(el('div', {class: 'sheet'},
+    el('div', {class: 'meta'},
+      H('div', `<svg class="ring" viewBox="0 0 76 76" aria-hidden="true"><circle cx="38" cy="38" r="32" style="fill:none;stroke:#ECE6DA" stroke-width="7"/><circle cx="38" cy="38" r="32" style="fill:none;stroke:#B8744F" stroke-width="7" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C * 0.25}" transform="rotate(-90 38 38)"/><text x="38" y="44" text-anchor="middle" style="fill:#17332B;font-family:'Instrument Serif',Georgia,serif;font-size:19px">4×</text></svg>`),
+      el('div', {}, H('h3', `Sua meta: <em>${min} a ${max} g</em> de proteína por dia`),
+        el('p', {class: 'src', style: 'font-size:.875rem;margin-top:4px'}, `Em 4 momentos, cerca de ${porRefeicao} g por vez.`))),
+    el('p', {}, 'Parece muito para quem quase não sente fome, e é por isso que as receitas são pensadas para caber em poucas garfadas.')));
 
   const vsNo = ['Come pouco e a proteína não fecha', 'Doce e gelado sem nada de proteína', 'Cansaço e zero pique para treinar', 'A pochete continua lá'];
   const vsYes = ['Porção pequena que alimenta', 'Gelado e doce que seguram a vontade', 'Mais energia ao longo do dia', 'O corpo queima gordura, não músculo'];
   out.push(el('div', {class: 'vs'},
-    el('div', {class: 'col no'}, el('div', {class: 'hd'}, 'Como está hoje'), vsNo.map((t) => el('div', {class: 'it'}, t))),
-    el('div', {class: 'col yes'}, el('div', {class: 'hd'}, 'Com as receitas certas'), vsYes.map((t) => el('div', {class: 'it'}, t)))));
+    el('div', {class: 'col no'}, el('div', {class: 'hd'}, 'Como está hoje'), vsNo.map((t) => H('div', ic('x') + `<span>${t}</span>`, 'it'))),
+    el('div', {class: 'col yes'}, H('div', 'Com as receitas <em>certas</em>', 'hd'), vsYes.map((t) => H('div', ic('check') + `<span>${t}</span>`, 'it')))));
 
   const rapido = a.tempo === 't5';
+  const gel = s.includes('gelado') || a.come === 'gelado';
   const meals = [
-    ['☕', 'Café da manhã', s.includes('enjoo') || a.come === 'economia' ? 'Shake gelado de café com leite e proteína. Desce fácil mesmo sem fome.' : 'Ovos mexidos cremosos com queijo + café. Pronto em 5 minutos.', 22],
-    ['🍽️', 'Almoço', a.come === 'lanche' ? 'Hambúrguer caseiro no prato com salada e batata rústica, porção pequena.' : (rapido ? 'Frango desfiado pronto da geladeira com legumes e 2 colheres de arroz.' : 'Prato pequeno: carne ou frango primeiro, depois legumes e 2 colheres de arroz.'), 30],
-    [s.includes('gelado') || a.come === 'gelado' ? '🍦' : '🍫', 'Lanche da tarde', s.includes('gelado') || a.come === 'gelado' ? 'Sorvete cremoso de chocolate proteico (3 ingredientes, no liquidificador).' : 'Mousse de chocolate com proteína para a hora da vontade de doce.', 18],
-    ['🍲', 'Jantar', s.includes('enjoo') ? 'Caldo leve de frango com legumes, em porção pequena.' : (a.come === 'lanche' ? 'Pizza de frigideira com massa de frango.' : 'Omelete recheada com legumes e queijo.'), 25]
+    ['xicara', 'Café da manhã', s.includes('enjoo') || a.come === 'economia' ? 'Shake gelado de café com leite e proteína. Desce fácil mesmo sem fome.' : 'Ovos mexidos cremosos com queijo + café. Pronto em 5 minutos.', 22],
+    ['prato', 'Almoço', a.come === 'lanche' ? 'Hambúrguer caseiro no prato com salada e batata rústica, porção pequena.' : (rapido ? 'Frango desfiado pronto da geladeira com legumes e 2 colheres de arroz.' : 'Prato pequeno: carne ou frango primeiro, depois legumes e 2 colheres de arroz.'), 30],
+    [gel ? 'gelado' : 'doce', 'Lanche da tarde', gel ? 'Sorvete cremoso de chocolate proteico (3 ingredientes, no liquidificador).' : 'Mousse de chocolate com proteína para a hora da vontade de doce.', 18],
+    ['bowl', 'Jantar', s.includes('enjoo') ? 'Caldo leve de frango com legumes, em porção pequena.' : (a.come === 'lanche' ? 'Pizza de frigideira com massa de frango.' : 'Omelete recheada com legumes e queijo.'), 25]
   ];
   const chips = [];
-  if (rapido) chips.push('Até 5 minutos');
-  if (s.includes('gelado') || a.come === 'gelado') chips.push('Opções geladas');
-  if (s.includes('doce') || a.come === 'doce') chips.push('Doce todo dia');
-  if (s.includes('enjoo')) chips.push('Leve para o enjoo');
-  out.push(H('h2', 'Veja como fica o <span class="g">seu Dia 1</span>'));
-  if (chips.length) out.push(el('div', {class: 'chips'}, chips.map((c) => el('span', {class: 'chip'}, '✓ ' + c))));
+  if (rapido) chips.push(['raio', 'Até 5 minutos']);
+  if (gel) chips.push(['floco', 'Opções geladas']);
+  if (s.includes('doce') || a.come === 'doce') chips.push(['doce', 'Doce todo dia']);
+  if (s.includes('enjoo')) chips.push(['folha', 'Leve para o enjoo']);
+  out.push(H('h2', 'Veja como fica o <em>seu Dia 1</em>'));
+  if (chips.length) out.push(el('div', {class: 'chips'}, chips.map(([i, c]) => H('span', ic(i) + c, 'chip'))));
   const day = el('div', {class: 'day', id: 'dia1'},
-    el('div', {class: 'hd'}, 'Dia 1', el('small', {}, 'montado pelas suas respostas')),
-    meals.map(([ic, t, d, g]) => el('div', {class: 'meal'}, el('span', {class: 'ic', 'aria-hidden': 'true'}, ic), el('div', {}, el('b', {}, t), d, el('br'), el('span', {class: 'pt'}, `~${g} g de proteína`)))));
+    el('div', {class: 'hd'}, el('b', {}, 'Dia 1'), el('small', {}, 'montado pelas suas respostas')),
+    meals.map(([i, t, d, g]) => el('div', {class: 'meal'}, H('span', ic(i), 'tile'), el('div', {}, el('span', {class: 'when'}, t), d, el('br'), el('span', {class: 'pt'}, `~${g} g de proteína`)))));
   out.push(day);
   out.push(el('p', {class: 'fine'}, `Total aproximado do Dia 1: ~${meals.reduce((t, m) => t + m[3], 0)} g de proteína. As receitas completas, com quantidades e variações, ficam no material.`));
 
-  out.push(el('div', {class: 'note', role: 'note'},
-    el('strong', {}, 'A caneta continua do jeito que o seu médico passou.'),
-    el('span', {}, 'As receitas cuidam do prato. Dose, troca de medicamento e efeitos colaterais fortes são sempre com o seu médico.')));
+  out.push(el('div', {class: 'note', role: 'note'}, H('span', ic('info')),
+    el('div', {}, el('strong', {}, 'A caneta continua do jeito que o seu médico passou.'),
+      el('span', {}, 'As receitas cuidam do prato. Dose, troca de medicamento e efeitos colaterais fortes são sempre com o seu médico.'))));
 
-  out.push(el('div', {class: 'panel'},
-    H('h3', `O que vem no <span class="g">${CONFIG.produto}</span>`),
-    el('div', {class: 'deliv'}, CONFIG.entregaveis.map(([ic, t, d]) => el('div', {}, el('span', {class: 'ic', 'aria-hidden': 'true'}, ic), el('div', {}, el('b', {}, t), el('span', {}, d))))),
-    CONFIG.bonus.length ? el('div', {class: 'deliv'}, H('h3', '🎁 Bônus'), CONFIG.bonus.map((b) => el('div', {}, el('span', {class: 'ic', 'aria-hidden': 'true'}, '🎁'), el('div', {}, el('b', {}, b))))) : null));
+  out.push(el('div', {class: 'sheet'},
+    H('h3', `O que vem no <em>${CONFIG.produto}</em>`),
+    el('div', {class: 'covers', 'aria-hidden': 'true'}, COVERS.map(([bg, fg, ac, t1, t2]) =>
+      el('div', {class: 'cover', style: `background:${bg};color:${fg}`}, H('span', capsuleSvg('cm', fg, ac)), H('b', `${t1}<i>${t2}</i>`), el('hr', {style: `background:${ac}`})))),
+    el('ul', {class: 'deliv'}, CONFIG.entregaveis.map(([i, t, d]) => el('li', {}, H('span', ic(i), 'tile'), el('div', {}, el('b', {}, t), el('span', {}, d))))),
+    CONFIG.bonus.length ? el('ul', {class: 'deliv'}, CONFIG.bonus.map((b) => el('li', {}, H('span', ic('check'), 'tile'), el('div', {}, el('b', {}, 'Bônus: ' + b))))) : null));
 
   const href = checkoutHref();
   const setupMsg = el('div', {class: 'setup', role: 'note', hidden: SETUP ? null : true},
@@ -697,29 +938,29 @@ const renderResult = () => {
   };
   const [reais, cents] = CONFIG.preco.toFixed(2).split('.');
   out.push(el('div', {class: 'offer', id: 'oferta'},
-    H('h2', 'Seu plano de receitas <span class="g">está pronto</span>'),
-    el('p', {}, `Receitas para o perfil ${perfil.nome}, com as opções que você marcou.`),
+    H('h2', 'Seu plano de receitas <em>está pronto</em>'),
+    el('p', {class: 'for'}, `Receitas para o perfil ${perfil.nome}, com as opções que você marcou.`),
     CONFIG.precoDe ? el('span', {class: 'de'}, `De ${fmtBRL(CONFIG.precoDe)}`) : null,
     H('span', `<small>R$</small>${reais},${cents}`, 'por'),
     el('span', {class: 'sub'}, 'Pagamento único · acesso imediato no seu e-mail'),
-    el('a', {class: 'btn big pulse', id: 'cta', href, onclick: onBuy}, 'Quero minhas receitas ✅'),
-    el('div', {class: 'pay', 'aria-label': 'Formas de pagamento'}, el('span', {}, 'PIX'), el('span', {}, 'CARTÃO'), el('span', {}, 'COMPRA SEGURA')),
+    el('a', {class: 'btn buy pulse', id: 'cta', href, onclick: onBuy}, 'Quero minhas receitas', icon('arrow')),
+    el('div', {class: 'pay', 'aria-label': 'Formas de pagamento'}, H('span', ic('pix') + 'Pix'), H('span', ic('cartao') + 'Cartão'), H('span', ic('cadeado') + 'Compra segura')),
     el('div', {class: 'guarantee'}, H('span', sealSvg(CONFIG.garantiaDias)), el('span', {}, el('b', {}, `Garantia de ${CONFIG.garantiaDias} dias. `), 'Se não gostar, devolvemos 100% do valor.')),
     setupMsg));
 
   const au = CONFIG.autor;
   if (au.nome) {
     const ph = el('div', {class: 'ph'});
-    if (au.foto) ph.append(el('img', {src: au.foto, alt: au.nome})); else ph.textContent = au.nome.split(' ').map((w) => w[0]).slice(0, 2).join('');
-    out.push(el('div', {class: 'panel'},
-      el('span', {class: 'badge'}, 'Quem montou as receitas'),
+    if (au.foto) ph.append(el('img', {src: au.foto, alt: au.nome, loading: 'lazy'})); else ph.textContent = au.nome.split(' ').map((w) => w[0]).slice(0, 2).join('');
+    out.push(el('div', {class: 'sheet'},
+      H('h3', 'Quem montou <em>as receitas</em>'),
       el('div', {class: 'author'}, ph, el('div', {}, el('b', {}, au.nome), au.registro ? el('div', {class: 'reg'}, au.registro) : null)),
       au.bio ? el('p', {}, au.bio) : null));
   }
 
   if (CONFIG.depoimentos.length) {
-    out.push(H('h2', 'Quem já está <span class="g">usando as receitas</span>'));
-    out.push(el('div', {class: 'chat'}, CONFIG.depoimentos.map((d) => el('div', {class: 'bubble'}, d.texto, el('span', {class: 'time'}, d.nome)))));
+    out.push(H('h2', 'Quem já está <em>usando as receitas</em>'));
+    out.push(el('div', {class: 'chat'}, CONFIG.depoimentos.map((d) => el('div', {class: 'bubble'}, d.texto, el('span', {class: 'who'}, d.nome)))));
   } else if (SETUP) {
     out.push(el('div', {class: 'setup', role: 'note'}, el('strong', {}, 'Espaço para depoimentos'), H('span', 'Adicione depoimentos reais, com autorização, em <code>CONFIG.depoimentos</code>. Sem depoimentos, esta parte some.')));
   }
@@ -732,8 +973,8 @@ const renderResult = () => {
     ['Como eu recebo?', 'Logo depois do pagamento, o acesso chega no seu e-mail. Dá para ver no celular ou imprimir.'],
     ['E se eu não gostar?', `Você tem ${CONFIG.garantiaDias} dias de garantia. É só pedir o reembolso e devolvemos 100% do valor.`]
   ];
-  out.push(el('div', {class: 'panel white'}, H('h3', 'Perguntas frequentes'), faq.map(([q, r]) => el('details', {}, el('summary', {}, q), el('p', {}, r)))));
-  out.push(el('a', {class: 'btn big', id: 'cta-2', href, onclick: onBuy}, 'Quero minhas receitas ✅'));
+  out.push(el('div', {class: 'sheet faq'}, H('h3', 'Perguntas <em>frequentes</em>'), faq.map(([q, r]) => el('details', {}, H('summary', `<span>${q}</span>${ic('plus')}`), el('p', {}, r)))));
+  out.push(el('a', {class: 'btn buy', id: 'cta-2', href, onclick: onBuy}, 'Quero minhas receitas', icon('arrow')));
   out.push(el('p', {class: 'fine'}, 'Material educativo. Não substitui consulta médica ou com nutricionista. Os resultados variam de pessoa para pessoa.'));
 
   $('#stickyPrice').textContent = fmtBRL(CONFIG.preco);
@@ -751,7 +992,7 @@ const renderResult = () => {
     sticky.hidden = false;
   }
   track('ViewContent', {value: CONFIG.preco, currency: 'BRL'});
-  setTimeout(() => { ['sc1', 'sc2', 'sc3', 'sc4'].forEach((id) => { const b = document.getElementById(id); if (b) b.style.width = b.dataset.w + '%'; }); }, reduceMotion ? 0 : 120);
+  setTimeout(() => { ['sc1', 'sc2', 'sc3', 'sc4'].forEach((id) => { const b = document.getElementById(id); if (b) b.style.width = b.dataset.w + '%'; }); }, reduceMotion ? 0 : 150);
   return out;
 };
 
@@ -763,7 +1004,12 @@ const render = () => {
   const qi = QUESTION_IDX.indexOf(state.i);
   back.hidden = state.i === 0 || s.type === 'loading';
   progress.hidden = state.i === 0 || s.type === 'result';
-  progressFill.style.width = (s.type === 'loading' ? 100 : Math.round(((qi + 1) / (QUESTION_IDX.length + 1)) * 100)) + '%';
+  const w = s.type === 'loading' ? 100 : Math.round(((qi + 1) / (QUESTION_IDX.length + 1)) * 100);
+  progressFill.style.width = w + '%';
+  progressCap.style.left = `calc(${w}% - ${(w * 0.24).toFixed(1)}px)`;
+  // Contador de perguntas: na pergunta mostra a posição dela; nas telas de explicação mantém a última respondida.
+  const feitas = ASK_IDX.filter((k) => k <= state.i).length;
+  count.textContent = state.i === 0 || ['loading', 'result'].includes(s.type) ? '' : `${feitas}/${ASK_IDX.length}`;
   if (s.type !== 'result') sticky.hidden = true;
   screen.replaceChildren(...RENDER[s.type](s).filter(Boolean));
   screen.style.animation = 'none';
