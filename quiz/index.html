@@ -423,7 +423,7 @@ const CONFIG = {
     quebra: '',             // "Você está no caminho certo!": grupo de mulheres
     caneta: '',             // pergunta da caneta
     idade: {i18: '', i30: '', i40: '', i50: '', i60: ''},
-    pochete: {nada: '', pouco: '', travou: '', saiu: ''},
+    barriga: {pochete: '', pneuzinho: '', alta: '', flacida: ''},
     sonho: {lisa: '', firme: '', roupa: '', leve: ''}
   },
   // Quebra de objeção da idade (tela logo depois da idade). Preencha só com números reais da sua base.
@@ -453,7 +453,7 @@ const CONFIG = {
 
 /* ===================================================================== */
 const SETUP = !CONFIG.checkoutUrl;
-const VERSAO = 'v5';
+const VERSAO = 'v6';
 const fmtBRL = (v) => new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(v);
 const $ = (s, r = document) => r.querySelector(s);
 const el = (tag, attrs = {}, ...kids) => {
@@ -524,7 +524,7 @@ const capsuleSvg = (cls, fg = '#17332B', ac = '#B8744F', progress = 1) =>
   `<svg class="${cls}" viewBox="0 0 88 40" aria-hidden="true"><rect x="2" y="17" width="26" height="14" rx="7" style="fill:none;stroke:${fg}" stroke-width="2.6"/><line x1="15" y1="17" x2="15" y2="31" style="stroke:${fg}" stroke-width="2.6"/><path d="M28 24 H50 C62 24 72 18 84 6" style="fill:none;stroke:${ac}" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="62" stroke-dashoffset="${62 * (1 - progress)}"/></svg>`;
 
 /* ---------- Ilustrações próprias (SVG), no lugar de fotos ----------
-   Retrato sem rosto por faixa de idade, tronco de perfil (mostra a pochete) e a caneta. */
+   Retrato sem rosto por faixa de idade, tronco de perfil e de frente (tipos de barriga) e a caneta. */
 let svgId = 0;
 const avatar = ({skin, hair, top, bg, gray, glasses, short}) => {
   const hairBack = short
@@ -550,9 +550,15 @@ const AVATAR = {
   i60: {skin: '#EBC9AE', hair: '#B9B2A6', top: '#4A5E52', bg: '#E8ECE3', glasses: true, short: true}
 };
 // Tronco de perfil virado para a direita; b é o quanto a barriga de baixo sai para a frente.
-const torso = (b, {jeans, define, pausa} = {}) => {
+const torso = (b, {jeans, define, pausa, alta, flacida} = {}) => {
   const id = 'tc' + (++svgId);
-  const d = `M58 6 C56 16 44 20 42 32 C40 54 46 70 44 86 C42 100 34 112 38 160 L80 160 C79 146 76 134 72 124 C${74 + b} 118 ${72 + b} 108 ${68 + b * 0.7} 100 C${66 + b * 0.3} 92 64 86 65 78 C66 70 68 64 72 60 C80 54 84 44 76 34 C70 28 66 18 66 6 Z`;
+  // Frente da barriga: baixa (pochete), alta (logo abaixo do peito) ou flácida (caindo sobre o cós).
+  const frente = alta
+    ? `C71 116 70 108 69 102 C${70 + b} 96 ${72 + b} 80 ${68 + b * 0.4} 66 C68 64 70 62 72 60`
+    : flacida
+      ? `C${76 + b} 132 ${75 + b} 110 ${68 + b * 0.5} 100 C${66 + b * 0.2} 92 64 86 65 78 C66 70 68 64 72 60`
+      : `C${74 + b} 118 ${72 + b} 108 ${68 + b * 0.7} 100 C${66 + b * 0.3} 92 64 86 65 78 C66 70 68 64 72 60`;
+  const d = `M58 6 C56 16 44 20 42 32 C40 54 46 70 44 86 C42 100 34 112 38 160 L80 160 C79 146 76 134 72 124 ${frente} C80 54 84 44 76 34 C70 28 66 18 66 6 Z`;
   return `<svg viewBox="0 0 120 160" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
   <rect width="120" height="160" style="fill:#E4DDCF"/>
   <defs><clipPath id="${id}"><path d="${d}"/></clipPath></defs>
@@ -562,9 +568,25 @@ const torso = (b, {jeans, define, pausa} = {}) => {
     <rect x="0" y="${jeans ? 120 : 118}" width="120" height="50" style="fill:${jeans ? '#5D7A94' : '#4A5E52'}"/>
     ${jeans ? '<path d="M0 124h120" style="stroke:#40576D" stroke-width="2"/><circle cx="76" cy="128" r="2.6" style="fill:#C9A66B"/>' : ''}
     ${define ? '<path d="M62 66 C61 78 61 92 63 106" style="fill:none;stroke:#B98868" stroke-width="2" stroke-linecap="round"/>' : ''}
-    <path d="M${65 + b * 0.45} 92 h.01" style="stroke:#9C6E52" stroke-width="3" stroke-linecap="round"/>
+    <path d="M${alta ? 66 + b * 0.6 : 65 + b * 0.45} ${alta ? 88 : 92} h.01" style="stroke:#9C6E52" stroke-width="3" stroke-linecap="round"/>
   </g>
   ${pausa ? '<g><circle cx="100" cy="24" r="13" style="fill:#FFFDF9"/><path d="M96 18v12M104 18v12" style="stroke:#A4442C" stroke-width="3" stroke-linecap="round"/></g>' : ''}
+</svg>`;
+};
+// Tronco de frente, para o pneuzinho (as laterais saem para fora na cintura).
+const frenteArt = (b) => {
+  const id = 'tf' + (++svgId);
+  const d = `M46 6 C46 16 32 20 28 30 C26 50 34 64 36 78 C${32 - b} 86 ${31 - b} 100 36 106 C32 118 30 132 32 160 L88 160 C90 132 88 118 84 106 C${89 + b} 100 ${88 + b} 86 84 78 C86 64 94 50 92 30 C88 20 74 16 74 6 Z`;
+  return `<svg viewBox="0 0 120 160" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+  <rect width="120" height="160" style="fill:#E4DDCF"/>
+  <defs><clipPath id="${id}"><path d="${d}"/></clipPath></defs>
+  <path d="${d}" style="fill:#D9A98A"/>
+  <g clip-path="url(#${id})">
+    <rect x="0" y="26" width="120" height="28" style="fill:#17332B"/>
+    <rect x="0" y="110" width="120" height="60" style="fill:#4A5E52"/>
+    <path d="M${36 - b * 0.6} 96 q6 2 10 0 M${84 + b * 0.6} 96 q-6 2 -10 0" style="fill:none;stroke:#B98868" stroke-width="2" stroke-linecap="round"/>
+    <path d="M60 92 h.01" style="stroke:#9C6E52" stroke-width="3" stroke-linecap="round"/>
+  </g>
 </svg>`;
 };
 const penArt = () => `<svg viewBox="0 0 360 170" role="img" aria-label="Ilustração de uma caneta de aplicação">
@@ -627,7 +649,7 @@ const sealSvg = (d) => `<svg class="seal" viewBox="0 0 64 64" aria-hidden="true"
 
 /* ---------- Perguntas ----------
    Ordem psicológica: gancho (idade) → aceitação (idade não é problema) → situação com a caneta →
-   dor principal (pochete) → consciência do problema → dores do dia a dia → hábito → peso →
+   dor principal (tipo de barriga) → consciência do problema → dores do dia a dia → hábito → peso →
    espelho personalizado → consciência da solução → preferência → microcompromisso → resultado.
    Em `opts`, `v` é o código enviado ao backend e `ic` é o ícone (ICON). */
 const IDADES = [
@@ -642,12 +664,14 @@ const STEPS = [
   {id: 'caneta', type: 'buttons', art: () => foto(CONFIG.imagens.caneta, penArt()), q: 'Há quanto tempo você <em>usa a caneta?</em>', hint: 'Mounjaro, Ozempic, Wegovy, Saxenda ou outra.', opts: [
     {v: 'c0', l: 'Comecei há menos de 1 mês', ic: 'broto'}, {v: 'c1', l: 'De 1 a 3 meses', ic: 'cal'},
     {v: 'c3', l: 'De 3 a 6 meses', ic: 'ampulheta'}, {v: 'c6', l: 'Mais de 6 meses', ic: 'calok'}, {v: 'parei', l: 'Já usei e parei', ic: 'pausa'}]},
-  {id: 'pochete', type: 'cards', q: 'E a barriga de baixo, a famosa <em>pochete</em>, como está?', opts: [
-    {v: 'nada', l: 'Não saiu nada ainda', img: () => foto(CONFIG.imagens.pochete.nada, torso(14))}, {v: 'pouco', l: 'Diminuiu bem pouco', img: () => foto(CONFIG.imagens.pochete.pouco, torso(9))},
-    {v: 'travou', l: 'Diminuiu e travou', img: () => foto(CONFIG.imagens.pochete.travou, torso(9, {pausa: true}))}, {v: 'saiu', l: 'Já diminuiu bem', img: () => foto(CONFIG.imagens.pochete.saiu, torso(4))}]},
+  {id: 'barriga', type: 'cards', q: 'Qual tipo de barriga <em>mais te incomoda</em> hoje?', opts: [
+    {v: 'pochete', l: 'Pochete', sub: 'a barriga de baixo', nome: 'a pochete', img: () => foto(CONFIG.imagens.barriga.pochete, torso(14))},
+    {v: 'pneuzinho', l: 'Pneuzinho', sub: 'as laterais', nome: 'o pneuzinho', img: () => foto(CONFIG.imagens.barriga.pneuzinho, frenteArt(9))},
+    {v: 'alta', l: 'Barriga alta', sub: 'estufada em cima', nome: 'a barriga alta', img: () => foto(CONFIG.imagens.barriga.alta, torso(12, {alta: true}))},
+    {v: 'flacida', l: 'Barriga flácida', sub: 'mole, caída', nome: 'a barriga flácida', img: () => foto(CONFIG.imagens.barriga.flacida, torso(12, {flacida: true}))}]},
   {id: 'sonho', type: 'cards', q: 'E como você quer que a sua <em>barriga</em> fique?', hint: 'Escolha a que mais combina com você.', opts: [
     {v: 'lisa', l: 'Lisinha', img: () => foto(CONFIG.imagens.sonho.lisa, torso(0))}, {v: 'firme', l: 'Firme e definida', img: () => foto(CONFIG.imagens.sonho.firme, torso(0, {define: true}))},
-    {v: 'roupa', l: 'Caber na roupa de antes', img: () => foto(CONFIG.imagens.sonho.roupa, torso(2, {jeans: true}))}, {v: 'leve', l: 'Sem a pochete, só isso', img: () => foto(CONFIG.imagens.sonho.leve, torso(3))}]},
+    {v: 'roupa', l: 'Caber na roupa de antes', img: () => foto(CONFIG.imagens.sonho.roupa, torso(2, {jeans: true}))}, {v: 'leve', l: 'Só sumir com essa barriga', img: () => foto(CONFIG.imagens.sonho.leve, torso(3))}]},
   {id: 'porque', type: 'insight'},
   {id: 'sintomas', type: 'multi', q: 'Desde a caneta, <em>o que acontece</em> com você?', hint: 'Marque tudo o que for verdade.', opts: [
     {v: 'fome', l: 'Quase não sinto fome, esqueço de comer', ic: 'prato'}, {v: 'doce', l: 'Vontade forte de doce', ic: 'doce'},
@@ -663,8 +687,8 @@ const STEPS = [
   {id: 'solucao', type: 'solution'},
   {id: 'tempo', type: 'buttons', q: 'Quanto tempo você tem <em>para preparar?</em>', opts: [
     {v: 't5', l: 'Até 5 minutos, coisa de liquidificador', ic: 'raio'}, {v: 't20', l: 'Uns 15 a 20 minutos', ic: 'panela'}, {v: 't40', l: 'Gosto de cozinhar com calma', ic: 'relogio'}]},
-  {id: 'compromisso', type: 'buttons', q: 'Se as receitas couberem no seu apetite e matarem a vontade de doce, <em>você testa por 7 dias?</em>', qf: () => `Se as receitas couberem no seu apetite e te deixarem mais perto da barriga <b>${sonhoLabel().toLowerCase()}</b>, <em>você testa por 7 dias?</em>`, opts: [
-    {v: 'sim', l: 'Sim, quero testar!', ic: 'saiu'}, {v: 'tentar', l: 'Vou tentar', ic: 'sorriso'}]},
+  {id: 'compromisso', type: 'buttons', q: 'Se existisse um jeito de comer o que você gosta e ainda ver a barriga diminuir, <em>você tentaria por 7 dias?</em>', qf: () => `Se existisse um jeito de comer o que você gosta e ficar mais perto da barriga <b>${sonhoLabel().toLowerCase()}</b>, <em>você tentaria por 7 dias?</em>`, opts: [
+    {v: 'sim', l: 'Sim, eu tentaria!', ic: 'saiu'}, {v: 'tentar', l: 'Talvez', ic: 'sorriso'}]},
   {id: 'loading', type: 'loading'},
   {id: 'resultado', type: 'result'}
 ];
@@ -673,6 +697,9 @@ const QUESTION_IDX = STEPS.map((s, i) => (['loading', 'result'].includes(s.type)
 // Só as perguntas de verdade entram no contador "3/8".
 const SONHO = Object.fromEntries(STEPS.find((x) => x.id === 'sonho').opts.map((o) => [o.v, o]));
 const sentimentoLabel = () => (STEPS[0].opts.find((o) => o.v === state.a.sentimento) || STEPS[0].opts[0]).l;
+const BARRIGA = Object.fromEntries(STEPS.find((x) => x.id === 'barriga').opts.map((o) => [o.v, o]));
+const barrigaNome = () => (BARRIGA[state.a.barriga] || BARRIGA.pochete).nome;
+const cap1 = (t) => t.charAt(0).toUpperCase() + t.slice(1);
 const sonhoLabel = () => (SONHO[state.a.sonho] || SONHO.lisa).l;
 
 const state = {i: 0, a: {}};
@@ -749,7 +776,7 @@ const renderHook = (s) => {
   return [
     H('div', foto(CONFIG.imagens.gancho, mirrorArt(), 'Mulher diante do espelho'), 'hook-pic'),
     H('h1', 'Você quase não come, toma a caneta certinho… e ainda <em>foge do espelho</em>?', 'hook-h'),
-    H('p', 'Não é falta de esforço. Tem um motivo para a pochete não sair, e ele está no seu prato.', 'lead'),
+    H('p', 'Não é falta de esforço. Tem um motivo para essa barriga não ir embora, e ele está no seu prato.', 'lead'),
     el('p', {class: 'hook-ask'}, 'Seja sincera: quando você se olha no espelho hoje, o que sente?'),
     wrap,
     H('p', ic('cadeado') + 'Ninguém vai ver as suas respostas.', 'secret'),
@@ -764,17 +791,17 @@ const renderIntro = (s) => {
     wrap.append(b);
   });
   return [
-    H('h2', 'Obrigada pela sinceridade. Para montar o seu plano, qual é a sua <em>idade</em>?'),
+    H('h2', 'Obrigada pela sinceridade. Agora me conta: qual é a sua <em>idade</em>?'),
     wrap
   ];
 };
 
 const IDADE_TXT = {
   i18: ['Antes dos 30, o corpo responde rápido.', 'A balança costuma cair logo no começo. Mas a gordura da barriga de baixo é das mais teimosas em qualquer idade, e o que destrava é o que vai no prato enquanto a fome está baixa.'],
-  i30: ['Aos 30 e poucos, o corpo ainda responde rápido.', 'Mas é a partir dos 30 que começamos a perder músculo a cada ano. Com a fome baixa da caneta, isso pode acelerar se faltar proteína, e é aí que a pochete fica.'],
+  i30: ['Aos 30 e poucos, o corpo ainda responde rápido.', 'Mas é a partir dos 30 que começamos a perder músculo a cada ano. Com a fome baixa da caneta, isso pode acelerar se faltar proteína, e é aí que a barriga fica.'],
   i40: ['Depois dos 40, não é que fica impossível. Muda o que precisa ir no prato.', 'Nessa fase o corpo perde músculo com mais facilidade e os hormônios favorecem a gordura na barriga. Com a caneta tirando a fome, cada garfada precisa contar mais.'],
   i50: ['Depois dos 50 dá, sim. Só não dá para comer de qualquer jeito.', 'A perda de músculo acelera nessa idade. Se a caneta tira a fome e o pouco que você come tem pouca proteína, o corpo emagrece no lugar errado. Ajustando o prato, isso muda.'],
-  i60: ['Depois dos 60, o prato vale ainda mais.', 'Nessa fase manter músculo é o que garante disposição, equilíbrio e barriga firme. Com a fome baixa da caneta, as receitas certas fazem toda a diferença.']
+  i60: ['Depois dos 60, o prato vale ainda mais.', 'Nessa fase manter músculo é o que garante disposição, equilíbrio e barriga firme. Com a fome baixa da caneta, o que vai no prato faz toda a diferença.']
 };
 // Curva ilustrativa: faixa de 3 a 8% de perda por década a partir dos 30, com a faixa da pessoa marcada.
 const muscleChart = (faixa) => {
@@ -814,7 +841,7 @@ const renderAge = () => {
       H('div', muscleChart(state.a.idade)),
       el('p', {class: 'src'}, 'Volpi E. et al., Curr Opin Clin Nutr Metab Care, 2004. Curva ilustrativa da faixa citada.')));
   }
-  out.push(el('div', {class: 'infobox'}, 'Vamos coletar mais algumas informações para montar o seu plano personalizado…'));
+  out.push(el('div', {class: 'infobox'}, 'Vamos entender melhor o que está acontecendo com o seu corpo…'));
   if (SETUP && !(prova && prova.pct)) out.push(el('div', {class: 'setup', role: 'note'}, el('strong', {}, 'Espaço para a prova da sua base'), H('span', 'Preencha <code>CONFIG.provaQuebra</code> (ex.: "+ 3.200 mulheres de {idade} que usam a caneta já fizeram este teste") e/ou <code>CONFIG.provaIdade</code> (% de alunas dessa faixa que disseram que funcionou) com os seus números reais. Aparecem em destaque aqui.')));
   out.push(contBtn('cont-quebra', 'Continuar'));
   return out;
@@ -869,12 +896,7 @@ const renderMulti = (s) => {
 
 // Consciência do problema: por que a pochete não sai.
 const renderInsight = () => {
-  const p = state.a.pochete;
-  const titulo = p === 'saiu'
-    ? 'Ótimo começo. Mas cuidado: <em>você pode estar perdendo músculo</em> no caminho.'
-    : p === 'travou'
-      ? 'Travou? <em>A culpa não é sua.</em>'
-      : 'Você está emagrecendo. <em>Só que do jeito errado.</em>';
+  const titulo = `${cap1(barrigaNome())} não sai? <em>A culpa não é sua.</em>`;
   return [
     H('h2', titulo),
     H('p', 'A caneta tira a fome. Mas se o pouco que você come tem pouca proteína, o corpo não queima só gordura: <b>ele queima o seu próprio músculo.</b>', 'c lead'),
@@ -884,7 +906,7 @@ const renderInsight = () => {
         el('div', {class: 'fat', style: 'flex:61', html: '~60%<small>gordura</small>'}), el('div', {class: 'lean', style: 'flex:39', html: '~40%<small>músculo e massa magra</small>'})),
       el('p', {class: 'src'}, 'Estudo STEP 1 (semaglutida), análise de composição corporal. Wilding J. et al., NEJM, 2021.')),
     el('div', {class: 'sheet linho'},
-      H('p', 'Músculo é o que mantém o metabolismo ligado e a barriga firme. Quando ele vai embora, vem o cansaço, a flacidez e <b>a pochete fica.</b>')),
+      H('p', `Músculo é o que mantém o metabolismo ligado e a barriga firme. Quando ele vai embora, vem o cansaço, a flacidez e <b>${barrigaNome()} fica.</b>`)),
     contBtn('cont-porque', 'Faz sentido. Continuar')
   ];
 };
@@ -990,12 +1012,12 @@ const renderSolution = () => {
     el('div', {class: 'swap'}, card('no', t.de), H('span', ic('arrow'), 'arrow'), card('yes', t.para)),
     el('p', {class: 'fine'}, 'Valores aproximados por porção.'),
     el('div', {class: 'sheet'},
-      H('h3', 'As receitas seguem <em>3 regras</em>'),
+      H('h3', 'O que funciona segue <em>3 regras</em>'),
       el('ol', {class: 'rules'},
         el('li', {}, el('span', {class: 'n'}, '1'), el('div', {}, el('b', {}, 'Proteína primeiro'), el('span', {}, 'Para o corpo queimar gordura e não músculo.'))),
         el('li', {}, el('span', {class: 'n'}, '2'), el('div', {}, el('b', {}, 'Porção do tamanho do apetite'), el('span', {}, 'Pequeno e frequente rende mais que um prato que não desce.'))),
         el('li', {}, el('span', {class: 'n'}, '3'), el('div', {}, el('b', {}, 'Prazer no cardápio'), el('span', {}, 'Gelado, doce e lanche continuam, na versão que alimenta.'))))),
-    contBtn('cont-solucao', 'Quero ver como fica pra mim')
+    contBtn('cont-solucao', 'Quero ver o meu resultado')
   ];
 };
 
@@ -1006,7 +1028,7 @@ const DICAS = [
   ['Deixe algo <em>pronto</em>', 'Ter algo proteico pronto na geladeira evita pular refeição nos dias de pouca fome.']
 ];
 const renderLoading = () => {
-  const items = ['Analisando as suas respostas', 'Calculando a sua proteína do dia', 'Separando receitas geladas e doces', 'Montando o seu Dia 1'];
+  const items = ['Analisando as suas respostas', 'Cruzando com a sua idade e o seu IMC', 'Calculando a proteína que o seu corpo pede', 'Preparando o seu resultado'];
   const ul = el('ul', {class: 'checks'}, items.map((t) => el('li', {}, H('span', markSvg, 't'), t)));
   const mark = H('div', capsuleSvg('big', '#17332B', '#B8744F', 0));
   const pct = el('div', {class: 'pct', 'aria-hidden': 'true'}, '0%');
@@ -1035,13 +1057,13 @@ const renderLoading = () => {
     }, 450);
   };
   requestAnimationFrame(tick);
-  return [H('h2', 'Montando o seu <em>plano de receitas</em>'), el('p', {class: 'hint'}, 'Estamos cruzando as suas respostas.'),
-    el('div', {class: 'loader', role: 'status', 'aria-label': 'Montando o seu plano'}, mark, pct, ul, tip)];
+  return [H('h2', 'Analisando o seu <em>corpo e a sua rotina</em>'), el('p', {class: 'hint'}, 'Leva só alguns segundos.'),
+    el('div', {class: 'loader', role: 'status', 'aria-label': 'Analisando as suas respostas'}, mark, pct, ul, tip)];
 };
 
 /* ---------- Resultado ---------- */
 const PERFIS = {
-  economia: {nome: 'Apetite no modo economia', txt: 'A caneta tirou a fome e você passa o dia beliscando. O corpo emagrece, mas parte do que sai é músculo, e por isso vem o cansaço e a pochete não sai. Seu plano começa com mini-refeições que fecham a proteína em poucas garfadas.'},
+  economia: {nome: 'Apetite no modo economia', txt: 'A caneta tirou a fome e você passa o dia beliscando. O corpo emagrece, mas parte do que sai é músculo, e por isso vem o cansaço e a barriga não sai. Seu plano começa com mini-refeições que fecham a proteína em poucas garfadas.'},
   gelado: {nome: 'Só desce gelado', txt: 'Com a caneta, o corpo pede coisas frias e leves. O problema é que os gelados comuns quase não têm proteína. Seu plano troca o sorvete e o açaí por versões cremosas que alimentam de verdade.'},
   doce: {nome: 'Doce no lugar da comida', txt: 'Com a fome baixa, o doce entra fácil e ocupa o espaço da comida. Seu plano mantém o doce todos os dias, só que em receitas com proteína que seguram a vontade.'},
   lanche: {nome: 'Fome de hambúrguer', txt: 'A vontade de lanche continua mesmo com a caneta. Em vez de lutar contra ela, seu plano traz hambúrguer, pizza e salgado caseiros, no tamanho do seu apetite e com a proteína que o corpo precisa.'},
@@ -1078,7 +1100,7 @@ const renderResult = () => {
     + (['i40', 'i50', 'i60'].includes(a.idade) ? 10 : 0) + (s.includes('cansaco') ? 6 : 0) + (s.includes('academia') ? 6 : 0), 20, 94);
   const vontade = clamp(20 + (s.includes('doce') ? 28 : 0) + (s.includes('gelado') ? 20 : 0) + (s.includes('lanche') ? 18 : 0) + (['doce', 'gelado', 'lanche'].includes(a.come) ? 14 : 0), 12, 95);
   const energia = clamp(78 - (s.includes('cansaco') ? 26 : 0) - (s.includes('academia') ? 14 : 0) - (s.includes('fome') ? 10 : 0), 18, 90);
-  const destravar = clamp(62 + (a.compromisso === 'sim' ? 22 : 10) + (a.tempo === 't5' ? 6 : 4) + (a.pochete === 'travou' ? 4 : 0), 40, 96);
+  const destravar = clamp(62 + (a.compromisso === 'sim' ? 22 : 10) + (a.tempo === 't5' ? 6 : 4) + (a.sonho === 'leve' ? 4 : 0), 40, 96);
   const scoreRow = (lbl, v, color, id) => el('div', {class: 'score'},
     el('div', {class: 'row'}, el('span', {}, lbl), el('b', {}, v + '%')),
     el('div', {class: 'track'}, el('i', {id, 'data-w': v, style: `background:${color}`})));
@@ -1099,7 +1121,7 @@ const renderResult = () => {
         el('p', {class: 'src', style: 'font-size:.875rem;margin-top:4px'}, `Em 4 momentos, cerca de ${porRefeicao} g por vez.`))),
     el('p', {}, 'Parece muito para quem quase não sente fome, e é por isso que as receitas são pensadas para caber em poucas garfadas.')));
 
-  const vsNo = ['Come pouco e a proteína não fecha', 'Doce e gelado sem nada de proteína', 'Cansaço e zero pique para treinar', 'A pochete continua lá'];
+  const vsNo = ['Come pouco e a proteína não fecha', 'Doce e gelado sem nada de proteína', 'Cansaço e zero pique para treinar', `${cap1(barrigaNome())} continua lá`];
   const vsYes = ['Porção pequena que alimenta', 'Gelado e doce que seguram a vontade', 'Mais energia ao longo do dia', 'O corpo queima gordura, não músculo'];
   out.push(el('div', {class: 'vs'},
     el('div', {class: 'col no'}, el('div', {class: 'hd'}, 'Como está hoje'), vsNo.map((t) => H('div', ic('x') + `<span>${t}</span>`, 'it'))),

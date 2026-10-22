@@ -14,9 +14,9 @@ let fail = false;
 const check = (ok, msg) => { if (!ok) fail = true; out.push(`${ok ? 'ok ' : 'ERRO'} ${msg}`); };
 
 const scenarios = [
-  {nome: 'gelado, 40 a 49', sentimento: 'vergonha', idade: 'i40', caneta: 'c3', pochete: 'travou', sonho: 'lisa', sintomas: ['fome', 'gelado', 'cansaco'], come: 'gelado', tempo: 't5', compromisso: 'sim'},
-  {nome: 'lanche, 60+', sentimento: 'evito', idade: 'i60', caneta: 'c6', pochete: 'nada', sonho: 'roupa', sintomas: ['lanche', 'enjoo', 'academia'], come: 'lanche', tempo: 't40', compromisso: 'tentar'},
-  {nome: 'sem sinais, 18 a 29', sentimento: 'raiva', idade: 'i18', caneta: 'parei', pochete: 'saiu', sonho: 'firme', sintomas: ['nenhum'], come: 'prato_pequeno', tempo: 't20', compromisso: 'sim'}
+  {nome: 'gelado, 40 a 49', sentimento: 'vergonha', idade: 'i40', caneta: 'c3', barriga: 'pochete', sonho: 'lisa', sintomas: ['fome', 'gelado', 'cansaco'], come: 'gelado', tempo: 't5', compromisso: 'sim'},
+  {nome: 'lanche, 60+', sentimento: 'evito', idade: 'i60', caneta: 'c6', barriga: 'pneuzinho', sonho: 'roupa', sintomas: ['lanche', 'enjoo', 'academia'], come: 'lanche', tempo: 't40', compromisso: 'tentar'},
+  {nome: 'sem sinais, 18 a 29', sentimento: 'raiva', idade: 'i18', caneta: 'parei', barriga: 'flacida', sonho: 'firme', sintomas: ['nenhum'], come: 'prato_pequeno', tempo: 't20', compromisso: 'sim'}
 ];
 
 const run = (sc) => new Promise((resolve) => {
@@ -48,7 +48,7 @@ const run = (sc) => new Promise((resolve) => {
       snap(); click('opt-idade-' + sc.idade); await wait(300);
       snap(); click('cont-quebra'); await wait(50);
       snap(); click('opt-caneta-' + sc.caneta); await wait(300);
-      snap(); click('opt-pochete-' + sc.pochete); await wait(300);
+      snap(); click('opt-barriga-' + sc.barriga); await wait(300);
       snap(); click('opt-sonho-' + sc.sonho); await wait(300);
       snap(); click('cont-porque'); await wait(50);
       snap(); sc.sintomas.forEach((v) => click('opt-sintomas-' + v)); click('cont-sintomas'); await wait(50);
@@ -91,7 +91,7 @@ const run = (sc) => new Promise((resolve) => {
     check(conc.perfil === sc.come, `[${sc.nome}] perfil enviado ao backend: ${conc.perfil}`);
     const etapas = sent.filter((e) => e.tipo === 'etapa');
     const resp = Object.assign({}, ...etapas.map((e) => e.respostas));
-    check(resp.sentimento === sc.sentimento && resp.idade === sc.idade && resp.sonho === sc.sonho && resp.come === sc.come && resp.peso === 82 && resp.altura === 164 && Array.isArray(resp.sintomas), `[${sc.nome}] respostas chegam ao backend (${Object.keys(resp).join(', ')})`);
+    check(resp.sentimento === sc.sentimento && resp.barriga === sc.barriga && resp.idade === sc.idade && resp.sonho === sc.sonho && resp.come === sc.come && resp.peso === 82 && resp.altura === 164 && Array.isArray(resp.sintomas), `[${sc.nome}] respostas chegam ao backend (${Object.keys(resp).join(', ')})`);
     check(new Set(sent.map((e) => e.sessao)).size === 1, `[${sc.nome}] uma sessão só`);
     // checkout: sem link mostra o aviso; com link manda o evento e repassa UTMs
     d.getElementById('cta').click();

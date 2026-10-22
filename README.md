@@ -10,7 +10,7 @@ Quiz de 16 telas (10 perguntas) que leva quem usa caneta emagrecedora a entender
 | 1 | Idade em cartões | Gancho ("usando a caneta e a pochete ainda não saiu?") e primeira interação já na capa |
 | 2 | Quebra da idade | "Você está no lugar certo": texto por faixa + % real da sua base (`CONFIG.provaIdade`) ou dado de pesquisa |
 | 3 | Há quanto tempo usa a caneta | Situação |
-| 4 | Como está a pochete | Dor principal |
+| 4 | Tipo de barriga que mais incomoda | Dor principal (pochete, pneuzinho, alta, flácida) |
 | 4b | Como quer que a barriga fique | Desejo: cartões com silhueta, volta no resultado e no compromisso |
 | 5 | Por que a pochete não sai | Consciência do problema (músculo × gordura, STEP 1) |
 | 6 | O que acontece desde a caneta | Dores: sem fome, doce, gelado, hambúrguer, cansaço, academia, enjoo |

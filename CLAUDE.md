@@ -4,7 +4,7 @@ Funil de quiz para vender um infoproduto low ticket de **receitas para quem usa 
 
 Tom: emocional e direto, de funil low ticket para tráfego frio (dor da autoestima, espelho, pochete). O espelho devolve o que a pessoa disse sentir. Fotos ficam em `CONFIG.imagens` (vazio = ilustração). Criativos de anúncio em `anuncios/criativos-meta.md`.
 
-O quiz é uma venda implícita: não pode parecer venda até o final. O resultado é o "plano personalizado" e o preço aparece como acesso ao plano completo.
+O quiz é uma venda implícita: não pode parecer venda até a última página. Antes dela, nada de "plano", "receitas", produto ou preço; só consciência do problema e depois da solução. O resultado é o "plano personalizado" e o preço aparece como acesso ao plano completo.
 
 O dono do projeto fala português. Responda e escreva os textos do quiz em português do Brasil, com linguagem simples.
 
@@ -18,7 +18,7 @@ O dono do projeto fala português. Responda e escreva os textos do quiz em portu
 ## Como o `quiz/index.html` está organizado
 
 - `CONFIG`: marca, preço, checkout, URL do backend, Pixel, garantia, prova social, `provaIdade` (quebra da idade), autor, depoimentos e entregáveis. Quase toda mudança de conteúdo começa aqui.
-- `STEPS`: a ordem das telas. Ordem psicológica: gancho emocional na autoestima (`sentimento`: o que sente no espelho; primeiro clique) → idade (cartões com imagem) → quebra da idade (prova da base em `provaIdade`, ou dado de pesquisa) → tempo de caneta → pochete (cartões com silhueta) → como quer que a barriga fique (`sonho`, desejo) → por que não sai (consciência do problema) → sintomas → o que mais come (define o perfil) → peso e altura (IMC ao vivo) → espelho personalizado com a proteína → solução (troca de receita) → tempo para cozinhar → microcompromisso → carregamento → resultado.
+- `STEPS`: a ordem das telas. Ordem psicológica: gancho emocional na autoestima (`sentimento`: o que sente no espelho; primeiro clique) → idade (cartões com imagem) → quebra da idade (prova da base em `provaIdade`, ou dado de pesquisa) → tempo de caneta → tipo de barriga que mais incomoda (`barriga`: pochete, pneuzinho, alta, flácida; o texto do quiz usa a escolhida) → como quer que a barriga fique (`sonho`, desejo) → por que não sai (consciência do problema) → sintomas → o que mais come (define o perfil) → peso e altura (IMC ao vivo) → espelho personalizado com a proteína → solução (troca de receita) → tempo para cozinhar → microcompromisso → carregamento → resultado.
 - Tipos de tela: `hook`, `intro`, `age`, `buttons`, `cards` (opções com imagem, `img`), `multi`, `insight`, `weight`, `mirror`, `solution`, `loading`, `result`. Em `opts`, `ic` é o ícone (objeto `ICON`, SVG de traço; não use emoji) e `v` é o código enviado ao backend: não renomeie sem atualizar `PERFIS`, `TROCA`, `ESPELHO`, `PROT_TIPICA` e `backend/.../validar.ts` (lista `PERFIS`).
 - O perfil vem da pergunta `come`: `economia`, `gelado`, `doce`, `lanche`, `prato_pequeno`.
 
