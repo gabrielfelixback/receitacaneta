@@ -9,12 +9,19 @@ test('aceita um registro completo e limpa UTMs', () => {
   const r = validarRegistro({
     sessao, tipo: 'concluido', etapa: 12, perfil: 'gelado', versao: 'v1',
     respostas: { idade: 'i45', sintomas: ['doce', 'gelado', 'doce'], peso: 82.4 },
-    utm: { utm_source: 'fb', utm_campaign: 'teste', email: 'x@y.com' },
+    utm: { utm_source: 'fb', utm_campaign: 'teste', email: 'x@y.com', fbclid: 'IwAR123' },
   });
   assert.equal(r.ok, true);
   if (!r.ok) return;
   assert.deepEqual(r.dados.respostas, { idade: 'i45', sintomas: ['doce', 'gelado'], peso: 82 });
   assert.deepEqual(r.dados.utm, { utm_source: 'fb', utm_campaign: 'teste' });
+});
+
+test('passo vira código curto ou some', () => {
+  const ok = validarRegistro({ sessao, tipo: 'etapa', etapa: 2, passo: 'barriga' });
+  assert.equal(ok.ok && ok.dados.passo, 'barriga');
+  const ruim = validarRegistro({ sessao, tipo: 'etapa', etapa: 2, passo: 'Maria <script>' });
+  assert.equal(ruim.ok && ruim.dados.passo, null);
 });
 
 test('recusa sessão, tipo e perfil inválidos', () => {

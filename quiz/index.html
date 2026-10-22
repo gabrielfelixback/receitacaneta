@@ -540,6 +540,7 @@ const CONFIG = {
   checkoutUrl: '',          // seu link de checkout (Kiwify, Hotmart, Payt...). UTMs e fbclid vão junto.
   backendUrl: '',           // https://SEU_PROJETO.supabase.co/functions/v1/quiz  (veja backend/README.md)
   pixelId: '',              // ID do Pixel do Meta. Só carrega no seu domínio.
+  privacidadeUrl: '',       // link da sua política de privacidade (o quiz coleta peso, altura e sintomas). Aparece no rodapé do resultado.
   garantiaDias: 7,
   provaSocial: '',          // ex.: 'Mais de 3.200 pessoas já fizeram o teste'. Só com número real.
   // Frase grande da tela "Você está no caminho certo!". {idade} vira a faixa escolhida.
@@ -592,7 +593,7 @@ const CONFIG = {
 
 /* ===================================================================== */
 const SETUP = !CONFIG.checkoutUrl;
-const VERSAO = 'v9';
+const VERSAO = 'v10';
 const fmtBRL = (v) => new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(v);
 const $ = (s, r = document) => r.querySelector(s);
 const el = (tag, attrs = {}, ...kids) => {
@@ -867,7 +868,7 @@ const next = () => {
     track('QuizEtapa', {etapa}, true);
     const respostas = {};
     [s.id, ...(s.also || [])].forEach((k) => { if (k in state.a) respostas[k] = state.a[k]; });
-    send('etapa', {etapa, respostas});
+    send('etapa', {etapa, passo: s.id, respostas});
   }
   go(state.i + 1);
 };
@@ -923,7 +924,7 @@ const renderHook = (s) => {
     H('p', 'Não é falta de esforço. <b>O motivo está no seu prato</b>, e quase ninguém te contou.', 'lead c'),
     el('p', {class: 'hook-ask'}, 'Seja sincera: quando você se olha no espelho, o que sente?'),
     wrap,
-    H('p', ic('cadeado') + 'Ninguém vai ver as suas respostas.', 'secret'),
+    H('p', ic('cadeado') + 'Suas respostas são anônimas. Sem nome, sem e-mail.', 'secret'),
     CONFIG.provaSocial ? el('p', {class: 'fine'}, CONFIG.provaSocial) : null
   ];
 };
@@ -1219,7 +1220,7 @@ const renderLoading = () => {
     if (p < 1) requestAnimationFrame(tick);
     else setTimeout(() => {
       if (STEPS[state.i].type !== 'loading') return;
-      send('concluido', {etapa: QUESTION_IDX.length + 1, perfil: perfilId()});
+      send('concluido', {etapa: QUESTION_IDX.length + 1, passo: 'concluido', perfil: perfilId()});
       track('QuizCompleto', {}, true);
       next();
     }, 450);
@@ -1343,7 +1344,7 @@ const renderResult = () => {
   const onBuy = (ev) => {
     ev.preventDefault();
     if (!CONFIG.checkoutUrl) { setupMsg.hidden = false; setupMsg.scrollIntoView({behavior: 'smooth', block: 'center'}); return; }
-    send('checkout', {etapa: QUESTION_IDX.length + 2});
+    send('checkout', {etapa: QUESTION_IDX.length + 2, passo: 'checkout'});
     track('InitiateCheckout', {value: CONFIG.preco, currency: 'BRL'});
     setTimeout(() => { location.href = href; }, 250);
   };
@@ -1396,7 +1397,7 @@ const renderResult = () => {
   ];
   out.push(el('div', {class: 'sheet faq'}, H('h3', 'Perguntas <em>frequentes</em>'), faq.map(([q, r]) => el('details', {}, H('summary', `<span>${q}</span>${ic('plus')}`), el('p', {}, r)))));
   out.push(el('a', {class: 'btn buy', id: 'cta-2', href, onclick: onBuy}, 'Acessar meu plano completo', icon('arrow')));
-  out.push(el('p', {class: 'fine'}, 'Material educativo. Não substitui consulta médica ou com nutricionista. Os resultados variam de pessoa para pessoa.'));
+  out.push(H('p', 'Material educativo. Não substitui consulta médica ou com nutricionista. Os resultados variam de pessoa para pessoa.' + (CONFIG.privacidadeUrl ? ` <a href="${CONFIG.privacidadeUrl}" target="_blank" rel="noopener">Política de privacidade</a>` : ''), 'fine'));
 
   $('#stickyPrice').textContent = fmtBRL(CONFIG.preco);
   $('#stickyDe').textContent = `De ${fmtBRL(de)}`;

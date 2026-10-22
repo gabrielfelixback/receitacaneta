@@ -1,6 +1,6 @@
 // Edge Function: quiz
 // POST /quiz  corpo JSON (enviado como text/plain para não gerar preflight):
-//   { sessao: uuid, tipo: 'inicio'|'etapa'|'concluido'|'checkout', etapa?, respostas?, perfil?, utm?, versao? }
+//   { sessao: uuid, tipo: 'inicio'|'etapa'|'concluido'|'checkout', etapa?, passo?, respostas?, perfil?, utm?, versao? }
 // -> { ok: true } ou { ok: false, erro }
 // Pública (deploy com --no-verify-jwt): o quiz roda sem login. A proteção é
 // a lista de origens, o limite de tamanho, a validação estrita e os limites
@@ -9,10 +9,13 @@ import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { corsHeaders, json, origemPermitida } from '../_shared/cors.ts';
 import { ipDoCliente, LIMITES, validarRegistro } from '../_shared/validar.ts';
 
-const db = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!, {
-  auth: { persistSession: false, autoRefreshToken: false },
-});
+const URL = Deno.env.get('SUPABASE_URL') ?? '';
+const CHAVE = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
 const SAL = Deno.env.get('QUIZ_IP_SALT') ?? '';
+// Falta de segredo aparece no log da função logo no deploy, e não como "falha ao salvar" a cada evento.
+if (!URL || !CHAVE) console.error('quiz: faltam SUPABASE_URL ou SUPABASE_SERVICE_ROLE_KEY nas variáveis da função');
+if (!SAL) console.warn('quiz: QUIZ_IP_SALT vazio, o limite de sessões por IP fica desligado');
+const db = createClient(URL, CHAVE, { auth: { persistSession: false, autoRefreshToken: false } });
 
 async function hashIp(ip: string | null): Promise<string | null> {
   if (!ip || !SAL) return null;
@@ -50,6 +53,7 @@ Deno.serve(async (req) => {
     p_utm: d.utm,
     p_ip_hash: await hashIp(ip),
     p_versao: d.versao,
+    p_passo: d.passo,
   });
   if (error) {
     console.error('quiz_registrar', error.message);

@@ -1,0 +1,7 @@
+# Config mínima do Supabase CLI para este backend. Rode os comandos de dentro de backend/.
+project_id = "receitacaneta"
+
+# O quiz não tem login: a função é pública. A proteção está na lista de origens,
+# na validação e nos limites (veja functions/quiz/index.ts).
+[functions.quiz]
+verify_jwt = false

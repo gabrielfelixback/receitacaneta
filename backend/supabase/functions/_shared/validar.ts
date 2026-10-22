@@ -9,7 +9,8 @@ export type Tipo = (typeof TIPOS)[number];
 // Mesmos códigos de PERFIS no quiz/index.html.
 export const PERFIS = ['economia', 'gelado', 'doce', 'lanche', 'prato_pequeno'] as const;
 
-export const UTM_CHAVES = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'utm_id', 'fbclid'] as const;
+// fbclid fica de fora: liga a pessoa ao perfil dela no Meta, e aqui ela ficaria junto de peso e sintomas.
+export const UTM_CHAVES = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'utm_id'] as const;
 
 export const LIMITES = {
   corpoBytes: 8 * 1024,
@@ -36,6 +37,7 @@ export type Registro = {
   perfil: string | null;
   utm: Record<string, string>;
   versao: string | null;
+  passo: string | null;
 };
 
 export type Resultado = { ok: true; dados: Registro } | { ok: false; erro: string };
@@ -82,7 +84,7 @@ function limparUtm(v: unknown): Record<string, string> {
 export function validarRegistro(corpo: unknown): Resultado {
   if (!isObj(corpo)) return { ok: false, erro: 'corpo invalido' };
 
-  const { sessao, tipo, etapa, respostas, perfil, utm, versao } = corpo;
+  const { sessao, tipo, etapa, respostas, perfil, utm, versao, passo } = corpo;
   if (typeof sessao !== 'string' || !UUID.test(sessao)) return { ok: false, erro: 'sessao invalida' };
   if (typeof tipo !== 'string' || !(TIPOS as readonly string[]).includes(tipo)) return { ok: false, erro: 'tipo invalido' };
 
@@ -105,6 +107,7 @@ export function validarRegistro(corpo: unknown): Resultado {
   }
 
   const versaoOk = typeof versao === 'string' && VERSAO.test(versao) ? versao : null;
+  const passoOk = typeof passo === 'string' && CODIGO.test(passo) ? passo : null;
 
   return {
     ok: true,
@@ -116,6 +119,7 @@ export function validarRegistro(corpo: unknown): Resultado {
       perfil: perfilOk,
       utm: limparUtm(utm),
       versao: versaoOk,
+      passo: passoOk,
     },
   };
 }
