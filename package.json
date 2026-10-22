@@ -1,0 +1,14 @@
+{
+  "name": "receitacaneta",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Quiz de receitas para quem usa caneta emagrecedora, com backend no Supabase",
+  "scripts": {
+    "test": "npm run test:backend && npm run test:quiz",
+    "test:backend": "node --experimental-strip-types --test backend/testes/validar.test.ts",
+    "test:quiz": "node --experimental-strip-types testes/testar-quiz.js"
+  },
+  "devDependencies": {
+    "jsdom": "24.1.3"
+  }
+}
