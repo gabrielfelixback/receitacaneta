@@ -1,8 +1,8 @@
 # Receita Caneta
 
-Funil de quiz para vender um infoproduto low ticket de **receitas para quem usa caneta emagrecedora** (Mounjaro, Ozempic, Wegovy, Saxenda). Tráfego do Meta (Facebook e Instagram). O quiz deixa a pessoa consciente do problema (pouca proteína com a fome baixa → perde músculo, cansaço, a pochete não sai) e da solução (receitas pequenas, geladas, doces e de lanche que fecham a proteína) e só no fim mostra a oferta.
+Funil de quiz para vender um infoproduto low ticket de **receitas para quem usa caneta emagrecedora** (Mounjaro, Ozempic, Wegovy, Saxenda). Tráfego do Meta (Facebook e Instagram). O quiz deixa a pessoa consciente do problema (pouca proteína com a fome baixa → perde músculo, cansaço, a barriga não sai) e da solução (receitas pequenas, geladas, doces e de lanche que fecham a proteína) e só no fim mostra a oferta.
 
-Tom: emocional e direto, de funil low ticket para tráfego frio (dor da autoestima, espelho, pochete). O espelho devolve o que a pessoa disse sentir. Fotos ficam em `CONFIG.imagens` (vazio = ilustração). Criativos de anúncio em `anuncios/criativos-meta.md`.
+Tom: emocional e direto, de funil low ticket para tráfego frio (dor da autoestima, espelho, tipos de barriga). O espelho devolve o que a pessoa disse sentir. Fotos ficam em `CONFIG.imagens` (vazio = ilustração). Criativos de anúncio em `anuncios/criativos-meta.md`.
 
 O quiz é uma venda implícita: não pode parecer venda até a última página. Antes dela, nada de "plano", "receitas", produto ou preço; só consciência do problema e depois da solução. O resultado é o "plano personalizado" e o preço aparece como acesso ao plano completo.
 

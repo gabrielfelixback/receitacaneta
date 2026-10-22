@@ -1,18 +1,18 @@
 # Receita Caneta · quiz
 
-Quiz de 16 telas (10 perguntas) que leva quem usa caneta emagrecedora a entender por que a pochete não sai e termina num plano de receitas personalizado com a oferta.
+Quiz de 16 telas (10 perguntas) que leva quem usa caneta emagrecedora a entender por que a barriga não sai e só na última página mostra o plano de receitas personalizado com a oferta.
 
 ## Fluxo
 
 | # | Tela | Para quê |
 | --- | --- | --- |
 | 0 | Gancho: o que sente no espelho | Dor da autoestima e primeiro clique já na capa |
-| 1 | Idade em cartões | Gancho ("usando a caneta e a pochete ainda não saiu?") e primeira interação já na capa |
+| 1 | Idade em cartões | Situação, com imagem por faixa |
 | 2 | Quebra da idade | "Você está no lugar certo": texto por faixa + % real da sua base (`CONFIG.provaIdade`) ou dado de pesquisa |
 | 3 | Há quanto tempo usa a caneta | Situação |
 | 4 | Tipo de barriga que mais incomoda | Dor principal (pochete, pneuzinho, alta, flácida) |
 | 4b | Como quer que a barriga fique | Desejo: cartões com silhueta, volta no resultado e no compromisso |
-| 5 | Por que a pochete não sai | Consciência do problema (músculo × gordura, STEP 1) |
+| 5 | Por que essa barriga não sai | Consciência do problema (músculo × gordura, STEP 1) |
 | 6 | O que acontece desde a caneta | Dores: sem fome, doce, gelado, hambúrguer, cansaço, academia, enjoo |
 | 7 | O que mais entra no prato | Define o perfil |
 | 8 | Peso e altura | Mostra o IMC na hora e calcula a proteína do dia |
