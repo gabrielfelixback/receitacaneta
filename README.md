@@ -26,7 +26,7 @@ Quiz de 16 telas (10 perguntas) que leva quem usa caneta emagrecedora a entender
 ## Ordem para colocar no ar
 
 1. **Backend**: siga `backend/README.md` (migração, segredos, deploy da função `quiz`).
-2. **Front**: troque as fotos em `CONFIG.imagens`, preencha o `CONFIG` em `quiz/index.html` (`backendUrl`, `checkoutUrl`, `pixelId`, `provaIdade`, autor, depoimentos) e suba a pasta `quiz/` em Netlify, Vercel, Cloudflare Pages ou na sua hospedagem.
+2. **Front**: coloque as fotos em `quiz/img/` e ligue em `CONFIG.imagens` (as da idade já estão lá), preencha o `CONFIG` em `quiz/index.html` (`backendUrl`, `checkoutUrl`, `pixelId`, `provaIdade`, autor, depoimentos) e suba a pasta `quiz/` em Netlify, Vercel, Cloudflare Pages ou na sua hospedagem.
 3. Rode `npm test` antes de cada publicação.
 
 ## Pendências
