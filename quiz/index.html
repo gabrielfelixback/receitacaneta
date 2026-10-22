@@ -442,6 +442,26 @@ h2.sans,h1.sans{font-family:var(--sans);font-weight:500;letter-spacing:-.015em;l
 /* resultado: abertura do plano */
 .ready{background:var(--floresta);color:var(--creme);border-radius:28px;padding:22px 20px 20px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden}
 .ready .mk2{position:absolute;right:-8px;bottom:14px;width:150px;height:68px;opacity:.9}
+.ready .mk2 path{stroke-dashoffset:62;animation:draw 1.6s .5s var(--ease) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.ready .lbl .ic{animation:pop 1.2s .3s var(--ease) both}
+.ready h1 em{display:inline-block;animation:glow 2.8s 1s ease-in-out infinite}
+@keyframes glow{0%,100%{text-shadow:0 0 0 rgba(217,160,126,0)}50%{text-shadow:0 0 18px rgba(217,160,126,.55)}}
+/* entrada dos blocos da última página */
+.rv{opacity:0;transition:opacity .7s var(--ease),transform .9s var(--ease);transition-delay:var(--d,0s);will-change:opacity,transform}
+.rv-up{transform:translateY(32px)}
+.rv-l{transform:translateX(-36px)}
+.rv-r{transform:translateX(36px)}
+.rv-pop{transform:scale(.86)}
+.rv.in{opacity:1;transform:none}
+.gains li.rv span{transform:scale(0);transition:transform .5s cubic-bezier(.34,1.56,.64,1);transition-delay:calc(var(--d,0s) + .25s)}
+.gains li.rv.in span{transform:scale(1)}
+.vtotal s.vt{text-decoration:none;position:relative}
+.vtotal s.vt::after{content:"";position:absolute;left:-3px;right:-3px;top:54%;height:2px;background:var(--danger);transform:scaleX(1);transform-origin:left}
+.vtotal.rv s.vt::after{transform:scaleX(0);transition:transform .7s var(--ease) .6s}
+.vtotal.rv.in s.vt::after{transform:scaleX(1)}
+.today.rv.in .por{animation:land .5s 1.5s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes land{0%{transform:scale(1)}40%{transform:scale(1.12)}100%{transform:scale(1)}}
 .ready .lbl{display:flex;align-items:center;gap:7px;font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--salvia)}
 .ready .lbl .ic{width:16px;height:16px}
 .ready h1{color:var(--creme);font-size:clamp(2.25rem,10vw,2.75rem);max-width:12ch}
@@ -502,7 +522,8 @@ h2.sans,h1.sans{font-family:var(--sans);font-weight:500;letter-spacing:-.015em;l
 @keyframes shine{0%,45%{transform:translateX(-120%)}75%,100%{transform:translateX(120%)}}
 @keyframes nudge{0%,62%,100%{transform:none}70%{transform:scale(1.06) rotate(-1deg)}78%{transform:scale(1.04) rotate(1deg)}86%{transform:scale(1.02)}}
 @media (prefers-reduced-motion: reduce){
-  .screen,.pulse,.tip.swapin,.sticky,.sticky .btn,.sticky .btn::after,.today .off,.sticky .p .off,.ready .go span{animation:none}
+  .screen,.pulse,.tip.swapin,.sticky,.sticky .btn,.sticky .btn::after,.today .off,.sticky .p .off,.ready .go span,.ready .mk2 path,.ready .lbl .ic,.ready h1 em{animation:none}
+  .ready .mk2 path{stroke-dashoffset:0}
   .progress .fill,.progress .cap,.score .track i,.gauge .track i{transition:none}
 }
 </style>
@@ -598,7 +619,7 @@ const CONFIG = {
 
 /* ===================================================================== */
 const SETUP = !CONFIG.checkoutUrl;
-const VERSAO = 'v10';
+const VERSAO = 'v11';
 const fmtBRL = (v) => new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(v);
 const $ = (s, r = document) => r.querySelector(s);
 const el = (tag, attrs = {}, ...kids) => {
@@ -834,7 +855,7 @@ const STEPS = [
   {id: 'solucao', type: 'solution'},
   {id: 'tempo', type: 'buttons', q: 'Quanto tempo você tem <em>para preparar?</em>', opts: [
     {v: 't5', l: 'Até 5 minutos, coisa de liquidificador', ic: 'raio'}, {v: 't20', l: 'Uns 15 a 20 minutos', ic: 'panela'}, {v: 't40', l: 'Gosto de cozinhar com calma', ic: 'relogio'}]},
-  {id: 'compromisso', type: 'buttons', q: 'Se existisse um jeito de comer o que você gosta e ainda ver a barriga diminuir, você tentaria por 7 dias?', sans: true, qf: () => `Se existisse um jeito de comer o que você gosta e ficar mais perto ${SONHO_FRASE[state.a.sonho] || SONHO_FRASE.lisa}, você tentaria por 7 dias?`, opts: [
+  {id: 'compromisso', type: 'buttons', q: 'Se existisse um jeito de comer o que você gosta e ainda ver a barriga diminuir, você tentaria por 21 dias?', sans: true, qf: () => `Se existisse um jeito de comer o que você gosta e ficar mais perto ${SONHO_FRASE[state.a.sonho] || SONHO_FRASE.lisa}, você tentaria por 21 dias?`, opts: [
     {v: 'sim', l: 'Sim, eu tentaria!', ic: 'saiu', destaque: true}, {v: 'tentar', l: 'Talvez', ic: 'sorriso'}]},
   {id: 'loading', type: 'loading'},
   {id: 'resultado', type: 'result'}
@@ -1363,11 +1384,11 @@ const renderResult = () => {
     H('h2', 'Libere o seu <em>plano completo</em>'),
     el('p', {class: 'for'}, `Tudo o que você precisa para o perfil ${perfil.nome} e para chegar na barriga ${sonhoLabel().toLowerCase()} sem forçar comida.`),
     el('ul', {class: 'vstack'}, CONFIG.entregaveis.map(([i, t, , v]) => el('li', {}, H('span', ic(i)), el('span', {}, t), v ? el('s', {}, fmtBRL(v)) : el('span')))),
-    el('div', {class: 'vtotal'}, el('span', {}, 'Valor total'), el('s', {}, fmtBRL(de))),
+    el('div', {class: 'vtotal'}, el('span', {}, 'Valor total'), el('s', {class: 'vt'}, fmtBRL(de))),
     el('div', {class: 'today'},
       el('span', {class: 'off'}, `${off}% OFF HOJE`),
       H('span', `De <s>${fmtBRL(de)}</s> por apenas`, 'from'),
-      H('span', `<small>R$</small>${reais},${cents}`, 'por'),
+      H('span', `<small>R$</small><span class="pn" data-de="${de}" data-para="${CONFIG.preco}">${reais},${cents}</span>`, 'por'),
       el('span', {class: 'save'}, `Você economiza ${fmtBRL(de - CONFIG.preco)}`)),
     el('span', {class: 'sub'}, 'Pagamento único · acesso imediato no seu e-mail'),
     el('a', {class: 'btn buy pulse', id: 'cta', href, onclick: onBuy}, 'Acessar meu plano completo', icon('arrow')),
@@ -1421,8 +1442,58 @@ const renderResult = () => {
     sticky.hidden = false;
   }
   track('ViewContent', {value: CONFIG.preco, currency: 'BRL'});
-  setTimeout(() => { ['sc1', 'sc2', 'sc3', 'sc4'].forEach((id) => { const b = document.getElementById(id); if (b) b.style.width = b.dataset.w + '%'; }); }, reduceMotion ? 0 : 150);
+  const barras = () => ['sc1', 'sc2', 'sc3', 'sc4'].forEach((id) => { const b = document.getElementById(id); if (b) b.style.width = b.dataset.w + '%'; });
+  if (reduceMotion || !('IntersectionObserver' in window)) setTimeout(barras, reduceMotion ? 0 : 150);
+  else setTimeout(() => animarResultado(barras), 0);
   return out;
+};
+
+/* ---------- Movimento da última página ----------
+   Cada bloco entra quando chega na tela (de baixo, da esquerda ou da direita), as listas entram em cascata,
+   os números contam e o preço cai de R$ 249 até o valor final. Sem IntersectionObserver ou com redução de
+   movimento, nada disso roda e a página aparece inteira e parada. */
+const contar = (node, de, para, ms, fmt) => {
+  const t0 = performance.now();
+  const passo = (now) => {
+    const p = Math.min(1, (now - t0) / ms);
+    const e = 1 - Math.pow(1 - p, 3);
+    node.textContent = fmt(de + (para - de) * e);
+    if (p < 1) requestAnimationFrame(passo);
+  };
+  requestAnimationFrame(passo);
+};
+const animarResultado = (barras) => {
+  const marcar = (sel, dir = 'up', gap = 0, base = 0) => document.querySelectorAll(sel).forEach((n, k) => {
+    n.classList.add('rv', 'rv-' + dir);
+    n.style.setProperty('--d', `${base + k * gap}s`);
+  });
+  marcar('#screen > *');
+  marcar('.ba > div:first-child', 'l', 0, .1); marcar('.ba > div:last-child', 'r', 0, .25);
+  marcar('.vs .col.no .it', 'l', .09, .15); marcar('.vs .col.yes .it', 'r', .09, .3);
+  marcar('.rhead .goal', 'up', 0, .2); marcar('.rhead .facts div', 'pop', .1, .3);
+  marcar('.scores .score', 'l', .12, .1);
+  marcar('.day .meal', 'r', .1, .15);
+  marcar('.cover', 'pop', .1, .1); marcar('.deliv li', 'l', .07, .1);
+  marcar('.gains li', 'l', .12, .15);
+  marcar('.vstack li', 'r', .08, .1); marcar('.vtotal', 'up', 0, .1); marcar('.today', 'pop', 0, .15);
+  marcar('.faq details', 'up', .06, 0);
+  const io = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    const n = e.target;
+    n.classList.add('in');
+    io.unobserve(n);
+    if (n.matches('.facts div')) {
+      const b = n.querySelector('b'); const m = b && b.textContent.match(/^([\d.,]+)(.*)$/);
+      if (m) { const v = parseFloat(m[1].replace(',', '.')); const dec = m[1].includes(',') ? 1 : 0;
+        contar(b, 0, v, 1100, (x) => x.toFixed(dec).replace('.', ',') + m[2]); }
+    }
+    if (n.matches('.today')) {
+      const pn = n.querySelector('.pn');
+      if (pn) contar(pn, Number(pn.dataset.de), Number(pn.dataset.para), 1600, (x) => x.toFixed(2).replace('.', ','));
+    }
+    if (n.querySelector && n.querySelector('.scores')) setTimeout(barras, 250);
+  }), {threshold: .12, rootMargin: '0px 0px -6% 0px'});
+  document.querySelectorAll('.rv').forEach((n) => io.observe(n));
 };
 
 /* ---------- Render ---------- */

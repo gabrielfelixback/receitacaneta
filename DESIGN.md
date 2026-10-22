@@ -20,3 +20,11 @@ As cores, as fontes e o logo são os do guia além da caneta. Só o fundo da pá
 - Destaque vermelho (`.hl`): fundo `--danger`, texto branco em negrito, o mesmo vermelho do selo "ATENÇÃO:". Os títulos que usam `.hl` ficam em Instrument Sans (`h2.sans`, `sans: true` no passo): abertura, tipo de barriga, barriga desejada, aviso da tela 7 e compromisso.
 - Resultado: "Como está hoje / Com as receitas certas" vem logo abaixo do card do plano exclusivo.
 - Opção em destaque (`destaque: true` no passo, classe `.opt.feat`): borda e ícone em argila. Usada no "Sim, eu tentaria!" do compromisso.
+- Movimento da última página (`animarResultado`):
+  - cada bloco entra ao chegar na tela, de baixo, da esquerda ou da direita;
+  - as listas entram em cascata e os checks dos ganhos "pulam";
+  - os números do perfil contam;
+  - o total riscado ganha o risco e o preço cai de R$ 249 até R$ 27,90;
+  - a linha da cápsula se desenha no card do plano.
+
+  Sem IntersectionObserver ou com redução de movimento, a página aparece inteira e parada.
