@@ -131,6 +131,7 @@ b,strong{font-weight:600}
 .icard .pic img{width:100%;height:100%;object-fit:cover;object-position:center 62%;display:block}
 .icards.ages .pic img{object-position:center 22%}
 .q-sonho .pic img{object-position:center 40%}
+.qpic > img{aspect-ratio:16/10;object-position:center 52%}
 .crowd span img{width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block}
 .pill{align-self:stretch;text-align:center;font-size:.9375rem;font-weight:600;color:var(--argila-ink);background:var(--argila-soft);border:1px solid #EBD6C6;border-radius:16px;padding:11px 14px;display:flex;align-items:center;justify-content:center;gap:8px}
 .pill .ic{width:18px;height:18px}
@@ -556,7 +557,7 @@ const CONFIG = {
   imagens: {
     gancho: '',             // primeira tela: mulher diante do espelho, barriga, emoção
     quebra: '',             // "Você está no caminho certo!": grupo de mulheres
-    caneta: '',             // pergunta da caneta
+    caneta: 'img/caneta.webp', // pergunta da caneta
     idade: {i18: 'img/idade-18.webp', i30: 'img/idade-30.webp', i40: 'img/idade-40.webp', i50: 'img/idade-50.webp', i60: 'img/idade-60.webp'},
     barriga: {pochete: 'img/barriga-pochete.webp', pneuzinho: 'img/barriga-pneuzinho.webp', alta: 'img/barriga-alta.webp', flacida: 'img/barriga-flacida.webp'},
     sonho: {lisa: 'img/sonho-lisa.webp', firme: 'img/sonho-firme.webp', roupa: 'img/sonho-roupa.webp', leve: 'img/sonho-leve.webp'}
@@ -1448,7 +1449,7 @@ const render = () => {
 };
 render();
 // As fotos da idade e das barrigas já começam a baixar na primeira tela.
-const preload = () => [...Object.values(CONFIG.imagens.idade), ...Object.values(CONFIG.imagens.barriga), ...Object.values(CONFIG.imagens.sonho)].filter(Boolean).forEach((u) => { const i = new Image(); i.src = u; });
+const preload = () => [CONFIG.imagens.caneta, ...Object.values(CONFIG.imagens.idade), ...Object.values(CONFIG.imagens.barriga), ...Object.values(CONFIG.imagens.sonho)].filter(Boolean).forEach((u) => { const i = new Image(); i.src = u; });
 if ('requestIdleCallback' in window) requestIdleCallback(preload); else setTimeout(preload, 800);
 </script>
 </body>
