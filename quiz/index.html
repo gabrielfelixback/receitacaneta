@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#17332B">
+<meta name="theme-color" content="#FFFFFF">
 <title>Teste da Caneta · além da caneta</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@800;900&family=Inter:wght@400;500;600;700;800&display=swap">
 <style>
 /* Identidade "além da caneta": Creme/Linho de base, Floresta/Sálvia/Musgo de apoio, Argila só como acento.
    Instrument Serif nos títulos (itálico só na palavra-chave) e Instrument Sans no resto. Tema claro único, de propósito. */
@@ -115,7 +115,7 @@ b,strong{font-weight:600}
 .btn:focus-visible,.opt:focus-visible,.icard:focus-visible,.back:focus-visible,summary:focus-visible,.step:focus-visible,input[type=range]:focus-visible{outline:2.5px solid var(--argila);outline-offset:3px}
 
 /* abertura */
-.hook-pic{border-radius:24px;overflow:hidden;background:var(--floresta);aspect-ratio:16/9}
+.hook-pic{border-radius:24px;overflow:hidden;background:#F3F4F6;aspect-ratio:16/9}
 .hook-pic > svg,.hook-pic > img,.qpic > img,.crowd-pic > img{width:100%;height:100%;object-fit:cover;display:block}
 .hook-h{text-align:center;font-size:clamp(2rem,9vw,2.625rem);line-height:1.04}
 .hook-h em{color:var(--argila-ink)}
@@ -369,6 +369,125 @@ details p{margin-top:8px;color:var(--musgo);font-size:.9375rem}
 .sticky .p b{font-family:var(--serif);font-weight:400;font-size:1.625rem;white-space:nowrap;font-variant-numeric:tabular-nums}
 .sticky .p small{font-size:.72rem;color:var(--musgo)}
 .sticky .btn{min-height:52px;font-size:1rem}
+/* ===== Tema alta conversão (funil low ticket, tráfego frio) =====
+   Fundo branco, títulos pesados, vermelho na dor, verde na solução e nos botões, amarelo de marca-texto. */
+:root{
+  --creme:#FFFFFF; --branco:#FFFFFF; --linho:#F3F4F6; --line:#E5E7EB; --line-soft:#EEF0F2;
+  --floresta:#111111; --musgo:#4B5563; --salvia:#BBF7D0; --salvia-soft:#ECFDF3;
+  --verde:#15803D; --verde-vivo:#16A34A; --verde-dark:#0F5E2C; --vermelho:#DC2626; --vermelho-soft:#FEF2F2; --amarelo:#FDE047;
+  --argila:#16A34A; --argila-ink:#DC2626; --argila-cta:#15803D; --argila-dark:#0F5E2C; --argila-on-dark:#FDE047; --argila-soft:#FEF2F2;
+  --on-dark-muted:#D1D5DB;
+  --serif:"Archivo","Arial Black",Impact,sans-serif;
+  --sans:"Inter","Segoe UI",system-ui,-apple-system,sans-serif;
+  --shadow:0 1px 2px rgba(0,0,0,.06),0 4px 12px rgba(0,0,0,.06);
+}
+body{font-size:1.0625rem}
+h1,h2{font-family:var(--serif);font-weight:900;letter-spacing:-.02em;line-height:1.12}
+h2{font-size:clamp(1.5rem,6.6vw,1.875rem)}
+h3{font-weight:800}
+h1 em,h2 em,h3 em,.tip b em,.proof em,.ask em{font-family:inherit;font-style:normal;font-size:inherit;color:var(--vermelho)}
+.g{color:var(--verde-vivo)}
+.mk{background:var(--amarelo);color:#111;padding:0 .15em;border-radius:3px}
+.lead{color:#374151}
+/* topo: logo e barra grossa em todas as telas, como nos funis de referência */
+.top{position:static;padding-top:10px}
+.top.quiz{display:block}
+.top.quiz .bar{min-height:48px;grid-template-columns:44px 1fr 44px}
+.top.quiz .logo{display:flex}
+.logo{flex-direction:column;gap:0;line-height:1}
+.logo small{font-family:var(--sans);font-weight:700;font-size:.66rem;letter-spacing:.24em;color:var(--verde)}
+.logo b{font-family:var(--serif);font-weight:900;font-style:italic;font-size:1.6rem;letter-spacing:-.03em;color:var(--verde-vivo)}
+.progress{height:12px}
+.progress .track,.progress .fill{height:10px;border-radius:99px}
+.progress .track{background:#DCFCE7}
+.progress .fill{background:var(--verde-vivo)}
+.progress .cap{display:none}
+/* botões */
+.btn{background:var(--verde);color:#FFFFFF;border-radius:14px;text-transform:uppercase;font-weight:800;font-size:1.0625rem;letter-spacing:.01em;box-shadow:0 4px 0 var(--verde-dark),0 10px 20px rgba(21,128,61,.25)}
+.btn:active{box-shadow:0 1px 0 var(--verde-dark)}
+.btn.buy{background:var(--verde);box-shadow:0 4px 0 var(--verde-dark),0 12px 24px rgba(21,128,61,.3)}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
+.pulse{animation:pulse 1.6s ease-in-out infinite}
+/* opções */
+.opt{border:2px solid var(--line);border-radius:14px;font-weight:600}
+.opt:hover{border-color:var(--verde-vivo)}
+.opt[aria-pressed="true"]{background:var(--verde);border-color:var(--verde);color:#FFFFFF}
+.opt[aria-pressed="true"] .tile{background:rgba(255,255,255,.18);color:#FFFFFF}
+.opt[aria-pressed="true"] .mark{background:#FFFFFF;border-color:#FFFFFF}
+.opt .mark svg{stroke:var(--verde)}
+.opt .tile{background:#F3F4F6}
+.icard{border:2px solid var(--line);border-radius:16px}
+.icard .pic{background:#F3F4F6}
+.icard .cap .ic{color:var(--verde)}
+.icard[aria-pressed="true"]{border-color:var(--verde)}
+.icard[aria-pressed="true"] .cap{background:var(--verde);color:#FFFFFF}
+.icard[aria-pressed="true"] .cap .ic,.icard[aria-pressed="true"] .cap small{color:#FFFFFF}
+/* abertura */
+.hook-h{text-transform:uppercase;font-size:clamp(1.625rem,7.4vw,2.125rem);line-height:1.1}
+.hook-h .tag{background:#111;color:#FFFFFF;padding:0 .2em;border-radius:4px;margin-right:.15em}
+.hook-h .gg{color:var(--verde-vivo)}
+.pill{background:#FEF9C3;border-color:#FDE68A;color:#A16207}
+.okay{color:var(--verde);text-transform:uppercase;font-weight:800}
+.infobox{background:#EFF6FF;border-color:#BFDBFE;color:#1D4ED8}
+/* blocos escuros e de destaque */
+.sheet{border:1px solid var(--line-soft)}
+.sheet.linho{background:#F9FAFB}
+.split .fat{background:#D1D5DB;color:#111}
+.split .lean{background:var(--vermelho);color:#FFFFFF}
+.swap .yes{background:var(--verde)}
+.swap .yes .g,.swap .yes .tile{color:#FFFFFF}
+.rules .n{background:var(--verde);font-family:var(--serif);font-weight:900;font-size:1rem}
+.vs .yes .hd,.day .hd{background:var(--verde)}
+.vs .yes .hd em{color:#111;background:var(--amarelo);padding:0 .15em}
+.day .hd b{font-weight:900}
+.meal .when{color:var(--verde)}
+.offer{border:3px dashed var(--verde)}
+.offer .por{color:#111;font-weight:900}
+.offer .acc{color:var(--vermelho)}
+.rhead h1 em,.rhead .goal b{color:#111;background:var(--amarelo);padding:0 .12em}
+.rhead .goal b{font-weight:900}
+.weight .val,.stat b,.bmi .bhead b,.swap .g,.rhead .facts b,.sticky .p b,.loader .pct,.proof .big{font-weight:900}
+.warn{font-family:var(--serif);font-weight:900;font-size:clamp(1.375rem,6vw,1.625rem);line-height:1.18;text-align:center;text-wrap:balance}
+.warn .r{color:var(--vermelho)}
+.warn .gg{color:var(--verde-vivo)}
+.see{text-align:center;font-weight:800;text-decoration:underline;text-underline-offset:4px}
+.paper{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#FFFFFF;box-shadow:var(--shadow)}
+.paper .pbar{background:#111;color:#FFFFFF;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.paper .pbar span{color:#9CA3AF;font-weight:600}
+.paper .pin{padding:16px;display:flex;flex-direction:column;gap:12px}
+.paper .pin b{font-family:Georgia,"Times New Roman",serif;font-size:1.375rem;line-height:1.2;font-weight:700}
+.alert{background:var(--verde-vivo);color:#FFFFFF;border-radius:18px;padding:16px 18px;box-shadow:0 4px 0 var(--verde-dark)}
+.alert b{display:block;font-family:var(--serif);font-weight:900;font-size:1.25rem;margin-bottom:4px}
+.said{background:#FFFFFF;color:#111;border:2px solid var(--vermelho)}
+.said span{color:#4B5563}
+.said b{font-family:var(--serif);font-weight:900;color:var(--vermelho)}
+.said p{color:#111}
+.voice{border:1px solid var(--line);border-radius:18px;padding:14px;display:grid;grid-template-columns:44px 1fr;gap:10px;align-items:end}
+.voice .av{width:44px;height:44px;border-radius:50%;overflow:hidden;background:#F3F4F6}
+.voice .av img{width:100%;height:100%;object-fit:cover}
+.voice .who{font-size:.875rem;font-weight:600;margin-bottom:6px;display:block}
+.voice .bub{background:#F3F4F6;border-radius:16px;padding:8px 12px;display:flex;align-items:center;gap:10px}
+.voice .play{all:unset;cursor:pointer;width:36px;height:36px;border-radius:50%;background:#FFFFFF;display:grid;place-items:center;box-shadow:var(--shadow);flex:none}
+.voice .play svg{width:16px;height:16px;fill:#111}
+.voice .wave{flex:1;display:flex;align-items:center;gap:3px;height:28px;overflow:hidden}
+.voice .wave i{display:block;width:3px;border-radius:2px;background:#9CA3AF}
+.voice .wave i.on{background:var(--verde-vivo)}
+.voice .dur{font-size:.8125rem;font-weight:700;background:#FFFFFF;border-radius:99px;padding:3px 9px;font-variant-numeric:tabular-nums}
+.stack{display:flex;flex-direction:column;gap:10px}
+.success{text-align:center;font-weight:600}
+.success b{text-decoration:underline;text-underline-offset:3px}
+.ready{background:var(--verde-vivo);color:#FFFFFF;border-radius:18px;padding:22px 16px 30px;text-align:center;position:relative;box-shadow:6px 6px 0 #94A3B8}
+.ready b{display:block;font-family:var(--serif);font-weight:900;font-size:clamp(1.75rem,8vw,2.25rem);line-height:1.08}
+.ready mark{background:#475569;color:#FFFFFF;padding:0 .25em;display:inline-block;margin-top:4px}
+.ready .down{position:absolute;left:50%;bottom:-22px;transform:translateX(-50%);width:44px;height:44px;border-radius:50%;background:#2563EB;border:3px solid #FFFFFF;display:grid;place-items:center;box-shadow:var(--shadow)}
+.ready .down svg{width:18px;height:18px;stroke:#FFFFFF;stroke-width:3;fill:none}
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.ba > div{display:flex;flex-direction:column;gap:8px;text-align:center}
+.ba .card{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#FFFFFF}
+.ba .card h3{font-family:var(--serif);font-weight:900;font-size:1.375rem;padding:10px 0 0}
+.ba .card .pic{display:block;aspect-ratio:1/1}
+.ba .card .pic svg{width:100%;height:100%}
+.ba p{font-weight:700;font-size:.9375rem;line-height:1.3}
 @media (prefers-reduced-motion: reduce){
   .screen,.pulse,.tip.swapin,.sticky{animation:none}
   .progress .fill,.progress .cap,.score .track i,.gauge .track i{transition:none}
@@ -405,7 +524,7 @@ details p{margin-top:8px;color:var(--musgo);font-size:.9375rem}
    CONFIGURAÇÃO: troque os valores abaixo antes de colocar no ar
    ===================================================================== */
 const CONFIG = {
-  marca: {nome: 'além da caneta'},
+  marca: {nome: 'além da caneta', logo: 'Além da Caneta'},
   produto: 'Receitas Além da Caneta',
   preco: 27.90,
   precoDe: null,            // ex.: 67. Use só se o produto já foi vendido por esse valor.
@@ -417,6 +536,8 @@ const CONFIG = {
   // Frase grande da tela "Você está no caminho certo!". {idade} vira a faixa escolhida.
   // Ex.: '+ 3.200 mulheres de {idade} que usam a caneta já fizeram este teste'. Use o número real do seu backend.
   provaQuebra: '',
+  // Áudio de explicação (mensagem de voz na tela do espelho). Grave você mesma. Vazio = some.
+  audio: {url: '', nome: '', foto: ''},   // ex.: {url: 'audio/explicacao.mp3', nome: 'Ana, do Além da Caneta', foto: 'img/ana.jpg'}
   // Fotos (URL ou caminho do arquivo, ex.: 'img/gancho.jpg'). Vazio = usa a ilustração.
   imagens: {
     gancho: '',             // primeira tela: mulher diante do espelho, barriga, emoção
@@ -453,7 +574,7 @@ const CONFIG = {
 
 /* ===================================================================== */
 const SETUP = !CONFIG.checkoutUrl;
-const VERSAO = 'v6';
+const VERSAO = 'v7';
 const fmtBRL = (v) => new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(v);
 const $ = (s, r = document) => r.querySelector(s);
 const el = (tag, attrs = {}, ...kids) => {
@@ -526,7 +647,7 @@ const capsuleSvg = (cls, fg = '#17332B', ac = '#B8744F', progress = 1) =>
 /* ---------- Ilustrações próprias (SVG), no lugar de fotos ----------
    Retrato sem rosto por faixa de idade, tronco de perfil e de frente (tipos de barriga) e a caneta. */
 let svgId = 0;
-const avatar = ({skin, hair, top, bg, gray, glasses, short}) => {
+const avatar = ({skin, hair, top, bg, gray, glasses, short, mood}) => {
   const hairBack = short
     ? 'M54 66 C50 36 64 22 80 22 C96 22 110 36 106 66 C106 76 104 84 100 90 L60 90 C56 84 54 76 54 66 Z'
     : 'M52 66 C46 30 64 20 80 20 C96 20 114 30 108 66 C110 92 118 110 128 128 C112 136 98 128 94 114 L66 114 C62 128 48 136 32 128 C42 110 50 92 52 66 Z';
@@ -540,6 +661,8 @@ const avatar = ({skin, hair, top, bg, gray, glasses, short}) => {
   <path d="M56 58 C54 38 68 29 82 29 C97 29 107 40 105 57 C99 46 91 40 81 40 C73 43 63 49 56 58 Z" style="fill:${hair}"/>
   ${gray ? `<path d="M60 52 C66 40 76 34 88 33" style="fill:none;stroke:${gray}" stroke-width="4" stroke-linecap="round"/>` : ''}
   ${glasses ? '<g style="fill:none;stroke:#17332B" stroke-width="2"><circle cx="70" cy="68" r="7"/><circle cx="90" cy="68" r="7"/><path d="M77 68h6"/></g>' : ''}
+  ${mood ? `<g style="fill:none;stroke:#2B211C" stroke-width="2.4" stroke-linecap="round"><circle cx="71" cy="68" r="2.2" style="fill:#2B211C;stroke:none"/><circle cx="89" cy="68" r="2.2" style="fill:#2B211C;stroke:none"/>
+    ${mood === 'triste' ? '<path d="M65 62 L75 59 M95 62 L85 59"/><path d="M73 83 Q80 77 87 83"/>' : '<path d="M66 60 Q71 57 76 60 M84 60 Q89 57 94 60"/><path d="M71 78 Q80 88 89 78" style="fill:#FFFFFF"/>'}</g>` : ''}
 </svg>`;
 };
 const AVATAR = {
@@ -606,16 +729,16 @@ const penArt = () => `<svg viewBox="0 0 360 170" role="img" aria-label="Ilustra�
 const foto = (url, fallback, alt = '') => (url ? `<img src="${url}" alt="${alt}" loading="lazy" decoding="async">` : fallback);
 // Primeira tela: o espelho, com a silhueta da pochete refletida.
 const mirrorArt = () => `<svg viewBox="0 0 360 225" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Ilustração de um espelho refletindo a barriga">
-  <rect width="360" height="225" style="fill:#17332B"/>
-  <circle cx="60" cy="40" r="90" style="fill:#1F4037"/>
-  <ellipse cx="180" cy="118" rx="74" ry="100" style="fill:#E4DDCF;stroke:#D9A07E" stroke-width="7"/>
+  <rect width="360" height="225" style="fill:#F3F4F6"/>
+  <circle cx="60" cy="40" r="90" style="fill:#DCFCE7"/>
+  <ellipse cx="180" cy="118" rx="74" ry="100" style="fill:#FFFFFF;stroke:#16A34A" stroke-width="7"/>
   <defs><clipPath id="mirr"><ellipse cx="180" cy="118" rx="70" ry="96"/></clipPath></defs>
   <g clip-path="url(#mirr)">${torso(15).replace('<svg ', '<svg x="120" y="30" width="120" height="200" ')}</g>
-  <path d="M232 52 l10 -10 M244 64 l14 -6 M238 36 l4 -12" style="stroke:#F4F0E8" stroke-width="3" stroke-linecap="round" opacity=".7"/>
-  <path d="M40 200 H118 C136 200 150 192 160 182" style="fill:none;stroke:#B8744F" stroke-width="3" stroke-linecap="round"/>
+  <path d="M232 52 l10 -10 M244 64 l14 -6 M238 36 l4 -12" style="stroke:#16A34A" stroke-width="3" stroke-linecap="round"/>
+  <path d="M40 200 H118 C136 200 150 192 160 182" style="fill:none;stroke:#DC2626" stroke-width="3" stroke-linecap="round"/>
 </svg>`;
 
-$('#logo').innerHTML = capsuleSvg('mark') + `<span class="word"><i>${CONFIG.marca.nome.split(' ')[0]}</i> ${CONFIG.marca.nome.split(' ').slice(1).join(' ')}</span>`;
+$('#logo').innerHTML = `<small>TESTE DA</small><b>${CONFIG.marca.logo || CONFIG.marca.nome}</b>`;
 
 /* ---------- Backend, Pixel e checkout ---------- */
 // Os nomes dos eventos do Pixel não citam saúde e nenhuma resposta vai para o Meta.
@@ -775,9 +898,9 @@ const renderHook = (s) => {
   });
   return [
     H('div', foto(CONFIG.imagens.gancho, mirrorArt(), 'Mulher diante do espelho'), 'hook-pic'),
-    H('h1', 'Você quase não come, toma a caneta certinho… e ainda <em>foge do espelho</em>?', 'hook-h'),
-    H('p', 'Não é falta de esforço. Tem um motivo para essa barriga não ir embora, e ele está no seu prato.', 'lead'),
-    el('p', {class: 'hook-ask'}, 'Seja sincera: quando você se olha no espelho hoje, o que sente?'),
+    H('h1', '<span class="tag">Atenção:</span> você toma a caneta, quase não come… e a barriga <em>não sai</em>?', 'hook-h'),
+    H('p', 'Não é falta de esforço. <b>O motivo está no seu prato</b>, e quase ninguém te contou.', 'lead c'),
+    el('p', {class: 'hook-ask'}, 'Seja sincera: quando você se olha no espelho, o que sente?'),
     wrap,
     H('p', ic('cadeado') + 'Ninguém vai ver as suas respostas.', 'secret'),
     CONFIG.provaSocial ? el('p', {class: 'fine'}, CONFIG.provaSocial) : null
@@ -899,12 +1022,15 @@ const renderInsight = () => {
   const titulo = `${cap1(barrigaNome())} não sai? <em>A culpa não é sua.</em>`;
   return [
     H('h2', titulo),
-    H('p', 'A caneta tira a fome. Mas se o pouco que você come tem pouca proteína, o corpo não queima só gordura: <b>ele queima o seu próprio músculo.</b>', 'c lead'),
-    el('div', {class: 'sheet'},
-      H('h3', 'Do peso perdido com a caneta, num estudo grande:'),
-      el('div', {class: 'split', role: 'img', 'aria-label': 'Cerca de 60% do peso perdido foi gordura e cerca de 40% foi massa magra'},
-        el('div', {class: 'fat', style: 'flex:61', html: '~60%<small>gordura</small>'}), el('div', {class: 'lean', style: 'flex:39', html: '~40%<small>músculo e massa magra</small>'})),
-      el('p', {class: 'src'}, 'Estudo STEP 1 (semaglutida), análise de composição corporal. Wilding J. et al., NEJM, 2021.')),
+    H('p', '<span class="r">Se você usa a caneta e come pouca proteína, cuidado:</span> o seu corpo pode estar queimando o <span class="r">próprio músculo</span> junto com a gordura. <span class="gg">É por isso que a barriga não vai embora.</span>', 'warn'),
+    H('p', 'Veja o que um dos maiores estudos com a caneta mostrou 👇', 'see'),
+    el('div', {class: 'paper'},
+      H('div', 'The New England Journal of Medicine<span>2021</span>', 'pbar'),
+      el('div', {class: 'pin'},
+        H('b', 'Quase metade do peso perdido com semaglutida não foi gordura'),
+        el('div', {class: 'split', role: 'img', 'aria-label': 'Cerca de 60% do peso perdido foi gordura e cerca de 40% foi massa magra'},
+          el('div', {class: 'fat', style: 'flex:61', html: '~60%<small>gordura</small>'}), el('div', {class: 'lean', style: 'flex:39', html: '~40%<small>músculo e massa magra</small>'})),
+        el('p', {class: 'src'}, 'Estudo STEP 1, análise de composição corporal. Wilding J. et al., NEJM, 2021.'))),
     el('div', {class: 'sheet linho'},
       H('p', `Músculo é o que mantém o metabolismo ligado e a barriga firme. Quando ele vai embora, vem o cansaço, a flacidez e <b>${barrigaNome()} fica.</b>`)),
     contBtn('cont-porque', 'Faz sentido. Continuar')
@@ -956,6 +1082,25 @@ const bmiBlock = () => {
     H('p', 'O IMC olha só o peso e a altura: <b>não diferencia músculo de gordura.</b> Duas pessoas com o mesmo IMC podem ter barrigas bem diferentes, e é a proteína que decide se o que sai é gordura ou músculo.', 'src'));
 };
 
+// Áudio de explicação no estilo WhatsApp. Só aparece com CONFIG.audio.url (gravação sua).
+const voiceBlock = () => {
+  const a = CONFIG.audio || {};
+  if (!a.url) return SETUP ? el('div', {class: 'setup', role: 'note'}, el('strong', {}, 'Espaço para o seu áudio'), H('span', 'Grave um áudio curto explicando o problema (30 a 60 s) e coloque em <code>CONFIG.audio</code>. Aparece aqui como mensagem de voz.')) : null;
+  const audio = el('audio', {src: a.url, preload: 'metadata'});
+  const wave = el('div', {class: 'wave', 'aria-hidden': 'true'}, Array.from({length: 34}, (_, k) => el('i', {style: `height:${6 + Math.round(Math.abs(Math.sin(k * 1.7)) * 20)}px`})));
+  const dur = el('span', {class: 'dur'}, '0:00');
+  const playIc = '<svg viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg>', pauseIc = '<svg viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>';
+  const play = el('button', {type: 'button', class: 'play', 'aria-label': 'Ouvir o áudio', html: playIc, onclick: () => (audio.paused ? audio.play() : audio.pause())});
+  const mm = (t) => `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, '0')}`;
+  audio.addEventListener('loadedmetadata', () => { dur.textContent = mm(audio.duration); });
+  audio.addEventListener('play', () => { play.innerHTML = pauseIc; });
+  audio.addEventListener('pause', () => { play.innerHTML = playIc; });
+  audio.addEventListener('timeupdate', () => { const f = audio.currentTime / (audio.duration || 1); [...wave.children].forEach((b, k) => b.classList.toggle('on', k / wave.children.length < f)); dur.textContent = mm(audio.currentTime); });
+  return el('div', {class: 'stack'}, H('p', 'Escute essa rápida explicação 👇', 'see'),
+    el('div', {class: 'voice'}, H('span', a.foto ? `<img src="${a.foto}" alt="">` : '', 'av'),
+      el('div', {}, el('span', {class: 'who'}, a.nome || ''), el('div', {class: 'bub'}, play, wave, dur)), audio));
+};
+
 // Proteína de um dia típico para cada hábito: estimativa ilustrativa para a comparação.
 const PROT_TIPICA = {economia: 30, gelado: 35, doce: 25, lanche: 50, prato_pequeno: 45};
 const ESPELHO = {
@@ -971,7 +1116,9 @@ const renderMirror = () => {
   const [min, max] = protMeta();
   const tipica = PROT_TIPICA[state.a.come] || 35;
   const itens = sint().map((v) => ESPELHO[v]).filter(Boolean);
-  const out = [H('h2', 'Olha o que as suas respostas <em>mostram</em>'),
+  const out = [
+    H('div', '<b>⚠️ Os resultados não mentem:</b>As suas respostas mostram sinais de que o seu corpo está emagrecendo do jeito errado. Veja com atenção.', 'alert'),
+    voiceBlock(),
     el('div', {class: 'said'}, el('span', {}, 'Você disse que, no espelho, sente:'), el('b', {}, `“${sentimentoLabel()}”`),
       el('p', {}, 'Isso não é frescura nem falta de força de vontade. É o seu corpo emagrecendo do jeito errado. E isso se corrige no prato.'))];
   if (itens.length) {
@@ -981,7 +1128,7 @@ const renderMirror = () => {
   }
   out.push(bmiBlock());
   const pct = clamp(Math.round((tipica / min) * 100), 8, 100);
-  const bars = [el('i', {style: 'background:var(--argila-cta)', 'data-w': pct}), el('i', {style: 'background:var(--floresta)', 'data-w': 100})];
+  const bars = [el('i', {style: 'background:var(--vermelho)', 'data-w': pct}), el('i', {style: 'background:var(--verde-vivo)', 'data-w': 100})];
   out.push(el('div', {class: 'sheet gauge'},
     H('h3', `Com ${peso()} kg e ${(altura() / 100).toFixed(2).replace('.', ',')} m, o seu corpo pede <em>${min} a ${max} g de proteína</em> por dia`),
     el('div', {class: 'row'}, el('span', {}, 'Um dia típico como o seu'), el('b', {}, `~${tipica} g`)),
@@ -1085,6 +1232,12 @@ const renderResult = () => {
   const porRefeicao = Math.round(min / 4);
   const out = [];
 
+  const eu = AVATAR[state.a.idade] || AVATAR.i40;
+  out.push(H('p', '🤩 Resultado <b>gerado com SUCESSO!</b>', 'success'));
+  out.push(H('div', `<b>O seu plano<br><mark>exclusivo está pronto!</mark></b><span class="down">${'<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>'}</span>`, 'ready'));
+  out.push(el('div', {class: 'ba'},
+    el('div', {}, el('div', {class: 'card'}, el('h3', {}, 'ANTES'), H('span', avatar({...eu, mood: 'triste'}), 'pic')), el('p', {}, 'Esta é você hoje, fugindo do espelho.')),
+    el('div', {}, el('div', {class: 'card'}, el('h3', {}, 'DEPOIS'), H('span', avatar({...eu, mood: 'feliz'}), 'pic')), el('p', {}, 'Esta é você voltando a gostar do que vê.'))));
   out.push(el('section', {class: 'rhead'},
     H('span', ic('saiu') + 'Seu plano para voltar a gostar do espelho está pronto', 'ok'),
     H('h1', `Seu perfil: <em>${perfil.nome}</em>`),
@@ -1108,9 +1261,9 @@ const renderResult = () => {
     H('h3', 'Análise das suas respostas'),
     el('div', {class: 'scores'},
       scoreRow('Risco de perder músculo junto com a gordura', musculo, 'var(--danger)', 'sc1'),
-      scoreRow('Força da vontade de doce, gelado ou lanche', vontade, 'var(--argila)', 'sc2'),
-      scoreRow('Energia no dia a dia', energia, 'var(--argila)', 'sc3'),
-      scoreRow('Chance de destravar a barriga com o prato certo', destravar, 'var(--floresta)', 'sc4')),
+      scoreRow('Força da vontade de doce, gelado ou lanche', vontade, '#F59E0B', 'sc2'),
+      scoreRow('Energia no dia a dia', energia, '#F59E0B', 'sc3'),
+      scoreRow('Chance de destravar a barriga com o prato certo', destravar, 'var(--verde-vivo)', 'sc4')),
     el('p', {class: 'src'}, 'Pontuação do teste, calculada pelas suas respostas. Não é diagnóstico.')));
 
   const C = 2 * Math.PI * 32;

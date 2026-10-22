@@ -2,30 +2,24 @@
 
 Segue o guia de marca **além da caneta** (o mesmo do app em `gabrielfelixback/al-mdacaneta`, `src/theme/tokens.ts`). Tema claro único: quem faz o quiz está no celular, vindo do Instagram ou do Facebook.
 
-## Cores (60/30/10)
+## Tema atual: alta conversão
 
-| Papel | Token | Valor | Uso |
-| --- | --- | --- | --- |
-| Base | `--creme` | `#F4F0E8` | fundo da página |
-| Base | `--branco` / `--linho` | `#FFFDF9` / `#E4DDCF` | cartões e folhas / blocos de apoio |
-| Apoio | `--floresta` | `#17332B` | texto, botão de avançar, blocos escuros (abertura, resultado) |
-| Apoio | `--musgo` / `--salvia` | `#4A5E52` / `#B7C4B1` | texto secundário (6,1:1) / seleção |
-| Acento | `--argila` | `#B8744F` | linha do progresso, traços, barras |
-| Acento | `--argila-ink` | `#9A5A39` | palavra em itálico sobre o creme (4,7:1) |
-| Acento | `--argila-cta` | `#A65E3A` | **só** o botão de compra (texto branco 4,8:1) |
-| Acento | `--argila-on-dark` | `#D9A07E` | itálico e números sobre o Floresta (6:1) |
+O quiz começou com a paleta do guia além da caneta (creme, floresta, argila, Instrument Serif). A pedido do dono, o tema virou o padrão dos funis de tráfego frio. O bloco "Tema alta conversão", no fim do CSS, sobrescreve os tokens e os componentes; para voltar ao visual da marca, basta apagar esse bloco.
 
-O botão Floresta avança no quiz e o botão Argila compra: cada cor tem uma função só.
+| Papel | Valor | Uso |
+| --- | --- | --- |
+| Fundo | `#FFFFFF` | página e cartões (borda `#E5E7EB`) |
+| Texto | `#111111` / `#4B5563` | títulos / apoio |
+| Dor | `--vermelho #DC2626` | palavra-chave dos títulos (`<em>`), alertas, barras de risco |
+| Solução | `--verde #15803D` (fundo com texto branco, 5:1) e `--verde-vivo #16A34A` (texto grande, barras) | botões, opção escolhida, caixas de resultado |
+| Marca-texto | `--amarelo #FDE047` com texto preto | destaque no resultado |
 
-## Tipografia
-
-- Instrument Serif nos títulos. Itálico (`<em>`) só na palavra-chave da frase, em argila.
-- Instrument Sans no resto: texto, botões e números das barras (`tabular-nums`).
-
-## Elementos da marca
-
-- Símbolo: a cápsula com a linha curva em argila (`capsuleSvg`). Aparece no logo, nas capas dos materiais e no carregamento, onde a linha se desenha conforme a porcentagem.
-- Progresso: linha argila com a cápsula correndo na ponta e o contador `3/8` (só perguntas).
-- Ícones: traço único de 1,8 em grade de 24 (`ICON`). Nada de emoji no lugar de ícone.
-- Imagens: só SVG desenhado no código, sem foto. Assim carrega na hora e não inventa pessoa nem resultado. `avatar()` faz os retratos sem rosto por idade, `torso()` a silhueta de perfil (o parâmetro é o quanto a pochete sai) e `penArt()` a caneta.
-- Estrutura de quiz de funil: nas perguntas só aparecem o voltar e o progresso; a marca fica na abertura e no resultado. Opção escolhida fica preenchida em Floresta. Telas de explicação têm o Continuar preso no fim da tela.
+- Tipografia: Archivo 900 nos títulos (a abertura em caixa alta, com o selo "ATENÇÃO:" em preto) e Inter no texto.
+- Topo: logo "TESTE DA / Além da Caneta" em verde e barra de progresso grossa em todas as telas.
+- Blocos de apelo, todos com conteúdo verdadeiro:
+  - aviso em vermelho (`.warn`);
+  - card do estudo NEJM 2021 (`.paper`);
+  - "Os resultados não mentem" (`.alert`);
+  - mensagem de voz (`CONFIG.audio`, gravada pelo dono);
+  - "Resultado gerado com SUCESSO" com antes e depois ilustrado (`avatar({mood})`).
+- Imagens: `CONFIG.imagens`; vazio usa as ilustrações em SVG (`avatar`, `torso`, `frenteArt`, `penArt`, `mirrorArt`).
