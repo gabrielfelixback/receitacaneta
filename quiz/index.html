@@ -399,6 +399,10 @@ h1,h2{line-height:1.04}
 h2.sans,h1.sans{font-family:var(--sans);font-weight:500;letter-spacing:-.015em;line-height:1.22;font-size:clamp(1.5rem,6.6vw,1.875rem)}
 .hook-h.sans{font-size:clamp(1.75rem,7.6vw,2.125rem);line-height:1.22}
 .hook-h.sans i{font-style:italic}
+.hook-h.sans .tag{font-size:1em;font-weight:700;letter-spacing:0;text-transform:none;vertical-align:baseline;padding:0 .22em;border-radius:6px;margin-right:.08em;line-height:inherit;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.opt.feat{border:2px solid var(--argila-cta);background:#FBF3EE;font-weight:700;box-shadow:0 0 0 4px rgba(184,116,79,.14)}
+.opt.feat .tile{background:var(--argila-cta);color:#FFFFFF}
+.opt.feat[aria-pressed="true"]{background:var(--floresta);border-color:var(--floresta)}
 .logo{flex-direction:column;gap:3px}
 .logo .kick{font-family:var(--sans);font-size:.625rem;font-weight:700;letter-spacing:.26em;color:var(--argila-ink)}
 .logo .lrow{display:flex;align-items:center;gap:8px}
@@ -507,7 +511,7 @@ h2.sans,h1.sans{font-family:var(--sans);font-weight:500;letter-spacing:-.015em;l
         <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
       </button>
       <div class="logo" id="logo"></div>
-      <span class="count" id="count" aria-label="Página atual"></span>
+      <span class="count" id="count" aria-label="Página"></span>
     </div>
     <div class="progress" id="progress" hidden>
       <span class="track"></span><span class="fill" id="progressFill"></span>
@@ -825,7 +829,7 @@ const STEPS = [
   {id: 'tempo', type: 'buttons', q: 'Quanto tempo você tem <em>para preparar?</em>', opts: [
     {v: 't5', l: 'Até 5 minutos, coisa de liquidificador', ic: 'raio'}, {v: 't20', l: 'Uns 15 a 20 minutos', ic: 'panela'}, {v: 't40', l: 'Gosto de cozinhar com calma', ic: 'relogio'}]},
   {id: 'compromisso', type: 'buttons', q: 'Se existisse um jeito de comer o que você gosta e ainda ver a barriga diminuir, você tentaria por 7 dias?', sans: true, qf: () => `Se existisse um jeito de comer o que você gosta e ficar mais perto ${SONHO_FRASE[state.a.sonho] || SONHO_FRASE.lisa}, você tentaria por 7 dias?`, opts: [
-    {v: 'sim', l: 'Sim, eu tentaria!', ic: 'saiu'}, {v: 'tentar', l: 'Talvez', ic: 'sorriso'}]},
+    {v: 'sim', l: 'Sim, eu tentaria!', ic: 'saiu', destaque: true}, {v: 'tentar', l: 'Talvez', ic: 'sorriso'}]},
   {id: 'loading', type: 'loading'},
   {id: 'resultado', type: 'result'}
 ];
@@ -987,7 +991,7 @@ const renderAge = () => {
   return out;
 };
 
-const optBtn = (s, o, sq) => el('button', {type: 'button', class: `opt${sq ? ' sq' : ''}${o.ic ? '' : ' plain'}`, id: `opt-${s.id}-${o.v}`, 'data-v': o.v, 'aria-pressed': 'false'},
+const optBtn = (s, o, sq) => el('button', {type: 'button', class: `opt${sq ? ' sq' : ''}${o.ic ? '' : ' plain'}${o.destaque ? ' feat' : ''}`, id: `opt-${s.id}-${o.v}`, 'data-v': o.v, 'aria-pressed': 'false'},
   o.ic ? H('span', ic(o.ic), 'tile') : null, el('span', {class: 'lbl'}, o.l), H('span', markSvg, 'mark'));
 
 const renderButtons = (s) => {
@@ -1428,7 +1432,7 @@ const render = () => {
   progressCap.style.left = `calc(${w}% - ${(w * 0.24).toFixed(1)}px)`;
   // Como na referência: nas perguntas só aparecem o voltar e o progresso; a marca fica na abertura e no resultado.
   topBar.classList.toggle('quiz', state.i > 0 && s.type !== 'result');
-  $('#count').textContent = `${state.i + 1}/${STEPS.length}`;
+  $('#count').textContent = String(state.i + 1);
   if (s.type !== 'result') sticky.hidden = true;
   screen.replaceChildren(...RENDER[s.type](s).filter(Boolean));
   screen.style.animation = 'none';

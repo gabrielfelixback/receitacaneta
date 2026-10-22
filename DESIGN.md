@@ -16,6 +16,7 @@ As cores, as fontes e o logo são os do guia além da caneta. Só o fundo da pá
   - soma do valor de cada entregável (`CONFIG.entregaveis[i][3]`), com o total riscado (`CONFIG.precoDe`);
   - selo "X% OFF" e economia em reais.
 - Rodapé fixo: "De R$ 249" riscado, preço, selo "-89%" pulsando e botão com brilho e balanço (desligado com redução de movimento).
-- Cabeçalho: "O TESTE" acima do logo e o número da página à direita (`3/16`).
+- Cabeçalho: "O TESTE" acima do logo e o número da página atual à direita (só o número).
 - Destaque vermelho (`.hl`): fundo `--danger`, texto branco em negrito, o mesmo vermelho do selo "ATENÇÃO:". Os títulos que usam `.hl` ficam em Instrument Sans (`h2.sans`, `sans: true` no passo): abertura, tipo de barriga, barriga desejada, aviso da tela 7 e compromisso.
 - Resultado: "Como está hoje / Com as receitas certas" vem logo abaixo do card do plano exclusivo.
+- Opção em destaque (`destaque: true` no passo, classe `.opt.feat`): borda e ícone em argila. Usada no "Sim, eu tentaria!" do compromisso.
