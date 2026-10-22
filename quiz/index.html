@@ -130,6 +130,7 @@ b,strong{font-weight:600}
 .said p{font-size:.9375rem;color:var(--creme)}
 .icard .pic img{width:100%;height:100%;object-fit:cover;object-position:center 62%;display:block}
 .icards.ages .pic img{object-position:center 22%}
+.q-sonho .pic img{object-position:center 40%}
 .crowd span img{width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block}
 .pill{align-self:stretch;text-align:center;font-size:.9375rem;font-weight:600;color:var(--argila-ink);background:var(--argila-soft);border:1px solid #EBD6C6;border-radius:16px;padding:11px 14px;display:flex;align-items:center;justify-content:center;gap:8px}
 .pill .ic{width:18px;height:18px}
@@ -280,6 +281,7 @@ input[type=range]{flex:1;min-width:0;height:36px;accent-color:var(--floresta);ba
 .rhead .goal{display:flex;align-items:center;gap:12px;background:rgba(244,240,232,.08);border:1px solid rgba(244,240,232,.12);border-radius:16px;padding:8px 14px 8px 8px}
 .rhead .goal .pic{flex:none;width:56px;height:56px;border-radius:12px;overflow:hidden;background:var(--linho)}
 .rhead .goal .pic svg{width:100%;height:100%}
+.rhead .goal .pic img{width:100%;height:100%;object-fit:cover;object-position:center 55%}
 .rhead .goal span{font-size:.8125rem;color:var(--on-dark-muted);display:block}
 .rhead .goal b{font-family:var(--serif);font-weight:400;font-size:1.375rem;line-height:1.1;color:var(--creme)}
 .offer .acc{font-size:.8125rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--musgo);margin-bottom:-6px}
@@ -557,7 +559,7 @@ const CONFIG = {
     caneta: '',             // pergunta da caneta
     idade: {i18: 'img/idade-18.webp', i30: 'img/idade-30.webp', i40: 'img/idade-40.webp', i50: 'img/idade-50.webp', i60: 'img/idade-60.webp'},
     barriga: {pochete: 'img/barriga-pochete.webp', pneuzinho: 'img/barriga-pneuzinho.webp', alta: 'img/barriga-alta.webp', flacida: 'img/barriga-flacida.webp'},
-    sonho: {lisa: '', firme: '', roupa: '', leve: ''}
+    sonho: {lisa: 'img/sonho-lisa.webp', firme: 'img/sonho-firme.webp', roupa: 'img/sonho-roupa.webp', leve: 'img/sonho-leve.webp'}
   },
   // Quebra de objeção da idade (tela logo depois da idade). Preencha só com números reais da sua base.
   // Ex.: i40: {pct: 40, texto: 'das nossas alunas de 40 a 49 anos disseram que a barriga começou a diminuir na 3ª semana de receitas'}
@@ -1008,7 +1010,7 @@ const renderButtons = (s) => {
   return [s.art ? H('div', s.art(), 'qpic') : null, H('h2', s.qf ? s.qf() : s.q, s.sans ? 'sans' : null), s.hint ? el('p', {class: 'hint'}, s.hint) : null, wrap];
 };
 const renderCards = (s) => {
-  const wrap = el('div', {class: 'icards', role: 'group'});
+  const wrap = el('div', {class: `icards q-${s.id}`, role: 'group'});
   s.opts.forEach((o) => { const b = cardBtn(s, o); b.addEventListener('click', () => pick(s, o.v, wrap, b)); wrap.append(b); });
   return [H('h2', s.q, s.sans ? 'sans' : null), s.hint ? el('p', {class: 'hint'}, s.hint) : null, wrap];
 };
@@ -1275,7 +1277,7 @@ const renderResult = () => {
   out.push(el('section', {class: 'rhead'},
     H('h1', `Seu perfil: <em>${perfil.nome}</em>`),
     el('p', {}, perfil.txt),
-    el('div', {class: 'goal'}, H('span', torso(state.a.sonho === 'firme' ? 0 : 1, {define: state.a.sonho === 'firme', jeans: state.a.sonho === 'roupa'}), 'pic'),
+    el('div', {class: 'goal'}, H('span', foto(CONFIG.imagens.sonho[state.a.sonho], torso(state.a.sonho === 'firme' ? 0 : 1, {define: state.a.sonho === 'firme', jeans: state.a.sonho === 'roupa'})), 'pic'),
       el('div', {}, el('span', {}, 'Seu objetivo'), el('b', {}, `Barriga: ${sonhoLabel().toLowerCase()}`))),
     el('div', {class: 'facts'},
       H('div', `<b class="bmiv">${fmt1(imc())}</b><span>IMC · ${imcFaixa().nome.toLowerCase()}</span>`),
@@ -1445,8 +1447,8 @@ const render = () => {
   if (first && state.i > 0) { first.setAttribute('tabindex', '-1'); try { first.focus({preventScroll: true}); } catch (e) {} }
 };
 render();
-// As fotos da idade e dos tipos de barriga já começam a baixar na primeira tela.
-const preload = () => [...Object.values(CONFIG.imagens.idade), ...Object.values(CONFIG.imagens.barriga)].filter(Boolean).forEach((u) => { const i = new Image(); i.src = u; });
+// As fotos da idade e das barrigas já começam a baixar na primeira tela.
+const preload = () => [...Object.values(CONFIG.imagens.idade), ...Object.values(CONFIG.imagens.barriga), ...Object.values(CONFIG.imagens.sonho)].filter(Boolean).forEach((u) => { const i = new Image(); i.src = u; });
 if ('requestIdleCallback' in window) requestIdleCallback(preload); else setTimeout(preload, 800);
 </script>
 </body>
