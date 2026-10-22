@@ -8,7 +8,7 @@
 <title>Teste da Caneta · além da caneta</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@800;900&family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap">
 <style>
 /* Identidade "além da caneta": Creme/Linho de base, Floresta/Sálvia/Musgo de apoio, Argila só como acento.
    Instrument Serif nos títulos (itálico só na palavra-chave) e Instrument Sans no resto. Tema claro único, de propósito. */
@@ -115,7 +115,7 @@ b,strong{font-weight:600}
 .btn:focus-visible,.opt:focus-visible,.icard:focus-visible,.back:focus-visible,summary:focus-visible,.step:focus-visible,input[type=range]:focus-visible{outline:2.5px solid var(--argila);outline-offset:3px}
 
 /* abertura */
-.hook-pic{border-radius:24px;overflow:hidden;background:#F3F4F6;aspect-ratio:16/9}
+.hook-pic{border-radius:24px;overflow:hidden;background:var(--linho);aspect-ratio:16/9}
 .hook-pic > svg,.hook-pic > img,.qpic > img,.crowd-pic > img{width:100%;height:100%;object-fit:cover;display:block}
 .hook-h{text-align:center;font-size:clamp(2rem,9vw,2.625rem);line-height:1.04}
 .hook-h em{color:var(--argila-ink)}
@@ -369,127 +369,121 @@ details p{margin-top:8px;color:var(--musgo);font-size:.9375rem}
 .sticky .p b{font-family:var(--serif);font-weight:400;font-size:1.625rem;white-space:nowrap;font-variant-numeric:tabular-nums}
 .sticky .p small{font-size:.72rem;color:var(--musgo)}
 .sticky .btn{min-height:52px;font-size:1rem}
-/* ===== Tema alta conversão (funil low ticket, tráfego frio) =====
-   Fundo branco, títulos pesados, vermelho na dor, verde na solução e nos botões, amarelo de marca-texto. */
+/* ===== Tema: a marca além da caneta no fundo branco =====
+   Mesmas cores e fontes do guia; o creme vira o fundo dos blocos de apoio. A força vem de tamanho, contraste e
+   dos blocos de destaque, não de trocar de identidade. */
 :root{
-  --creme:#FFFFFF; --branco:#FFFFFF; --linho:#F3F4F6; --line:#E5E7EB; --line-soft:#EEF0F2;
-  --floresta:#111111; --musgo:#4B5563; --salvia:#BBF7D0; --salvia-soft:#ECFDF3;
-  --verde:#15803D; --verde-vivo:#16A34A; --verde-dark:#0F5E2C; --vermelho:#DC2626; --vermelho-soft:#FEF2F2; --amarelo:#FDE047;
-  --argila:#16A34A; --argila-ink:#DC2626; --argila-cta:#15803D; --argila-dark:#0F5E2C; --argila-on-dark:#FDE047; --argila-soft:#FEF2F2;
-  --on-dark-muted:#D1D5DB;
-  --serif:"Archivo","Arial Black",Impact,sans-serif;
-  --sans:"Inter","Segoe UI",system-ui,-apple-system,sans-serif;
-  --shadow:0 1px 2px rgba(0,0,0,.06),0 4px 12px rgba(0,0,0,.06);
+  --creme:#FFFFFF; --branco:#FFFFFF; --linho:#F4F0E8; --line:#E6E0D4; --line-soft:#EFEAE1;
+  --vermelho:#A4442C; --verde:#17332B; --verde-vivo:#17332B;
 }
-body{font-size:1.0625rem}
-h1,h2{font-family:var(--serif);font-weight:900;letter-spacing:-.02em;line-height:1.12}
-h2{font-size:clamp(1.5rem,6.6vw,1.875rem)}
-h3{font-weight:800}
-h1 em,h2 em,h3 em,.tip b em,.proof em,.ask em{font-family:inherit;font-style:normal;font-size:inherit;color:var(--vermelho)}
-.g{color:var(--verde-vivo)}
-.mk{background:var(--amarelo);color:#111;padding:0 .15em;border-radius:3px}
-.lead{color:#374151}
-/* topo: logo e barra grossa em todas as telas, como nos funis de referência */
+body{background:#FFFFFF}
+h1,h2{line-height:1.04}
 .top{position:static;padding-top:10px}
 .top.quiz{display:block}
 .top.quiz .bar{min-height:48px;grid-template-columns:44px 1fr 44px}
 .top.quiz .logo{display:flex}
-.logo{flex-direction:column;gap:0;line-height:1}
-.logo small{font-family:var(--sans);font-weight:700;font-size:.66rem;letter-spacing:.24em;color:var(--verde)}
-.logo b{font-family:var(--serif);font-weight:900;font-style:italic;font-size:1.6rem;letter-spacing:-.03em;color:var(--verde-vivo)}
-.progress{height:12px}
-.progress .track,.progress .fill{height:10px;border-radius:99px}
-.progress .track{background:#DCFCE7}
-.progress .fill{background:var(--verde-vivo)}
-.progress .cap{display:none}
-/* botões */
-.btn{background:var(--verde);color:#FFFFFF;border-radius:14px;text-transform:uppercase;font-weight:800;font-size:1.0625rem;letter-spacing:.01em;box-shadow:0 4px 0 var(--verde-dark),0 10px 20px rgba(21,128,61,.25)}
-.btn:active{box-shadow:0 1px 0 var(--verde-dark)}
-.btn.buy{background:var(--verde);box-shadow:0 4px 0 var(--verde-dark),0 12px 24px rgba(21,128,61,.3)}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
-.pulse{animation:pulse 1.6s ease-in-out infinite}
-/* opções */
-.opt{border:2px solid var(--line);border-radius:14px;font-weight:600}
-.opt:hover{border-color:var(--verde-vivo)}
-.opt[aria-pressed="true"]{background:var(--verde);border-color:var(--verde);color:#FFFFFF}
-.opt[aria-pressed="true"] .tile{background:rgba(255,255,255,.18);color:#FFFFFF}
-.opt[aria-pressed="true"] .mark{background:#FFFFFF;border-color:#FFFFFF}
-.opt .mark svg{stroke:var(--verde)}
-.opt .tile{background:#F3F4F6}
-.icard{border:2px solid var(--line);border-radius:16px}
-.icard .pic{background:#F3F4F6}
-.icard .cap .ic{color:var(--verde)}
-.icard[aria-pressed="true"]{border-color:var(--verde)}
-.icard[aria-pressed="true"] .cap{background:var(--verde);color:#FFFFFF}
-.icard[aria-pressed="true"] .cap .ic,.icard[aria-pressed="true"] .cap small{color:#FFFFFF}
+.progress .track{height:5px;background:var(--linho)}
+.progress .fill{height:5px}
+.opt,.icard,.age{border-color:var(--line)}
+.opt .tile{background:var(--linho)}
+.icard .pic{background:var(--linho)}
 /* abertura */
-.hook-h{text-transform:uppercase;font-size:clamp(1.625rem,7.4vw,2.125rem);line-height:1.1}
-.hook-h .tag{background:#111;color:#FFFFFF;padding:0 .2em;border-radius:4px;margin-right:.15em}
-.hook-h .gg{color:var(--verde-vivo)}
-.pill{background:#FEF9C3;border-color:#FDE68A;color:#A16207}
-.okay{color:var(--verde);text-transform:uppercase;font-weight:800}
-.infobox{background:#EFF6FF;border-color:#BFDBFE;color:#1D4ED8}
-/* blocos escuros e de destaque */
-.sheet{border:1px solid var(--line-soft)}
-.sheet.linho{background:#F9FAFB}
-.split .fat{background:#D1D5DB;color:#111}
-.split .lean{background:var(--vermelho);color:#FFFFFF}
-.swap .yes{background:var(--verde)}
-.swap .yes .g,.swap .yes .tile{color:#FFFFFF}
-.rules .n{background:var(--verde);font-family:var(--serif);font-weight:900;font-size:1rem}
-.vs .yes .hd,.day .hd{background:var(--verde)}
-.vs .yes .hd em{color:#111;background:var(--amarelo);padding:0 .15em}
-.day .hd b{font-weight:900}
-.meal .when{color:var(--verde)}
-.offer{border:3px dashed var(--verde)}
-.offer .por{color:#111;font-weight:900}
-.offer .acc{color:var(--vermelho)}
-.rhead h1 em,.rhead .goal b{color:#111;background:var(--amarelo);padding:0 .12em}
-.rhead .goal b{font-weight:900}
-.weight .val,.stat b,.bmi .bhead b,.swap .g,.rhead .facts b,.sticky .p b,.loader .pct,.proof .big{font-weight:900}
-.warn{font-family:var(--serif);font-weight:900;font-size:clamp(1.375rem,6vw,1.625rem);line-height:1.18;text-align:center;text-wrap:balance}
-.warn .r{color:var(--vermelho)}
-.warn .gg{color:var(--verde-vivo)}
-.see{text-align:center;font-weight:800;text-decoration:underline;text-underline-offset:4px}
-.paper{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#FFFFFF;box-shadow:var(--shadow)}
-.paper .pbar{background:#111;color:#FFFFFF;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
-.paper .pbar span{color:#9CA3AF;font-weight:600}
+.hook-h{font-size:clamp(2.125rem,9.4vw,2.75rem);line-height:1.02;text-wrap:balance}
+.hook-h .tag{display:inline-block;vertical-align:.3em;font-family:var(--sans);font-size:.36em;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:var(--danger);color:#FFFFFF;border-radius:999px;padding:.35em .9em;margin-right:.3em}
+.hook-h em{color:var(--danger)}
+/* aviso e evidência */
+.warn{font-family:var(--serif);font-size:clamp(1.625rem,7vw,2rem);line-height:1.12;text-align:center;text-wrap:balance}
+.warn .r{color:var(--danger)}
+.warn .gg{color:var(--argila-ink);font-style:italic}
+.see{text-align:center;font-weight:600;text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--argila)}
+.paper{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#FFFFFF;box-shadow:var(--shadow)}
+.paper .pbar{background:var(--floresta);color:var(--creme);padding:10px 16px;display:flex;justify-content:space-between;align-items:center;font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.paper .pbar span{color:var(--on-dark-muted)}
 .paper .pin{padding:16px;display:flex;flex-direction:column;gap:12px}
-.paper .pin b{font-family:Georgia,"Times New Roman",serif;font-size:1.375rem;line-height:1.2;font-weight:700}
-.alert{background:var(--verde-vivo);color:#FFFFFF;border-radius:18px;padding:16px 18px;box-shadow:0 4px 0 var(--verde-dark)}
-.alert b{display:block;font-family:var(--serif);font-weight:900;font-size:1.25rem;margin-bottom:4px}
-.said{background:#FFFFFF;color:#111;border:2px solid var(--vermelho)}
-.said span{color:#4B5563}
-.said b{font-family:var(--serif);font-weight:900;color:var(--vermelho)}
-.said p{color:#111}
+.paper .pin b{font-family:var(--serif);font-weight:400;font-size:1.5rem;line-height:1.12}
+.split .fat{background:var(--salvia);color:var(--floresta)}
+.split .lean{background:var(--danger);color:#FFFFFF}
+.alert{background:var(--floresta);color:var(--creme);border-radius:22px;padding:16px 18px}
+.alert b{display:block;font-family:var(--serif);font-weight:400;font-size:1.5rem;line-height:1.1;color:var(--argila-on-dark);margin-bottom:4px}
+.said{background:#FFFFFF;color:var(--floresta);border:1.5px solid var(--danger);border-radius:22px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+.said span{font-size:.8125rem;color:var(--musgo);font-weight:600}
+.said b{font-family:var(--serif);font-style:italic;font-weight:400;font-size:1.625rem;line-height:1.1;color:var(--danger)}
 .voice{border:1px solid var(--line);border-radius:18px;padding:14px;display:grid;grid-template-columns:44px 1fr;gap:10px;align-items:end}
-.voice .av{width:44px;height:44px;border-radius:50%;overflow:hidden;background:#F3F4F6}
+.voice .av{width:44px;height:44px;border-radius:50%;overflow:hidden;background:var(--linho)}
 .voice .av img{width:100%;height:100%;object-fit:cover}
 .voice .who{font-size:.875rem;font-weight:600;margin-bottom:6px;display:block}
-.voice .bub{background:#F3F4F6;border-radius:16px;padding:8px 12px;display:flex;align-items:center;gap:10px}
-.voice .play{all:unset;cursor:pointer;width:36px;height:36px;border-radius:50%;background:#FFFFFF;display:grid;place-items:center;box-shadow:var(--shadow);flex:none}
-.voice .play svg{width:16px;height:16px;fill:#111}
+.voice .bub{background:var(--linho);border-radius:16px;padding:8px 12px;display:flex;align-items:center;gap:10px}
+.voice .play{all:unset;cursor:pointer;width:36px;height:36px;border-radius:50%;background:var(--floresta);display:grid;place-items:center;flex:none}
+.voice .play svg{width:15px;height:15px;fill:#FFFFFF}
 .voice .wave{flex:1;display:flex;align-items:center;gap:3px;height:28px;overflow:hidden}
-.voice .wave i{display:block;width:3px;border-radius:2px;background:#9CA3AF}
-.voice .wave i.on{background:var(--verde-vivo)}
-.voice .dur{font-size:.8125rem;font-weight:700;background:#FFFFFF;border-radius:99px;padding:3px 9px;font-variant-numeric:tabular-nums}
+.voice .wave i{display:block;width:3px;border-radius:2px;background:#B9B2A6}
+.voice .wave i.on{background:var(--argila)}
+.voice .dur{font-size:.8125rem;font-weight:600;font-variant-numeric:tabular-nums}
 .stack{display:flex;flex-direction:column;gap:10px}
-.success{text-align:center;font-weight:600}
-.success b{text-decoration:underline;text-underline-offset:3px}
-.ready{background:var(--verde-vivo);color:#FFFFFF;border-radius:18px;padding:22px 16px 30px;text-align:center;position:relative;box-shadow:6px 6px 0 #94A3B8}
-.ready b{display:block;font-family:var(--serif);font-weight:900;font-size:clamp(1.75rem,8vw,2.25rem);line-height:1.08}
-.ready mark{background:#475569;color:#FFFFFF;padding:0 .25em;display:inline-block;margin-top:4px}
-.ready .down{position:absolute;left:50%;bottom:-22px;transform:translateX(-50%);width:44px;height:44px;border-radius:50%;background:#2563EB;border:3px solid #FFFFFF;display:grid;place-items:center;box-shadow:var(--shadow)}
-.ready .down svg{width:18px;height:18px;stroke:#FFFFFF;stroke-width:3;fill:none}
-.ba{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+/* resultado: abertura do plano */
+.ready{background:var(--floresta);color:var(--creme);border-radius:28px;padding:22px 20px 20px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden}
+.ready .mk2{position:absolute;right:-8px;bottom:14px;width:150px;height:68px;opacity:.9}
+.ready .lbl{display:flex;align-items:center;gap:7px;font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--salvia)}
+.ready .lbl .ic{width:16px;height:16px}
+.ready h1{color:var(--creme);font-size:clamp(2.25rem,10vw,2.75rem);max-width:12ch}
+.ready h1 em{color:var(--argila-on-dark)}
+.ready p{color:var(--on-dark-muted);font-size:.9375rem}
+.ready .go{display:flex;align-items:center;gap:8px;font-size:.875rem;font-weight:600;color:var(--creme)}
+.ready .go span{width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(244,240,232,.4);display:grid;place-items:center;animation:bob 1.8s var(--ease) infinite}
+.ready .go .ic{width:16px;height:16px;transform:rotate(90deg)}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .ba > div{display:flex;flex-direction:column;gap:8px;text-align:center}
-.ba .card{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#FFFFFF}
-.ba .card h3{font-family:var(--serif);font-weight:900;font-size:1.375rem;padding:10px 0 0}
+.ba .card{border-radius:20px;overflow:hidden;background:var(--linho)}
+.ba .card h3{font-family:var(--sans);font-weight:600;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--musgo);padding:12px 0 2px}
+.ba > div:last-child .card h3{color:var(--argila-ink)}
 .ba .card .pic{display:block;aspect-ratio:1/1}
 .ba .card .pic svg{width:100%;height:100%}
-.ba p{font-weight:700;font-size:.9375rem;line-height:1.3}
+.ba p{font-family:var(--serif);font-size:1.125rem;line-height:1.15}
+.rhead{background:var(--linho);color:var(--floresta)}
+.rhead .ok{color:var(--musgo)}
+.rhead h1{color:var(--floresta)}
+.rhead h1 em{color:var(--argila-ink)}
+.rhead p{color:var(--musgo)}
+.rhead .goal,.rhead .facts div{background:#FFFFFF;border-color:var(--line)}
+.rhead .goal span,.rhead .facts span{color:var(--musgo)}
+.rhead .goal b,.rhead .facts b{color:var(--floresta)}
+.rhead .facts b.bmiv{color:var(--argila-ink)}
+/* benefícios: o que ela ganha, em letra grande */
+.gains{background:var(--floresta);color:var(--creme);border-radius:28px;padding:22px 20px;display:flex;flex-direction:column;gap:14px}
+.gains h2{color:var(--creme);text-align:left}
+.gains h2 em{color:var(--argila-on-dark)}
+.gains ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.gains li{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;font-size:1.125rem;font-weight:600;line-height:1.3}
+.gains li span{width:30px;height:30px;border-radius:50%;background:var(--argila-cta);display:grid;place-items:center}
+.gains li span svg{width:16px;height:16px;stroke:#FFFFFF;stroke-width:3;fill:none}
+.gains li small{display:block;font-weight:400;font-size:.875rem;color:var(--on-dark-muted);margin-top:2px}
+/* oferta: soma do valor e preço ancorado */
+.offer{border:1.5px solid var(--floresta);border-radius:28px;box-shadow:var(--shadow-lift)}
+.vstack{list-style:none;margin:0;padding:0;width:100%;display:flex;flex-direction:column;text-align:left}
+.vstack li{display:grid;grid-template-columns:22px 1fr auto;gap:10px;align-items:center;padding:9px 0;border-top:1px solid var(--line-soft);font-size:.9375rem;font-weight:500}
+.vstack li:first-child{border-top:0}
+.vstack li .ic{width:18px;height:18px;color:var(--floresta)}
+.vstack li s{color:var(--musgo);font-size:.875rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+.vtotal{width:100%;display:flex;justify-content:space-between;align-items:baseline;border-top:1.5px solid var(--floresta);padding-top:10px;font-weight:600}
+.vtotal s{font-family:var(--serif);font-size:1.5rem;color:var(--danger);font-weight:400}
+.today{width:100%;background:var(--linho);border-radius:22px;padding:16px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.today .off{font-size:.8125rem;font-weight:700;letter-spacing:.06em;color:#FFFFFF;background:var(--danger);border-radius:999px;padding:5px 12px;animation:pop 1.8s var(--ease) infinite}
+@keyframes pop{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.today .from{font-size:.9375rem;color:var(--musgo)}
+.today .from s{color:var(--danger);font-weight:600}
+.offer .por{font-size:4.25rem;color:var(--floresta)}
+.today .save{font-size:.875rem;font-weight:600;color:var(--argila-ink)}
+/* rodapé fixo em movimento */
+.sticky .p s{font-size:.75rem;color:var(--danger);font-weight:600}
+.sticky .p b{font-size:1.75rem;line-height:1}
+.sticky .p .off{display:inline-block;margin-left:6px;vertical-align:.4em;font-family:var(--sans);font-size:.6875rem;font-weight:700;color:#FFFFFF;background:var(--danger);border-radius:999px;padding:2px 7px;animation:pop 1.6s var(--ease) infinite}
+.sticky .btn{position:relative;overflow:hidden;animation:nudge 2.6s var(--ease) infinite}
+.sticky .btn::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.5) 50%,transparent 70%);transform:translateX(-120%);animation:shine 2.6s ease-in-out infinite;pointer-events:none}
+@keyframes shine{0%,45%{transform:translateX(-120%)}75%,100%{transform:translateX(120%)}}
+@keyframes nudge{0%,62%,100%{transform:none}70%{transform:scale(1.06) rotate(-1deg)}78%{transform:scale(1.04) rotate(1deg)}86%{transform:scale(1.02)}}
 @media (prefers-reduced-motion: reduce){
-  .screen,.pulse,.tip.swapin,.sticky{animation:none}
+  .screen,.pulse,.tip.swapin,.sticky,.sticky .btn,.sticky .btn::after,.today .off,.sticky .p .off,.ready .go span{animation:none}
   .progress .fill,.progress .cap,.score .track i,.gauge .track i{transition:none}
 }
 </style>
@@ -514,7 +508,7 @@ h1 em,h2 em,h3 em,.tip b em,.proof em,.ask em{font-family:inherit;font-style:nor
 
 <div class="sticky" id="sticky" hidden>
   <div class="in">
-    <span class="p"><b id="stickyPrice"></b><small>plano completo</small></span>
+    <span class="p"><s id="stickyDe"></s><b><span id="stickyPrice"></span><span class="off" id="stickyOff"></span></b></span>
     <a class="btn buy" id="stickyCta" href="#">Acessar meu plano</a>
   </div>
 </div>
@@ -524,10 +518,10 @@ h1 em,h2 em,h3 em,.tip b em,.proof em,.ask em{font-family:inherit;font-style:nor
    CONFIGURAÇÃO: troque os valores abaixo antes de colocar no ar
    ===================================================================== */
 const CONFIG = {
-  marca: {nome: 'além da caneta', logo: 'Além da Caneta'},
+  marca: {nome: 'além da caneta'},
   produto: 'Receitas Além da Caneta',
   preco: 27.90,
-  precoDe: null,            // ex.: 67. Use só se o produto já foi vendido por esse valor.
+  precoDe: 249,             // preço cheio mostrado riscado ("de R$ 249 por R$ 27,90"). null = soma dos valores dos entregáveis.
   checkoutUrl: '',          // seu link de checkout (Kiwify, Hotmart, Payt...). UTMs e fbclid vão junto.
   backendUrl: '',           // https://SEU_PROJETO.supabase.co/functions/v1/quiz  (veja backend/README.md)
   pixelId: '',              // ID do Pixel do Meta. Só carrega no seu domínio.
@@ -560,21 +554,30 @@ const CONFIG = {
     // Só depoimentos reais, com autorização. Formato:
     // { nome: 'Carla, 44 anos', texto: 'O sorvete de chocolate salvou minhas noites...' }
   ],
-  // [ícone, título, descrição]. Ícones disponíveis: veja ICON abaixo.
+  // [ícone, título, descrição, valor em R$ mostrado riscado na soma]. Ícones disponíveis: veja ICON abaixo.
   entregaveis: [
-    ['gelado', 'Receitas geladas e líquidas', 'Shakes, sorvetes, picolés e smoothies com proteína, para quando só desce coisa gelada.'],
-    ['doce', 'Doces que matam a vontade', 'Mousses, brigadeiros e bolos de caneca com proteína e pouco açúcar.'],
-    ['lanche', 'Fast-food de casa', 'Hambúrguer, pizza e salgado em versão caseira, com porção do tamanho do seu apetite.'],
-    ['bowl', 'Mini-refeições para dias sem fome', 'Porções pequenas que fecham a proteína mesmo quando você quase não come.'],
-    ['prato', 'Guia do prato com a caneta', 'O que comer primeiro, quanto e como evitar o enjoo.'],
-    ['cart', 'Lista de compras', 'Tudo separado por semana, para ir ao mercado uma vez.']
+    ['gelado', 'Receitas geladas e líquidas', 'Shakes, sorvetes, picolés e smoothies com proteína, para quando só desce coisa gelada.', 47],
+    ['doce', 'Doces que matam a vontade', 'Mousses, brigadeiros e bolos de caneca com proteína e pouco açúcar.', 47],
+    ['lanche', 'Fast-food de casa', 'Hambúrguer, pizza e salgado em versão caseira, com porção do tamanho do seu apetite.', 47],
+    ['bowl', 'Mini-refeições para dias sem fome', 'Porções pequenas que fecham a proteína mesmo quando você quase não come.', 37],
+    ['prato', 'Guia do prato com a caneta', 'O que comer primeiro, quanto e como evitar o enjoo.', 37],
+    ['cart', 'Lista de compras', 'Tudo separado por semana, para ir ao mercado uma vez.', 34]
+  ],
+  // Benefícios em letra grande antes do preço: [o que ela ganha, detalhe].
+  ganhos: [
+    ['Fechar a proteína do dia mesmo sem fome', 'Em poucas garfadas, do tamanho do apetite da caneta.'],
+    ['Matar a vontade de doce sem culpa', 'Doce todo dia, em versão que alimenta.'],
+    ['Comer gelado, hambúrguer e pizza', 'Na versão caseira, com a proteína que o corpo pede.'],
+    ['Proteger o seu músculo enquanto emagrece', 'Para o corpo queimar gordura, e não músculo.'],
+    ['Mais energia no dia a dia', 'Chega de cansaço por comer pouco e mal.'],
+    ['Saber exatamente o que comer', 'Cardápio pronto e lista de compras. Zero dúvida.']
   ],
   bonus: []
 };
 
 /* ===================================================================== */
 const SETUP = !CONFIG.checkoutUrl;
-const VERSAO = 'v7';
+const VERSAO = 'v8';
 const fmtBRL = (v) => new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(v);
 const $ = (s, r = document) => r.querySelector(s);
 const el = (tag, attrs = {}, ...kids) => {
@@ -729,16 +732,16 @@ const penArt = () => `<svg viewBox="0 0 360 170" role="img" aria-label="Ilustra�
 const foto = (url, fallback, alt = '') => (url ? `<img src="${url}" alt="${alt}" loading="lazy" decoding="async">` : fallback);
 // Primeira tela: o espelho, com a silhueta da pochete refletida.
 const mirrorArt = () => `<svg viewBox="0 0 360 225" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Ilustração de um espelho refletindo a barriga">
-  <rect width="360" height="225" style="fill:#F3F4F6"/>
-  <circle cx="60" cy="40" r="90" style="fill:#DCFCE7"/>
-  <ellipse cx="180" cy="118" rx="74" ry="100" style="fill:#FFFFFF;stroke:#16A34A" stroke-width="7"/>
+  <rect width="360" height="225" style="fill:#F4F0E8"/>
+  <circle cx="60" cy="40" r="90" style="fill:#E8ECE3"/>
+  <ellipse cx="180" cy="118" rx="74" ry="100" style="fill:#FFFFFF;stroke:#B8744F" stroke-width="7"/>
   <defs><clipPath id="mirr"><ellipse cx="180" cy="118" rx="70" ry="96"/></clipPath></defs>
-  <g clip-path="url(#mirr)">${torso(15).replace('<svg ', '<svg x="120" y="30" width="120" height="200" ')}</g>
-  <path d="M232 52 l10 -10 M244 64 l14 -6 M238 36 l4 -12" style="stroke:#16A34A" stroke-width="3" stroke-linecap="round"/>
-  <path d="M40 200 H118 C136 200 150 192 160 182" style="fill:none;stroke:#DC2626" stroke-width="3" stroke-linecap="round"/>
+  <g clip-path="url(#mirr)">${torso(15).replace('<svg ', '<svg x="120" y="30" width="120" height="200" ').replace('<rect width="120" height="160" style="fill:#E4DDCF"/>', '')}</g>
+  <path d="M232 52 l10 -10 M244 64 l14 -6 M238 36 l4 -12" style="stroke:#17332B" stroke-width="3" stroke-linecap="round"/>
+  <path d="M40 200 H118 C136 200 150 192 160 182" style="fill:none;stroke:#B8744F" stroke-width="3" stroke-linecap="round"/>
 </svg>`;
 
-$('#logo').innerHTML = `<small>TESTE DA</small><b>${CONFIG.marca.logo || CONFIG.marca.nome}</b>`;
+$('#logo').innerHTML = capsuleSvg('mark') + `<span class="word"><i>${CONFIG.marca.nome.split(' ')[0]}</i> ${CONFIG.marca.nome.split(' ').slice(1).join(' ')}</span>`;
 
 /* ---------- Backend, Pixel e checkout ---------- */
 // Os nomes dos eventos do Pixel não citam saúde e nenhuma resposta vai para o Meta.
@@ -1216,6 +1219,7 @@ const PERFIS = {
   lanche: {nome: 'Fome de hambúrguer', txt: 'A vontade de lanche continua mesmo com a caneta. Em vez de lutar contra ela, seu plano traz hambúrguer, pizza e salgado caseiros, no tamanho do seu apetite e com a proteína que o corpo precisa.'},
   prato_pequeno: {nome: 'Prato encolhido', txt: 'Você come comida de verdade, só que bem menos, e a parte que sobra no prato costuma ser a proteína. Seu plano muda a ordem e a proporção do prato para cada garfada contar.'}
 };
+const precoCheio = () => CONFIG.precoDe || CONFIG.entregaveis.reduce((t, e) => t + (e[3] || 0), 0) || CONFIG.preco;
 const perfilId = () => (PERFIS[state.a.come] ? state.a.come : 'gelado');
 const COVERS = [
   ['#17332B', '#F4F0E8', '#B8744F', 'Gelados', 'que nutrem'],
@@ -1233,13 +1237,16 @@ const renderResult = () => {
   const out = [];
 
   const eu = AVATAR[state.a.idade] || AVATAR.i40;
-  out.push(H('p', '🤩 Resultado <b>gerado com SUCESSO!</b>', 'success'));
-  out.push(H('div', `<b>O seu plano<br><mark>exclusivo está pronto!</mark></b><span class="down">${'<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>'}</span>`, 'ready'));
+  out.push(el('section', {class: 'ready'},
+    H('span', capsuleSvg('mk2', '#F4F0E8', '#D9A07E')),
+    H('span', ic('saiu') + 'Resultado gerado com sucesso', 'lbl'),
+    H('h1', 'O seu plano exclusivo <em>está pronto.</em>'),
+    el('p', {}, `Montado a partir das suas respostas, para ${barrigaNome()} e para o seu apetite com a caneta.`),
+    H('span', `<span>${ic('arrow')}</span>Veja o seu resultado`, 'go')));
   out.push(el('div', {class: 'ba'},
     el('div', {}, el('div', {class: 'card'}, el('h3', {}, 'ANTES'), H('span', avatar({...eu, mood: 'triste'}), 'pic')), el('p', {}, 'Esta é você hoje, fugindo do espelho.')),
     el('div', {}, el('div', {class: 'card'}, el('h3', {}, 'DEPOIS'), H('span', avatar({...eu, mood: 'feliz'}), 'pic')), el('p', {}, 'Esta é você voltando a gostar do que vê.'))));
   out.push(el('section', {class: 'rhead'},
-    H('span', ic('saiu') + 'Seu plano para voltar a gostar do espelho está pronto', 'ok'),
     H('h1', `Seu perfil: <em>${perfil.nome}</em>`),
     el('p', {}, perfil.txt),
     el('div', {class: 'goal'}, H('span', torso(state.a.sonho === 'firme' ? 0 : 1, {define: state.a.sonho === 'firme', jeans: state.a.sonho === 'roupa'}), 'pic'),
@@ -1261,8 +1268,8 @@ const renderResult = () => {
     H('h3', 'Análise das suas respostas'),
     el('div', {class: 'scores'},
       scoreRow('Risco de perder músculo junto com a gordura', musculo, 'var(--danger)', 'sc1'),
-      scoreRow('Força da vontade de doce, gelado ou lanche', vontade, '#F59E0B', 'sc2'),
-      scoreRow('Energia no dia a dia', energia, '#F59E0B', 'sc3'),
+      scoreRow('Força da vontade de doce, gelado ou lanche', vontade, 'var(--argila)', 'sc2'),
+      scoreRow('Energia no dia a dia', energia, 'var(--argila)', 'sc3'),
       scoreRow('Chance de destravar a barriga com o prato certo', destravar, 'var(--verde-vivo)', 'sc4')),
     el('p', {class: 'src'}, 'Pontuação do teste, calculada pelas suas respostas. Não é diagnóstico.')));
 
@@ -1324,12 +1331,21 @@ const renderResult = () => {
     setTimeout(() => { location.href = href; }, 250);
   };
   const [reais, cents] = CONFIG.preco.toFixed(2).split('.');
+  const de = precoCheio();
+  const off = Math.round((1 - CONFIG.preco / de) * 100);
+  out.push(el('section', {class: 'gains'},
+    H('h2', 'Com o plano completo, <em>você vai:</em>'),
+    el('ul', {}, CONFIG.ganhos.map(([t, d]) => el('li', {}, H('span', markSvg), el('div', {}, t, el('small', {}, d)))))));
   out.push(el('div', {class: 'offer', id: 'oferta'},
     H('h2', 'Libere o seu <em>plano completo</em>'),
-    el('p', {class: 'for'}, `O Dia 1 é só o começo. O plano completo traz todas as receitas para o perfil ${perfil.nome}, para chegar na barriga ${sonhoLabel().toLowerCase()} sem forçar comida.`),
-    el('span', {class: 'acc'}, 'Acesso completo'),
-    CONFIG.precoDe ? el('span', {class: 'de'}, `De ${fmtBRL(CONFIG.precoDe)}`) : null,
-    H('span', `<small>R$</small>${reais},${cents}`, 'por'),
+    el('p', {class: 'for'}, `Tudo o que você precisa para o perfil ${perfil.nome} e para chegar na barriga ${sonhoLabel().toLowerCase()} sem forçar comida.`),
+    el('ul', {class: 'vstack'}, CONFIG.entregaveis.map(([i, t, , v]) => el('li', {}, H('span', ic(i)), el('span', {}, t), v ? el('s', {}, fmtBRL(v)) : el('span')))),
+    el('div', {class: 'vtotal'}, el('span', {}, 'Valor total'), el('s', {}, fmtBRL(de))),
+    el('div', {class: 'today'},
+      el('span', {class: 'off'}, `${off}% OFF HOJE`),
+      H('span', `De <s>${fmtBRL(de)}</s> por apenas`, 'from'),
+      H('span', `<small>R$</small>${reais},${cents}`, 'por'),
+      el('span', {class: 'save'}, `Você economiza ${fmtBRL(de - CONFIG.preco)}`)),
     el('span', {class: 'sub'}, 'Pagamento único · acesso imediato no seu e-mail'),
     el('a', {class: 'btn buy pulse', id: 'cta', href, onclick: onBuy}, 'Acessar meu plano completo', icon('arrow')),
     el('div', {class: 'pay', 'aria-label': 'Formas de pagamento'}, H('span', ic('pix') + 'Pix'), H('span', ic('cartao') + 'Cartão'), H('span', ic('cadeado') + 'Compra segura')),
@@ -1366,6 +1382,8 @@ const renderResult = () => {
   out.push(el('p', {class: 'fine'}, 'Material educativo. Não substitui consulta médica ou com nutricionista. Os resultados variam de pessoa para pessoa.'));
 
   $('#stickyPrice').textContent = fmtBRL(CONFIG.preco);
+  $('#stickyDe').textContent = `De ${fmtBRL(de)}`;
+  $('#stickyOff').textContent = `-${off}%`;
   const sc = $('#stickyCta');
   sc.href = href;
   sc.onclick = onBuy;
