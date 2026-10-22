@@ -115,6 +115,20 @@ b,strong{font-weight:600}
 .btn:focus-visible,.opt:focus-visible,.icard:focus-visible,.back:focus-visible,summary:focus-visible,.step:focus-visible,input[type=range]:focus-visible{outline:2.5px solid var(--argila);outline-offset:3px}
 
 /* abertura */
+.hook-pic{border-radius:24px;overflow:hidden;background:var(--floresta);aspect-ratio:16/9}
+.hook-pic > svg,.hook-pic > img,.qpic > img,.crowd-pic > img{width:100%;height:100%;object-fit:cover;display:block}
+.hook-h{text-align:center;font-size:clamp(2rem,9vw,2.625rem);line-height:1.04}
+.hook-h em{color:var(--argila-ink)}
+.hook-ask{font-weight:700;text-align:center;font-size:1.0625rem;margin-top:2px}
+.opts.big .opt{min-height:60px;font-size:1.0625rem;font-weight:600}
+.secret{display:flex;align-items:center;justify-content:center;gap:6px;font-size:.8125rem;color:var(--musgo);font-weight:500}
+.secret .ic{width:15px;height:15px}
+.crowd-pic{border-radius:22px;overflow:hidden;aspect-ratio:16/10}
+.said{background:var(--floresta);color:var(--creme);border-radius:22px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+.said span{font-size:.8125rem;color:var(--on-dark-muted);font-weight:600}
+.said b{font-family:var(--serif);font-weight:400;font-size:1.5rem;line-height:1.1;color:var(--argila-on-dark)}
+.said p{font-size:.9375rem;color:var(--creme)}
+.icard .pic img{width:100%;height:100%;object-fit:cover;display:block}
 .pill{align-self:stretch;text-align:center;font-size:.9375rem;font-weight:600;color:var(--argila-ink);background:var(--argila-soft);border:1px solid #EBD6C6;border-radius:16px;padding:11px 14px;display:flex;align-items:center;justify-content:center;gap:8px}
 .pill .ic{width:18px;height:18px}
 .intro-h{text-align:center;font-size:clamp(2.125rem,9.6vw,2.75rem)}
@@ -140,7 +154,7 @@ b,strong{font-weight:600}
 .qpic{border-radius:24px;overflow:hidden;background:var(--salvia-soft)}
 .qpic svg{width:100%;height:auto}
 /* quebra: prova social e botão fixo */
-.okay{text-align:center;font-size:.9375rem;font-weight:600;color:var(--musgo)}
+.okay{text-align:center;font-size:.9375rem;font-weight:700;color:var(--musgo);letter-spacing:.02em}
 .okay b{color:var(--argila-ink);font-weight:700}
 .crowd{display:flex;justify-content:center;padding:4px 0}
 .crowd span{width:74px;height:74px;border-radius:50%;overflow:hidden;border:3px solid var(--creme);margin-left:-14px;background:var(--linho)}
@@ -400,6 +414,18 @@ const CONFIG = {
   pixelId: '',              // ID do Pixel do Meta. Só carrega no seu domínio.
   garantiaDias: 7,
   provaSocial: '',          // ex.: 'Mais de 3.200 pessoas já fizeram o teste'. Só com número real.
+  // Frase grande da tela "Você está no caminho certo!". {idade} vira a faixa escolhida.
+  // Ex.: '+ 3.200 mulheres de {idade} que usam a caneta já fizeram este teste'. Use o número real do seu backend.
+  provaQuebra: '',
+  // Fotos (URL ou caminho do arquivo, ex.: 'img/gancho.jpg'). Vazio = usa a ilustração.
+  imagens: {
+    gancho: '',             // primeira tela: mulher diante do espelho, barriga, emoção
+    quebra: '',             // "Você está no caminho certo!": grupo de mulheres
+    caneta: '',             // pergunta da caneta
+    idade: {i18: '', i30: '', i40: '', i50: '', i60: ''},
+    pochete: {nada: '', pouco: '', travou: '', saiu: ''},
+    sonho: {lisa: '', firme: '', roupa: '', leve: ''}
+  },
   // Quebra de objeção da idade (tela logo depois da idade). Preencha só com números reais da sua base.
   // Ex.: i40: {pct: 40, texto: 'das nossas alunas de 40 a 49 anos disseram que a barriga começou a diminuir na 3ª semana de receitas'}
   provaIdade: {i18: null, i30: null, i40: null, i50: null, i60: null},
@@ -427,7 +453,7 @@ const CONFIG = {
 
 /* ===================================================================== */
 const SETUP = !CONFIG.checkoutUrl;
-const VERSAO = 'v4';
+const VERSAO = 'v5';
 const fmtBRL = (v) => new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(v);
 const $ = (s, r = document) => r.querySelector(s);
 const el = (tag, attrs = {}, ...kids) => {
@@ -555,6 +581,18 @@ const penArt = () => `<svg viewBox="0 0 360 170" role="img" aria-label="Ilustra�
   <path d="M40 150 H130 C150 150 166 140 184 124" style="fill:none;stroke:#B8744F" stroke-width="3" stroke-linecap="round"/>
 </svg>`;
 
+const foto = (url, fallback, alt = '') => (url ? `<img src="${url}" alt="${alt}" loading="lazy" decoding="async">` : fallback);
+// Primeira tela: o espelho, com a silhueta da pochete refletida.
+const mirrorArt = () => `<svg viewBox="0 0 360 225" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Ilustração de um espelho refletindo a barriga">
+  <rect width="360" height="225" style="fill:#17332B"/>
+  <circle cx="60" cy="40" r="90" style="fill:#1F4037"/>
+  <ellipse cx="180" cy="118" rx="74" ry="100" style="fill:#E4DDCF;stroke:#D9A07E" stroke-width="7"/>
+  <defs><clipPath id="mirr"><ellipse cx="180" cy="118" rx="70" ry="96"/></clipPath></defs>
+  <g clip-path="url(#mirr)">${torso(15).replace('<svg ', '<svg x="120" y="30" width="120" height="200" ')}</g>
+  <path d="M232 52 l10 -10 M244 64 l14 -6 M238 36 l4 -12" style="stroke:#F4F0E8" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+  <path d="M40 200 H118 C136 200 150 192 160 182" style="fill:none;stroke:#B8744F" stroke-width="3" stroke-linecap="round"/>
+</svg>`;
+
 $('#logo').innerHTML = capsuleSvg('mark') + `<span class="word"><i>${CONFIG.marca.nome.split(' ')[0]}</i> ${CONFIG.marca.nome.split(' ').slice(1).join(' ')}</span>`;
 
 /* ---------- Backend, Pixel e checkout ---------- */
@@ -596,17 +634,20 @@ const IDADES = [
   {v: 'i18', l: '18–29', s: 'anos'}, {v: 'i30', l: '30–39', s: 'anos'}, {v: 'i40', l: '40–49', s: 'anos'},
   {v: 'i50', l: '50–59', s: 'anos'}, {v: 'i60', l: '60+', s: 'anos'}];
 const STEPS = [
+  {id: 'sentimento', type: 'hook', opts: [
+    {v: 'vergonha', l: 'Vergonha do meu corpo'}, {v: 'raiva', l: 'Raiva de mim mesma'},
+    {v: 'irreconhecivel', l: 'Não me reconheço mais'}, {v: 'evito', l: 'Eu nem me olho mais'}]},
   {id: 'idade', type: 'intro'},
   {id: 'quebra', type: 'age'},
-  {id: 'caneta', type: 'buttons', art: penArt, q: 'Há quanto tempo você <em>usa a caneta?</em>', hint: 'Mounjaro, Ozempic, Wegovy, Saxenda ou outra.', opts: [
+  {id: 'caneta', type: 'buttons', art: () => foto(CONFIG.imagens.caneta, penArt()), q: 'Há quanto tempo você <em>usa a caneta?</em>', hint: 'Mounjaro, Ozempic, Wegovy, Saxenda ou outra.', opts: [
     {v: 'c0', l: 'Comecei há menos de 1 mês', ic: 'broto'}, {v: 'c1', l: 'De 1 a 3 meses', ic: 'cal'},
     {v: 'c3', l: 'De 3 a 6 meses', ic: 'ampulheta'}, {v: 'c6', l: 'Mais de 6 meses', ic: 'calok'}, {v: 'parei', l: 'Já usei e parei', ic: 'pausa'}]},
   {id: 'pochete', type: 'cards', q: 'E a barriga de baixo, a famosa <em>pochete</em>, como está?', opts: [
-    {v: 'nada', l: 'Não saiu nada ainda', img: () => torso(14)}, {v: 'pouco', l: 'Diminuiu bem pouco', img: () => torso(9)},
-    {v: 'travou', l: 'Diminuiu e travou', img: () => torso(9, {pausa: true})}, {v: 'saiu', l: 'Já diminuiu bem', img: () => torso(4)}]},
+    {v: 'nada', l: 'Não saiu nada ainda', img: () => foto(CONFIG.imagens.pochete.nada, torso(14))}, {v: 'pouco', l: 'Diminuiu bem pouco', img: () => foto(CONFIG.imagens.pochete.pouco, torso(9))},
+    {v: 'travou', l: 'Diminuiu e travou', img: () => foto(CONFIG.imagens.pochete.travou, torso(9, {pausa: true}))}, {v: 'saiu', l: 'Já diminuiu bem', img: () => foto(CONFIG.imagens.pochete.saiu, torso(4))}]},
   {id: 'sonho', type: 'cards', q: 'E como você quer que a sua <em>barriga</em> fique?', hint: 'Escolha a que mais combina com você.', opts: [
-    {v: 'lisa', l: 'Lisinha', img: () => torso(0)}, {v: 'firme', l: 'Firme e definida', img: () => torso(0, {define: true})},
-    {v: 'roupa', l: 'Caber na roupa de antes', img: () => torso(2, {jeans: true})}, {v: 'leve', l: 'Sem a pochete, só isso', img: () => torso(3)}]},
+    {v: 'lisa', l: 'Lisinha', img: () => foto(CONFIG.imagens.sonho.lisa, torso(0))}, {v: 'firme', l: 'Firme e definida', img: () => foto(CONFIG.imagens.sonho.firme, torso(0, {define: true}))},
+    {v: 'roupa', l: 'Caber na roupa de antes', img: () => foto(CONFIG.imagens.sonho.roupa, torso(2, {jeans: true}))}, {v: 'leve', l: 'Sem a pochete, só isso', img: () => foto(CONFIG.imagens.sonho.leve, torso(3))}]},
   {id: 'porque', type: 'insight'},
   {id: 'sintomas', type: 'multi', q: 'Desde a caneta, <em>o que acontece</em> com você?', hint: 'Marque tudo o que for verdade.', opts: [
     {v: 'fome', l: 'Quase não sinto fome, esqueço de comer', ic: 'prato'}, {v: 'doce', l: 'Vontade forte de doce', ic: 'doce'},
@@ -631,6 +672,7 @@ const STEPS = [
 const QUESTION_IDX = STEPS.map((s, i) => (['loading', 'result'].includes(s.type) ? -1 : i)).filter((i) => i >= 0);
 // Só as perguntas de verdade entram no contador "3/8".
 const SONHO = Object.fromEntries(STEPS.find((x) => x.id === 'sonho').opts.map((o) => [o.v, o]));
+const sentimentoLabel = () => (STEPS[0].opts.find((o) => o.v === state.a.sentimento) || STEPS[0].opts[0]).l;
 const sonhoLabel = () => (SONHO[state.a.sonho] || SONHO.lisa).l;
 
 const state = {i: 0, a: {}};
@@ -694,25 +736,36 @@ const markSvg = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.
 /* ---------- Telas ---------- */
 const cardBtn = (s, o, wide) => el('button', {type: 'button', class: `icard${wide ? ' wide' : ''}`, id: `opt-${s.id}-${o.v}`, 'aria-pressed': String(state.a[s.id] === o.v)},
   H('span', o.img(), 'pic'), el('span', {class: 'cap'}, o.sub ? el('span', {}, o.l, el('small', {}, o.sub)) : el('span', {}, o.l), icon('arrow')));
-const renderIntro = (s) => {
-  const wrap = el('div', {class: 'icards ages', role: 'group', 'aria-label': 'Sua idade'});
-  IDADES.forEach((o, k) => {
-    const b = cardBtn(s, {...o, l: o.l, sub: o.s, img: () => avatar(AVATAR[o.v])}, k === IDADES.length - 1 && IDADES.length % 2 === 1);
-    b.addEventListener('click', () => {
-      if (!state.started) { state.started = true; track('QuizInicio', {}, true); send('inicio', {etapa: 0}); }
-      pick(s, o.v, wrap, b);
-    });
+const comecar = () => { if (!state.started) { state.started = true; track('QuizInicio', {}, true); send('inicio', {etapa: 0}); } };
+// Primeira tela: gancho emocional na autoestima, com o primeiro clique já na capa.
+const renderHook = (s) => {
+  const wrap = el('div', {class: 'opts big', role: 'group', 'aria-label': 'O que você sente no espelho'});
+  s.opts.forEach((o) => {
+    const b = optBtn(s, o);
+    b.setAttribute('aria-pressed', String(state.a[s.id] === o.v));
+    b.addEventListener('click', () => { comecar(); pick(s, o.v, wrap, b); });
     wrap.append(b);
   });
   return [
-    H('div', ic('relogio') + 'Teste rápido de 1 minuto', 'pill'),
-    H('h1', 'Usando a caneta e a <em>pochete</em> ainda não saiu?', 'intro-h'),
-    H('p', 'Responda o teste e descubra o que está travando o seu resultado. No final, você recebe um <b>plano de receitas montado para você</b>.', 'lead'),
-    el('p', {class: 'ask'}, 'Para começar, qual é a sua idade?'),
+    H('div', foto(CONFIG.imagens.gancho, mirrorArt(), 'Mulher diante do espelho'), 'hook-pic'),
+    H('h1', 'Você quase não come, toma a caneta certinho… e ainda <em>foge do espelho</em>?', 'hook-h'),
+    H('p', 'Não é falta de esforço. Tem um motivo para a pochete não sair, e ele está no seu prato.', 'lead'),
+    el('p', {class: 'hook-ask'}, 'Seja sincera: quando você se olha no espelho hoje, o que sente?'),
     wrap,
-    el('div', {class: 'trust'},
-      H('span', ic('anonimo') + 'sem cadastro'), H('span', ic('check') + 'resultado na hora')),
+    H('p', ic('cadeado') + 'Ninguém vai ver as suas respostas.', 'secret'),
     CONFIG.provaSocial ? el('p', {class: 'fine'}, CONFIG.provaSocial) : null
+  ];
+};
+const renderIntro = (s) => {
+  const wrap = el('div', {class: 'icards ages', role: 'group', 'aria-label': 'Sua idade'});
+  IDADES.forEach((o, k) => {
+    const b = cardBtn(s, {...o, l: o.l, sub: o.s, img: () => foto(CONFIG.imagens.idade[o.v], avatar(AVATAR[o.v]))}, k === IDADES.length - 1 && IDADES.length % 2 === 1);
+    b.addEventListener('click', () => { comecar(); pick(s, o.v, wrap, b); });
+    wrap.append(b);
+  });
+  return [
+    H('h2', 'Obrigada pela sinceridade. Para montar o seu plano, qual é a sua <em>idade</em>?'),
+    wrap
   ];
 };
 
@@ -744,23 +797,25 @@ const renderAge = () => {
   const prova = CONFIG.provaIdade[state.a.idade];
   const faixa = `${idadeLabel().replace('+', ' anos ou mais')}${idadeLabel().includes('+') ? '' : ' anos'}`;
   const out = [
-    H('p', '<b>Você está no lugar certo!</b>', 'okay'),
-    el('div', {class: 'crowd', 'aria-hidden': 'true'}, ['i18', 'i30', 'i40', 'i50', 'i60'].map((k) => H('span', avatar(AVATAR[k]))))
+    H('p', 'Você está no CAMINHO CERTO!', 'okay'),
+    CONFIG.imagens.quebra ? H('div', foto(CONFIG.imagens.quebra, '', 'Mulheres que fizeram o teste'), 'crowd-pic')
+      : el('div', {class: 'crowd', 'aria-hidden': 'true'}, ['i18', 'i30', 'i40', 'i50', 'i60'].map((k) => H('span', avatar(AVATAR[k]))))
   ];
+  if (CONFIG.provaQuebra) out.push(H('p', CONFIG.provaQuebra.replace('{idade}', faixa), 'proof'));
   if (prova && prova.pct) {
     // Prova real da base, no formato pedido: "X% das alunas dessa idade disseram que funcionou".
     out.push(H('p', `<span class="big">${prova.pct}%</span> das nossas alunas de ${faixa} ${prova.texto}`, 'proof'));
     out.push(el('p', {class: 'c lead'}, titulo));
   } else {
-    out.push(H('h2', titulo));
+    if (!CONFIG.provaQuebra) out.push(H('h2', titulo));
     out.push(el('p', {class: 'c lead'}, txt));
     out.push(el('div', {class: 'sheet dark'},
       el('div', {class: 'stat'}, el('b', {}, '3–8%'), el('span', {}, 'da massa muscular se perde a cada década depois dos 30, se nada for feito.')),
       H('div', muscleChart(state.a.idade)),
       el('p', {class: 'src'}, 'Volpi E. et al., Curr Opin Clin Nutr Metab Care, 2004. Curva ilustrativa da faixa citada.')));
   }
-  out.push(el('div', {class: 'infobox'}, 'Vamos ver mais algumas coisas para montar o seu plano personalizado…'));
-  if (SETUP && !(prova && prova.pct)) out.push(el('div', {class: 'setup', role: 'note'}, el('strong', {}, 'Espaço para a prova da sua base'), H('span', 'Preencha <code>CONFIG.provaIdade</code> com a % real de alunas dessa faixa que disseram que funcionou. Aparece em destaque aqui. Sem número real, fica o dado de pesquisa.')));
+  out.push(el('div', {class: 'infobox'}, 'Vamos coletar mais algumas informações para montar o seu plano personalizado…'));
+  if (SETUP && !(prova && prova.pct)) out.push(el('div', {class: 'setup', role: 'note'}, el('strong', {}, 'Espaço para a prova da sua base'), H('span', 'Preencha <code>CONFIG.provaQuebra</code> (ex.: "+ 3.200 mulheres de {idade} que usam a caneta já fizeram este teste") e/ou <code>CONFIG.provaIdade</code> (% de alunas dessa faixa que disseram que funcionou) com os seus números reais. Aparecem em destaque aqui.')));
   out.push(contBtn('cont-quebra', 'Continuar'));
   return out;
 };
@@ -816,13 +871,13 @@ const renderMulti = (s) => {
 const renderInsight = () => {
   const p = state.a.pochete;
   const titulo = p === 'saiu'
-    ? 'Ótimo começo. Agora o cuidado é <em>não perder músculo</em> no caminho.'
+    ? 'Ótimo começo. Mas cuidado: <em>você pode estar perdendo músculo</em> no caminho.'
     : p === 'travou'
-      ? 'Travou? <em>Não é falta de força de vontade.</em>'
-      : 'A pochete é uma das últimas a sair. <em>E tem um motivo.</em>';
+      ? 'Travou? <em>A culpa não é sua.</em>'
+      : 'Você está emagrecendo. <em>Só que do jeito errado.</em>';
   return [
     H('h2', titulo),
-    H('p', 'A caneta tira a fome. Mas se o pouco que você come tem pouca proteína, o corpo não queima só gordura: <b>ele também gasta músculo.</b>', 'c lead'),
+    H('p', 'A caneta tira a fome. Mas se o pouco que você come tem pouca proteína, o corpo não queima só gordura: <b>ele queima o seu próprio músculo.</b>', 'c lead'),
     el('div', {class: 'sheet'},
       H('h3', 'Do peso perdido com a caneta, num estudo grande:'),
       el('div', {class: 'split', role: 'img', 'aria-label': 'Cerca de 60% do peso perdido foi gordura e cerca de 40% foi massa magra'},
@@ -894,7 +949,9 @@ const renderMirror = () => {
   const [min, max] = protMeta();
   const tipica = PROT_TIPICA[state.a.come] || 35;
   const itens = sint().map((v) => ESPELHO[v]).filter(Boolean);
-  const out = [H('h2', 'Olha o que as suas respostas <em>mostram</em>')];
+  const out = [H('h2', 'Olha o que as suas respostas <em>mostram</em>'),
+    el('div', {class: 'said'}, el('span', {}, 'Você disse que, no espelho, sente:'), el('b', {}, `“${sentimentoLabel()}”`),
+      el('p', {}, 'Isso não é frescura nem falta de força de vontade. É o seu corpo emagrecendo do jeito errado. E isso se corrige no prato.'))];
   if (itens.length) {
     out.push(el('div', {class: 'sheet'}, el('ul', {class: 'mirror'}, itens.map(([i, t, d]) => el('li', {}, H('span', ic(i), 'tile'), el('div', {}, el('b', {}, t), el('span', {}, d)))))));
   } else {
@@ -1007,7 +1064,7 @@ const renderResult = () => {
   const out = [];
 
   out.push(el('section', {class: 'rhead'},
-    H('span', ic('saiu') + 'Seu plano personalizado está pronto', 'ok'),
+    H('span', ic('saiu') + 'Seu plano para voltar a gostar do espelho está pronto', 'ok'),
     H('h1', `Seu perfil: <em>${perfil.nome}</em>`),
     el('p', {}, perfil.txt),
     el('div', {class: 'goal'}, H('span', torso(state.a.sonho === 'firme' ? 0 : 1, {define: state.a.sonho === 'firme', jeans: state.a.sonho === 'roupa'}), 'pic'),
@@ -1153,7 +1210,7 @@ const renderResult = () => {
 };
 
 /* ---------- Render ---------- */
-const RENDER = {intro: renderIntro, age: renderAge, buttons: renderButtons, cards: renderCards, multi: renderMulti, insight: renderInsight,
+const RENDER = {hook: renderHook, intro: renderIntro, age: renderAge, buttons: renderButtons, cards: renderCards, multi: renderMulti, insight: renderInsight,
   weight: renderWeight, mirror: renderMirror, solution: renderSolution, loading: renderLoading, result: renderResult};
 const render = () => {
   const s = STEPS[state.i];

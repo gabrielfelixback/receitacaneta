@@ -1,12 +1,13 @@
 # Receita Caneta · quiz
 
-Quiz de 15 telas (9 perguntas) que leva quem usa caneta emagrecedora a entender por que a pochete não sai e termina num plano de receitas personalizado com a oferta.
+Quiz de 16 telas (10 perguntas) que leva quem usa caneta emagrecedora a entender por que a pochete não sai e termina num plano de receitas personalizado com a oferta.
 
 ## Fluxo
 
 | # | Tela | Para quê |
 | --- | --- | --- |
-| 1 | Abertura com a idade em cartões | Gancho ("usando a caneta e a pochete ainda não saiu?") e primeira interação já na capa |
+| 0 | Gancho: o que sente no espelho | Dor da autoestima e primeiro clique já na capa |
+| 1 | Idade em cartões | Gancho ("usando a caneta e a pochete ainda não saiu?") e primeira interação já na capa |
 | 2 | Quebra da idade | "Você está no lugar certo": texto por faixa + % real da sua base (`CONFIG.provaIdade`) ou dado de pesquisa |
 | 3 | Há quanto tempo usa a caneta | Situação |
 | 4 | Como está a pochete | Dor principal |
@@ -25,7 +26,7 @@ Quiz de 15 telas (9 perguntas) que leva quem usa caneta emagrecedora a entender 
 ## Ordem para colocar no ar
 
 1. **Backend**: siga `backend/README.md` (migração, segredos, deploy da função `quiz`).
-2. **Front**: preencha o `CONFIG` em `quiz/index.html` (`backendUrl`, `checkoutUrl`, `pixelId`, `provaIdade`, autor, depoimentos) e suba a pasta `quiz/` em Netlify, Vercel, Cloudflare Pages ou na sua hospedagem.
+2. **Front**: troque as fotos em `CONFIG.imagens`, preencha o `CONFIG` em `quiz/index.html` (`backendUrl`, `checkoutUrl`, `pixelId`, `provaIdade`, autor, depoimentos) e suba a pasta `quiz/` em Netlify, Vercel, Cloudflare Pages ou na sua hospedagem.
 3. Rode `npm test` antes de cada publicação.
 
 ## Pendências

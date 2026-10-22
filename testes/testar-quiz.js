@@ -1,4 +1,4 @@
-// Passa pelas 15 telas do quiz no jsdom, clicando como uma pessoa, e
+// Passa pelas 16 telas do quiz no jsdom, clicando como uma pessoa, e
 // confere três cenários de resultado: sem erro de JavaScript, sem NaN/undefined,
 // eventos certos para o backend e checkout repassando UTMs.
 // Uso: node --experimental-strip-types testes/testar-quiz.js [caminho do html]   (padrão: quiz/index.html)
@@ -14,9 +14,9 @@ let fail = false;
 const check = (ok, msg) => { if (!ok) fail = true; out.push(`${ok ? 'ok ' : 'ERRO'} ${msg}`); };
 
 const scenarios = [
-  {nome: 'gelado, 40 a 49', idade: 'i40', caneta: 'c3', pochete: 'travou', sonho: 'lisa', sintomas: ['fome', 'gelado', 'cansaco'], come: 'gelado', tempo: 't5', compromisso: 'sim'},
-  {nome: 'lanche, 60+', idade: 'i60', caneta: 'c6', pochete: 'nada', sonho: 'roupa', sintomas: ['lanche', 'enjoo', 'academia'], come: 'lanche', tempo: 't40', compromisso: 'tentar'},
-  {nome: 'sem sinais, 18 a 29', idade: 'i18', caneta: 'parei', pochete: 'saiu', sonho: 'firme', sintomas: ['nenhum'], come: 'prato_pequeno', tempo: 't20', compromisso: 'sim'}
+  {nome: 'gelado, 40 a 49', sentimento: 'vergonha', idade: 'i40', caneta: 'c3', pochete: 'travou', sonho: 'lisa', sintomas: ['fome', 'gelado', 'cansaco'], come: 'gelado', tempo: 't5', compromisso: 'sim'},
+  {nome: 'lanche, 60+', sentimento: 'evito', idade: 'i60', caneta: 'c6', pochete: 'nada', sonho: 'roupa', sintomas: ['lanche', 'enjoo', 'academia'], come: 'lanche', tempo: 't40', compromisso: 'tentar'},
+  {nome: 'sem sinais, 18 a 29', sentimento: 'raiva', idade: 'i18', caneta: 'parei', pochete: 'saiu', sonho: 'firme', sintomas: ['nenhum'], come: 'prato_pequeno', tempo: 't20', compromisso: 'sim'}
 ];
 
 const run = (sc) => new Promise((resolve) => {
@@ -44,6 +44,7 @@ const run = (sc) => new Promise((resolve) => {
 
   (async () => {
     try {
+      snap(); click('opt-sentimento-' + sc.sentimento); await wait(300);
       snap(); click('opt-idade-' + sc.idade); await wait(300);
       snap(); click('cont-quebra'); await wait(50);
       snap(); click('opt-caneta-' + sc.caneta); await wait(300);
@@ -71,7 +72,7 @@ const run = (sc) => new Promise((resolve) => {
     const all = texts.join(' | ');
     const result = texts[texts.length - 1] || '';
     check(!errors.length, `[${sc.nome}] sem erros de JavaScript ${errors.length ? '→ ' + errors.join(' || ') : ''}`);
-    check(texts.length === 15, `[${sc.nome}] ${texts.length} telas percorridas (esperado 15)`);
+    check(texts.length === 16, `[${sc.nome}] ${texts.length} telas percorridas (esperado 16)`);
     check(!/NaN|undefined|null/.test(all), `[${sc.nome}] nenhuma tela com NaN, undefined ou null`);
     const perfil = (result.match(/Seu perfil: (.+?)(A caneta|Com a caneta|Com a fome|Você come|A vontade)/) || [])[1];
     check(!!perfil, `[${sc.nome}] resultado com perfil "${(perfil || '?').trim()}"`);
@@ -80,6 +81,7 @@ const run = (sc) => new Promise((resolve) => {
     check(result.includes('30,5') && all.includes('Obesidade grau I'), `[${sc.nome}] IMC calculado com a altura (30,5)`);
     check(result.includes('85 a 113 g'), `[${sc.nome}] proteína pelo peso ajustado (85 a 113 g)`);
     check(result.includes('Dia 1') && result.includes('Garantia'), `[${sc.nome}] resultado tem Dia 1 e oferta`);
+    check(all.includes('Você disse que, no espelho, sente'), `[${sc.nome}] o espelho devolve o que a pessoa sente`);
     check(result.includes('Seu objetivo'), `[${sc.nome}] resultado mostra o objetivo escolhido`);
     const tipos = sent.map((e) => e.tipo);
     check(tipos[0] === 'inicio' && tipos.includes('concluido'), `[${sc.nome}] backend recebeu início e conclusão (${sent.length} eventos)`);
@@ -89,7 +91,7 @@ const run = (sc) => new Promise((resolve) => {
     check(conc.perfil === sc.come, `[${sc.nome}] perfil enviado ao backend: ${conc.perfil}`);
     const etapas = sent.filter((e) => e.tipo === 'etapa');
     const resp = Object.assign({}, ...etapas.map((e) => e.respostas));
-    check(resp.idade === sc.idade && resp.sonho === sc.sonho && resp.come === sc.come && resp.peso === 82 && resp.altura === 164 && Array.isArray(resp.sintomas), `[${sc.nome}] respostas chegam ao backend (${Object.keys(resp).join(', ')})`);
+    check(resp.sentimento === sc.sentimento && resp.idade === sc.idade && resp.sonho === sc.sonho && resp.come === sc.come && resp.peso === 82 && resp.altura === 164 && Array.isArray(resp.sintomas), `[${sc.nome}] respostas chegam ao backend (${Object.keys(resp).join(', ')})`);
     check(new Set(sent.map((e) => e.sessao)).size === 1, `[${sc.nome}] uma sessão só`);
     // checkout: sem link mostra o aviso; com link manda o evento e repassa UTMs
     d.getElementById('cta').click();
