@@ -37,7 +37,7 @@ backend/
 - **Dado de saúde (LGPD):** peso, altura e sintomas contam como dado de saúde, mesmo sem nome.
   - Não exporte para planilhas abertas e não mande para o Pixel do Meta.
   - As sessões com mais de 180 dias são apagadas por `quiz_limpar_antigos()`.
-  - Publique uma política de privacidade e coloque o link em `CONFIG.privacidadeUrl` no quiz.
+  - A política de privacidade fica em `quiz/privacidade.html` (ligada em `CONFIG.privacidadeUrl`). Se mudar o que o backend guarda ou o prazo de 180 dias, atualize a página também.
 - **Acesso ao banco:** RLS ligada e sem policy. Só o `service_role` (a Edge Function) grava. `anon` e `authenticated` não têm acesso às tabelas, às views nem às funções. Você lê os números pelo SQL Editor.
 - **Validação na função:**
   - sessão em UUID e tipo de evento numa lista fixa;

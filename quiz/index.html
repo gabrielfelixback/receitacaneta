@@ -131,6 +131,8 @@ b,strong{font-weight:600}
 .opts.big .opt{min-height:60px;font-size:1.0625rem;font-weight:600}
 .secret{display:flex;align-items:center;justify-content:center;gap:6px;font-size:.8125rem;color:var(--musgo);font-weight:500}
 .secret .ic{width:15px;height:15px}
+.consent{font-size:.75rem;color:var(--musgo);text-align:center;margin-top:-8px;text-wrap:balance}
+.consent a,.fine a{color:var(--argila-ink);text-underline-offset:2px}
 .crowd-pic{border-radius:22px;overflow:hidden;aspect-ratio:900/506}
 .said{background:var(--floresta);color:var(--creme);border-radius:22px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
 .said span{font-size:.8125rem;color:var(--on-dark-muted);font-weight:600}
@@ -618,7 +620,7 @@ const CONFIG = {
   checkoutUrl: '',          // seu link de checkout (Kiwify, Hotmart, Payt...). UTMs e fbclid vão junto.
   backendUrl: '',           // https://SEU_PROJETO.supabase.co/functions/v1/quiz  (veja backend/README.md)
   pixelId: '',              // ID do Pixel do Meta. Só carrega no seu domínio.
-  privacidadeUrl: '',       // link da sua política de privacidade (o quiz coleta peso, altura e sintomas). Aparece no rodapé do resultado.
+  privacidadeUrl: 'privacidade.html', // política de privacidade (quiz/privacidade.html). Aparece na abertura e no rodapé do resultado.
   garantiaDias: 7,
   provaSocial: '',          // ex.: 'Mais de 3.200 pessoas já fizeram o teste'. Só com número real.
   // Frase grande da tela "Você está no caminho certo!". {idade} vira a faixa escolhida.
@@ -1042,6 +1044,7 @@ const renderHook = (s) => {
     el('p', {class: 'hook-ask'}, 'Seja sincera: quando você se olha no espelho, o que sente?'),
     wrap,
     H('p', ic('cadeado') + 'Suas respostas são anônimas. Sem nome, sem e-mail.', 'secret'),
+    CONFIG.privacidadeUrl ? H('p', `Ao responder, você concorda com o uso das suas respostas, inclusive peso, altura e sintomas, para montar o seu resultado, conforme a <a href="${CONFIG.privacidadeUrl}" target="_blank" rel="noopener">Política de Privacidade</a>.`, 'consent') : null,
     CONFIG.provaSocial ? el('p', {class: 'fine'}, CONFIG.provaSocial) : null
   ];
 };
