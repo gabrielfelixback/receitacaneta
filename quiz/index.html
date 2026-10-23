@@ -116,6 +116,14 @@ b,strong{font-weight:600}
 
 /* abertura */
 .hook-pic{border-radius:24px;overflow:hidden;background:var(--linho);aspect-ratio:16/9}
+.hook-pic{position:relative}
+.vsl-som{all:unset;cursor:pointer;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:10px;background:rgba(23,51,43,.88);color:#FFFFFF;font-weight:700;font-size:1rem;padding:12px 18px 12px 14px;border-radius:999px;box-shadow:0 6px 20px rgba(0,0,0,.25);animation:somPulse 1.8s var(--ease) infinite;white-space:nowrap}
+.vsl-som span{width:30px;height:30px;border-radius:50%;background:var(--argila-cta);display:grid;place-items:center}
+.vsl-som svg{width:17px;height:17px;fill:#FFFFFF;stroke:#FFFFFF;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.vsl-som:focus-visible{outline:3px solid var(--argila);outline-offset:3px}
+@keyframes somPulse{0%,100%{box-shadow:0 6px 20px rgba(0,0,0,.25),0 0 0 0 rgba(184,116,79,.55)}60%{box-shadow:0 6px 20px rgba(0,0,0,.25),0 0 0 14px rgba(184,116,79,0)}}
+.vsl-barra{position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.35)}
+.vsl-barra i{display:block;height:100%;width:0;background:var(--argila-cta);transition:width .25s linear}
 .hook-pic > svg,.hook-pic > img,.hook-pic > video,.qpic > img,.crowd-pic > img{width:100%;height:100%;object-fit:cover;display:block}
 .hook-h{text-align:center;font-size:clamp(2rem,9vw,2.625rem);line-height:1.04}
 .hook-h em{color:var(--argila-ink)}
@@ -532,6 +540,7 @@ h2.sans,h1.sans{font-family:var(--sans);font-weight:500;letter-spacing:-.015em;l
 @keyframes shine{0%,45%{transform:translateX(-120%)}75%,100%{transform:translateX(120%)}}
 @keyframes nudge{0%,62%,100%{transform:none}70%{transform:scale(1.06) rotate(-1deg)}78%{transform:scale(1.04) rotate(1deg)}86%{transform:scale(1.02)}}
 @media (prefers-reduced-motion: reduce){
+  .vsl-som{animation:none}
   .screen,.pulse,.tip.swapin,.sticky,.sticky .btn,.sticky .btn::after,.today .off,.sticky .p .off,.ready .go span,.ready .mk2 path,.ready .lbl .ic,.ready h1 em{animation:none}
   .ready .mk2 path{stroke-dashoffset:0}
   .progress .fill,.progress .cap,.score .track i,.gauge .track i{transition:none}
@@ -597,8 +606,9 @@ const CONFIG = {
   imagens: {
     gancho: '',             // primeira tela: mulher diante do espelho, barriga, emoção
     // Vídeo da primeira tela (no lugar da foto). Toca sozinho, sem som e em loop, como um GIF.
-    // mp4 = arquivo do vídeo (ex.: 'video/gancho.mp4'); webm = versão menor opcional; capa = imagem mostrada enquanto carrega.
-    ganchoVideo: {mp4: '', webm: '', capa: ''},
+    // mp4 = arquivo do vídeo; webm = alternativa opcional; capa = imagem mostrada enquanto carrega.
+    // som: true = vídeo falado (VSL): começa mudo e mostra "Toque para ouvir", que reinicia com som.
+    ganchoVideo: {mp4: 'video/gancho.mp4', webm: '', capa: 'video/gancho-capa.webp', som: true},
     quebra: '',             // "Você está no caminho certo!": grupo de mulheres
     caneta: 'img/caneta.webp', // pergunta da caneta
     idade: {i18: 'img/idade-18.webp', i30: 'img/idade-30.webp', i40: 'img/idade-40.webp', i50: 'img/idade-50.webp', i60: 'img/idade-60.webp'},
@@ -957,10 +967,31 @@ const markSvg = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.
 const cardBtn = (s, o, wide) => el('button', {type: 'button', class: `icard${wide ? ' wide' : ''}`, id: `opt-${s.id}-${o.v}`, 'aria-pressed': String(state.a[s.id] === o.v)},
   H('span', o.img(), 'pic'), el('span', {class: 'cap'}, o.sub ? el('span', {}, o.l, el('small', {}, o.sub)) : el('span', {}, o.l), icon('arrow')));
 // Primeira tela: vídeo (se tiver), senão foto, senão a ilustração do espelho.
+// Vídeo falado: toca mudo com a legenda gravada; "Toque para ouvir" volta ao início com som.
 const midiaGancho = () => {
   const v = CONFIG.imagens.ganchoVideo || {};
-  if (v.mp4 || v.webm) return `<video autoplay muted loop playsinline preload="auto"${v.capa ? ` poster="${v.capa}"` : ''} aria-hidden="true">${v.webm ? `<source src="${v.webm}" type="video/webm">` : ''}${v.mp4 ? `<source src="${v.mp4}" type="video/mp4">` : ''}</video>`;
-  return foto(CONFIG.imagens.gancho, mirrorArt(), 'Mulher diante do espelho');
+  const box = el('div', {class: 'hook-pic'});
+  if (!v.mp4 && !v.webm) { box.innerHTML = foto(CONFIG.imagens.gancho, mirrorArt(), 'Mulher diante do espelho'); return box; }
+  const video = el('video', {autoplay: true, muted: true, loop: true, playsinline: true, preload: 'auto', poster: v.capa || null, 'aria-label': 'Vídeo de apresentação do teste'});
+  video.muted = true;
+  if (v.mp4) video.append(el('source', {src: v.mp4, type: 'video/mp4'}));
+  if (v.webm) video.append(el('source', {src: v.webm, type: 'video/webm'}));
+  box.append(video);
+  if (!v.som) { video.setAttribute('aria-hidden', 'true'); return box; }
+  const barra = el('i');
+  const som = el('button', {type: 'button', class: 'vsl-som', id: 'vsl-som'}, H('span', '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" style="fill:none"/></svg>'), 'Toque para ouvir');
+  const ligar = () => {
+    video.muted = false; video.loop = false; video.currentTime = 0;
+    const tentar = video.play(); if (tentar && tentar.catch) tentar.catch(() => {});
+    som.hidden = true; box.classList.add('com-som');
+    track('QuizVideoSom', {}, true);
+  };
+  som.addEventListener('click', (ev) => { ev.stopPropagation(); ligar(); });
+  box.addEventListener('click', () => { if (!video.muted) { if (video.paused) video.play(); else video.pause(); } });
+  video.addEventListener('timeupdate', () => { barra.style.width = `${(video.currentTime / (video.duration || 1)) * 100}%`; });
+  video.addEventListener('ended', () => { video.muted = true; video.loop = true; video.play(); som.hidden = false; som.lastChild.textContent = 'Ouvir de novo'; box.classList.remove('com-som'); });
+  box.append(som, el('span', {class: 'vsl-barra', 'aria-hidden': 'true'}, barra));
+  return box;
 };
 const comecar = () => { if (!state.started) { state.started = true; track('QuizInicio', {}, true); send('inicio', {etapa: 0}); } };
 // Primeira tela: gancho emocional na autoestima, com o primeiro clique já na capa.
@@ -973,7 +1004,7 @@ const renderHook = (s) => {
     wrap.append(b);
   });
   return [
-    H('div', midiaGancho(), 'hook-pic'),
+    midiaGancho(),
     H('h1', '<span class="tag">Atenção:</span> você toma a caneta, <i>quase não</i> come… e <span class="hl">a barriga não sai?</span>', 'hook-h sans'),
     H('p', 'Não é falta de esforço. <b>O motivo está no seu prato</b>, e quase ninguém te contou.', 'lead c'),
     el('p', {class: 'hook-ask'}, 'Seja sincera: quando você se olha no espelho, o que sente?'),
@@ -1555,7 +1586,7 @@ const render = () => {
   if (first && state.i > 0) { first.setAttribute('tabindex', '-1'); try { first.focus({preventScroll: true}); } catch (e) {} }
 };
 render();
-// As fotos da idade e das barrigas já começam a baixar na primeira tela.
+// As fotos da idade e das barrigas já começam a baixar na primeira tela (depois do vídeo, que tem prioridade).
 const preload = () => [CONFIG.imagens.caneta, ...Object.values(CONFIG.imagens.idade), ...Object.values(CONFIG.imagens.barriga), ...Object.values(CONFIG.imagens.sonho)].filter(Boolean).forEach((u) => { const i = new Image(); i.src = u; });
 if ('requestIdleCallback' in window) requestIdleCallback(preload); else setTimeout(preload, 800);
 </script>

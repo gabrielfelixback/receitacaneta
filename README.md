@@ -38,7 +38,10 @@ Quiz de 16 telas (10 perguntas) que leva quem usa caneta emagrecedora a entender
 
 ## Vídeo na primeira página
 
-O espaço da imagem da abertura aceita um vídeo curto, que toca sozinho, sem som e em loop, como um GIF.
+O espaço da imagem da abertura aceita vídeo. Hoje está com o vídeo de apresentação (`quiz/video/gancho.mp4`, 51 s).
+
+- **Vídeo falado (`som: true`):** começa sozinho e sem som (a legenda gravada conta a história). O botão "Toque para ouvir" volta ao início com som. Uma barra mostra o progresso, e tocar no vídeo pausa ou continua. No fim ele volta a rodar mudo, com "Ouvir de novo". O toque no som gera o evento `QuizVideoSom` no Pixel.
+- **Vídeo curto sem fala (`som: false`):** toca em loop, mudo, como um GIF.
 
 1. Grave ou edite um vídeo de 5 a 10 segundos, na horizontal (16:9) ou quadrado. Ele fica cortado em 16:9, então mantenha o principal no centro. Sem som: no celular, vídeo automático sempre começa mudo.
 2. Comprima para a página continuar rápida (o ideal é ficar abaixo de 1,5 MB):
