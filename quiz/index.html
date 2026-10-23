@@ -376,6 +376,14 @@ input[type=range]{flex:1;min-width:0;height:36px;accent-color:var(--floresta);ba
 .cover:nth-child(2){transform:translateY(-6px)}
 .cover:nth-child(3){transform:translateY(-10px)}
 .cover .cm{width:24px;height:11px}
+.cover.foto{padding:0;overflow:hidden}
+.cover.foto img{width:100%;height:100%;object-fit:cover;display:block}
+.extras h3.xh{font-family:var(--serif);font-weight:400;font-size:1.625rem;line-height:1.1;text-align:center}
+.extras h3.xh em{font-style:italic;color:var(--argila-ink)}
+.fila{overflow:hidden;margin:2px -20px 4px;padding:10px 0 14px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.fila-in{display:flex;gap:12px;width:max-content;animation:fila 26s linear infinite}
+.fila-in img{width:112px;aspect-ratio:2/3;height:auto;border-radius:10px;display:block;box-shadow:0 2px 4px rgba(23,51,43,.14),0 10px 20px rgba(23,51,43,.14)}
+@keyframes fila{to{transform:translateX(calc(-50% - 6px))}}
 .cover b{font-family:var(--serif);font-weight:400;font-size:1rem;line-height:1.02}
 .cover b i{display:block}
 .cover hr{border:0;height:1.5px;width:40%;margin:0;border-radius:1px}
@@ -497,7 +505,7 @@ h2.sans,h1.sans{font-family:var(--sans);font-weight:500;letter-spacing:-.015em;l
 .voice .dur{font-size:.8125rem;font-weight:600;font-variant-numeric:tabular-nums}
 .stack{display:flex;flex-direction:column;gap:10px}
 /* resultado: abertura do plano */
-.ready{background:var(--floresta);color:var(--creme);border-radius:28px;padding:22px 20px 20px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden}
+.ready{background:var(--argila-cta);color:#FFFFFF;box-shadow:0 14px 34px rgba(166,94,58,.35);border-radius:28px;padding:22px 20px 20px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden}
 .ready .mk2{position:absolute;right:-8px;bottom:14px;width:150px;height:68px;opacity:.9}
 .ready .mk2 path{stroke-dashoffset:62;animation:draw 1.6s .5s var(--ease) forwards}
 @keyframes draw{to{stroke-dashoffset:0}}
@@ -519,12 +527,12 @@ h2.sans,h1.sans{font-family:var(--sans);font-weight:500;letter-spacing:-.015em;l
 .vtotal.rv.in s.vt::after{transform:scaleX(1)}
 .today.rv.in .por{animation:land .5s 1.5s cubic-bezier(.34,1.56,.64,1) both}
 @keyframes land{0%{transform:scale(1)}40%{transform:scale(1.12)}100%{transform:scale(1)}}
-.ready .lbl{display:flex;align-items:center;gap:7px;font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--salvia)}
+.ready .lbl{display:flex;align-items:center;gap:7px;font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#FFF1E6}
 .ready .lbl .ic{width:16px;height:16px}
-.ready h1{color:var(--creme);font-size:clamp(2.25rem,10vw,2.75rem);max-width:12ch}
-.ready h1 em{color:var(--argila-on-dark)}
-.ready p{color:var(--on-dark-muted);font-size:.9375rem}
-.ready .go{display:flex;align-items:center;gap:8px;font-size:.875rem;font-weight:600;color:var(--creme)}
+.ready h1{color:#FFFFFF;font-size:clamp(2.25rem,10vw,2.75rem);max-width:12ch}
+.ready h1 em{color:var(--floresta)}
+.ready p{color:#FFF1E6;font-size:.9375rem}
+.ready .go{display:flex;align-items:center;gap:8px;font-size:.875rem;font-weight:600;color:#FFFFFF}
 .ready .go span{width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(244,240,232,.4);display:grid;place-items:center;animation:bob 1.8s var(--ease) infinite}
 .ready .go .ic{width:16px;height:16px;transform:rotate(90deg)}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
@@ -584,7 +592,6 @@ h2.sans,h1.sans{font-family:var(--sans);font-weight:500;letter-spacing:-.015em;l
 .today .save{font-size:.875rem;font-weight:600;color:var(--argila-ink)}
 /* materiais de apoio: lista compacta em duas colunas */
 .extras{border-top:1px solid var(--line-soft);padding-top:14px;display:flex;flex-direction:column;gap:10px}
-.extras .xh{font-weight:600;font-size:.9375rem}
 .xlist{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:12px 12px}
 .xlist li{display:grid;grid-template-columns:28px 1fr;gap:8px;align-items:start}
 .xlist .xt{width:28px;height:28px;border-radius:9px;background:var(--linho);display:grid;place-items:center;color:var(--floresta)}
@@ -600,7 +607,8 @@ h2.sans,h1.sans{font-family:var(--sans);font-weight:500;letter-spacing:-.015em;l
 @keyframes shine{0%,45%{transform:translateX(-120%)}75%,100%{transform:translateX(120%)}}
 @keyframes nudge{0%,62%,100%{transform:none}70%{transform:scale(1.06) rotate(-1deg)}78%{transform:scale(1.04) rotate(1deg)}86%{transform:scale(1.02)}}
 @media (prefers-reduced-motion: reduce){
-  .vsl-som,.pc-bar i,.provacard .pc-curve path,.voice .play.pulsa{animation:none}
+  .vsl-som,.pc-bar i,.provacard .pc-curve path,.voice .play.pulsa,.fila-in{animation:none}
+  .fila{overflow-x:auto}
   .provacard .pc-curve path{stroke-dashoffset:0}
   .screen,.pulse,.tip.swapin,.sticky,.sticky .btn,.sticky .btn::after,.today .off,.sticky .p .off,.ready .go span,.ready .mk2 path,.ready .lbl .ic,.ready h1 em{animation:none}
   .ready .mk2 path{stroke-dashoffset:0}
@@ -693,23 +701,24 @@ const CONFIG = {
     // Só depoimentos reais, com autorização. Formato:
     // { nome: 'Carla, 44 anos', texto: 'O sorvete de chocolate salvou minhas noites...' }
   ],
-  // [ícone, título, descrição, valor em R$ (opcional)]. Os 4 primeiros são os livros de receitas das capas.
+  // [ícone, título, descrição, valor em R$ (opcional), capa]. Os 4 livros de receitas.
   // Os materiais 09 a 12 da área de membros. Ícones disponíveis: veja ICON abaixo.
   entregaveis: [
-    ['gelado', 'Gelados que Nutrem', 'Shakes, sorvetes, picolés e smoothies com proteína, para quando só desce coisa gelada.'],
-    ['doce', 'Doces com Proteína', 'Mousses, brigadeiros e bolos de caneca com proteína e pouco açúcar.'],
-    ['lanche', 'Lanches de Casa', 'Hambúrguer, pizza e salgado em versão caseira, com porção do tamanho do seu apetite.'],
-    ['bowl', 'Mini Refeições', 'Porções pequenas que fecham a proteína mesmo quando você quase não come.']
+    ['gelado', 'Gelados que Nutrem', 'Shakes, sorvetes, picolés e smoothies com proteína, para quando só desce coisa gelada.', null, 'img/capas/09.webp'],
+    ['doce', 'Doces com Proteína', 'Mousses, brigadeiros e bolos de caneca com proteína e pouco açúcar.', null, 'img/capas/10.webp'],
+    ['lanche', 'Lanches de Casa', 'Hambúrguer, pizza e salgado em versão caseira, com porção do tamanho do seu apetite.', null, 'img/capas/11.webp'],
+    ['bowl', 'Mini Refeições', 'Porções pequenas que fecham a proteína mesmo quando você quase não come.', null, 'img/capas/12.webp']
   ],
   // Os outros materiais do produto principal, mostrados em lista compacta.
   // Kit Fora de Casa e Intestino Destravado são order bumps; Plano do Depois é o upsell. Não entram aqui.
+  // [ícone, título, descrição, capa]. As capas passam em fila contínua na página de vendas.
   materiais: [
-    ['prato', 'Guia do prato com a caneta', 'O que comer primeiro, quanto e como evitar o enjoo'],
-    ['cart', 'Lista de compras da semana', 'Quatro semanas separadas, uma ida ao mercado por semana'],
-    ['bowl', 'Cardápio Sem Fome', '30 receitas pequenas, do café ao jantar'],
-    ['enjoo', 'SOS Não Tô Com Fome', 'O que fazer na hora em que nada desce'],
-    ['calok', 'Tracker de Evolução', '12 semanas, um minuto por dia'],
-    ['saiu', 'Comece Aqui', 'O mapa do sistema e as 50 situações']
+    ['saiu', 'Comece Aqui', 'O mapa do sistema e as 50 situações', 'img/capas/00.webp'],
+    ['prato', 'Método 3P', 'O guia do prato, da proteína e das refeições', 'img/capas/01.webp'],
+    ['enjoo', 'SOS Não Tô Com Fome', 'Para quando nada desce', 'img/capas/02.webp'],
+    ['bowl', 'Cardápio Sem Fome', '30 receitas pequenas com proteína', 'img/capas/03.webp'],
+    ['cart', 'Carrinho Pronto', 'Compras por semana e por orçamento', 'img/capas/04.webp'],
+    ['calok', 'Tracker de Evolução', '12 semanas, um minuto por dia', 'img/capas/07.webp']
   ],
   // Benefícios em letra grande antes do preço: [o que ela ganha, detalhe].
   ganhos: [
@@ -726,7 +735,7 @@ const CONFIG = {
 
 /* ===================================================================== */
 const SETUP = !CONFIG.checkoutUrl;
-const VERSAO = 'v14';
+const VERSAO = 'v15';
 const fmtBRL = (v) => new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(v);
 const $ = (s, r = document) => r.querySelector(s);
 const el = (tag, attrs = {}, ...kids) => {
@@ -1448,7 +1457,7 @@ const renderResult = () => {
 
   const eu = AVATAR[state.a.idade] || AVATAR.i40;
   out.push(el('section', {class: 'ready'},
-    H('span', capsuleSvg('mk2', '#F4F0E8', '#D9A07E')),
+    H('span', capsuleSvg('mk2', '#F4F0E8', '#F4F0E8')),
     H('span', ic('saiu') + 'Resultado gerado com sucesso', 'lbl'),
     H('h1', 'O seu plano exclusivo <em>está pronto.</em>'),
     el('p', {}, `Montado a partir das suas respostas, para ${barrigaNome()} e para o seu apetite com a caneta.`),
@@ -1459,9 +1468,10 @@ const renderResult = () => {
     el('div', {class: 'col no'}, el('div', {class: 'hd'}, 'Como está hoje'), vsNo.map((t) => H('div', ic('x') + `<span>${t}</span>`, 'it'))),
     el('div', {class: 'col yes'}, H('div', 'Com as receitas <em>certas</em>', 'hd'), vsYes.map((t) => H('div', ic('check') + `<span>${t}</span>`, 'it')))));
   const fr = CONFIG.fotoObjetivo || {};
+  let goal = null;
   if (CONFIG.audioVenda) out.push(voiceBlock(CONFIG.audioVenda));
   if (fr.url) {
-    out.push(el('figure', {class: 'goalpic'},
+    out.push(goal = el('figure', {class: 'goalpic'},
       el('div', {class: 'gp-img'}, el('img', {src: fr.url, alt: fr.alt || '', loading: 'lazy', decoding: 'async'}), el('span', {class: 'gp-tag'}, fr.selo || 'Onde você quer chegar')),
       el('figcaption', {}, H('b', fr.titulo || 'Imagine a roupa de hoje <em>sobrando assim.</em>'), fr.legenda ? el('small', {}, fr.legenda) : null)));
   } else {
@@ -1539,11 +1549,15 @@ const renderResult = () => {
 
   out.push(el('div', {class: 'sheet'},
     H('h3', 'O que tem no seu <em>plano completo</em>'),
-    el('div', {class: 'covers', 'aria-hidden': 'true'}, COVERS.map(([bg, fg, ac, t1, t2]) =>
-      el('div', {class: 'cover', style: `background:${bg};color:${fg}`}, H('span', capsuleSvg('cm', fg, ac)), H('b', `${t1}<i>${t2}</i>`), el('hr', {style: `background:${ac}`})))),
+    el('div', {class: 'covers', 'aria-hidden': 'true'}, COVERS.map(([bg, fg, ac, t1, t2], k) => ((CONFIG.entregaveis[k] || [])[4]
+      ? el('div', {class: 'cover foto'}, el('img', {src: CONFIG.entregaveis[k][4], alt: '', loading: 'lazy', decoding: 'async'}))
+      : el('div', {class: 'cover', style: `background:${bg};color:${fg}`}, H('span', capsuleSvg('cm', fg, ac)), H('b', `${t1}<i>${t2}</i>`), el('hr', {style: `background:${ac}`}))))),
     el('ul', {class: 'deliv'}, CONFIG.entregaveis.map(([i, t, d]) => el('li', {}, H('span', ic(i), 'tile'), el('div', {}, el('b', {}, t), el('span', {}, d))))),
     CONFIG.materiais && CONFIG.materiais.length ? el('div', {class: 'extras'},
-      el('p', {class: 'xh'}, `E mais ${CONFIG.materiais.length} materiais que organizam o resto`),
+      H('h3', `E mais <em>${CONFIG.materiais.length} materiais</em> que organizam todo o resto`, 'xh'),
+      CONFIG.materiais.some((m) => m[3]) ? el('div', {class: 'fila', role: 'img', 'aria-label': 'Capas: ' + CONFIG.materiais.map((m) => m[1]).join(', ')},
+        // a fila vai duas vezes para o movimento emendar sem pulo
+        el('div', {class: 'fila-in'}, [...CONFIG.materiais, ...CONFIG.materiais].filter((m) => m[3]).map((m) => el('img', {src: m[3], alt: '', loading: 'lazy', decoding: 'async'})))) : null,
       el('ul', {class: 'xlist'}, CONFIG.materiais.map(([i, t, d]) => el('li', {}, H('span', ic(i), 'xt'), el('div', {}, el('b', {}, t), el('span', {}, d)))))) : null,
     el('p', {class: 'fine'}, `${CONFIG.entregaveis.length + (CONFIG.materiais || []).length} materiais na área de membros, cada um em versão para o celular e para imprimir.`),
     CONFIG.bonus.length ? el('ul', {class: 'deliv'}, CONFIG.bonus.map((b) => el('li', {}, H('span', ic('check'), 'tile'), el('div', {}, el('b', {}, 'Bônus: ' + b))))) : null));
@@ -1571,7 +1585,7 @@ const renderResult = () => {
     H('h2', 'Libere o seu <em>plano completo</em>'),
     el('p', {class: 'for'}, `Tudo o que você precisa para o perfil ${perfil.nome}, sem forçar comida e sem cortar o que você gosta.`),
     el('ul', {class: 'vstack'}, CONFIG.entregaveis.map(([i, t, , v]) => el('li', {}, H('span', ic(i)), el('span', {}, t), v ? el('s', {}, fmtBRL(v)) : el('span'))),
-      CONFIG.materiais && CONFIG.materiais.length ? el('li', {}, H('span', ic('plus')), el('span', {}, `Mais ${CONFIG.materiais.length} materiais: guia do prato, listas de compras, SOS, tracker e mais`), el('span')) : null),
+      CONFIG.materiais && CONFIG.materiais.length ? el('li', {}, H('span', ic('plus')), el('span', {}, `Mais ${CONFIG.materiais.length} materiais: Comece Aqui, Método 3P, SOS, Cardápio Sem Fome, Carrinho Pronto e Tracker`), el('span')) : null),
     el('div', {class: 'vtotal'}, el('span', {}, 'Valor total'), el('s', {class: 'vt'}, fmtBRL(de))),
     el('div', {class: 'today'},
       el('span', {class: 'off'}, `${off}% OFF HOJE`),
@@ -1621,13 +1635,13 @@ const renderResult = () => {
   const sc = $('#stickyCta');
   sc.href = href;
   sc.onclick = onBuy;
-  // A barra fixa de compra só aparece depois que a pessoa viu o Dia 1: primeiro o valor, depois o preço.
+  // A barra fixa de compra aparece quando a pessoa chega na foto do objetivo (sem foto, no Dia 1).
   sticky.hidden = true;
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {
       if (entries.some((e) => e.isIntersecting || e.boundingClientRect.top < 0)) { sticky.hidden = STEPS[state.i].type !== 'result'; io.disconnect(); }
     });
-    setTimeout(() => io.observe(day), 0);
+    setTimeout(() => io.observe(goal || day), 0);
   } else {
     sticky.hidden = false;
   }
