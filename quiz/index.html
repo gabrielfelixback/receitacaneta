@@ -388,9 +388,13 @@ input[type=range]{flex:1;min-width:0;height:36px;accent-color:var(--floresta);ba
 .cover b i{display:block}
 .cover hr{border:0;height:1.5px;width:40%;margin:0;border-radius:1px}
 .deliv{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
-.deliv li{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:center}
+.deliv li{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start}
+.deliv li.seu{background:#FFF6EF;border:1.5px solid var(--argila);border-radius:16px;padding:12px;margin-inline:-6px}
+.deliv .seu-tag{display:inline-block;font-size:.6875rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#FFFFFF;background:var(--argila-cta);border-radius:999px;padding:3px 9px;margin-bottom:5px}
+.deliv .quando{display:block;font-family:var(--serif);font-size:1.0625rem;line-height:1.2;color:var(--argila-ink);margin:1px 0 3px}
+.deliv-lead{text-align:center;color:var(--musgo);font-size:.9375rem;margin-top:-4px}
 .deliv .tile{width:40px;height:40px;border-radius:12px;background:var(--creme);display:grid;place-items:center;color:var(--floresta)}
-.deliv b{display:block;line-height:1.25}
+.deliv b{display:block;line-height:1.25;font-size:1.0625rem}
 .deliv span{font-size:.875rem;color:var(--musgo);line-height:1.35}
 .offer{background:var(--branco);border:2px solid var(--floresta);border-radius:28px;padding:22px 18px;display:flex;flex-direction:column;gap:12px;align-items:center;text-align:center;box-shadow:var(--shadow-lift);scroll-margin-top:90px}
 .offer h2{font-size:1.875rem}
@@ -592,12 +596,6 @@ h2.sans,h1.sans{font-family:var(--sans);font-weight:500;letter-spacing:-.015em;l
 .today .save{font-size:.875rem;font-weight:600;color:var(--argila-ink)}
 /* materiais de apoio: lista compacta em duas colunas */
 .extras{border-top:1px solid var(--line-soft);padding-top:14px;display:flex;flex-direction:column;gap:10px}
-.xlist{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:12px 12px}
-.xlist li{display:grid;grid-template-columns:28px 1fr;gap:8px;align-items:start}
-.xlist .xt{width:28px;height:28px;border-radius:9px;background:var(--linho);display:grid;place-items:center;color:var(--floresta)}
-.xlist .xt .ic{width:16px;height:16px}
-.xlist b{display:block;font-size:.875rem;line-height:1.25}
-.xlist span{font-size:.75rem;color:var(--musgo);line-height:1.3;display:block}
 /* rodapé fixo em movimento */
 .sticky .p s{font-size:.75rem;color:var(--danger);font-weight:600}
 .sticky .p b{font-size:1.75rem;line-height:1}
@@ -701,41 +699,49 @@ const CONFIG = {
     // Só depoimentos reais, com autorização. Formato:
     // { nome: 'Carla, 44 anos', texto: 'O sorvete de chocolate salvou minhas noites...' }
   ],
-  // [ícone, título, descrição, valor em R$ (opcional), capa]. Os 4 livros de receitas.
-  // Os materiais 09 a 12 da área de membros. Ícones disponíveis: veja ICON abaixo.
+  // Os 4 livros de receitas. quando = a situação em que ela vai abrir; desc = o que muda pra ela;
+  // perfil = respostas (come ou sintomas) que ganham o selo "Para o seu perfil"; valor (opcional) aparece riscado.
   entregaveis: [
-    ['gelado', 'Gelados que Nutrem', 'Shakes, sorvetes, picolés e smoothies com proteína, para quando só desce coisa gelada.', null, 'img/capas/09.webp'],
-    ['doce', 'Doces com Proteína', 'Mousses, brigadeiros e bolos de caneca com proteína e pouco açúcar.', null, 'img/capas/10.webp'],
-    ['lanche', 'Lanches de Casa', 'Hambúrguer, pizza e salgado em versão caseira, com porção do tamanho do seu apetite.', null, 'img/capas/11.webp'],
-    ['bowl', 'Mini Refeições', 'Porções pequenas que fecham a proteína mesmo quando você quase não come.', null, 'img/capas/12.webp']
+    {ic: 'gelado', nome: 'Gelados que Nutrem', quando: 'Para os dias em que só desce coisa gelada', capa: 'img/capas/09.webp', perfil: ['gelado'],
+      desc: 'Shake, sorvete, picolé e smoothie que descem fácil, matam a vontade e ainda fecham a proteína. Do liquidificador direto para o copo.'},
+    {ic: 'doce', nome: 'Doces com Proteína', quando: 'Para a vontade de doce que bate toda noite', capa: 'img/capas/10.webp', perfil: ['doce'],
+      desc: 'Mousse, brigadeiro e bolo de caneca para comer sem culpa. Você mata a vontade e o corpo ganha proteína, e não só açúcar.'},
+    {ic: 'lanche', nome: 'Lanches de Casa', quando: 'Para não abrir mão do hambúrguer e da pizza', capa: 'img/capas/11.webp', perfil: ['lanche'],
+      desc: 'O fast-food na versão caseira, no tamanho do seu apetite. Você continua comendo o que gosta, agora a favor do seu corpo.'},
+    {ic: 'bowl', nome: 'Mini Refeições', quando: 'Para os dias em que a fome some', capa: 'img/capas/12.webp', perfil: ['economia', 'prato_pequeno', 'fome'],
+      desc: 'Pratinhos de poucas garfadas com a proteína garantida. Chega de pular refeição e deixar o músculo ir embora junto com o peso.'}
   ],
-  // Os outros materiais do produto principal, mostrados em lista compacta.
-  // Kit Fora de Casa e Intestino Destravado são order bumps; Plano do Depois é o upsell. Não entram aqui.
-  // [ícone, título, descrição, capa]. As capas passam em fila contínua na página de vendas.
+  // Os outros materiais do produto principal (mesmos campos). As capas passam em fila contínua na página de vendas.
+  // Kit Fora de Casa, Intestino Destravado e Plano do Depois são order bumps e upsell: não entram aqui.
   materiais: [
-    ['saiu', 'Comece Aqui', 'O mapa do sistema e as 50 situações', 'img/capas/00.webp'],
-    ['prato', 'Método 3P', 'O guia do prato, da proteína e das refeições', 'img/capas/01.webp'],
-    ['enjoo', 'SOS Não Tô Com Fome', 'Para quando nada desce', 'img/capas/02.webp'],
-    ['bowl', 'Cardápio Sem Fome', '30 receitas pequenas com proteína', 'img/capas/03.webp'],
-    ['cart', 'Carrinho Pronto', 'Compras por semana e por orçamento', 'img/capas/04.webp'],
-    ['calok', 'Tracker de Evolução', '12 semanas, um minuto por dia', 'img/capas/07.webp']
+    {ic: 'saiu', nome: 'Comece Aqui', quando: 'Para começar hoje, sem se perder', capa: 'img/capas/00.webp',
+      desc: 'O mapa do primeiro dia e respostas prontas para 50 situações da vida com a caneta.'},
+    {ic: 'prato', nome: 'Método 3P', quando: 'Para montar o prato com a fome baixa', capa: 'img/capas/01.webp',
+      desc: 'O que comer primeiro, quanto e em que ordem, para a proteína nunca ficar para trás.'},
+    {ic: 'enjoo', nome: 'SOS Não Tô Com Fome', quando: 'Para abrir na hora em que nada desce', capa: 'img/capas/02.webp', perfil: ['enjoo', 'fome'],
+      desc: 'O passo a passo do dia difícil: enjoo, zero fome ou só uma coisa descendo.'},
+    {ic: 'bowl', nome: 'Cardápio Sem Fome', quando: '30 receitas pequenas, do café ao jantar', capa: 'img/capas/03.webp',
+      desc: 'Abra, escolha e faça. Você para de perder tempo pensando no que comer.'},
+    {ic: 'cart', nome: 'Carrinho Pronto', quando: 'Para resolver o mercado de uma vez', capa: 'img/capas/04.webp',
+      desc: 'Lista de compras por semana e por orçamento. Nada de gastar à toa ou ficar sem o que comer.'},
+    {ic: 'calok', nome: 'Tracker de Evolução', quando: 'Para enxergar o que o espelho ainda não mostra', capa: 'img/capas/07.webp',
+      desc: '12 semanas, um minuto por dia, para acompanhar a sua evolução e não desistir no meio.'}
   ],
   // Benefícios em letra grande antes do preço: [o que ela ganha, detalhe].
   ganhos: [
-    ['Fechar a proteína do dia mesmo sem fome', 'Em poucas garfadas, do tamanho do apetite da caneta.'],
-    ['Matar a vontade de doce sem culpa', 'Doce todo dia, em versão que alimenta.'],
-    ['Comer gelado, hambúrguer e pizza', 'Na versão caseira, com a proteína que o corpo pede.'],
-    ['Proteína em cada refeição, mesmo pequena', 'É ela que ajuda a preservar o músculo enquanto o peso cai.'],
-    ['Mais energia no dia a dia', 'Chega de cansaço por comer pouco e mal.'],
-    ['Saber exatamente o que comer', 'Cardápio pronto e lista de compras por semana.'],
-    ['Saber o que fazer no dia difícil', 'Enjoo, dia sem fome e dia que só desce uma coisa, com passo a passo.']
+    ['Bater a proteína do dia comendo pouco', 'Em porções do tamanho do apetite da caneta, sem se forçar a comer.'],
+    ['Proteger o seu músculo enquanto o peso cai', 'Com proteína em toda refeição, mesmo pequena. É ela que o corpo usa para preservá-lo.'],
+    ['Comer doce, gelado e lanche sem culpa', 'Nas versões que alimentam. Nada de cortar o que você gosta.'],
+    ['Sair do ciclo de comer pouco, mal e viver cansada', 'Refeições pequenas que sustentam o seu dia.'],
+    ['Nunca mais ficar perdida sobre o que comer', 'Cardápio pronto, lista de compras por semana e passo a passo para o dia difícil.'],
+    ['Fazer a caneta trabalhar a seu favor', 'O remédio cuida da fome. O prato certo cuida do resto.']
   ],
   bonus: []
 };
 
 /* ===================================================================== */
 const SETUP = !CONFIG.checkoutUrl;
-const VERSAO = 'v15';
+const VERSAO = 'v16';
 const fmtBRL = (v) => new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(v);
 const $ = (s, r = document) => r.querySelector(s);
 const el = (tag, attrs = {}, ...kids) => {
@@ -1438,7 +1444,7 @@ const PERFIS = {
   lanche: {nome: 'Fome de hambúrguer', txt: 'A vontade de lanche continua mesmo com a caneta. Em vez de lutar contra ela, seu plano traz hambúrguer, pizza e salgado caseiros, no tamanho do seu apetite e com a proteína que o corpo precisa.'},
   prato_pequeno: {nome: 'Prato encolhido', txt: 'Você come comida de verdade, só que bem menos, e a parte que sobra no prato costuma ser a proteína. Seu plano muda a ordem e a proporção do prato para cada garfada contar.'}
 };
-const precoCheio = () => CONFIG.precoDe || CONFIG.entregaveis.reduce((t, e) => t + (e[3] || 0), 0) || CONFIG.preco;
+const precoCheio = () => CONFIG.precoDe || CONFIG.entregaveis.reduce((t, e) => t + (e.valor || 0), 0) || CONFIG.preco;
 const perfilId = () => (PERFIS[state.a.come] ? state.a.come : 'gelado');
 const COVERS = [
   ['#17332B', '#F4F0E8', '#B8744F', 'Gelados', 'que nutrem'],
@@ -1547,18 +1553,25 @@ const renderResult = () => {
     el('div', {}, el('strong', {}, 'A caneta continua do jeito que o seu médico passou.'),
       el('span', {}, 'As receitas cuidam do prato. Dose, troca de medicamento e efeitos colaterais fortes são sempre com o seu médico.'))));
 
+  const itemEntrega = (e) => {
+    const seu = (e.perfil || []).some((v) => v === a.come || s.includes(v));
+    return el('li', {class: seu ? 'seu' : null}, H('span', ic(e.ic), 'tile'),
+      el('div', {}, seu ? el('span', {class: 'seu-tag'}, 'Para o seu perfil') : null,
+        el('b', {}, e.nome), el('i', {class: 'quando'}, e.quando), el('span', {}, e.desc)));
+  };
   out.push(el('div', {class: 'sheet'},
-    H('h3', 'O que tem no seu <em>plano completo</em>'),
-    el('div', {class: 'covers', 'aria-hidden': 'true'}, COVERS.map(([bg, fg, ac, t1, t2], k) => ((CONFIG.entregaveis[k] || [])[4]
-      ? el('div', {class: 'cover foto'}, el('img', {src: CONFIG.entregaveis[k][4], alt: '', loading: 'lazy', decoding: 'async'}))
+    H('h3', 'Tudo o que você <em>recebe hoje</em>'),
+    el('p', {class: 'deliv-lead'}, 'Feito para quem come pouco com a caneta e não quer perder músculo, nem abrir mão do que gosta.'),
+    el('div', {class: 'covers', 'aria-hidden': 'true'}, COVERS.map(([bg, fg, ac, t1, t2], k) => ((CONFIG.entregaveis[k] || {}).capa
+      ? el('div', {class: 'cover foto'}, el('img', {src: CONFIG.entregaveis[k].capa, alt: '', loading: 'lazy', decoding: 'async'}))
       : el('div', {class: 'cover', style: `background:${bg};color:${fg}`}, H('span', capsuleSvg('cm', fg, ac)), H('b', `${t1}<i>${t2}</i>`), el('hr', {style: `background:${ac}`}))))),
-    el('ul', {class: 'deliv'}, CONFIG.entregaveis.map(([i, t, d]) => el('li', {}, H('span', ic(i), 'tile'), el('div', {}, el('b', {}, t), el('span', {}, d))))),
+    el('ul', {class: 'deliv'}, CONFIG.entregaveis.map(itemEntrega)),
     CONFIG.materiais && CONFIG.materiais.length ? el('div', {class: 'extras'},
-      H('h3', `E mais <em>${CONFIG.materiais.length} materiais</em> que organizam todo o resto`, 'xh'),
-      CONFIG.materiais.some((m) => m[3]) ? el('div', {class: 'fila', role: 'img', 'aria-label': 'Capas: ' + CONFIG.materiais.map((m) => m[1]).join(', ')},
+      H('h3', `E mais <em>${CONFIG.materiais.length} materiais</em> para você não travar no caminho`, 'xh'),
+      CONFIG.materiais.some((m) => m.capa) ? el('div', {class: 'fila', role: 'img', 'aria-label': 'Capas: ' + CONFIG.materiais.map((m) => m.nome).join(', ')},
         // a fila vai duas vezes para o movimento emendar sem pulo
-        el('div', {class: 'fila-in'}, [...CONFIG.materiais, ...CONFIG.materiais].filter((m) => m[3]).map((m) => el('img', {src: m[3], alt: '', loading: 'lazy', decoding: 'async'})))) : null,
-      el('ul', {class: 'xlist'}, CONFIG.materiais.map(([i, t, d]) => el('li', {}, H('span', ic(i), 'xt'), el('div', {}, el('b', {}, t), el('span', {}, d)))))) : null,
+        el('div', {class: 'fila-in'}, [...CONFIG.materiais, ...CONFIG.materiais].filter((m) => m.capa).map((m) => el('img', {src: m.capa, alt: '', loading: 'lazy', decoding: 'async'})))) : null,
+      el('ul', {class: 'deliv'}, CONFIG.materiais.map(itemEntrega))) : null,
     el('p', {class: 'fine'}, `${CONFIG.entregaveis.length + (CONFIG.materiais || []).length} materiais na área de membros, cada um em versão para o celular e para imprimir.`),
     CONFIG.bonus.length ? el('ul', {class: 'deliv'}, CONFIG.bonus.map((b) => el('li', {}, H('span', ic('check'), 'tile'), el('div', {}, el('b', {}, 'Bônus: ' + b))))) : null));
 
@@ -1584,7 +1597,7 @@ const renderResult = () => {
   out.push(el('div', {class: 'offer', id: 'oferta'},
     H('h2', 'Libere o seu <em>plano completo</em>'),
     el('p', {class: 'for'}, `Tudo o que você precisa para o perfil ${perfil.nome}, sem forçar comida e sem cortar o que você gosta.`),
-    el('ul', {class: 'vstack'}, CONFIG.entregaveis.map(([i, t, , v]) => el('li', {}, H('span', ic(i)), el('span', {}, t), v ? el('s', {}, fmtBRL(v)) : el('span'))),
+    el('ul', {class: 'vstack'}, CONFIG.entregaveis.map((e) => el('li', {}, H('span', ic(e.ic)), el('span', {}, e.nome), e.valor ? el('s', {}, fmtBRL(e.valor)) : el('span'))),
       CONFIG.materiais && CONFIG.materiais.length ? el('li', {}, H('span', ic('plus')), el('span', {}, `Mais ${CONFIG.materiais.length} materiais: Comece Aqui, Método 3P, SOS, Cardápio Sem Fome, Carrinho Pronto e Tracker`), el('span')) : null),
     el('div', {class: 'vtotal'}, el('span', {}, 'Valor total'), el('s', {class: 'vt'}, fmtBRL(de))),
     el('div', {class: 'today'},
@@ -1678,7 +1691,7 @@ const animarResultado = (barras) => {
   marcar('.rhead .goal', 'up', 0, .2); marcar('.rhead .facts div', 'pop', .1, .3);
   marcar('.scores .score', 'l', .12, .1);
   marcar('.day .meal', 'r', .1, .15);
-  marcar('.cover', 'pop', .1, .1); marcar('.deliv li', 'l', .07, .1); marcar('.xlist li', 'up', .04, .1);
+  marcar('.cover', 'pop', .1, .1); marcar('.deliv li', 'l', .07, .1);
   marcar('.gains li', 'l', .12, .15);
   marcar('.vstack li', 'r', .08, .1); marcar('.vtotal', 'up', 0, .1); marcar('.today', 'pop', 0, .15);
   marcar('.faq details', 'up', .06, 0);
