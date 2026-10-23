@@ -65,7 +65,9 @@ ganchoVideo: {mp4: 'video/gancho.mp4', webm: 'video/gancho.webm', capa: 'video/g
 
 Sem vídeo, aparece a foto de `imagens.gancho`; sem foto, a ilustração do espelho.
 
-## Prova da base (página 3)
+## Prova da base (página "caminho certo")
+
+Hoje os percentuais por faixa estão em `PROVA_IDADE`, no `quiz/index.html`, com os números informados pelo dono. A ferramenta abaixo serve para quando houver uma planilha nova.
 
 Quando tiver a pesquisa real com as compradoras, gere o `CONFIG.provaIdade` com:
 

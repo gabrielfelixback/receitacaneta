@@ -47,13 +47,13 @@ const run = (sc) => new Promise((resolve) => {
     try {
       snap(); click('opt-sentimento-' + sc.sentimento); await wait(300);
       snap(); click('opt-idade-' + sc.idade); await wait(300);
-      snap(); click('cont-quebra'); await wait(50);
       snap(); click('opt-caneta-' + sc.caneta); await wait(300);
       snap(); click('opt-barriga-' + sc.barriga); await wait(300);
       snap(); click('opt-sonho-' + sc.sonho); await wait(300);
       snap(); click('cont-porque'); await wait(50);
       snap(); sc.sintomas.forEach((v) => click('opt-sintomas-' + v)); click('cont-sintomas'); await wait(50);
       snap(); click('opt-come-' + sc.come); await wait(300);
+      snap(); click('cont-quebra'); await wait(50);
       snap(); click('peso-mais'); click('peso-mais'); click('altura-menos'); click('cont-peso'); await wait(50);
       snap(); click('cont-espelho'); await wait(50);
       snap(); click('cont-solucao'); await wait(50);
@@ -74,6 +74,8 @@ const run = (sc) => new Promise((resolve) => {
     const result = texts[texts.length - 1] || '';
     check(!errors.length, `[${sc.nome}] sem erros de JavaScript ${errors.length ? '→ ' + errors.join(' || ') : ''}`);
     check(texts.length === 16, `[${sc.nome}] ${texts.length} telas percorridas (esperado 16)`);
+    check(/\d+% das mulheres (entre|com) .+ que responderam nosso quiz/.test(texts[8] || ''), `[${sc.nome}] "caminho certo" depois da pergunta do prato, com o % da faixa`);
+    check(/6x\s*R\$\s*4,65/.test(result) && result.includes('ou R$ 27,90 à vista'), `[${sc.nome}] oferta mostra 6x de R$ 4,65 e o valor à vista`);
     check(!/NaN|undefined|null/.test(all), `[${sc.nome}] nenhuma tela com NaN, undefined ou null`);
     const perfil = (result.match(/Seu perfil: (.+?)(A caneta|Com a caneta|Com a fome|Você come|A vontade)/) || [])[1];
     check(!!perfil, `[${sc.nome}] resultado com perfil "${(perfil || '?').trim()}"`);
