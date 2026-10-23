@@ -578,11 +578,29 @@ h2.sans,h1.sans{font-family:var(--sans);font-weight:500;letter-spacing:-.015em;l
 .gains li small{display:block;font-weight:400;font-size:.875rem;color:var(--on-dark-muted);margin-top:2px}
 /* oferta: soma do valor e preço ancorado */
 .offer{border:1.5px solid var(--floresta);border-radius:28px;box-shadow:var(--shadow-lift)}
-.vstack{list-style:none;margin:0;padding:0;width:100%;display:flex;flex-direction:column;text-align:left}
-.vstack li{display:grid;grid-template-columns:22px 1fr auto;gap:10px;align-items:center;padding:9px 0;border-top:1px solid var(--line-soft);font-size:.9375rem;font-weight:500}
-.vstack li:first-child{border-top:0}
-.vstack li .ic{width:18px;height:18px;color:var(--floresta)}
+.offer .for b{color:var(--floresta)}
+.offer .inclui{width:100%;margin-top:4px;font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--argila-ink);display:flex;align-items:center;gap:10px}
+.offer .inclui::before,.offer .inclui::after{content:"";flex:1;height:1px;background:var(--line)}
+.vstack{list-style:none;margin:0;padding:0;width:100%;display:flex;flex-direction:column;gap:10px;text-align:left}
+.vstack li{display:grid;grid-template-columns:52px 1fr 28px;gap:12px;align-items:center;padding:10px 12px 10px 10px;background:#FBF8F3;border:1.5px solid var(--line);border-radius:16px}
+.vstack li.seu{background:#FFF6EF;border-color:var(--argila);box-shadow:0 6px 16px rgba(166,94,58,.14)}
+.vstack .vc{width:52px;aspect-ratio:2/3;height:auto;border-radius:6px;display:grid;place-items:center;box-shadow:0 2px 6px rgba(23,51,43,.18)}
+.vstack b{display:block;font-size:1rem;line-height:1.2}
+.vstack li span:not(.seu-tag):not(.ok){display:block;font-size:.8125rem;color:var(--musgo);line-height:1.3;margin-top:2px}
+.vstack .seu-tag{display:inline-block;font-size:.625rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#FFFFFF;background:var(--argila-cta);border-radius:999px;padding:2px 8px;margin-bottom:4px}
+.vstack .ok{width:28px;height:28px;border-radius:50%;background:var(--floresta);color:#FFFFFF;display:grid;place-items:center}
+.vstack .ok .ic{width:15px;height:15px}
 .vstack li s{color:var(--musgo);font-size:.875rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+.vmais{width:100%;background:var(--floresta);color:var(--creme);border-radius:18px;padding:16px;text-align:left;display:flex;flex-direction:column;gap:10px}
+.vm-capas{display:flex;padding-left:10px}
+.vm-capas img{width:44px;aspect-ratio:2/3;height:auto;border-radius:5px;margin-left:-10px;box-shadow:0 3px 8px rgba(0,0,0,.35);border:1.5px solid rgba(244,240,232,.5)}
+.vm-capas img:nth-child(odd){transform:rotate(-4deg)}
+.vm-capas img:nth-child(even){transform:rotate(3deg) translateY(3px)}
+.vmais > b{font-family:var(--serif);font-weight:400;font-size:1.5rem;line-height:1.1}
+.vmais > b span{color:var(--argila-on-dark);font-style:italic}
+.vmais ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px 10px}
+.vmais li{display:flex;align-items:center;gap:6px;font-size:.8125rem;font-weight:500;line-height:1.25}
+.vmais li .ic{width:14px;height:14px;flex:none;color:var(--argila-on-dark)}
 .vtotal{width:100%;display:flex;justify-content:space-between;align-items:baseline;border-top:1.5px solid var(--floresta);padding-top:10px;font-weight:600}
 .vtotal s{font-family:var(--serif);font-size:1.5rem;color:var(--danger);font-weight:400}
 .today{width:100%;background:var(--linho);border-radius:22px;padding:16px;display:flex;flex-direction:column;align-items:center;gap:6px}
@@ -741,7 +759,7 @@ const CONFIG = {
 
 /* ===================================================================== */
 const SETUP = !CONFIG.checkoutUrl;
-const VERSAO = 'v16';
+const VERSAO = 'v17';
 const fmtBRL = (v) => new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(v);
 const $ = (s, r = document) => r.querySelector(s);
 const el = (tag, attrs = {}, ...kids) => {
@@ -1553,8 +1571,9 @@ const renderResult = () => {
     el('div', {}, el('strong', {}, 'A caneta continua do jeito que o seu médico passou.'),
       el('span', {}, 'As receitas cuidam do prato. Dose, troca de medicamento e efeitos colaterais fortes são sempre com o seu médico.'))));
 
+  const ehSeu = (e) => (e.perfil || []).some((v) => v === a.come || s.includes(v));
   const itemEntrega = (e) => {
-    const seu = (e.perfil || []).some((v) => v === a.come || s.includes(v));
+    const seu = ehSeu(e);
     return el('li', {class: seu ? 'seu' : null}, H('span', ic(e.ic), 'tile'),
       el('div', {}, seu ? el('span', {class: 'seu-tag'}, 'Para o seu perfil') : null,
         el('b', {}, e.nome), el('i', {class: 'quando'}, e.quando), el('span', {}, e.desc)));
@@ -1596,9 +1615,17 @@ const renderResult = () => {
     el('ul', {}, CONFIG.ganhos.map(([t, d]) => el('li', {}, H('span', markSvg), el('div', {}, t, el('small', {}, d)))))));
   out.push(el('div', {class: 'offer', id: 'oferta'},
     H('h2', 'Libere o seu <em>plano completo</em>'),
-    el('p', {class: 'for'}, `Tudo o que você precisa para o perfil ${perfil.nome}, sem forçar comida e sem cortar o que você gosta.`),
-    el('ul', {class: 'vstack'}, CONFIG.entregaveis.map((e) => el('li', {}, H('span', ic(e.ic)), el('span', {}, e.nome), e.valor ? el('s', {}, fmtBRL(e.valor)) : el('span'))),
-      CONFIG.materiais && CONFIG.materiais.length ? el('li', {}, H('span', ic('plus')), el('span', {}, `Mais ${CONFIG.materiais.length} materiais: Comece Aqui, Método 3P, SOS, Cardápio Sem Fome, Carrinho Pronto e Tracker`), el('span')) : null),
+    H('p', `Tudo o que você precisa para o perfil <b>${perfil.nome}</b>, sem forçar comida e sem cortar o que você gosta.`, 'for'),
+    el('p', {class: 'inclui'}, 'O seu plano completo inclui'),
+    // Cada livro numa caixa: capa, nome, a situação em que ela usa e o check; o do perfil dela vem marcado.
+    el('ul', {class: 'vstack'}, CONFIG.entregaveis.map((e) => el('li', {class: ehSeu(e) ? 'seu' : null},
+      e.capa ? el('img', {class: 'vc', src: e.capa, alt: '', loading: 'lazy', decoding: 'async'}) : H('span', ic(e.ic), 'vc'),
+      el('div', {}, ehSeu(e) ? el('span', {class: 'seu-tag'}, 'Para o seu perfil') : null, el('b', {}, e.nome), el('span', {}, e.quando)),
+      e.valor ? el('s', {}, fmtBRL(e.valor)) : H('span', ic('check'), 'ok')))),
+    CONFIG.materiais && CONFIG.materiais.length ? el('div', {class: 'vmais'},
+      el('div', {class: 'vm-capas', 'aria-hidden': 'true'}, CONFIG.materiais.filter((m) => m.capa).map((m) => el('img', {src: m.capa, alt: '', loading: 'lazy', decoding: 'async'}))),
+      H('b', `<span>+${CONFIG.materiais.length}</span> materiais de apoio`),
+      el('ul', {}, CONFIG.materiais.map((m) => H('li', ic('check') + m.nome)))) : null,
     el('div', {class: 'vtotal'}, el('span', {}, 'Valor total'), el('s', {class: 'vt'}, fmtBRL(de))),
     el('div', {class: 'today'},
       el('span', {class: 'off'}, `${off}% OFF HOJE`),
@@ -1693,7 +1720,7 @@ const animarResultado = (barras) => {
   marcar('.day .meal', 'r', .1, .15);
   marcar('.cover', 'pop', .1, .1); marcar('.deliv li', 'l', .07, .1);
   marcar('.gains li', 'l', .12, .15);
-  marcar('.vstack li', 'r', .08, .1); marcar('.vtotal', 'up', 0, .1); marcar('.today', 'pop', 0, .15);
+  marcar('.vstack li', 'r', .08, .1); marcar('.vmais', 'up', 0, .1); marcar('.vtotal', 'up', 0, .1); marcar('.today', 'pop', 0, .15);
   marcar('.faq details', 'up', .06, 0);
   const io = new IntersectionObserver((es) => es.forEach((e) => {
     if (!e.isIntersecting) return;
