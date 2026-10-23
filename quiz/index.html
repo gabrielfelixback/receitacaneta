@@ -565,6 +565,15 @@ h2.sans,h1.sans{font-family:var(--sans);font-weight:500;letter-spacing:-.015em;l
 .today .from s{color:var(--danger);font-weight:600}
 .offer .por{font-size:4.25rem;color:var(--floresta)}
 .today .save{font-size:.875rem;font-weight:600;color:var(--argila-ink)}
+/* materiais de apoio: lista compacta em duas colunas */
+.extras{border-top:1px solid var(--line-soft);padding-top:14px;display:flex;flex-direction:column;gap:10px}
+.extras .xh{font-weight:600;font-size:.9375rem}
+.xlist{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:12px 12px}
+.xlist li{display:grid;grid-template-columns:28px 1fr;gap:8px;align-items:start}
+.xlist .xt{width:28px;height:28px;border-radius:9px;background:var(--linho);display:grid;place-items:center;color:var(--floresta)}
+.xlist .xt .ic{width:16px;height:16px}
+.xlist b{display:block;font-size:.875rem;line-height:1.25}
+.xlist span{font-size:.75rem;color:var(--musgo);line-height:1.3;display:block}
 /* rodapé fixo em movimento */
 .sticky .p s{font-size:.75rem;color:var(--danger);font-weight:600}
 .sticky .p b{font-size:1.75rem;line-height:1}
@@ -614,7 +623,7 @@ h2.sans,h1.sans{font-family:var(--sans);font-weight:500;letter-spacing:-.015em;l
    ===================================================================== */
 const CONFIG = {
   marca: {nome: 'além da caneta'},
-  produto: 'Receitas Além da Caneta',
+  produto: 'além da caneta · plano completo',
   preco: 27.90,
   precoDe: 249,             // preço cheio mostrado riscado ("de R$ 249 por R$ 27,90"). null = soma dos valores dos entregáveis.
   checkoutUrl: '',          // seu link de checkout (Kiwify, Hotmart, Payt...). UTMs e fbclid vão junto.
@@ -662,30 +671,40 @@ const CONFIG = {
     // Só depoimentos reais, com autorização. Formato:
     // { nome: 'Carla, 44 anos', texto: 'O sorvete de chocolate salvou minhas noites...' }
   ],
-  // [ícone, título, descrição, valor em R$ mostrado riscado na soma]. Ícones disponíveis: veja ICON abaixo.
+  // [ícone, título, descrição, valor em R$ (opcional)]. Os 4 primeiros são os livros de receitas das capas.
+  // Os materiais 09 a 12 da área de membros. Ícones disponíveis: veja ICON abaixo.
   entregaveis: [
-    ['gelado', 'Receitas geladas e líquidas', 'Shakes, sorvetes, picolés e smoothies com proteína, para quando só desce coisa gelada.', 47],
-    ['doce', 'Doces que matam a vontade', 'Mousses, brigadeiros e bolos de caneca com proteína e pouco açúcar.', 47],
-    ['lanche', 'Fast-food de casa', 'Hambúrguer, pizza e salgado em versão caseira, com porção do tamanho do seu apetite.', 47],
-    ['bowl', 'Mini-refeições para dias sem fome', 'Porções pequenas que fecham a proteína mesmo quando você quase não come.', 37],
-    ['prato', 'Guia do prato com a caneta', 'O que comer primeiro, quanto e como evitar o enjoo.', 37],
-    ['cart', 'Lista de compras', 'Tudo separado por semana, para ir ao mercado uma vez.', 34]
+    ['gelado', 'Gelados que Nutrem', 'Shakes, sorvetes, picolés e smoothies com proteína, para quando só desce coisa gelada.'],
+    ['doce', 'Doces com Proteína', 'Mousses, brigadeiros e bolos de caneca com proteína e pouco açúcar.'],
+    ['lanche', 'Lanches de Casa', 'Hambúrguer, pizza e salgado em versão caseira, com porção do tamanho do seu apetite.'],
+    ['bowl', 'Mini Refeições', 'Porções pequenas que fecham a proteína mesmo quando você quase não come.']
+  ],
+  // Os outros materiais do produto principal, mostrados em lista compacta.
+  // Kit Fora de Casa e Intestino Destravado são order bumps; Plano do Depois é o upsell. Não entram aqui.
+  materiais: [
+    ['prato', 'Guia do prato com a caneta', 'O que comer primeiro, quanto e como evitar o enjoo'],
+    ['cart', 'Lista de compras da semana', 'Quatro semanas separadas, uma ida ao mercado por semana'],
+    ['bowl', 'Cardápio Sem Fome', '30 receitas pequenas, do café ao jantar'],
+    ['enjoo', 'SOS Não Tô Com Fome', 'O que fazer na hora em que nada desce'],
+    ['calok', 'Tracker de Evolução', '12 semanas, um minuto por dia'],
+    ['saiu', 'Comece Aqui', 'O mapa do sistema e as 50 situações']
   ],
   // Benefícios em letra grande antes do preço: [o que ela ganha, detalhe].
   ganhos: [
     ['Fechar a proteína do dia mesmo sem fome', 'Em poucas garfadas, do tamanho do apetite da caneta.'],
     ['Matar a vontade de doce sem culpa', 'Doce todo dia, em versão que alimenta.'],
     ['Comer gelado, hambúrguer e pizza', 'Na versão caseira, com a proteína que o corpo pede.'],
-    ['Proteger o seu músculo enquanto emagrece', 'Para o corpo queimar gordura, e não músculo.'],
+    ['Proteína em cada refeição, mesmo pequena', 'É ela que ajuda a preservar o músculo enquanto o peso cai.'],
     ['Mais energia no dia a dia', 'Chega de cansaço por comer pouco e mal.'],
-    ['Saber exatamente o que comer', 'Cardápio pronto e lista de compras. Zero dúvida.']
+    ['Saber exatamente o que comer', 'Cardápio pronto e lista de compras por semana.'],
+    ['Saber o que fazer no dia difícil', 'Enjoo, dia sem fome e dia que só desce uma coisa, com passo a passo.']
   ],
   bonus: []
 };
 
 /* ===================================================================== */
 const SETUP = !CONFIG.checkoutUrl;
-const VERSAO = 'v11';
+const VERSAO = 'v13';
 const fmtBRL = (v) => new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(v);
 const $ = (s, r = document) => r.querySelector(s);
 const el = (tag, attrs = {}, ...kids) => {
@@ -1324,11 +1343,11 @@ const renderMirror = () => {
 
 // Consciência da solução: mesma vontade, outra receita. O exemplo segue o hábito marcado.
 const TROCA = {
-  gelado: {de: ['gelado', 'Pote de sorvete comum', 4], para: ['doce', 'Sorvete cremoso de chocolate proteico', 20]},
-  doce: {de: ['bolo', 'Fatia de bolo de chocolate', 4], para: ['doce', 'Mousse de chocolate com proteína', 18]},
-  lanche: {de: ['lanche', 'Hambúrguer de lanchonete com batata', 25], para: ['lanche', 'Hambúrguer caseiro no tamanho certo', 30]},
-  economia: {de: ['belisco', 'Biscoito e café ao longo do dia', 3], para: ['shake', 'Shake gelado de café com proteína', 22]},
-  prato_pequeno: {de: ['bowl', 'Meio prato de arroz, feijão e um pouco de carne', 15], para: ['prato', 'Prato pequeno com a proteína primeiro', 30]}
+  gelado: {de: ['gelado', 'Bola de sorvete comum', 3], para: ['gelado', 'Sorvete de banana com amendoim e iogurte', 10]},
+  doce: {de: ['bolo', 'Fatia de bolo de chocolate', 4], para: ['doce', 'Mousse de chocolate com iogurte', 10]},
+  lanche: {de: ['pizza', 'Duas fatias de pizza de delivery', 20], para: ['pizza', 'Pizza de pão folha com frango', 30]},
+  economia: {de: ['belisco', 'Biscoito e café ao longo do dia', 3], para: ['shake', 'Shake gelado de café com leite', 13]},
+  prato_pequeno: {de: ['bowl', 'Meio prato de arroz, feijão e um pouco de carne', 15], para: ['prato', 'PF pequeno com a carne primeiro', 30]}
 };
 const renderSolution = () => {
   const t = TROCA[state.a.come] || TROCA.gelado;
@@ -1341,7 +1360,7 @@ const renderSolution = () => {
     el('div', {class: 'sheet'},
       H('h3', 'O que funciona segue <em>3 regras</em>'),
       el('ol', {class: 'rules'},
-        el('li', {}, el('span', {class: 'n'}, '1'), el('div', {}, el('b', {}, 'Proteína primeiro'), el('span', {}, 'Para o corpo queimar gordura e não músculo.'))),
+        el('li', {}, el('span', {class: 'n'}, '1'), el('div', {}, el('b', {}, 'Proteína primeiro'), el('span', {}, 'Ela ajuda a preservar o músculo enquanto o peso cai.'))),
         el('li', {}, el('span', {class: 'n'}, '2'), el('div', {}, el('b', {}, 'Porção do tamanho do apetite'), el('span', {}, 'Pequeno e frequente rende mais que um prato que não desce.'))),
         el('li', {}, el('span', {class: 'n'}, '3'), el('div', {}, el('b', {}, 'Prazer no cardápio'), el('span', {}, 'Gelado, doce e lanche continuam, na versão que alimenta.'))))),
     contBtn('cont-solucao', 'Quero ver o meu resultado')
@@ -1421,7 +1440,7 @@ const renderResult = () => {
     el('p', {}, `Montado a partir das suas respostas, para ${barrigaNome()} e para o seu apetite com a caneta.`),
     H('span', `<span>${ic('arrow')}</span>Veja o seu resultado`, 'go')));
   const vsNo = ['Come pouco e a proteína não fecha', 'Doce e gelado sem nada de proteína', 'Cansaço e zero pique para treinar', `${cap1(barrigaNome())} continua lá`];
-  const vsYes = ['Porção pequena que alimenta', 'Gelado e doce que seguram a vontade', 'Mais energia ao longo do dia', 'O corpo queima gordura, não músculo'];
+  const vsYes = ['Porção pequena que alimenta', 'Gelado e doce que seguram a vontade', 'Mais energia ao longo do dia', 'Proteína em cada refeição, para preservar o músculo'];
   out.push(el('div', {class: 'vs'},
     el('div', {class: 'col no'}, el('div', {class: 'hd'}, 'Como está hoje'), vsNo.map((t) => H('div', ic('x') + `<span>${t}</span>`, 'it'))),
     el('div', {class: 'col yes'}, H('div', 'Com as receitas <em>certas</em>', 'hd'), vsYes.map((t) => H('div', ic('check') + `<span>${t}</span>`, 'it')))));
@@ -1472,11 +1491,19 @@ const renderResult = () => {
 
   const rapido = a.tempo === 't5';
   const gel = s.includes('gelado') || a.come === 'gelado';
+  // Cada refeição é uma ficha do material, com a proteína estimada na própria ficha (TACO).
+  const leve = s.includes('enjoo') || a.come === 'economia';
   const meals = [
-    ['xicara', 'Café da manhã', s.includes('enjoo') || a.come === 'economia' ? 'Shake gelado de café com leite e proteína. Desce fácil mesmo sem fome.' : 'Ovos mexidos cremosos com queijo + café. Pronto em 5 minutos.', 22],
-    ['prato', 'Almoço', a.come === 'lanche' ? 'Hambúrguer caseiro no prato com salada e batata rústica, porção pequena.' : (rapido ? 'Frango desfiado pronto da geladeira com legumes e 2 colheres de arroz.' : 'Prato pequeno: carne ou frango primeiro, depois legumes e 2 colheres de arroz.'), 30],
-    [gel ? 'gelado' : 'doce', 'Lanche da tarde', gel ? 'Sorvete cremoso de chocolate proteico (3 ingredientes, no liquidificador).' : 'Mousse de chocolate com proteína para a hora da vontade de doce.', 18],
-    ['bowl', 'Jantar', s.includes('enjoo') ? 'Caldo leve de frango com legumes, em porção pequena.' : (a.come === 'lanche' ? 'Pizza de frigideira com massa de frango.' : 'Omelete recheada com legumes e queijo.'), 25]
+    leve ? ['xicara', 'Café da manhã', 'Shake gelado de café com leite. Desce fácil mesmo sem fome.', 13]
+      : ['xicara', 'Café da manhã', 'Ovos mexidos cremosos com queijo. Pronto em 5 minutos.', 17],
+    a.come === 'lanche' ? ['lanche', 'Almoço', 'Hambúrguer caseiro de 60 g com salada, no pão pequeno.', 22]
+      : (rapido ? ['prato', 'Almoço', 'Pratinho de frango desfiado, purê e cenoura, pronto da geladeira.', 20]
+        : ['prato', 'Almoço', 'PF pequeno: carne primeiro, depois feijão, arroz e salada.', 30]),
+    gel ? ['gelado', 'Lanche da tarde', 'Sorvete de banana com amendoim e iogurte, no liquidificador.', 10]
+      : ['doce', 'Lanche da tarde', 'Mousse de chocolate com iogurte, para a hora da vontade de doce.', 10],
+    s.includes('enjoo') ? ['bowl', 'Jantar', 'Canja batida, servida na caneca.', 20]
+      : (a.come === 'lanche' ? ['pizza', 'Jantar', 'Pizza de frigideira com frango e queijo.', 25]
+        : ['bowl', 'Jantar', 'Omelete de caneca com queijo e tomate.', 18])
   ];
   const chips = [];
   if (rapido) chips.push(['raio', 'Até 5 minutos']);
@@ -1500,6 +1527,10 @@ const renderResult = () => {
     el('div', {class: 'covers', 'aria-hidden': 'true'}, COVERS.map(([bg, fg, ac, t1, t2]) =>
       el('div', {class: 'cover', style: `background:${bg};color:${fg}`}, H('span', capsuleSvg('cm', fg, ac)), H('b', `${t1}<i>${t2}</i>`), el('hr', {style: `background:${ac}`})))),
     el('ul', {class: 'deliv'}, CONFIG.entregaveis.map(([i, t, d]) => el('li', {}, H('span', ic(i), 'tile'), el('div', {}, el('b', {}, t), el('span', {}, d))))),
+    CONFIG.materiais && CONFIG.materiais.length ? el('div', {class: 'extras'},
+      el('p', {class: 'xh'}, `E mais ${CONFIG.materiais.length} materiais que organizam o resto`),
+      el('ul', {class: 'xlist'}, CONFIG.materiais.map(([i, t, d]) => el('li', {}, H('span', ic(i), 'xt'), el('div', {}, el('b', {}, t), el('span', {}, d)))))) : null,
+    el('p', {class: 'fine'}, `${CONFIG.entregaveis.length + (CONFIG.materiais || []).length} materiais na área de membros, cada um em versão para o celular e para imprimir.`),
     CONFIG.bonus.length ? el('ul', {class: 'deliv'}, CONFIG.bonus.map((b) => el('li', {}, H('span', ic('check'), 'tile'), el('div', {}, el('b', {}, 'Bônus: ' + b))))) : null));
 
   const href = checkoutHref();
@@ -1521,8 +1552,9 @@ const renderResult = () => {
     el('ul', {}, CONFIG.ganhos.map(([t, d]) => el('li', {}, H('span', markSvg), el('div', {}, t, el('small', {}, d)))))));
   out.push(el('div', {class: 'offer', id: 'oferta'},
     H('h2', 'Libere o seu <em>plano completo</em>'),
-    el('p', {class: 'for'}, `Tudo o que você precisa para o perfil ${perfil.nome} e para chegar na barriga ${sonhoLabel().toLowerCase()} sem forçar comida.`),
-    el('ul', {class: 'vstack'}, CONFIG.entregaveis.map(([i, t, , v]) => el('li', {}, H('span', ic(i)), el('span', {}, t), v ? el('s', {}, fmtBRL(v)) : el('span')))),
+    el('p', {class: 'for'}, `Tudo o que você precisa para o perfil ${perfil.nome}, sem forçar comida e sem cortar o que você gosta.`),
+    el('ul', {class: 'vstack'}, CONFIG.entregaveis.map(([i, t, , v]) => el('li', {}, H('span', ic(i)), el('span', {}, t), v ? el('s', {}, fmtBRL(v)) : el('span'))),
+      CONFIG.materiais && CONFIG.materiais.length ? el('li', {}, H('span', ic('plus')), el('span', {}, `Mais ${CONFIG.materiais.length} materiais: guia do prato, listas de compras, SOS, tracker e mais`), el('span')) : null),
     el('div', {class: 'vtotal'}, el('span', {}, 'Valor total'), el('s', {class: 'vt'}, fmtBRL(de))),
     el('div', {class: 'today'},
       el('span', {class: 'off'}, `${off}% OFF HOJE`),
@@ -1557,12 +1589,13 @@ const renderResult = () => {
     ['E se eu quase não sinto fome?', 'É exatamente para isso: porções pequenas, muitas delas geladas ou líquidas, que fecham a proteína em poucas garfadas.'],
     ['Preciso comprar whey ou suplemento?', 'Não é obrigatório. Várias receitas usam ovos, frango, iogurte e queijo. Onde o whey entra, tem a versão sem ele.'],
     ['Preciso mudar a dose da caneta?', 'Não. Nada aqui mexe no seu tratamento. Dose e medicamento são sempre com o seu médico.'],
-    ['Como eu recebo?', 'Logo depois do pagamento, o acesso chega no seu e-mail. Dá para ver no celular ou imprimir.'],
+    ['Isso é uma dieta?', 'Não. É um banco de receitas e um método para organizar o prato com a fome baixa. Quantidades individuais, como a sua meta de proteína, você combina com a sua nutricionista.'],
+    ['Como eu recebo?', 'Logo depois do pagamento, o acesso à área de membros chega no seu e-mail. São 10 materiais, cada um em versão para o celular e para imprimir.'],
     ['E se eu não gostar?', `Você tem ${CONFIG.garantiaDias} dias de garantia. É só pedir o reembolso e devolvemos 100% do valor.`]
   ];
   out.push(el('div', {class: 'sheet faq'}, H('h3', 'Perguntas <em>frequentes</em>'), faq.map(([q, r]) => el('details', {}, H('summary', `<span>${q}</span>${ic('plus')}`), el('p', {}, r)))));
   out.push(el('a', {class: 'btn buy', id: 'cta-2', href, onclick: onBuy}, 'Acessar meu plano completo', icon('arrow')));
-  out.push(H('p', 'Material educativo. Não substitui consulta médica ou com nutricionista. Os resultados variam de pessoa para pessoa.' + (CONFIG.privacidadeUrl ? ` <a href="${CONFIG.privacidadeUrl}" target="_blank" rel="noopener">Política de privacidade</a>` : ''), 'fine'));
+  out.push(H('p', 'Material educativo, para maiores de 18 anos. Não substitui consulta médica ou com nutricionista. Os resultados variam de pessoa para pessoa.' + (CONFIG.privacidadeUrl ? ` <a href="${CONFIG.privacidadeUrl}" target="_blank" rel="noopener">Política de privacidade</a>` : ''), 'fine'));
 
   $('#stickyPrice').textContent = fmtBRL(CONFIG.preco);
   $('#stickyDe').textContent = `De ${fmtBRL(de)}`;
@@ -1613,7 +1646,7 @@ const animarResultado = (barras) => {
   marcar('.rhead .goal', 'up', 0, .2); marcar('.rhead .facts div', 'pop', .1, .3);
   marcar('.scores .score', 'l', .12, .1);
   marcar('.day .meal', 'r', .1, .15);
-  marcar('.cover', 'pop', .1, .1); marcar('.deliv li', 'l', .07, .1);
+  marcar('.cover', 'pop', .1, .1); marcar('.deliv li', 'l', .07, .1); marcar('.xlist li', 'up', .04, .1);
   marcar('.gains li', 'l', .12, .15);
   marcar('.vstack li', 'r', .08, .1); marcar('.vtotal', 'up', 0, .1); marcar('.today', 'pop', 0, .15);
   marcar('.faq details', 'up', .06, 0);
