@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#FFFFFF">
+<title>Política de Privacidade · além da caneta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap">
+<style>
+/* Mesma identidade do quiz (DESIGN.md): fundo branco, Floresta no texto, Argila no acento, creme nos blocos. */
+:root{
+  color-scheme:light;
+  --floresta:#17332B; --musgo:#4A5E52; --argila:#B8744F; --argila-ink:#9A5A39;
+  --linho:#F4F0E8; --line:#E6E0D4; --branco:#FFFFFF; --aviso:#FFF4D6; --aviso-borda:#E6C77A;
+  --serif:"Instrument Serif",Georgia,"Times New Roman",serif;
+  --sans:"Instrument Sans","Segoe UI",system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--branco);color:var(--floresta);font-family:var(--sans);font-size:1rem;line-height:1.6;-webkit-font-smoothing:antialiased;padding-top:env(safe-area-inset-top,0px)}
+::selection{background:#B7C4B1}
+.wrap{max-width:40rem;margin-inline:auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));padding-block:20px 64px}
+.logo{display:flex;align-items:center;gap:8px;color:var(--floresta);text-decoration:none;width:max-content}
+.logo svg{width:40px;height:18px}
+.logo span{font-family:var(--serif);font-size:1.375rem;line-height:1}
+.logo i{font-style:italic}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(2.25rem,9vw,3rem);line-height:1.02;letter-spacing:-.015em;margin:28px 0 8px;text-wrap:balance}
+h1 em{color:var(--argila-ink)}
+.meta{color:var(--musgo);font-size:.875rem;margin:0 0 20px}
+.resumo{background:var(--linho);border-radius:20px;padding:18px 20px;margin:0 0 28px}
+.resumo h2{margin:0 0 8px;font-family:var(--sans);font-size:1rem;font-weight:700}
+.resumo ul{margin:0;padding-left:1.1em}
+.resumo li{margin:4px 0}
+h2{font-family:var(--serif);font-weight:400;font-size:1.625rem;line-height:1.15;margin:32px 0 8px;scroll-margin-top:16px}
+h2 b{font-family:var(--sans);font-weight:600;font-size:.75rem;letter-spacing:.14em;color:var(--argila-ink);display:block;margin-bottom:2px}
+p,li{text-wrap:pretty}
+p{margin:0 0 12px}
+ul{margin:0 0 12px;padding-left:1.2em}
+li{margin:6px 0}
+a{color:var(--argila-ink);text-underline-offset:3px}
+a:focus-visible{outline:2.5px solid var(--argila);outline-offset:2px;border-radius:3px}
+table{width:100%;border-collapse:collapse;font-size:.9375rem;margin:4px 0 14px}
+th,td{text-align:left;vertical-align:top;padding:10px 8px;border-top:1px solid var(--line)}
+th{font-weight:600;width:38%}
+.tabela{overflow-x:auto}
+.nota{font-size:.875rem;color:var(--musgo)}
+.falta{background:var(--aviso);border:1.5px dashed var(--aviso-borda);border-radius:14px;padding:12px 14px;font-size:.875rem;margin:0 0 20px}
+.falta code{font-family:ui-monospace,Menlo,monospace;font-size:.8125rem}
+.vazio{background:var(--aviso);padding:0 .25em;border-radius:4px}
+.voltar{display:inline-flex;align-items:center;gap:8px;margin-top:28px;background:var(--floresta);color:#FFFFFF;text-decoration:none;font-weight:600;border-radius:999px;padding:12px 20px}
+.voltar:focus-visible{outline:2.5px solid var(--argila);outline-offset:3px}
+footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--line);font-family:var(--serif);font-style:italic;font-size:1.0625rem}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <a class="logo" href="./" aria-label="Voltar para o teste">
+    <svg viewBox="0 0 88 40" aria-hidden="true"><rect x="2" y="17" width="26" height="14" rx="7" style="fill:none;stroke:#17332B" stroke-width="2.6"/><line x1="15" y1="17" x2="15" y2="31" style="stroke:#17332B" stroke-width="2.6"/><path d="M28 24 H50 C62 24 72 18 84 6" style="fill:none;stroke:#B8744F" stroke-width="2.6" stroke-linecap="round"/></svg>
+    <span><i>além</i> da caneta</span>
+  </a>
+
+  <h1>Política de <em>Privacidade</em></h1>
+  <p class="meta">Última atualização: <span data-campo="atualizacao"></span></p>
+
+  <div class="falta" id="falta" hidden>
+    <strong>Falta preencher os dados do responsável.</strong> Abra <code>quiz/privacidade.html</code> e complete o bloco <code>EMPRESA</code> no fim do arquivo (nome do responsável, e-mail de contato e encarregado). Os trechos marcados em amarelo mostram onde eles aparecem.
+  </div>
+
+  <section class="resumo" aria-labelledby="resumo-t">
+    <h2 id="resumo-t">Em poucas palavras</h2>
+    <ul>
+      <li>O teste <strong>não pede nome, e-mail nem telefone</strong>.</li>
+      <li>Guardamos as suas respostas (incluindo peso, altura e sintomas) <strong>sem saber quem você é</strong>, para mostrar o seu resultado e melhorar o teste.</li>
+      <li>Nada do que você responde é enviado ao Facebook ou ao Instagram.</li>
+      <li>As respostas são <strong>apagadas depois de 180 dias</strong>.</li>
+      <li>Se você comprar, os dados da compra ficam com a plataforma de pagamento.</li>
+    </ul>
+  </section>
+
+  <h2 id="quem"><b>1</b>Quem cuida dos seus dados</h2>
+  <p>Esta página e o teste "além da caneta" são de <span data-campo="nome"></span>, responsável pelos seus dados nos termos da Lei Geral de Proteção de Dados (Lei 13.709/2018, a LGPD).</p>
+  <p>Encarregado pelo tratamento de dados (DPO): <span data-campo="encarregado"></span>. Contato para qualquer assunto de privacidade: <a data-campo="email" data-link="mailto"></a>.</p>
+
+  <h2 id="coleta"><b>2</b>O que coletamos no teste</h2>
+  <div class="tabela">
+    <table>
+      <tr><th scope="row">Suas respostas</th><td>O que você sente no espelho, faixa de idade, há quanto tempo usa a caneta, tipo de barriga, como quer que ela fique, sintomas, o que mais come, tempo para cozinhar e as demais escolhas do teste. Ficam guardadas como códigos curtos, sem texto livre.</td></tr>
+      <tr><th scope="row">Peso e altura</th><td>Para calcular o IMC e a proteína do dia mostrados no resultado.</td></tr>
+      <tr><th scope="row">Dados técnicos</th><td>Um código aleatório da sessão, criado no seu navegador; a versão do teste; o horário de cada etapa; a campanha de anúncio de onde você veio (parâmetros <code>utm</code>); e um código feito a partir do seu IP com uma chave secreta, usado só para limitar abusos. O IP em si não é guardado.</td></tr>
+    </table>
+  </div>
+  <p><strong>Não coletamos</strong> nome, e-mail, telefone, CPF, endereço, fotos nem a sua localização no teste.</p>
+
+  <h2 id="saude"><b>3</b>Dados de saúde</h2>
+  <p>Peso, altura, uso de caneta e sintomas são dados de saúde, que a LGPD trata como sensíveis (art. 5º, II). Nós os tratamos com base no seu <strong>consentimento</strong> (art. 11, I), dado de forma específica ao responder o teste depois de ver o aviso no início dele. Você pode parar de responder a qualquer momento, e nada é guardado sobre as perguntas que não respondeu.</p>
+  <p>Esses dados não são usados para diagnóstico, não substituem consulta médica e nunca são vendidos, cedidos para publicidade ou enviados ao Meta (Facebook e Instagram).</p>
+
+  <h2 id="uso"><b>4</b>Para que usamos</h2>
+  <ul>
+    <li>Montar e mostrar o seu resultado personalizado no fim do teste.</li>
+    <li>Entender, em números somados, em que etapa as pessoas param e quais perfis aparecem mais, para melhorar o teste.</li>
+    <li>Saber quais anúncios trazem as pessoas que concluem o teste, sem ligar isso a você.</li>
+    <li>Evitar abuso e uso automatizado do formulário.</li>
+  </ul>
+
+  <h2 id="cookies"><b>5</b>Pixel do Meta e cookies</h2>
+  <p>Usamos o Pixel do Meta para medir os anúncios. Ele recebe apenas eventos genéricos: que a página abriu, que o teste começou, em que número de etapa você está, que concluiu e que clicou para comprar. <strong>Nenhuma resposta sua vai para o Meta.</strong> O Pixel pode usar cookies do próprio Meta no seu navegador.</p>
+  <p>Você pode limpar ou bloquear cookies nas configurações do navegador e ajustar os anúncios que vê nas <a href="https://www.facebook.com/adpreferences" target="_blank" rel="noopener">preferências de anúncios do Meta</a>. O teste continua funcionando normalmente.</p>
+
+  <h2 id="compra"><b>6</b>Se você comprar</h2>
+  <p>O pagamento é feito na plataforma <span data-campo="checkout"></span>, que recebe os dados da compra (como nome, e-mail, CPF e forma de pagamento) e segue a política de privacidade dela. Nós recebemos da plataforma apenas o necessário para liberar e dar suporte ao seu acesso. Os dados do pagamento não se misturam com as respostas do teste.</p>
+
+  <h2 id="compartilhamento"><b>7</b>Com quem compartilhamos</h2>
+  <ul>
+    <li><strong>Supabase</strong>: hospeda o banco onde as respostas ficam guardadas (operador de dados).</li>
+    <li><strong>Hospedagem do site</strong>: entrega as páginas do teste.</li>
+    <li><strong>Meta</strong>: recebe só os eventos genéricos do Pixel descritos acima.</li>
+    <li><strong>Plataforma de pagamento</strong>: apenas se você comprar.</li>
+    <li><strong>Autoridades</strong>: quando a lei ou uma ordem judicial exigir.</li>
+  </ul>
+  <p>Alguns desses serviços podem guardar dados em servidores fora do Brasil. Nesses casos, a transferência segue o que a LGPD permite (art. 33), com fornecedores que adotam proteções contratuais e técnicas.</p>
+
+  <h2 id="tempo"><b>8</b>Por quanto tempo guardamos</h2>
+  <p>As respostas do teste e os dados técnicos são <strong>apagados automaticamente 180 dias</strong> depois do seu acesso. Números somados, que não permitem identificar ninguém (por exemplo, "120 pessoas concluíram o teste em março"), podem ser mantidos.</p>
+
+  <h2 id="seguranca"><b>9</b>Como protegemos</h2>
+  <p>O envio é feito com conexão segura (HTTPS). O banco só aceita gravação pelo nosso servidor, que confere cada resposta antes de guardar; ninguém de fora consegue ler os dados pela internet. O acesso interno é restrito a quem precisa dele para cuidar do teste.</p>
+
+  <h2 id="direitos"><b>10</b>Seus direitos</h2>
+  <p>Pela LGPD (art. 18), você pode pedir: confirmação de que tratamos dados seus; acesso a eles; correção; anonimização, bloqueio ou eliminação; informação sobre com quem compartilhamos; e revogação do consentimento, a qualquer momento.</p>
+  <p>Como o teste não pede seus dados de contato, nós não conseguimos achar as suas respostas só pelo seu nome ou e-mail. Para exercer esses direitos sobre o teste, escreva para <a data-campo="email" data-link="mailto"></a> informando o dia e o horário aproximados em que respondeu. Responderemos em até 15 dias. Se não ficar satisfeita, você também pode procurar a Autoridade Nacional de Proteção de Dados (ANPD).</p>
+
+  <h2 id="menores"><b>11</b>Menores de idade</h2>
+  <p>O teste é destinado a pessoas com 18 anos ou mais.</p>
+
+  <h2 id="mudancas"><b>12</b>Mudanças nesta política</h2>
+  <p>Se esta política mudar, a nova versão será publicada nesta página, com a data de atualização no topo.</p>
+
+  <a class="voltar" href="./">Voltar para o teste</a>
+  <footer>O remédio cuida da fome. O resto é método.</footer>
+</main>
+
+<script>
+/* =====================================================================
+   Dados da empresa: preencha antes de publicar.
+   ===================================================================== */
+const EMPRESA = {
+  nome: 'Método Além da Caneta', // nome do responsável (ou da marca)
+  email: 'contato@oalemdacaneta.com.br', // e-mail para assuntos de privacidade
+  encarregado: 'Método Além da Caneta', // encarregado (DPO); pequeno negócio pode ser o próprio responsável
+  checkout: 'Kiwify',  // plataforma de pagamento
+  atualizacao: '23 de outubro de 2026'
+};
+
+let faltando = false;
+document.querySelectorAll('[data-campo]').forEach((n) => {
+  const v = EMPRESA[n.dataset.campo];
+  if (!v) { faltando = true; n.classList.add('vazio'); n.textContent = '[preencher]'; return; }
+  n.textContent = v;
+  if (n.dataset.link === 'mailto') n.href = 'mailto:' + v;
+});
+document.getElementById('falta').hidden = !faltando;
+</script>
+</body>
+</html>
