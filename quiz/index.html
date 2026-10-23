@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#FFFFFF">
-<title>Teste da Caneta · além da caneta</title>
+<title>Teste • Além da Caneta</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317332B'/%3E%3Crect x='7' y='25' width='34' height='17' rx='8.5' fill='none' stroke='%23F4F0E8' stroke-width='3.6'/%3E%3Cline x1='29' y1='25' x2='29' y2='42' stroke='%23F4F0E8' stroke-width='3.6'/%3E%3Cpath d='M41 33.5 H45 C51 33.5 54 27 58 15' fill='none' stroke='%23D9A07E' stroke-width='3.6' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap">
@@ -133,7 +134,15 @@ b,strong{font-weight:600}
 .secret .ic{width:15px;height:15px}
 .consent{font-size:.75rem;color:var(--musgo);text-align:center;margin-top:-8px;text-wrap:balance}
 .consent a,.fine a{color:var(--argila-ink);text-underline-offset:2px}
-.crowd-pic{border-radius:22px;overflow:hidden;aspect-ratio:900/506}
+.crowd-pic{border-radius:22px;overflow:hidden;aspect-ratio:941/705;background:#F7F5F0}
+h2.caminho{font-family:var(--sans);font-weight:500;font-size:clamp(1.5rem,6.4vw,1.75rem);letter-spacing:-.01em}
+h2.caminho em{font-family:var(--serif);font-style:italic;font-weight:400;font-size:1.12em}
+.cstat{text-align:center;font-size:clamp(1.375rem,6vw,1.625rem);line-height:1.22;font-weight:500;letter-spacing:-.015em;text-wrap:balance}
+.cstat b{font-weight:700}
+.cstat .nw{white-space:nowrap}
+.infobox.lf{display:flex;align-items:center;gap:14px;text-align:left;font-weight:500}
+.infobox .lfi{flex:none;width:44px;height:44px;border-radius:50%;background:#FFFFFF;display:grid;place-items:center;color:var(--floresta)}
+.infobox .lfi .ic{width:22px;height:22px}
 .said{background:var(--floresta);color:var(--creme);border-radius:22px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
 .said span{font-size:.8125rem;color:var(--on-dark-muted);font-weight:600}
 .said b{font-family:var(--serif);font-weight:400;font-size:1.5rem;line-height:1.1;color:var(--argila-on-dark)}
@@ -456,6 +465,10 @@ h2.sans,h1.sans{font-family:var(--sans);font-weight:500;letter-spacing:-.015em;l
 .paper .pbar{background:var(--floresta);color:var(--creme);padding:10px 16px;display:flex;justify-content:space-between;align-items:center;font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
 .paper .pbar span{color:var(--on-dark-muted)}
 .paper .pin{padding:16px;display:flex;flex-direction:column;gap:12px}
+.midia{margin:0;display:flex;flex-direction:column;gap:8px}
+.midia figcaption{font-weight:600;text-align:center}
+.midia img{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
+.midia .src{overflow-wrap:anywhere;text-align:center}
 .paper .pin b{font-family:var(--serif);font-weight:400;font-size:1.5rem;line-height:1.12}
 .split .fat{background:var(--salvia);color:var(--floresta)}
 .split .lean{background:var(--danger);color:#FFFFFF}
@@ -475,6 +488,8 @@ h2.sans,h1.sans{font-family:var(--sans);font-weight:500;letter-spacing:-.015em;l
 .voice .who{font-size:.875rem;font-weight:600;margin-bottom:6px;display:block}
 .voice .bub{background:var(--linho);border-radius:16px;padding:8px 12px;display:flex;align-items:center;gap:10px}
 .voice .play{all:unset;cursor:pointer;width:36px;height:36px;border-radius:50%;background:var(--floresta);display:grid;place-items:center;flex:none}
+.voice .play.pulsa{background:var(--argila-cta);animation:playPulse 1.5s ease-out infinite}
+@keyframes playPulse{0%{box-shadow:0 0 0 0 rgba(184,116,79,.6);transform:scale(1)}50%{transform:scale(1.08)}70%{box-shadow:0 0 0 14px rgba(184,116,79,0)}100%{box-shadow:0 0 0 0 rgba(184,116,79,0);transform:scale(1)}}
 .voice .play svg{width:15px;height:15px;fill:#FFFFFF}
 .voice .wave{flex:1;display:flex;align-items:center;gap:3px;height:28px;overflow:hidden}
 .voice .wave i{display:block;width:3px;border-radius:2px;background:#B9B2A6}
@@ -564,6 +579,8 @@ h2.sans,h1.sans{font-family:var(--sans);font-weight:500;letter-spacing:-.015em;l
 .today .from{font-size:.9375rem;color:var(--musgo)}
 .today .from s{color:var(--danger);font-weight:600}
 .offer .por{font-size:4.25rem;color:var(--floresta)}
+.offer .por .x{font-family:var(--sans);font-size:1.5rem;font-weight:700;margin-right:6px}
+.today .vista{font-size:.875rem;color:var(--musgo);margin-top:-2px}
 .today .save{font-size:.875rem;font-weight:600;color:var(--argila-ink)}
 /* materiais de apoio: lista compacta em duas colunas */
 .extras{border-top:1px solid var(--line-soft);padding-top:14px;display:flex;flex-direction:column;gap:10px}
@@ -583,7 +600,7 @@ h2.sans,h1.sans{font-family:var(--sans);font-weight:500;letter-spacing:-.015em;l
 @keyframes shine{0%,45%{transform:translateX(-120%)}75%,100%{transform:translateX(120%)}}
 @keyframes nudge{0%,62%,100%{transform:none}70%{transform:scale(1.06) rotate(-1deg)}78%{transform:scale(1.04) rotate(1deg)}86%{transform:scale(1.02)}}
 @media (prefers-reduced-motion: reduce){
-  .vsl-som,.pc-bar i,.provacard .pc-curve path{animation:none}
+  .vsl-som,.pc-bar i,.provacard .pc-curve path,.voice .play.pulsa{animation:none}
   .provacard .pc-curve path{stroke-dashoffset:0}
   .screen,.pulse,.tip.swapin,.sticky,.sticky .btn,.sticky .btn::after,.today .off,.sticky .p .off,.ready .go span,.ready .mk2 path,.ready .lbl .ic,.ready h1 em{animation:none}
   .ready .mk2 path{stroke-dashoffset:0}
@@ -625,6 +642,7 @@ const CONFIG = {
   marca: {nome: 'além da caneta'},
   produto: 'além da caneta · plano completo',
   preco: 27.90,
+  parcelas: 6,              // parcelas sem juros mostradas na oferta (27,90 ÷ 6 = 6x de R$ 4,65). 0 = mostra só o valor à vista.
   precoDe: 249,             // preço cheio mostrado riscado ("de R$ 249 por R$ 27,90"). null = soma dos valores dos entregáveis.
   checkoutUrl: 'https://pay.kiwify.com.br/3gLGyNe', // checkout da Kiwify. UTMs e fbclid vão junto.
   backendUrl: '',           // https://SEU_PROJETO.supabase.co/functions/v1/quiz  (veja backend/README.md)
@@ -636,16 +654,19 @@ const CONFIG = {
   // Ex.: '+ 3.200 mulheres de {idade} que usam a caneta já fizeram este teste'. Use o número real do seu backend.
   provaQuebra: '',
   // Foto grande logo abaixo do "como está hoje / com as receitas certas". Vazio = antes e depois ilustrado.
-  // Se for foto de banco ou feita por IA, mantenha a legenda; se for de cliente real com autorização, troque a legenda.
   fotoObjetivo: {
     url: 'img/objetivo.webp',
     alt: 'Mulher sorrindo segurando a cintura de uma saia que ficou larga',
     selo: 'Onde você quer chegar',
     titulo: 'Imagine a roupa de hoje <em>sobrando assim.</em>',
-    legenda: 'Imagem ilustrativa. Não é resultado de cliente.'
+    legenda: ''
   },
-  // Áudio de explicação (mensagem de voz na tela do espelho). Grave você mesma. Vazio = some.
-  audio: {url: 'audio/explicacao.mp3', nome: 'Além da Caneta', foto: ''},   // foto vazia = símbolo da marca no avatar
+  // Áudio da nutricionista (mensagem de voz na tela do espelho, com o play pulsando). Vazio = some.
+  audio: {url: 'audio/nutricionista.mp3', nome: 'Nutricionista · Além da Caneta', foto: ''},   // foto vazia = símbolo da marca no avatar
+  // Áudio na página de vendas, logo acima da foto do objetivo. Vazio = some.
+  audioVenda: {url: 'audio/explicacao.mp3', nome: 'Além da Caneta', foto: '', chamada: 'Ouça este áudio antes de continuar 👇'},
+  // Print da matéria mostrado na página 6 (por que a barriga não sai), só como fonte: o endereço aparece em texto, sem link.
+  materia: {img: 'img/veja-materia.webp', fonte: 'VEJA, 2 de outubro de 2026', endereco: 'veja.abril.com.br/saude/popularizacao-das-canetas-mobiliza-mercado-por-solucoes-contra-reducao-da-massa-muscular/'},
   // Fotos (URL ou caminho do arquivo, ex.: 'img/gancho.jpg'). Vazio = usa a ilustração.
   imagens: {
     gancho: '',             // primeira tela: mulher diante do espelho, barriga, emoção
@@ -653,7 +674,8 @@ const CONFIG = {
     // mp4 = arquivo do vídeo; webm = alternativa opcional; capa = imagem mostrada enquanto carrega.
     // som: true = vídeo falado (VSL): começa mudo e mostra "Toque para ouvir", que reinicia com som.
     ganchoVideo: {mp4: 'video/gancho.mp4', webm: '', capa: 'video/gancho-capa.webp', som: true},
-    quebra: 'img/quebra.webp', // "Você está no caminho certo!": grupo de mulheres
+    // "Você está no caminho certo!" (depois da pergunta do prato): grupo de mulheres da faixa escolhida
+    caminho: {i18: 'img/caminho-18.webp', i30: 'img/caminho-30.webp', i40: 'img/caminho-40.webp', i50: 'img/caminho-50.webp', i60: 'img/caminho-60.webp'},
     caneta: 'img/caneta.webp', // pergunta da caneta
     idade: {i18: 'img/idade-18.webp', i30: 'img/idade-30.webp', i40: 'img/idade-40.webp', i50: 'img/idade-50.webp', i60: 'img/idade-60.webp'},
     barriga: {pochete: 'img/barriga-pochete.webp', pneuzinho: 'img/barriga-pneuzinho.webp', alta: 'img/barriga-alta.webp', flacida: 'img/barriga-flacida.webp'},
@@ -704,7 +726,7 @@ const CONFIG = {
 
 /* ===================================================================== */
 const SETUP = !CONFIG.checkoutUrl;
-const VERSAO = 'v13';
+const VERSAO = 'v14';
 const fmtBRL = (v) => new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(v);
 const $ = (s, r = document) => r.querySelector(s);
 const el = (tag, attrs = {}, ...kids) => {
@@ -913,7 +935,6 @@ const STEPS = [
     {v: 'vergonha', l: 'Vergonha do meu corpo'}, {v: 'raiva', l: 'Raiva de mim mesma'},
     {v: 'irreconhecivel', l: 'Não me reconheço mais'}, {v: 'evito', l: 'Eu nem me olho mais'}]},
   {id: 'idade', type: 'intro'},
-  {id: 'quebra', type: 'age'},
   {id: 'caneta', type: 'buttons', art: () => foto(CONFIG.imagens.caneta, penArt()), q: 'Há quanto tempo você <em>usa a caneta?</em>', hint: 'Mounjaro, Ozempic, Wegovy, Saxenda ou outra.', opts: [
     {v: 'c0', l: 'Comecei há menos de 1 mês', ic: 'broto'}, {v: 'c1', l: 'De 1 a 3 meses', ic: 'cal'},
     {v: 'c3', l: 'De 3 a 6 meses', ic: 'ampulheta'}, {v: 'c6', l: 'Mais de 6 meses', ic: 'calok'}, {v: 'parei', l: 'Já usei e parei', ic: 'pausa'}]},
@@ -935,6 +956,7 @@ const STEPS = [
     {v: 'economia', l: 'Quase nada, vou beliscando', ic: 'belisco'}, {v: 'gelado', l: 'Gelados: iogurte, açaí, sorvete, shake', ic: 'gelado'},
     {v: 'doce', l: 'Doces: chocolate, bolo, biscoito', ic: 'bolo'}, {v: 'lanche', l: 'Lanches: hambúrguer, pizza, salgado', ic: 'pizza'},
     {v: 'prato_pequeno', l: 'Comida normal, só que bem menos', ic: 'bowl'}]},
+  {id: 'quebra', type: 'age'},
   {id: 'peso', type: 'weight', also: ['altura'], q: 'Qual é o seu <em>peso e altura?</em>', hint: 'Para calcular o seu IMC e a proteína que o seu corpo precisa.'},
   {id: 'espelho', type: 'mirror'},
   {id: 'solucao', type: 'solution'},
@@ -1120,14 +1142,9 @@ const muscleChart = (faixa) => {
     ${eixoX}<text x="${L + W}" y="${T + Hh + 30}" text-anchor="end" style="fill:#4A5E52;font-size:10px">idade</text>
   </svg>`;
 };
-// Resultados da pesquisa com as alunas por faixa de idade (jan–out 2026), informados pelo dono do projeto.
-const PROVA_IDADE = {
-  i18: {pct: 68, titulo: 'viveram menos ansiedade com a comida.', texto: 'Entre 18 e 29 anos, 68% relatam mais controle da fome e menos compulsão no dia a dia.'},
-  i30: {pct: 72, titulo: 'sentiram mais facilidade para manter a rotina.', texto: 'Na faixa de 30 a 39 anos, 72% relatam mais constância nos hábitos e menos deslizes impulsivos.'},
-  i40: {pct: 75, titulo: 'notaram mais energia e bem-estar.', texto: 'Entre 40 e 49 anos, 75% relatam mais disposição, melhor humor e qualidade de vida.'},
-  i50: {pct: 70, titulo: 'relataram melhora na qualidade do sono.', texto: 'Na faixa de 50 a 59 anos, 70% dizem dormir melhor e sentir mais equilíbrio ao longo do dia.'},
-  i60: {pct: 62, titulo: 'sentiram mais autonomia nas escolhas.', texto: 'A partir dos 60 anos, 62% relatam mais segurança para fazer escolhas alimentares e manter a independência.'}
-};
+// "Você está no caminho certo!": % das mulheres de cada faixa que responderam o quiz e têm dificuldade
+// na alimentação e na perda de barriga. Números informados pelo dono do projeto (out 2026).
+const PROVA_IDADE = {i18: {pct: 78}, i30: {pct: 74}, i40: {pct: 83}, i50: {pct: 63}, i60: {pct: 57}};
 // Card de prova da página 3: faixa, número grande, frase, barra (só com % real), explicação e assinatura.
 const provaCard = (faixa, numero, titulo, texto, pct) => {
   const barra = typeof pct === 'number'
@@ -1142,29 +1159,23 @@ const provaCard = (faixa, numero, titulo, texto, pct) => {
     el('p', {class: 'pc-sign'}, 'O remédio cuida da fome. O resto é método.'));
 };
 const renderAge = () => {
-  const [titulo, txt] = IDADE_TXT[state.a.idade] || IDADE_TXT.i40;
+  const [titulo] = IDADE_TXT[state.a.idade] || IDADE_TXT.i40;
   const prova = PROVA_IDADE[state.a.idade];
-  const faixa = `${idadeLabel().replace('+', ' anos ou mais')}${idadeLabel().includes('+') ? '' : ' anos'}`;
+  const faixa = idadeLabel().includes('+') ? `com <span class="nw">${idadeLabel()} anos</span>` : `entre <span class="nw">${idadeLabel().replace('–', '-')} anos</span>`;
+  const img = (CONFIG.imagens.caminho || {})[state.a.idade];
   const out = [
-    H('p', 'Você está no CAMINHO CERTO!', 'okay'),
-    CONFIG.imagens.quebra ? H('div', foto(CONFIG.imagens.quebra, '', 'Mulheres que fizeram o teste'), 'crowd-pic')
+    H('h2', 'Você está no <em>caminho certo!</em>', 'caminho'),
+    img ? H('div', foto(img, '', 'Mulheres que fizeram o teste'), 'crowd-pic')
       : el('div', {class: 'crowd', 'aria-hidden': 'true'}, ['i18', 'i30', 'i40', 'i50', 'i60'].map((k) => H('span', foto(CONFIG.imagens.idade[k], avatar(AVATAR[k])))))
   ];
-  if (CONFIG.provaQuebra) out.push(H('p', CONFIG.provaQuebra.replace('{idade}', faixa), 'proof'));
-  const temProva = prova && typeof prova.pct === 'number';
-  if (temProva) {
-    // Prova real da base, no card da faixa: número grande, frase, barra e explicação.
-    out.push(provaCard(idadeLabel(), `${prova.pct}%`, prova.titulo, prova.texto, prova.pct));
+  if (CONFIG.provaQuebra) out.push(H('p', CONFIG.provaQuebra.replace('{idade}', `${idadeLabel().replace('+', ' anos ou mais')}${idadeLabel().includes('+') ? '' : ' anos'}`), 'proof'));
+  if (prova && typeof prova.pct === 'number') {
+    out.push(H('p', `<b>${prova.pct}% das mulheres ${faixa}</b> que responderam nosso quiz têm dificuldades na alimentação e na perda de barriga`, 'cstat'));
   } else {
-    // Sem número real: o mesmo card, com o dado de pesquisa.
+    // Sem número informado: o dado de pesquisa sobre músculo e idade.
     out.push(provaCard(idadeLabel(), '3–8%', 'da massa muscular vai embora a cada década depois dos 30.', titulo, null));
-    out.push(el('figure', {class: 'sheet chartcard'},
-      el('figcaption', {}, el('b', {}, 'Quanto músculo sobra com o passar dos anos'), el('span', {}, '100% = o músculo que você tinha aos 30')),
-      H('div', muscleChart(state.a.idade), 'chartbox'),
-      H('div', '<span><i class="lg-faixa"></i>faixa possível</span><span><i class="lg-forte"></i>perda maior</span><span><i class="lg-leve"></i>perda menor</span>', 'legend'),
-      el('p', {class: 'src'}, 'Fonte: Volpi E. et al., Curr Opin Clin Nutr Metab Care, 2004. Faixa de 3% a 8% por década, acumulada.')));
   }
-  out.push(el('div', {class: 'infobox'}, 'Vamos entender melhor o que está acontecendo com o seu corpo…'));
+  out.push(el('div', {class: 'infobox lf'}, H('span', ic('broto'), 'lfi'), el('span', {}, 'Vamos coletar mais algumas informações para montar o seu resultado personalizado.')));
   out.push(contBtn('cont-quebra', 'Continuar'));
   return out;
 };
@@ -1230,6 +1241,10 @@ const renderInsight = () => {
         el('div', {class: 'split', role: 'img', 'aria-label': 'Cerca de 60% do peso perdido foi gordura e cerca de 40% foi massa magra'},
           el('div', {class: 'fat', style: 'flex:61', html: '~60%<small>gordura</small>'}), el('div', {class: 'lean', style: 'flex:39', html: '~40%<small>músculo e massa magra</small>'})),
         el('p', {class: 'src'}, 'Estudo STEP 1, análise de composição corporal. Wilding J. et al., NEJM, 2021.'))),
+    CONFIG.materia && CONFIG.materia.img ? el('figure', {class: 'midia'},
+      H('figcaption', 'E a imprensa já fala disso:'),
+      el('img', {src: CONFIG.materia.img, alt: 'Matéria: Popularização das canetas mobiliza mercado por soluções contra perda de massa muscular', loading: 'lazy', decoding: 'async'}),
+      el('p', {class: 'src'}, `Fonte: ${CONFIG.materia.fonte}. ${CONFIG.materia.endereco}`)) : null,
     el('div', {class: 'sheet linho'},
       H('p', `Músculo é o que mantém o metabolismo ligado e a barriga firme. Quando ele vai embora, vem o cansaço, a flacidez e <b>${barrigaNome()} fica.</b>`)),
     contBtn('cont-porque', 'Faz sentido. Continuar')
@@ -1282,20 +1297,19 @@ const bmiBlock = () => {
 };
 
 // Áudio de explicação no estilo WhatsApp. Só aparece com CONFIG.audio.url (gravação sua).
-const voiceBlock = () => {
-  const a = CONFIG.audio || {};
-  if (!a.url) return SETUP ? el('div', {class: 'setup', role: 'note'}, el('strong', {}, 'Espaço para o seu áudio'), H('span', 'Grave um áudio curto explicando o problema (30 a 60 s) e coloque em <code>CONFIG.audio</code>. Aparece aqui como mensagem de voz.')) : null;
+const voiceBlock = (a = CONFIG.audio || {}) => {
+  if (!a.url) return SETUP && a === CONFIG.audio ? el('div', {class: 'setup', role: 'note'}, el('strong', {}, 'Espaço para o seu áudio'), H('span', 'Grave um áudio curto explicando o problema (30 a 60 s) e coloque em <code>CONFIG.audio</code>. Aparece aqui como mensagem de voz.')) : null;
   const audio = el('audio', {src: a.url, preload: 'metadata'});
   const wave = el('div', {class: 'wave', 'aria-hidden': 'true'}, Array.from({length: 34}, (_, k) => el('i', {style: `height:${6 + Math.round(Math.abs(Math.sin(k * 1.7)) * 20)}px`})));
   const dur = el('span', {class: 'dur'}, '0:00');
   const playIc = '<svg viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg>', pauseIc = '<svg viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>';
-  const play = el('button', {type: 'button', class: 'play', 'aria-label': 'Ouvir o áudio', html: playIc, onclick: () => (audio.paused ? audio.play() : audio.pause())});
+  const play = el('button', {type: 'button', class: 'play pulsa', 'aria-label': 'Ouvir o áudio', html: playIc, onclick: () => (audio.paused ? audio.play() : audio.pause())});
   const mm = (t) => `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, '0')}`;
   audio.addEventListener('loadedmetadata', () => { dur.textContent = mm(audio.duration); });
-  audio.addEventListener('play', () => { play.innerHTML = pauseIc; });
+  audio.addEventListener('play', () => { play.innerHTML = pauseIc; play.classList.remove('pulsa'); });
   audio.addEventListener('pause', () => { play.innerHTML = playIc; });
   audio.addEventListener('timeupdate', () => { const f = audio.currentTime / (audio.duration || 1); [...wave.children].forEach((b, k) => b.classList.toggle('on', k / wave.children.length < f)); dur.textContent = mm(audio.currentTime); });
-  return el('div', {class: 'stack'}, H('p', 'Escute essa rápida explicação 👇', 'see'),
+  return el('div', {class: 'stack'}, H('p', a.chamada || 'Escute este áudio da nossa nutricionista 👇', 'see'),
     el('div', {class: 'voice'}, H('span', a.foto ? `<img src="${a.foto}" alt="">` : capsuleSvg('avmark', '#F4F0E8', '#D9A07E'), a.foto ? 'av' : 'av marca'),
       el('div', {}, el('span', {class: 'who'}, a.nome || ''), el('div', {class: 'bub'}, play, wave, dur)), audio));
 };
@@ -1445,6 +1459,7 @@ const renderResult = () => {
     el('div', {class: 'col no'}, el('div', {class: 'hd'}, 'Como está hoje'), vsNo.map((t) => H('div', ic('x') + `<span>${t}</span>`, 'it'))),
     el('div', {class: 'col yes'}, H('div', 'Com as receitas <em>certas</em>', 'hd'), vsYes.map((t) => H('div', ic('check') + `<span>${t}</span>`, 'it')))));
   const fr = CONFIG.fotoObjetivo || {};
+  if (CONFIG.audioVenda) out.push(voiceBlock(CONFIG.audioVenda));
   if (fr.url) {
     out.push(el('figure', {class: 'goalpic'},
       el('div', {class: 'gp-img'}, el('img', {src: fr.url, alt: fr.alt || '', loading: 'lazy', decoding: 'async'}), el('span', {class: 'gp-tag'}, fr.selo || 'Onde você quer chegar')),
@@ -1544,7 +1559,9 @@ const renderResult = () => {
     track('InitiateCheckout', {value: CONFIG.preco, currency: 'BRL'});
     setTimeout(() => { location.href = href; }, 250);
   };
-  const [reais, cents] = CONFIG.preco.toFixed(2).split('.');
+  const n = CONFIG.parcelas || 0;
+  const parcela = n ? Math.round((CONFIG.preco * 100) / n) / 100 : CONFIG.preco;
+  const [reais, cents] = parcela.toFixed(2).split('.');
   const de = precoCheio();
   const off = Math.round((1 - CONFIG.preco / de) * 100);
   out.push(el('section', {class: 'gains'},
@@ -1559,9 +1576,10 @@ const renderResult = () => {
     el('div', {class: 'today'},
       el('span', {class: 'off'}, `${off}% OFF HOJE`),
       H('span', `De <s>${fmtBRL(de)}</s> por apenas`, 'from'),
-      H('span', `<small>R$</small><span class="pn" data-de="${de}" data-para="${CONFIG.preco}">${reais},${cents}</span>`, 'por'),
+      H('span', `${n ? `<small class="x">${n}x</small>` : ''}<small>R$</small><span class="pn" data-de="${n ? de / n : de}" data-para="${parcela}">${reais},${cents}</span>`, 'por'),
+      n ? el('span', {class: 'vista'}, `sem juros, ou ${fmtBRL(CONFIG.preco)} à vista`) : null,
       el('span', {class: 'save'}, `Você economiza ${fmtBRL(de - CONFIG.preco)}`)),
-    el('span', {class: 'sub'}, 'Pagamento único · acesso imediato no seu e-mail'),
+    el('span', {class: 'sub'}, `${n ? 'Sem mensalidade' : 'Pagamento único'} · acesso imediato no seu e-mail`),
     el('a', {class: 'btn buy pulse', id: 'cta', href, onclick: onBuy}, 'Acessar meu plano completo', icon('arrow')),
     el('div', {class: 'pay', 'aria-label': 'Formas de pagamento'}, H('span', ic('pix') + 'Pix'), H('span', ic('cartao') + 'Cartão'), H('span', ic('cadeado') + 'Compra segura')),
     el('div', {class: 'guarantee'}, H('span', sealSvg(CONFIG.garantiaDias)), el('span', {}, el('b', {}, `Garantia de ${CONFIG.garantiaDias} dias. `), 'Se não gostar, devolvemos 100% do valor.')),
@@ -1597,7 +1615,7 @@ const renderResult = () => {
   out.push(el('a', {class: 'btn buy', id: 'cta-2', href, onclick: onBuy}, 'Acessar meu plano completo', icon('arrow')));
   out.push(H('p', 'Material educativo, para maiores de 18 anos. Não substitui consulta médica ou com nutricionista. Os resultados variam de pessoa para pessoa.' + (CONFIG.privacidadeUrl ? ` <a href="${CONFIG.privacidadeUrl}" target="_blank" rel="noopener">Política de privacidade</a>` : ''), 'fine'));
 
-  $('#stickyPrice').textContent = fmtBRL(CONFIG.preco);
+  $('#stickyPrice').textContent = n ? `${n}x ${fmtBRL(parcela)}` : fmtBRL(CONFIG.preco);
   $('#stickyDe').textContent = `De ${fmtBRL(de)}`;
   $('#stickyOff').textContent = `-${off}%`;
   const sc = $('#stickyCta');
@@ -1693,7 +1711,7 @@ const render = () => {
 };
 render();
 // As fotos da idade e das barrigas já começam a baixar na primeira tela (depois do vídeo, que tem prioridade).
-const preload = () => [CONFIG.imagens.quebra, CONFIG.imagens.caneta, ...Object.values(CONFIG.imagens.idade), ...Object.values(CONFIG.imagens.barriga), ...Object.values(CONFIG.imagens.sonho)].filter(Boolean).forEach((u) => { const i = new Image(); i.src = u; });
+const preload = () => [CONFIG.imagens.caneta, ...Object.values(CONFIG.imagens.idade), ...Object.values(CONFIG.imagens.barriga), ...Object.values(CONFIG.imagens.sonho)].filter(Boolean).forEach((u) => { const i = new Image(); i.src = u; });
 if ('requestIdleCallback' in window) requestIdleCallback(preload); else setTimeout(preload, 800);
 </script>
 </body>
