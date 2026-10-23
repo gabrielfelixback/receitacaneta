@@ -41,10 +41,12 @@ h2{font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:1.875r
 .price .v small{font-family:"Instrument Sans",sans-serif;font-size:1.125rem;font-weight:600;vertical-align:1.1em;margin-right:4px}
 .price .how{font-size:.875rem;color:var(--musgo)}
 .kiwify{margin-top:16px;display:flex;flex-direction:column;align-items:center;gap:12px;width:100%}
-.preview-yes{all:unset;box-sizing:border-box;cursor:pointer;width:100%;min-height:62px;padding:16px 20px;border-radius:999px;background:var(--argila-cta);color:#FFF;font-weight:700;font-size:1.0625rem;text-align:center;box-shadow:0 3px 0 var(--argila-dark),0 12px 26px rgba(166,94,58,.3)}
-.preview-no{color:var(--musgo);font-size:.9375rem;text-decoration:underline;text-underline-offset:3px}
-.setup{border:1.5px dashed var(--argila);background:#F3E6DC;border-radius:14px;padding:10px 12px;font-size:.8125rem;width:100%}
 .note{font-size:.75rem;color:var(--musgo);text-align:center;margin-top:22px;line-height:1.45}
+/* botões do upsell de 1 clique da Kiwify (o script deles cuida da cobrança; aqui só o visual) */
+[id^="kiwify-upsell-"]:not([id*="trigger"]){width:100%;display:flex;flex-direction:column;align-items:center;gap:12px}
+[id^="kiwify-upsell-trigger-"]{all:unset;box-sizing:border-box;cursor:pointer;width:100%;min-height:62px;padding:16px 20px;border-radius:999px;background:var(--argila-cta);color:#FFF;font-family:"Instrument Sans",system-ui,sans-serif;font-weight:700;font-size:1.0625rem;line-height:1.3;text-align:center;box-shadow:0 3px 0 var(--argila-dark),0 12px 26px rgba(166,94,58,.3)}
+[id^="kiwify-upsell-trigger-"]:focus-visible{outline:2.5px solid var(--floresta);outline-offset:3px}
+[id^="kiwify-upsell-cancel-trigger-"]{cursor:pointer;color:var(--musgo);font-size:.9375rem;text-align:center;text-decoration:underline;text-underline-offset:3px;padding:6px 4px}
 </style></head>
 <body>
 <div class="ok">✓ <b>Pagamento aprovado.</b> Seu acesso chega no seu e-mail.</div>
@@ -75,15 +77,13 @@ h2{font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:1.875r
     <span class="how">Cobrado no mesmo cartão da sua compra, sem digitar nada de novo.</span>
     <div class="kiwify">
       <!-- ============================================================
-           COLE AQUI O CÓDIGO HTML GERADO PELA KIWIFY
+           CÓDIGO HTML GERADO PELA KIWIFY (não mude os ids nem o script)
            Produtos > {produto principal} > Configurações > "Página de obrigado e upsell" > Gerador de upsell
-           Depois de colar, APAGUE o bloco de pré-visualização abaixo (do "PREVIEW INÍCIO" ao "PREVIEW FIM").
            ============================================================ -->
-      <!-- PREVIEW INÍCIO -->
-      <button class="preview-yes" type="button">Sim, quero o Plano do Depois</button>
-      <a class="preview-no" href="#">Não, obrigada. Vou seguir sem o plano.</a>
-      <div class="setup"><b>Pré-visualização.</b> Estes botões não cobram nada. Troque pelo código gerado na Kiwify.</div>
-      <!-- PREVIEW FIM -->
+      <div id="kiwify-upsell-e7bftvr" data-upsell-url="" data-downsell-url="https://oalemdacaneta.com.br/downsell/" style="--kiwify-upsell-accept-bg:#a65e3a;--kiwify-upsell-accept-color:#FFFFFF">
+          <button id="kiwify-upsell-trigger-e7bftvr">Sim, eu preciso continuar me cuidando!</button>
+          <div id="kiwify-upsell-cancel-trigger-e7bftvr">Não, ainda não me convenceu.</div>
+        </div><script src="https://snippets.kiwify.com/upsell-v2/upsell.min.js"></script>
     </div>
   </section>
   <p class="note">Material educativo, para maiores de 18 anos. Não substitui acompanhamento médico e nutricional. Mudanças de dose, pausa ou fim do tratamento são sempre com o seu médico.<br>Garantia de 7 dias também para este material.</p>
