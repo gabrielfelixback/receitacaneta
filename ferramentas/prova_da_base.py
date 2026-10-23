@@ -5,8 +5,8 @@ Uso:
     python3 ferramentas/prova_da_base.py caminho/da/planilha.xlsx --simulacao   # só para testar com base de exemplo
 
 A planilha precisa da aba "Participantes" com as colunas:
-    Faixa etária (18–29, 30–39, 40–49, 50–59, 60+), Usa caneta? (Sim/Não),
-    Percepção da barriga (Sim / Um pouco / Não), Semanas com cardápio.
+    Faixa etária (18–29, 30–39, 40–49, 50–59, 60+), Usa caneta? ou Uso de caneta (Sim/Não),
+    Percepção da barriga ou Redução abdominal percebida (Sim / Um pouco / Não), Semanas com cardápio.
 
 Regras:
 - Conta só quem usa caneta (é o público do quiz).
@@ -48,6 +48,13 @@ def main():
 
     linhas = list(wb['Participantes'].iter_rows(values_only=True))
     col = {nome: i for i, nome in enumerate(linhas[0])}
+    # Aceita também os nomes do modelo base_participantes.
+    for nome, alt in (('Usa caneta?', 'Uso de caneta'), ('Percepção da barriga', 'Redução abdominal percebida')):
+        if nome not in col and alt in col:
+            col[nome] = col[alt]
+    respondidas = sum(1 for r in linhas[1:] if r[col.get('Percepção da barriga', 0)] not in (None, ''))
+    if 'Percepção da barriga' in col and respondidas == 0:
+        sys.exit('A planilha não tem nenhuma resposta sobre a barriga ainda. Preencha as respostas e rode de novo.')
     for nome in ('Faixa etária', 'Usa caneta?', 'Percepção da barriga', 'Semanas com cardápio'):
         if nome not in col:
             sys.exit(f'Falta a coluna "{nome}" na aba Participantes.')
