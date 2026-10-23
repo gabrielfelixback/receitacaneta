@@ -191,6 +191,22 @@ b,strong{font-weight:600}
 .stat{display:flex;align-items:baseline;gap:12px}
 .stat b{font-family:var(--serif);font-weight:400;font-size:3.25rem;line-height:.9;color:var(--argila-on-dark);white-space:nowrap;letter-spacing:-.02em}
 .stat span{font-size:.9375rem;line-height:1.35}
+.provacard{position:relative;overflow:hidden;background:#FFFFFF;border:1px solid var(--line);border-radius:24px;padding:22px 20px 20px;display:flex;flex-direction:column;gap:6px;box-shadow:var(--shadow)}
+.provacard .pc-curve{position:absolute;right:-4px;top:-4px;width:130px;height:130px;pointer-events:none;transform:scaleY(-1)}
+.provacard > *:not(.pc-curve){position:relative}
+.provacard .pc-curve svg{width:100%;height:100%}
+.provacard .pc-curve path{stroke-dasharray:200;stroke-dashoffset:200;animation:draw 1.8s .3s var(--ease) forwards}
+.pc-faixa{font-size:.8125rem;font-weight:600;letter-spacing:.16em;color:var(--floresta);font-variant-numeric:tabular-nums}
+.pc-faixa i{font-style:normal;color:var(--musgo);opacity:.7}
+.pc-num{font-family:var(--serif);font-weight:400;font-size:clamp(4rem,19vw,5.25rem);line-height:.92;letter-spacing:-.02em;color:var(--floresta);font-variant-numeric:tabular-nums;margin-top:2px}
+.pc-tit{font-family:var(--serif);font-size:clamp(1.625rem,7vw,2rem);line-height:1.06;color:var(--floresta);text-wrap:balance;max-width:16ch}
+.pc-bar{display:flex;align-items:center;gap:12px;margin:8px 0 4px}
+.pc-bar span{flex:1;height:14px;border-radius:99px;background:var(--linho);overflow:hidden}
+.pc-bar i{display:block;height:100%;border-radius:99px;background:var(--musgo);width:var(--w);animation:fillbar 1.2s .2s var(--ease) both}
+@keyframes fillbar{from{width:0}}
+.pc-bar b{font-size:.9375rem;font-weight:600;font-variant-numeric:tabular-nums}
+.pc-txt{font-size:.9375rem;color:var(--floresta);line-height:1.45;max-width:34ch;position:relative}
+.pc-sign{font-family:var(--serif);font-style:italic;font-size:1.0625rem;color:var(--floresta);margin-top:6px;position:relative}
 .chart{width:100%;height:auto;overflow:visible}
 .chartcard{margin:0}
 .chartcard .stat b{color:var(--argila-ink)}
@@ -551,7 +567,8 @@ h2.sans,h1.sans{font-family:var(--sans);font-weight:500;letter-spacing:-.015em;l
 @keyframes shine{0%,45%{transform:translateX(-120%)}75%,100%{transform:translateX(120%)}}
 @keyframes nudge{0%,62%,100%{transform:none}70%{transform:scale(1.06) rotate(-1deg)}78%{transform:scale(1.04) rotate(1deg)}86%{transform:scale(1.02)}}
 @media (prefers-reduced-motion: reduce){
-  .vsl-som{animation:none}
+  .vsl-som,.pc-bar i,.provacard .pc-curve path{animation:none}
+  .provacard .pc-curve path{stroke-dashoffset:0}
   .screen,.pulse,.tip.swapin,.sticky,.sticky .btn,.sticky .btn::after,.today .off,.sticky .p .off,.ready .go span,.ready .mk2 path,.ready .lbl .ic,.ready h1 em{animation:none}
   .ready .mk2 path{stroke-dashoffset:0}
   .progress .fill,.progress .cap,.score .track i,.gauge .track i{transition:none}
@@ -628,7 +645,6 @@ const CONFIG = {
   },
   // Quebra de objeção da idade (tela logo depois da idade). Preencha só com números reais da sua base.
   // Ex.: i40: {pct: 40, texto: 'das nossas alunas de 40 a 49 anos disseram que a barriga começou a diminuir na 3ª semana de receitas'}
-  provaIdade: {i18: null, i30: null, i40: null, i50: null, i60: null},
   autor: {                  // quem montou as receitas. Deixe nome vazio para esconder o bloco.
     nome: '',
     registro: '',           // ex.: 'CRN-3 00000'
@@ -1077,9 +1093,30 @@ const muscleChart = (faixa) => {
     ${eixoX}<text x="${L + W}" y="${T + Hh + 30}" text-anchor="end" style="fill:#4A5E52;font-size:10px">idade</text>
   </svg>`;
 };
+// Resultados da pesquisa com as alunas por faixa de idade (jan–out 2026), informados pelo dono do projeto.
+const PROVA_IDADE = {
+  i18: {pct: 68, titulo: 'viveram menos ansiedade com a comida.', texto: 'Entre 18 e 29 anos, 68% relatam mais controle da fome e menos compulsão no dia a dia.'},
+  i30: {pct: 72, titulo: 'sentiram mais facilidade para manter a rotina.', texto: 'Na faixa de 30 a 39 anos, 72% relatam mais constância nos hábitos e menos deslizes impulsivos.'},
+  i40: {pct: 75, titulo: 'notaram mais energia e bem-estar.', texto: 'Entre 40 e 49 anos, 75% relatam mais disposição, melhor humor e qualidade de vida.'},
+  i50: {pct: 70, titulo: 'relataram melhora na qualidade do sono.', texto: 'Na faixa de 50 a 59 anos, 70% dizem dormir melhor e sentir mais equilíbrio ao longo do dia.'},
+  i60: {pct: 62, titulo: 'sentiram mais autonomia nas escolhas.', texto: 'A partir dos 60 anos, 62% relatam mais segurança para fazer escolhas alimentares e manter a independência.'}
+};
+// Card de prova da página 3: faixa, número grande, frase, barra (só com % real), explicação e assinatura.
+const provaCard = (faixa, numero, titulo, texto, pct) => {
+  const barra = typeof pct === 'number'
+    ? el('div', {class: 'pc-bar', role: 'img', 'aria-label': `${pct}%`}, el('span', {}, el('i', {style: `--w:${pct}%`})), el('b', {}, `${pct}%`)) : null;
+  return el('section', {class: 'provacard'},
+    H('span', '<svg viewBox="0 0 120 120" aria-hidden="true"><path d="M2 118 C30 70 60 70 80 52 C96 38 104 20 118 4" style="fill:none;stroke:#B8744F;stroke-width:1.6;stroke-linecap:round"/></svg>', 'pc-curve'),
+    H('span', `${faixa.replace('–', ' – ')} <i>ANOS</i>`.replace('+ <i>ANOS</i>', '+ <i>ANOS</i>'), 'pc-faixa'),
+    el('b', {class: 'pc-num'}, numero),
+    el('p', {class: 'pc-tit'}, titulo),
+    barra,
+    texto ? el('p', {class: 'pc-txt'}, texto) : null,
+    el('p', {class: 'pc-sign'}, 'O remédio cuida da fome. O resto é método.'));
+};
 const renderAge = () => {
   const [titulo, txt] = IDADE_TXT[state.a.idade] || IDADE_TXT.i40;
-  const prova = CONFIG.provaIdade[state.a.idade];
+  const prova = PROVA_IDADE[state.a.idade];
   const faixa = `${idadeLabel().replace('+', ' anos ou mais')}${idadeLabel().includes('+') ? '' : ' anos'}`;
   const out = [
     H('p', 'Você está no CAMINHO CERTO!', 'okay'),
@@ -1087,22 +1124,20 @@ const renderAge = () => {
       : el('div', {class: 'crowd', 'aria-hidden': 'true'}, ['i18', 'i30', 'i40', 'i50', 'i60'].map((k) => H('span', foto(CONFIG.imagens.idade[k], avatar(AVATAR[k])))))
   ];
   if (CONFIG.provaQuebra) out.push(H('p', CONFIG.provaQuebra.replace('{idade}', faixa), 'proof'));
-  if (prova && prova.pct) {
-    // Prova real da base, no formato pedido: "X% das alunas dessa idade disseram que funcionou".
-    out.push(H('p', `<span class="big">${prova.pct}%</span> das nossas alunas de ${faixa} ${prova.texto}`, 'proof'));
-    out.push(el('p', {class: 'c lead'}, titulo));
+  const temProva = prova && typeof prova.pct === 'number';
+  if (temProva) {
+    // Prova real da base, no card da faixa: número grande, frase, barra e explicação.
+    out.push(provaCard(idadeLabel(), `${prova.pct}%`, prova.titulo, prova.texto, prova.pct));
   } else {
-    if (!CONFIG.provaQuebra) out.push(H('h2', titulo));
-    out.push(el('p', {class: 'c lead'}, txt));
+    // Sem número real: o mesmo card, com o dado de pesquisa.
+    out.push(provaCard(idadeLabel(), '3–8%', 'da massa muscular vai embora a cada década depois dos 30.', titulo, null));
     out.push(el('figure', {class: 'sheet chartcard'},
-      el('div', {class: 'stat'}, el('b', {}, '3–8%'), el('span', {}, 'da massa muscular se perde a cada década depois dos 30, se nada for feito.')),
       el('figcaption', {}, el('b', {}, 'Quanto músculo sobra com o passar dos anos'), el('span', {}, '100% = o músculo que você tinha aos 30')),
       H('div', muscleChart(state.a.idade), 'chartbox'),
       H('div', '<span><i class="lg-faixa"></i>faixa possível</span><span><i class="lg-forte"></i>perda maior</span><span><i class="lg-leve"></i>perda menor</span>', 'legend'),
       el('p', {class: 'src'}, 'Fonte: Volpi E. et al., Curr Opin Clin Nutr Metab Care, 2004. Faixa de 3% a 8% por década, acumulada.')));
   }
   out.push(el('div', {class: 'infobox'}, 'Vamos entender melhor o que está acontecendo com o seu corpo…'));
-  if (SETUP && !(prova && prova.pct)) out.push(el('div', {class: 'setup', role: 'note'}, el('strong', {}, 'Espaço para a prova da sua base'), H('span', 'Preencha <code>CONFIG.provaQuebra</code> (ex.: "+ 3.200 mulheres de {idade} que usam a caneta já fizeram este teste") e/ou <code>CONFIG.provaIdade</code> (% de alunas dessa faixa que disseram que funcionou) com os seus números reais. Aparecem em destaque aqui.')));
   out.push(contBtn('cont-quebra', 'Continuar'));
   return out;
 };
