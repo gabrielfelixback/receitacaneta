@@ -64,3 +64,20 @@ ganchoVideo: {mp4: 'video/gancho.mp4', webm: 'video/gancho.webm', capa: 'video/g
 4. Suba a pasta `quiz/` inteira (com `video/` e `img/`).
 
 Sem vídeo, aparece a foto de `imagens.gancho`; sem foto, a ilustração do espelho.
+
+## Prova da base (página 3)
+
+Quando tiver a pesquisa real com as compradoras, gere o `CONFIG.provaIdade` com:
+
+```bash
+pip install openpyxl
+python3 ferramentas/prova_da_base.py caminho/da/planilha.xlsx
+```
+
+A planilha segue o modelo de `base_avaliacoes_quiz` (aba **Participantes** com Faixa etária, Usa caneta?, Percepção da barriga, Semanas com cardápio). A ferramenta:
+- conta só quem usa caneta;
+- usa o % que respondeu "Sim";
+- deixa de fora as faixas com menos de 30 respostas;
+- imprime a linha pronta para colar no `CONFIG`.
+
+Se a planilha disser que é simulação, teste ou demonstração, ela para; `--simulacao` mostra o resultado só para teste.
