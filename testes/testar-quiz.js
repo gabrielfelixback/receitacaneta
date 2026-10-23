@@ -8,7 +8,8 @@ const {JSDOM} = require('jsdom');
 
 const file = process.argv[2] || path.join(__dirname, '..', 'quiz', 'index.html');
 const html = fs.readFileSync(file, 'utf8')
-  .replace("backendUrl: '',", "backendUrl: 'https://backend.exemplo.com/functions/v1/quiz',");
+  .replace("backendUrl: '',", "backendUrl: 'https://backend.exemplo.com/functions/v1/quiz',")
+  .replace(/checkoutUrl: '[^']*'/, "checkoutUrl: ''"); // começa sem link para testar o aviso; o link é posto no meio do teste
 const out = [];
 let fail = false;
 const check = (ok, msg) => { if (!ok) fail = true; out.push(`${ok ? 'ok ' : 'ERRO'} ${msg}`); };
