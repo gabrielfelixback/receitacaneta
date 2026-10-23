@@ -465,6 +465,11 @@ h2.sans,h1.sans{font-family:var(--sans);font-weight:500;letter-spacing:-.015em;l
 .voice{border:1px solid var(--line);border-radius:18px;padding:14px;display:grid;grid-template-columns:44px 1fr;gap:10px;align-items:end}
 .voice .av{width:44px;height:44px;border-radius:50%;overflow:hidden;background:var(--linho)}
 .voice .av img{width:100%;height:100%;object-fit:cover}
+.voice .av.marca{background:var(--floresta);display:grid;place-items:center}
+.voice > div{min-width:0}
+.voice .wave{min-width:0}
+.said p{color:var(--floresta);font-size:.9375rem}
+.voice .av .avmark{width:30px;height:14px}
 .voice .who{font-size:.875rem;font-weight:600;margin-bottom:6px;display:block}
 .voice .bub{background:var(--linho);border-radius:16px;padding:8px 12px;display:flex;align-items:center;gap:10px}
 .voice .play{all:unset;cursor:pointer;width:36px;height:36px;border-radius:50%;background:var(--floresta);display:grid;place-items:center;flex:none}
@@ -629,7 +634,7 @@ const CONFIG = {
     legenda: 'Imagem ilustrativa. Não é resultado de cliente.'
   },
   // Áudio de explicação (mensagem de voz na tela do espelho). Grave você mesma. Vazio = some.
-  audio: {url: '', nome: '', foto: ''},   // ex.: {url: 'audio/explicacao.mp3', nome: 'Ana, do Além da Caneta', foto: 'img/ana.jpg'}
+  audio: {url: 'audio/explicacao.mp3', nome: 'Além da Caneta', foto: ''},   // foto vazia = símbolo da marca no avatar
   // Fotos (URL ou caminho do arquivo, ex.: 'img/gancho.jpg'). Vazio = usa a ilustração.
   imagens: {
     gancho: '',             // primeira tela: mulher diante do espelho, barriga, emoção
@@ -1269,7 +1274,7 @@ const voiceBlock = () => {
   audio.addEventListener('pause', () => { play.innerHTML = playIc; });
   audio.addEventListener('timeupdate', () => { const f = audio.currentTime / (audio.duration || 1); [...wave.children].forEach((b, k) => b.classList.toggle('on', k / wave.children.length < f)); dur.textContent = mm(audio.currentTime); });
   return el('div', {class: 'stack'}, H('p', 'Escute essa rápida explicação 👇', 'see'),
-    el('div', {class: 'voice'}, H('span', a.foto ? `<img src="${a.foto}" alt="">` : '', 'av'),
+    el('div', {class: 'voice'}, H('span', a.foto ? `<img src="${a.foto}" alt="">` : capsuleSvg('avmark', '#F4F0E8', '#D9A07E'), a.foto ? 'av' : 'av marca'),
       el('div', {}, el('span', {class: 'who'}, a.nome || ''), el('div', {class: 'bub'}, play, wave, dur)), audio));
 };
 
