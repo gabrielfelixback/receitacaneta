@@ -131,7 +131,7 @@ b,strong{font-weight:600}
 .opts.big .opt{min-height:60px;font-size:1.0625rem;font-weight:600}
 .secret{display:flex;align-items:center;justify-content:center;gap:6px;font-size:.8125rem;color:var(--musgo);font-weight:500}
 .secret .ic{width:15px;height:15px}
-.crowd-pic{border-radius:22px;overflow:hidden;aspect-ratio:16/10}
+.crowd-pic{border-radius:22px;overflow:hidden;aspect-ratio:900/506}
 .said{background:var(--floresta);color:var(--creme);border-radius:22px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
 .said span{font-size:.8125rem;color:var(--on-dark-muted);font-weight:600}
 .said b{font-family:var(--serif);font-weight:400;font-size:1.5rem;line-height:1.1;color:var(--argila-on-dark)}
@@ -191,7 +191,18 @@ b,strong{font-weight:600}
 .stat{display:flex;align-items:baseline;gap:12px}
 .stat b{font-family:var(--serif);font-weight:400;font-size:3.25rem;line-height:.9;color:var(--argila-on-dark);white-space:nowrap;letter-spacing:-.02em}
 .stat span{font-size:.9375rem;line-height:1.35}
-.chart{width:100%;height:auto}
+.chart{width:100%;height:auto;overflow:visible}
+.chartcard{margin:0}
+.chartcard .stat b{color:var(--argila-ink)}
+.chartcard figcaption{display:flex;flex-direction:column;gap:2px;border-top:1px solid var(--line-soft);padding-top:12px}
+.chartcard figcaption b{font-weight:600;font-size:.9375rem}
+.chartcard figcaption span{font-size:.8125rem;color:var(--musgo)}
+.chartbox{margin:4px -4px 0}
+.chartcard .legend{flex-wrap:wrap;gap:6px 14px;font-size:.75rem}
+.chartcard .legend i{width:18px;height:10px;border-radius:2px}
+.lg-faixa{background:rgba(184,116,79,.22)}
+.lg-forte{height:0!important;border-top:2.5px solid #9A5A39;border-radius:0!important}
+.lg-leve{height:0!important;border-top:2px dashed #9A5A39;border-radius:0!important}
 .chart text{font-family:var(--sans);font-size:11px;font-weight:500}
 .split{display:flex;height:54px;border-radius:14px;overflow:hidden;font-weight:600;font-size:.875rem}
 .split div{display:flex;flex-direction:column;justify-content:center;padding:0 12px;line-height:1.15}
@@ -609,7 +620,7 @@ const CONFIG = {
     // mp4 = arquivo do vídeo; webm = alternativa opcional; capa = imagem mostrada enquanto carrega.
     // som: true = vídeo falado (VSL): começa mudo e mostra "Toque para ouvir", que reinicia com som.
     ganchoVideo: {mp4: 'video/gancho.mp4', webm: '', capa: 'video/gancho-capa.webp', som: true},
-    quebra: '',             // "Você está no caminho certo!": grupo de mulheres
+    quebra: 'img/quebra.webp', // "Você está no caminho certo!": grupo de mulheres
     caneta: 'img/caneta.webp', // pergunta da caneta
     idade: {i18: 'img/idade-18.webp', i30: 'img/idade-30.webp', i40: 'img/idade-40.webp', i50: 'img/idade-50.webp', i60: 'img/idade-60.webp'},
     barriga: {pochete: 'img/barriga-pochete.webp', pneuzinho: 'img/barriga-pneuzinho.webp', alta: 'img/barriga-alta.webp', flacida: 'img/barriga-flacida.webp'},
@@ -1033,21 +1044,38 @@ const IDADE_TXT = {
   i50: ['Depois dos 50 dá, sim. Só não dá para comer de qualquer jeito.', 'A perda de músculo acelera nessa idade. Se a caneta tira a fome e o pouco que você come tem pouca proteína, o corpo emagrece no lugar errado. Ajustando o prato, isso muda.'],
   i60: ['Depois dos 60, o prato vale ainda mais.', 'Nessa fase manter músculo é o que garante disposição, equilíbrio e barriga firme. Com a fome baixa da caneta, o que vai no prato faz toda a diferença.']
 };
-// Curva ilustrativa: faixa de 3 a 8% de perda por década a partir dos 30, com a faixa da pessoa marcada.
+// Faixa de massa muscular a partir dos 30 (100% = aos 30), perdendo de 3% a 8% por década (Volpi 2004),
+// com a década da pessoa destacada. É uma faixa (melhor e pior caso), por isso um tom só da marca:
+// limite tracejado (−3%) e contínuo (−8%), rotulados direto na ponta.
 const muscleChart = (faixa) => {
-  const dec = [30, 40, 50, 60, 70];
-  const x = (k) => 28 + k * 64;
-  const yA = (k) => 18 + k * 8;     // perda menor (3%)
-  const yB = (k) => 18 + k * 20;    // perda maior (8%)
-  const area = `M${x(0)} ${yA(0)} ${dec.map((_, k) => `L${x(k)} ${yA(k)}`).join(' ')} ${dec.slice().reverse().map((_, k) => `L${x(4 - k)} ${yB(4 - k)}`).join(' ')} Z`;
-  const mid = dec.map((_, k) => `${k ? 'L' : 'M'}${x(k)} ${(yA(k) + yB(k)) / 2}`).join(' ');
-  const hi = {i18: -1, i30: 0, i40: 1, i50: 2, i60: 3}[faixa] ?? 1;
-  const dot = hi >= 0 ? `<circle cx="${x(hi)}" cy="${(yA(hi) + yB(hi)) / 2}" r="6" style="fill:#D9A07E;stroke:#17332B" stroke-width="2.5"/><text x="${x(hi)}" y="${(yA(hi) + yB(hi)) / 2 - 12}" text-anchor="middle" style="fill:#F4F0E8">você</text>` : '';
-  return `<svg class="chart" viewBox="0 0 320 128" role="img" aria-label="Gráfico ilustrativo: a massa muscular cai entre 3 e 8% a cada década depois dos 30">
-    <path d="${area}" style="fill:rgba(217,160,126,.22)"/>
-    <path d="${mid}" style="fill:none;stroke:#D9A07E" stroke-width="2.5" stroke-linecap="round"/>
-    ${dec.map((d, k) => `<text x="${x(k)}" y="122" text-anchor="middle" style="fill:#A9B8AC">${d}</text>`).join('')}
-    ${dot}</svg>`;
+  const idades = [30, 40, 50, 60, 70];
+  const L = 34, W = 214, T = 22, Hh = 150, ymin = 70, ymax = 100;
+  const x = (a) => L + 12 + ((a - 30) / 40) * (W - 12);
+  const y = (v) => T + ((ymax - v) / (ymax - ymin)) * Hh;
+  const leve = idades.map((_, k) => 100 * 0.97 ** k);
+  const forte = idades.map((_, k) => 100 * 0.92 ** k);
+  const linha = (vs) => vs.map((v, k) => `${k ? 'L' : 'M'}${x(idades[k]).toFixed(1)} ${y(v).toFixed(1)}`).join(' ');
+  const area = `${linha(leve)} ${forte.slice().reverse().map((v, k) => `L${x(idades[4 - k]).toFixed(1)} ${y(v).toFixed(1)}`).join(' ')} Z`;
+  const dec = {i30: [30, 40], i40: [40, 50], i50: [50, 60], i60: [60, 70]}[faixa];
+  const voce = dec
+    ? `<rect x="${x(dec[0])}" y="${T - 4}" width="${x(dec[1]) - x(dec[0])}" height="${Hh + 4}" rx="6" style="fill:#17332B;fill-opacity:.06"/>
+       <rect x="${(x(dec[0]) + x(dec[1])) / 2 - 22}" y="${T - 20}" width="44" height="16" rx="8" style="fill:#17332B"/>
+       <text x="${(x(dec[0]) + x(dec[1])) / 2}" y="${T - 9}" text-anchor="middle" style="fill:#FFFFFF;font-weight:700;font-size:10px">VOCÊ</text>`
+    : `<line x1="${x(30)}" x2="${x(30)}" y1="${T - 4}" y2="${T + Hh}" style="stroke:#17332B;stroke-width:1.5;stroke-dasharray:2 3"/>
+       <text x="${x(30) + 6}" y="${T - 8}" style="fill:#17332B;font-weight:700;font-size:10px">VOCÊ CHEGA AQUI AOS 30</text>`;
+  const grade = [70, 80, 90, 100].map((v) => `<line x1="${L + 4}" x2="${L + W}" y1="${y(v)}" y2="${y(v)}" style="stroke:#E6E0D4;stroke-width:1"/><text x="${L - 6}" y="${y(v) + 3.5}" text-anchor="end" style="fill:#4A5E52">${v}%</text>`).join('');
+  const eixoX = idades.map((a) => `<text x="${x(a)}" y="${T + Hh + 16}" text-anchor="middle" style="fill:#4A5E52">${a}</text>`).join('');
+  const pontos = (vs, nome) => vs.map((v, k) => `<circle cx="${x(idades[k])}" cy="${y(v)}" r="3.5" style="fill:#FFFFFF;stroke:#9A5A39;stroke-width:2"><title>${idades[k]} anos, ${nome}: ${Math.round(v)}%</title></circle>`).join('');
+  const ponta = (v, rotulo, dy) => `<text x="${L + W + 8}" y="${y(v) + dy}" style="fill:#17332B;font-weight:700;font-size:13px">${Math.round(v)}%</text><text x="${L + W + 8}" y="${y(v) + dy + 13}" style="fill:#4A5E52;font-size:10px">${rotulo}</text>`;
+  return `<svg class="chart" viewBox="0 0 320 200" role="img" aria-label="Massa muscular a partir dos 30 anos, com 100% aos 30: perdendo 3% por década chega a ${Math.round(leve[4])}% aos 70; perdendo 8% por década chega a ${Math.round(forte[4])}%.">
+    ${grade}${voce}
+    <path d="${area}" style="fill:#B8744F;fill-opacity:.16"/>
+    <path d="${linha(leve)}" style="fill:none;stroke:#9A5A39;stroke-width:2;stroke-dasharray:5 4;stroke-linecap:round"/>
+    <path d="${linha(forte)}" style="fill:none;stroke:#9A5A39;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"/>
+    ${pontos(forte, 'perdendo 8% por década')}
+    ${ponta(leve[4], '−3% por década', -2)}${ponta(forte[4], '−8% por década', 2)}
+    ${eixoX}<text x="${L + W}" y="${T + Hh + 30}" text-anchor="end" style="fill:#4A5E52;font-size:10px">idade</text>
+  </svg>`;
 };
 const renderAge = () => {
   const [titulo, txt] = IDADE_TXT[state.a.idade] || IDADE_TXT.i40;
@@ -1066,10 +1094,12 @@ const renderAge = () => {
   } else {
     if (!CONFIG.provaQuebra) out.push(H('h2', titulo));
     out.push(el('p', {class: 'c lead'}, txt));
-    out.push(el('div', {class: 'sheet dark'},
+    out.push(el('figure', {class: 'sheet chartcard'},
       el('div', {class: 'stat'}, el('b', {}, '3–8%'), el('span', {}, 'da massa muscular se perde a cada década depois dos 30, se nada for feito.')),
-      H('div', muscleChart(state.a.idade)),
-      el('p', {class: 'src'}, 'Volpi E. et al., Curr Opin Clin Nutr Metab Care, 2004. Curva ilustrativa da faixa citada.')));
+      el('figcaption', {}, el('b', {}, 'Quanto músculo sobra com o passar dos anos'), el('span', {}, '100% = o músculo que você tinha aos 30')),
+      H('div', muscleChart(state.a.idade), 'chartbox'),
+      H('div', '<span><i class="lg-faixa"></i>faixa possível</span><span><i class="lg-forte"></i>perda maior</span><span><i class="lg-leve"></i>perda menor</span>', 'legend'),
+      el('p', {class: 'src'}, 'Fonte: Volpi E. et al., Curr Opin Clin Nutr Metab Care, 2004. Faixa de 3% a 8% por década, acumulada.')));
   }
   out.push(el('div', {class: 'infobox'}, 'Vamos entender melhor o que está acontecendo com o seu corpo…'));
   if (SETUP && !(prova && prova.pct)) out.push(el('div', {class: 'setup', role: 'note'}, el('strong', {}, 'Espaço para a prova da sua base'), H('span', 'Preencha <code>CONFIG.provaQuebra</code> (ex.: "+ 3.200 mulheres de {idade} que usam a caneta já fizeram este teste") e/ou <code>CONFIG.provaIdade</code> (% de alunas dessa faixa que disseram que funcionou) com os seus números reais. Aparecem em destaque aqui.')));
@@ -1587,7 +1617,7 @@ const render = () => {
 };
 render();
 // As fotos da idade e das barrigas já começam a baixar na primeira tela (depois do vídeo, que tem prioridade).
-const preload = () => [CONFIG.imagens.caneta, ...Object.values(CONFIG.imagens.idade), ...Object.values(CONFIG.imagens.barriga), ...Object.values(CONFIG.imagens.sonho)].filter(Boolean).forEach((u) => { const i = new Image(); i.src = u; });
+const preload = () => [CONFIG.imagens.quebra, CONFIG.imagens.caneta, ...Object.values(CONFIG.imagens.idade), ...Object.values(CONFIG.imagens.barriga), ...Object.values(CONFIG.imagens.sonho)].filter(Boolean).forEach((u) => { const i = new Image(); i.src = u; });
 if ('requestIdleCallback' in window) requestIdleCallback(preload); else setTimeout(preload, 800);
 </script>
 </body>
