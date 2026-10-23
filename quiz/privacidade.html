@@ -66,7 +66,7 @@ footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--line);font-fa
   <p class="meta">Última atualização: <span data-campo="atualizacao"></span></p>
 
   <div class="falta" id="falta" hidden>
-    <strong>Falta preencher os dados da empresa.</strong> Abra <code>quiz/privacidade.html</code> e complete o bloco <code>EMPRESA</code> no fim do arquivo (razão social, CNPJ, e-mail de contato e encarregado). Os trechos marcados em amarelo mostram onde eles aparecem.
+    <strong>Falta preencher os dados do responsável.</strong> Abra <code>quiz/privacidade.html</code> e complete o bloco <code>EMPRESA</code> no fim do arquivo (nome do responsável, e-mail de contato e encarregado). Os trechos marcados em amarelo mostram onde eles aparecem.
   </div>
 
   <section class="resumo" aria-labelledby="resumo-t">
@@ -81,7 +81,7 @@ footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--line);font-fa
   </section>
 
   <h2 id="quem"><b>1</b>Quem cuida dos seus dados</h2>
-  <p>Esta página e o teste "além da caneta" são de <span data-campo="nome"></span>, CNPJ <span data-campo="cnpj"></span>, a controladora dos dados, nos termos da Lei Geral de Proteção de Dados (Lei 13.709/2018, a LGPD).</p>
+  <p>Esta página e o teste "além da caneta" são de <span data-campo="nome"></span>, responsável pelos seus dados nos termos da Lei Geral de Proteção de Dados (Lei 13.709/2018, a LGPD).</p>
   <p>Encarregado pelo tratamento de dados (DPO): <span data-campo="encarregado"></span>. Contato para qualquer assunto de privacidade: <a data-campo="email" data-link="mailto"></a>.</p>
 
   <h2 id="coleta"><b>2</b>O que coletamos no teste</h2>
@@ -148,8 +148,7 @@ footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--line);font-fa
    Dados da empresa: preencha antes de publicar.
    ===================================================================== */
 const EMPRESA = {
-  nome: '',            // razão social ou nome do responsável, ex.: 'Além da Caneta Conteúdos Ltda.'
-  cnpj: '',            // ex.: '00.000.000/0001-00' (ou CPF, se for pessoa física)
+  nome: '',            // nome do responsável (ou da marca), ex.: 'Maria Souza'
   email: '',           // e-mail para assuntos de privacidade, ex.: 'privacidade@seudominio.com.br'
   encarregado: '',     // nome do encarregado (DPO); pode ser o próprio responsável
   checkout: '',        // plataforma de pagamento, ex.: 'Kiwify' ou 'Hotmart'
