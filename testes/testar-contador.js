@@ -22,6 +22,7 @@ const URL_FN = 'https://oalemdacaneta.com.br/api/contagem';
 const pedido = (body, {method = 'POST', origin = 'https://oalemdacaneta.com.br', headers = {}} = {}) => {
   const h = new Headers(headers);
   if (origin) h.set('Origin', origin);
+  if (!h.has('Content-Type')) h.set('Content-Type', 'text/plain;charset=UTF-8'); // o que o sendBeacon manda
   if (typeof body === 'string' && !h.has('Content-Length')) h.set('Content-Length', String(Buffer.byteLength(body)));
   return new Request(URL_FN, {method, headers: h, body: method === 'GET' || method === 'HEAD' ? undefined : body});
 };
@@ -94,9 +95,33 @@ const pedido = (body, {method = 'POST', origin = 'https://oalemdacaneta.com.br',
     check([400, 413].includes(res2.status) && !db2.gravado.length, `corpo grande com Content-Length falso: recusado (${res2.status})`);
   }
 
+  // Corpo sem Content-Length (enviado aos pedaços): ainda é cortado em 128 bytes.
+  {
+    const enc = new TextEncoder();
+    const pedacos = (texto) => new ReadableStream({start(c) { for (let i = 0; i < texto.length; i += 40) c.enqueue(enc.encode(texto.slice(i, i + 40))); c.close(); }});
+    const semTamanho = (texto) => new Request(URL_FN, {method: 'POST', headers: {Origin: 'https://oalemdacaneta.com.br', 'Content-Type': 'text/plain'}, body: pedacos(texto), duplex: 'half'});
+    const {res, db} = await chama(semTamanho(JSON.stringify({e: 'inicio', v: 'v19', x: 'a'.repeat(5000)})));
+    check(res.status === 413 && !db.gravado.length, 'corpo grande enviado aos pedaços, sem Content-Length: 413');
+    const {res: r2, db: d2} = await chama(semTamanho(JSON.stringify({e: 'etapa', n: 4, v: 'v19'})));
+    check(r2.status === 204 && d2.gravado.length === 1, 'corpo válido enviado aos pedaços: 204');
+  }
+
+  // Tipo de conteúdo: só texto ou JSON.
+  {
+    const corpo = JSON.stringify({e: 'inicio', v: 'v19'});
+    const {res, db} = await chama(pedido(corpo, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}));
+    check(res.status === 415 && !db.gravado.length, 'Content-Type de formulário: 415');
+    const {res: r2} = await chama(pedido(corpo, {headers: {'Content-Type': 'application/json'}}));
+    check(r2.status === 204, 'Content-Type application/json: aceito');
+    const {res: r3, db: d3} = await chama(new Request(URL_FN, {method: 'POST', headers: {Origin: 'https://oalemdacaneta.com.br'}, body: new Uint8Array([123, 255, 254, 125])}));
+    check(r3.status === 415 && !d3.gravado.length, 'bytes sem Content-Type: 415');
+    const {res: r4, db: d4} = await chama(new Request(URL_FN, {method: 'POST', headers: {Origin: 'https://oalemdacaneta.com.br', 'Content-Type': 'text/plain'}, body: new Uint8Array([123, 255, 254, 125])}));
+    check(r4.status === 400 && !d4.gravado.length, 'texto com bytes inválidos (não UTF-8): 400');
+  }
+
   // Método: só POST.
-  for (const method of ['GET', 'PUT', 'DELETE']) {
-    const {res, db} = await chama(pedido(method === 'GET' ? '' : '{}', {method}));
+  for (const method of ['GET', 'HEAD', 'OPTIONS', 'PUT', 'DELETE']) {
+    const {res, db} = await chama(pedido(['GET', 'HEAD'].includes(method) ? '' : '{}', {method}));
     check(res.status === 405 && res.headers.get('Allow') === 'POST' && !db.gravado.length, `${method}: 405 com Allow: POST`);
   }
 

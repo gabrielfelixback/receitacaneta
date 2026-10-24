@@ -17,6 +17,28 @@ const resposta = (status, extra = {}) => new Response(null, {status, headers: {'
 // Dia no horário de Brasília (UTC−3, sem horário de verão desde 2019). Vem do servidor, nunca do navegador.
 export const diaBrasil = (agora = Date.now()) => new Date(agora - 3 * 3600 * 1000).toISOString().slice(0, 10);
 
+// sendBeacon e fetch com texto mandam text/plain; também aceitamos application/json. Outros tipos: 415.
+const tipoAceito = (request) => /^(text\/plain|application\/json)(\s*;|$)/i.test(request.headers.get('Content-Type') || '');
+
+// Lê o corpo parando em MAX_CORPO bytes, sem confiar no Content-Length (que pode faltar ou mentir).
+const lerCorpo = async (request) => {
+  if (!request.body) return '';
+  const leitor = request.body.getReader();
+  const partes = [];
+  let total = 0;
+  for (;;) {
+    const {done, value} = await leitor.read();
+    if (done) break;
+    total += value.byteLength;
+    if (total > MAX_CORPO) { try { await leitor.cancel(); } catch (e) {} return null; }
+    partes.push(value);
+  }
+  const junto = new Uint8Array(total);
+  let pos = 0;
+  for (const p of partes) { junto.set(p, pos); pos += p.byteLength; }
+  try { return new TextDecoder('utf-8', {fatal: true}).decode(junto); } catch (e) { return undefined; }
+};
+
 // Só aceita pedido da própria página: Origin igual ao host do pedido (ou, sem Origin, Sec-Fetch-Site same-origin).
 const mesmaOrigem = (request) => {
   const host = new URL(request.url).host;
@@ -44,10 +66,11 @@ export const validar = (texto) => {
 
 const contar = async ({request, env}) => {
   if (!mesmaOrigem(request)) return resposta(403);
-  const tamanho = Number(request.headers.get('Content-Length') || 0);
-  if (tamanho > MAX_CORPO) return resposta(413);
-  const texto = await request.text();
-  if (new TextEncoder().encode(texto).length > MAX_CORPO) return resposta(413);
+  if (!tipoAceito(request)) return resposta(415);
+  if (Number(request.headers.get('Content-Length') || 0) > MAX_CORPO) return resposta(413);
+  const texto = await lerCorpo(request);
+  if (texto === null) return resposta(413);
+  if (texto === undefined) return resposta(400);
   const ev = validar(texto);
   if (!ev) return resposta(400);
   if (!env || !env.DB) return resposta(503);
