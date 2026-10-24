@@ -73,9 +73,9 @@ footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--line);font-fa
     <h2 id="resumo-t">Em poucas palavras</h2>
     <ul>
       <li>O teste <strong>não pede nome, e-mail nem telefone</strong>.</li>
-      <li>Guardamos as suas respostas (incluindo peso, altura e sintomas) <strong>sem saber quem você é</strong>, para mostrar o seu resultado e melhorar o teste.</li>
-      <li>Nada do que você responde é enviado ao Facebook ou ao Instagram.</li>
-      <li>As respostas são <strong>apagadas depois de 180 dias</strong>.</li>
+      <li>As suas respostas (incluindo peso, altura e sintomas) são usadas <strong>só no seu navegador</strong>, para montar o seu resultado. <strong>Nós não guardamos as respostas</strong>.</li>
+      <li>Para saber em que etapa as pessoas param, contamos só <strong>números somados</strong> (por exemplo, "120 chegaram à etapa 5 hoje"), sem cookies e sem nada que identifique você.</li>
+      <li>Nada do que você responde é enviado ao Facebook, ao Instagram ou a qualquer outra empresa.</li>
       <li>Se você comprar, os dados da compra ficam com a plataforma de pagamento.</li>
     </ul>
   </section>
@@ -87,27 +87,27 @@ footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--line);font-fa
   <h2 id="coleta"><b>2</b>O que coletamos no teste</h2>
   <div class="tabela">
     <table>
-      <tr><th scope="row">Suas respostas</th><td>O que você sente no espelho, faixa de idade, há quanto tempo usa a caneta, tipo de barriga, como quer que ela fique, sintomas, o que mais come, tempo para cozinhar e as demais escolhas do teste. Ficam guardadas como códigos curtos, sem texto livre.</td></tr>
-      <tr><th scope="row">Peso e altura</th><td>Para calcular o IMC e a proteína do dia mostrados no resultado.</td></tr>
-      <tr><th scope="row">Dados técnicos</th><td>Um código aleatório da sessão, criado no seu navegador; a versão do teste; o horário de cada etapa; a campanha de anúncio de onde você veio (parâmetros <code>utm</code>); e um código feito a partir do seu IP com uma chave secreta, usado só para limitar abusos. O IP em si não é guardado.</td></tr>
+      <tr><th scope="row">Suas respostas</th><td>O que você sente no espelho, faixa de idade, há quanto tempo usa a caneta, tipo de barriga, como quer que ela fique, sintomas, o que mais come, tempo para cozinhar e as demais escolhas do teste. <strong>Ficam só no seu navegador</strong> enquanto a página está aberta e servem para montar o seu resultado. Não são enviadas para nós nem guardadas por nós; ao fechar a página, elas se perdem.</td></tr>
+      <tr><th scope="row">Peso e altura</th><td>Calculados no seu navegador para mostrar o IMC e a proteína do dia no resultado. Também não são enviados nem guardados.</td></tr>
+      <tr><th scope="row">Contagem do funil</th><td>Quando você abre o teste, começa, chega a uma etapa, termina, vê a oferta, clica para comprar ou abre as páginas de oferta seguintes, o site soma +1 num contador: só o nome do passo, o número da etapa e a versão do teste. Guardamos apenas os totais por dia (por exemplo, "312 chegaram à etapa 7 em 24/10"). <strong>Não guardamos</strong> respostas, IP, navegador, cookies, identificador seu ou o endereço completo da página. Para não contar a mesma etapa duas vezes, o navegador anota numa memória da própria aba (<code>sessionStorage</code>) o que já foi contado; essa anotação não é enviada e some quando a aba é fechada.</td></tr>
     </table>
   </div>
   <p><strong>Não coletamos</strong> nome, e-mail, telefone, CPF, endereço, fotos nem a sua localização no teste.</p>
 
   <h2 id="saude"><b>3</b>Dados de saúde</h2>
-  <p>Peso, altura, uso de caneta e sintomas são dados de saúde, que a LGPD trata como sensíveis (art. 5º, II). Nós os tratamos com base no seu <strong>consentimento</strong> (art. 11, I), dado de forma específica ao responder o teste depois de ver o aviso no início dele. Você pode parar de responder a qualquer momento, e nada é guardado sobre as perguntas que não respondeu.</p>
-  <p>Esses dados não são usados para diagnóstico, não substituem consulta médica e nunca são vendidos, cedidos para publicidade ou enviados ao Meta (Facebook e Instagram).</p>
+  <p>Peso, altura, uso de caneta e sintomas são dados de saúde, que a LGPD trata como sensíveis (art. 5º, II). Eles são usados com base no seu <strong>consentimento</strong> (art. 11, I), dado de forma específica ao responder o teste depois de ver o aviso no início dele, e só dentro do seu navegador, para montar o resultado. Você pode parar de responder a qualquer momento.</p>
+  <p>Esses dados não são usados para diagnóstico, não substituem consulta médica, não são guardados por nós e nunca são vendidos, cedidos para publicidade ou enviados ao Meta (Facebook e Instagram) ou a outra empresa.</p>
 
   <h2 id="uso"><b>4</b>Para que usamos</h2>
   <ul>
     <li>Montar e mostrar o seu resultado personalizado no fim do teste.</li>
-    <li>Entender, em números somados, em que etapa as pessoas param e quais perfis aparecem mais, para melhorar o teste.</li>
-    <li>Saber quais anúncios trazem as pessoas que concluem o teste, sem ligar isso a você.</li>
-    <li>Evitar abuso e uso automatizado do formulário.</li>
+    <li>Entender, em números somados, em que etapa as pessoas param, para melhorar o teste.</li>
+    <li>Medir os anúncios com o Pixel do Meta, como descrito abaixo, sem enviar as suas respostas.</li>
   </ul>
 
   <h2 id="cookies"><b>5</b>Pixel do Meta e cookies</h2>
-  <p>Usamos o Pixel do Meta para medir os anúncios. Ele recebe apenas eventos genéricos: que a página abriu, que o teste começou, em que número de etapa você está, que concluiu e que clicou para comprar. <strong>Nenhuma resposta sua vai para o Meta.</strong> O Pixel pode usar cookies do próprio Meta no seu navegador.</p>
+  <p>Usamos o Pixel do Meta para medir os anúncios. Ele recebe apenas eventos genéricos: que a página abriu, que o teste começou, em que número de etapa você está, que concluiu, que viu a oferta e que clicou para comprar; nas páginas de oferta depois da compra, só que a página abriu. <strong>Nenhuma resposta sua vai para o Meta.</strong> O Pixel é do Meta e pode usar cookies e dados técnicos do seu navegador (como o IP) segundo a política de privacidade do Meta.</p>
+  <p>A contagem do funil descrita acima <strong>não usa cookies</strong>.</p>
   <p>Você pode limpar ou bloquear cookies nas configurações do navegador e ajustar os anúncios que vê nas <a href="https://www.facebook.com/adpreferences" target="_blank" rel="noopener">preferências de anúncios do Meta</a>. O teste continua funcionando normalmente.</p>
 
   <h2 id="compra"><b>6</b>Se você comprar</h2>
@@ -115,8 +115,7 @@ footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--line);font-fa
 
   <h2 id="compartilhamento"><b>7</b>Com quem compartilhamos</h2>
   <ul>
-    <li><strong>Supabase</strong>: hospeda o banco onde as respostas ficam guardadas (operador de dados).</li>
-    <li><strong>Hospedagem do site</strong>: entrega as páginas do teste.</li>
+    <li><strong>Cloudflare</strong>: hospeda o site e guarda os totais da contagem do funil. Para entregar as páginas e proteger o site contra ataques, a infraestrutura da Cloudflare processa dados técnicos da conexão, como o IP e o tipo de navegador, segundo a política dela. A nossa contagem não lê nem guarda esses dados.</li>
     <li><strong>Meta</strong>: recebe só os eventos genéricos do Pixel descritos acima.</li>
     <li><strong>Plataforma de pagamento</strong>: apenas se você comprar.</li>
     <li><strong>Autoridades</strong>: quando a lei ou uma ordem judicial exigir.</li>
@@ -124,14 +123,14 @@ footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--line);font-fa
   <p>Alguns desses serviços podem guardar dados em servidores fora do Brasil. Nesses casos, a transferência segue o que a LGPD permite (art. 33), com fornecedores que adotam proteções contratuais e técnicas.</p>
 
   <h2 id="tempo"><b>8</b>Por quanto tempo guardamos</h2>
-  <p>As respostas do teste e os dados técnicos são <strong>apagados automaticamente 180 dias</strong> depois do seu acesso. Números somados, que não permitem identificar ninguém (por exemplo, "120 pessoas concluíram o teste em março"), podem ser mantidos.</p>
+  <p>As suas respostas não são guardadas por nós: elas ficam só no seu navegador e se perdem ao fechar a página. Os totais da contagem do funil, que não permitem identificar ninguém (por exemplo, "120 pessoas concluíram o teste em março"), podem ser mantidos para comparar o desempenho do teste ao longo do tempo. Os dados da compra ficam com a plataforma de pagamento, pelo prazo que ela define.</p>
 
   <h2 id="seguranca"><b>9</b>Como protegemos</h2>
-  <p>O envio é feito com conexão segura (HTTPS). O banco só aceita gravação pelo nosso servidor, que confere cada resposta antes de guardar; ninguém de fora consegue ler os dados pela internet. O acesso interno é restrito a quem precisa dele para cuidar do teste.</p>
+  <p>O site usa conexão segura (HTTPS). O contador só aceita pedidos vindos do próprio site, com um nome de passo de uma lista fechada e uma etapa de 1 a 14; qualquer outra coisa é descartada. Os totais só podem ser lidos pelo painel da Cloudflare, com acesso restrito a quem cuida do teste.</p>
 
   <h2 id="direitos"><b>10</b>Seus direitos</h2>
   <p>Pela LGPD (art. 18), você pode pedir: confirmação de que tratamos dados seus; acesso a eles; correção; anonimização, bloqueio ou eliminação; informação sobre com quem compartilhamos; e revogação do consentimento, a qualquer momento.</p>
-  <p>Como o teste não pede seus dados de contato, nós não conseguimos achar as suas respostas só pelo seu nome ou e-mail. Para exercer esses direitos sobre o teste, escreva para <a data-campo="email" data-link="mailto"></a> informando o dia e o horário aproximados em que respondeu. Responderemos em até 15 dias. Se não ficar satisfeita, você também pode procurar a Autoridade Nacional de Proteção de Dados (ANPD).</p>
+  <p>Como não guardamos as respostas nem nada que identifique você no teste, não temos respostas suas para mostrar, corrigir ou apagar. Para qualquer pedido sobre os seus dados, inclusive os da compra, escreva para <a data-campo="email" data-link="mailto"></a>. Responderemos em até 15 dias. Se não ficar satisfeita, você também pode procurar a Autoridade Nacional de Proteção de Dados (ANPD).</p>
 
   <h2 id="menores"><b>11</b>Menores de idade</h2>
   <p>O teste é destinado a pessoas com 18 anos ou mais.</p>
@@ -152,7 +151,7 @@ const EMPRESA = {
   email: 'contato@oalemdacaneta.com.br', // e-mail para assuntos de privacidade
   encarregado: 'Método Além da Caneta', // encarregado (DPO); pequeno negócio pode ser o próprio responsável
   checkout: 'Kiwify',  // plataforma de pagamento
-  atualizacao: '23 de outubro de 2026'
+  atualizacao: '24 de outubro de 2026'
 };
 
 let faltando = false;

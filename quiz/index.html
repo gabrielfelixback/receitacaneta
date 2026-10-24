@@ -672,6 +672,9 @@ const CONFIG = {
   backendUrl: '',           // https://SEU_PROJETO.supabase.co/functions/v1/quiz  (veja backend/README.md)
   pixelId: '1656573129190462', // ID do Pixel do Meta.
   dominio: 'oalemdacaneta.com.br', // o Pixel só carrega neste domínio (e subdomínios), para a prévia e os testes não sujarem os dados.
+  // Contador agregado do funil (functions/api/contagem.js + D1). Manda só evento, etapa e versão; nada de respostas.
+  // Funciona no domínio acima, nas prévias *.pages.dev e no teste local. Vazio = desligado.
+  contadorUrl: '/api/contagem',
   privacidadeUrl: 'privacidade.html', // política de privacidade (quiz/privacidade.html). Aparece na abertura e no rodapé do resultado.
   garantiaDias: 7,
   provaSocial: '',          // ex.: 'Mais de 3.200 pessoas já fizeram o teste'. Só com número real.
@@ -760,7 +763,7 @@ const CONFIG = {
 
 /* ===================================================================== */
 const SETUP = !CONFIG.checkoutUrl;
-const VERSAO = 'v18';
+const VERSAO = 'v19';
 const fmtBRL = (v) => new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(v);
 const $ = (s, r = document) => r.querySelector(s);
 const el = (tag, attrs = {}, ...kids) => {
@@ -946,6 +949,25 @@ const send = (tipo, extra = {}) => {
   const body = JSON.stringify({sessao, tipo, versao: VERSAO, ...(tipo === 'inicio' ? {utm} : {}), ...extra});
   try { fetch(CONFIG.backendUrl, {method: 'POST', mode: 'no-cors', keepalive: true, headers: {'Content-Type': 'text/plain'}, body}).catch(() => {}); } catch (e) {}
 };
+// Contador agregado: {e: evento, n: etapa, v: versão} para /api/contagem. Cada evento conta uma vez por aba
+// (a marca fica no sessionStorage, que não sai do navegador). Falhas são ignoradas: o quiz nunca espera o contador.
+const contadorAtivo = () => {
+  const h = location.hostname;
+  return !!CONFIG.contadorUrl && /^https?:$/.test(location.protocol) && (h === CONFIG.dominio || h.endsWith('.' + CONFIG.dominio)
+    || h.endsWith('.pages.dev') || h === 'localhost' || h === '127.0.0.1');
+};
+const contados = new Set();
+const conta = (e, n) => {
+  const chave = n ? `${e}:${n}` : e;
+  if (contados.has(chave) || !contadorAtivo()) return;
+  contados.add(chave);
+  try { if (sessionStorage.getItem('contagem:' + chave)) return; sessionStorage.setItem('contagem:' + chave, '1'); } catch (x) {}
+  const body = JSON.stringify(n ? {e, n, v: VERSAO} : {e, v: VERSAO});
+  try {
+    if (navigator.sendBeacon && navigator.sendBeacon(CONFIG.contadorUrl, body)) return;
+    fetch(CONFIG.contadorUrl, {method: 'POST', body, keepalive: true, credentials: 'omit'}).catch(() => {});
+  } catch (x) {}
+};
 const checkoutHref = () => {
   if (!CONFIG.checkoutUrl) return '#';
   try {
@@ -1102,7 +1124,7 @@ const midiaGancho = () => {
   box.append(som, el('span', {class: 'vsl-barra', 'aria-hidden': 'true'}, barra));
   return box;
 };
-const comecar = () => { if (!state.started) { state.started = true; track('QuizInicio', {}, true); send('inicio', {etapa: 0}); } };
+const comecar = () => { if (!state.started) { state.started = true; track('QuizInicio', {}, true); send('inicio', {etapa: 0}); conta('inicio'); } };
 // Primeira tela: gancho emocional na autoestima, com o primeiro clique já na capa.
 const renderHook = (s) => {
   const wrap = el('div', {class: 'opts big', role: 'group', 'aria-label': 'O que você sente no espelho'});
@@ -1447,6 +1469,7 @@ const renderLoading = () => {
       if (STEPS[state.i].type !== 'loading') return;
       send('concluido', {etapa: QUESTION_IDX.length + 1, passo: 'concluido', perfil: perfilId()});
       track('QuizCompleto', {}, true);
+      conta('conclusao');
       next();
     }, 450);
   };
@@ -1604,6 +1627,7 @@ const renderResult = () => {
     if (!CONFIG.checkoutUrl) { setupMsg.hidden = false; setupMsg.scrollIntoView({behavior: 'smooth', block: 'center'}); return; }
     send('checkout', {etapa: QUESTION_IDX.length + 2, passo: 'checkout'});
     track('InitiateCheckout', {value: CONFIG.preco, currency: 'BRL'});
+    conta('checkout');
     setTimeout(() => { location.href = href; }, 250);
   };
   const n = CONFIG.parcelas || 0;
@@ -1687,6 +1711,7 @@ const renderResult = () => {
     sticky.hidden = false;
   }
   track('ViewContent', {value: CONFIG.preco, currency: 'BRL'});
+  conta('oferta');
   const barras = () => ['sc1', 'sc2', 'sc3', 'sc4'].forEach((id) => { const b = document.getElementById(id); if (b) b.style.width = b.dataset.w + '%'; });
   if (reduceMotion || !('IntersectionObserver' in window)) setTimeout(barras, reduceMotion ? 0 : 150);
   else setTimeout(() => animarResultado(barras), 0);
@@ -1761,9 +1786,11 @@ const render = () => {
   screen.style.animation = 'none';
   void screen.offsetWidth;
   screen.style.animation = '';
+  if (qi >= 0) conta('etapa', qi + 1); // alcance da etapa (ao chegar nela); voltar e avançar não conta de novo
   const first = screen.querySelector('h1,h2');
   if (first && state.i > 0) { first.setAttribute('tabindex', '-1'); try { first.focus({preventScroll: true}); } catch (e) {} }
 };
+conta('visita');
 render();
 // As fotos da idade e das barrigas já começam a baixar na primeira tela (depois do vídeo, que tem prioridade).
 const preload = () => [CONFIG.imagens.caneta, ...Object.values(CONFIG.imagens.idade), ...Object.values(CONFIG.imagens.barriga), ...Object.values(CONFIG.imagens.sonho)].filter(Boolean).forEach((u) => { const i = new Image(); i.src = u; });

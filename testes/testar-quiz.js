@@ -1,6 +1,6 @@
 // Passa pelas 16 telas do quiz no jsdom, clicando como uma pessoa, e
 // confere três cenários de resultado: sem erro de JavaScript, sem NaN/undefined,
-// eventos certos para o backend e checkout repassando UTMs.
+// eventos certos para o backend, contador agregado (sem respostas, sem repetir) e checkout repassando UTMs.
 // Uso: node --experimental-strip-types testes/testar-quiz.js [caminho do html]   (padrão: quiz/index.html)
 const fs = require('fs');
 const path = require('path');
@@ -16,22 +16,29 @@ const check = (ok, msg) => { if (!ok) fail = true; out.push(`${ok ? 'ok ' : 'ERR
 
 const scenarios = [
   {nome: 'gelado, 40 a 49', sentimento: 'vergonha', idade: 'i40', caneta: 'c3', barriga: 'pochete', sonho: 'lisa', sintomas: ['fome', 'gelado', 'cansaco'], come: 'gelado', tempo: 't5', compromisso: 'sim'},
-  {nome: 'lanche, 60+', sentimento: 'evito', idade: 'i60', caneta: 'c6', barriga: 'pneuzinho', sonho: 'roupa', sintomas: ['lanche', 'enjoo', 'academia'], come: 'lanche', tempo: 't40', compromisso: 'tentar'},
+  {nome: 'lanche, 60+', contadorFalha: true, sentimento: 'evito', idade: 'i60', caneta: 'c6', barriga: 'pneuzinho', sonho: 'roupa', sintomas: ['lanche', 'enjoo', 'academia'], come: 'lanche', tempo: 't40', compromisso: 'tentar'},
   {nome: 'sem sinais, 18 a 29', sentimento: 'raiva', idade: 'i18', caneta: 'parei', barriga: 'flacida', sonho: 'firme', sintomas: ['nenhum'], come: 'prato_pequeno', tempo: 't20', compromisso: 'sim'}
 ];
 
 const run = (sc) => new Promise((resolve) => {
   const errors = [];
   const sent = [];
+  const contados = [];
   const dom = new JSDOM(html, {
     runScripts: 'dangerously',
     pretendToBeVisual: true,
-    url: 'https://exemplo.com/quiz?utm_source=fb&utm_campaign=c1&fbclid=abc',
+    url: 'https://oalemdacaneta.com.br/?utm_source=fb&utm_campaign=c1&fbclid=abc', // domínio real: liga o Pixel (sem baixar o script) e o contador
     beforeParse(w) {
       w.matchMedia = () => ({matches: true, addListener() {}, removeListener() {}}); // reduz animação: loading em 1,2 s
       w.scrollTo = () => {};
       w.Element.prototype.scrollIntoView = () => {};
-      w.fetch = (url, opt) => { sent.push(JSON.parse(opt.body)); return Promise.resolve({}); };
+      w.fetch = (url, opt) => {
+        if (String(url).includes('/api/contagem')) {
+          contados.push(opt.body);
+          return sc.contadorFalha ? Promise.reject(new Error('contador fora do ar')) : Promise.resolve({status: 204});
+        }
+        sent.push(JSON.parse(opt.body)); return Promise.resolve({});
+      };
       w.addEventListener('error', (e) => errors.push(e.message));
     }
   });
@@ -51,6 +58,7 @@ const run = (sc) => new Promise((resolve) => {
       snap(); click('opt-barriga-' + sc.barriga); await wait(300);
       snap(); click('opt-sonho-' + sc.sonho); await wait(300);
       snap(); click('cont-porque'); await wait(50);
+      click('back'); await wait(50); click('cont-porque'); await wait(50); // voltar e avançar não pode contar de novo
       snap(); sc.sintomas.forEach((v) => click('opt-sintomas-' + v)); click('cont-sintomas'); await wait(50);
       snap(); click('opt-come-' + sc.come); await wait(300);
       snap(); click('cont-quebra'); await wait(50);
@@ -62,14 +70,14 @@ const run = (sc) => new Promise((resolve) => {
       snap(); await wait(2200);
       snap();
     } catch (e) { errors.push(e.message); }
-    resolve({errors, sent, texts, w, d, click});
+    resolve({errors, sent, contados, texts, w, d, click});
   })();
 });
 
 (async () => {
   const {validarRegistro} = await import('../backend/supabase/functions/_shared/validar.ts');
   for (const sc of scenarios) {
-    const {errors, sent, texts, w, d} = await run(sc);
+    const {errors, sent, contados, texts, w, d} = await run(sc);
     const all = texts.join(' | ');
     const result = texts[texts.length - 1] || '';
     check(!errors.length, `[${sc.nome}] sem erros de JavaScript ${errors.length ? '→ ' + errors.join(' || ') : ''}`);
@@ -104,6 +112,18 @@ const run = (sc) => new Promise((resolve) => {
     w.eval("location.assign = () => {}"); // o jsdom não navega; só queremos o evento
     d.getElementById('cta-2').click();
     check(sent.some((e) => e.tipo === 'checkout'), `[${sc.nome}] clique no checkout vai para o backend`);
+    d.getElementById('cta').click(); // segundo clique: não conta de novo
+    // contador agregado: cada evento uma vez, etapas 1 a 14, só {e, n, v} e nada das respostas
+    const evs = contados.map((b) => JSON.parse(b));
+    const conta = (e, n) => evs.filter((x) => x.e === e && (n === undefined || x.n === n)).length;
+    check(['visita', 'inicio', 'conclusao', 'oferta', 'checkout'].every((e) => conta(e) === 1), `[${sc.nome}] contador: visita, início, conclusão, oferta e checkout uma vez cada`);
+    check(Array.from({length: 14}, (_, k) => conta('etapa', k + 1)).every((c) => c === 1) && conta('etapa') === 14, `[${sc.nome}] contador: etapas 1 a 14, uma vez cada (mesmo voltando)`);
+    check(evs.every((x) => Object.keys(x).every((k) => ['e', 'n', 'v'].includes(k)) && x.v === w.eval('VERSAO')), `[${sc.nome}] contador manda só evento, etapa e versão (${evs.length} envios)`);
+    const vazou = [sc.idade, sc.barriga, sc.sonho, sc.come, sc.caneta, sc.sentimento, ...sc.sintomas, '82', '164'].filter((v) => contados.join(' ').includes(`"${v}"`) || contados.join(' ').includes(`:${v}`));
+    check(!vazou.length, `[${sc.nome}] nenhuma resposta, idade, peso ou sintoma no contador ${vazou.join(', ')}`);
+    if (sc.contadorFalha) check(texts.length === 16 && !errors.length, `[${sc.nome}] com o contador fora do ar, o quiz vai até o fim sem erro`);
+    const fila = ((w.fbq && w.fbq.queue) || []).map((x) => Array.from(x).slice(0, 2).join(':'));
+    check(fila.includes('init:1656573129190462') && fila.includes('track:PageView') && fila.includes('track:InitiateCheckout'), `[${sc.nome}] Pixel do Meta continua: init, PageView e InitiateCheckout`);
     const recusados = sent.map((e) => validarRegistro(e)).filter((r) => !r.ok);
     check(!recusados.length, `[${sc.nome}] o backend aceita todos os ${sent.length} eventos ${recusados.map((r) => r.erro).join(', ')}`);
     w.close();
