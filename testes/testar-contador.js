@@ -55,6 +55,10 @@ const pedido = (body, {method = 'POST', origin = 'https://oalemdacaneta.com.br',
 
   // Inválidos: 400 e nada gravado.
   const invalidos = [
+    // Regressão: nomes longos dos campos (testados à mão em produção, 24/10) não são o formato do contador.
+    ['nomes longos {evento, versao}', {evento: 'visita', versao: 'v19'}],
+    ['nomes longos com etapa', {evento: 'visita', versao: 'v19', etapa: 0}],
+    ['mistura de nomes', {e: 'visita', versao: 'v19'}],
     ['evento fora da lista', {e: 'compra', v: 'v19'}],
     ['evento Purchase', {e: 'Purchase', v: 'v19'}],
     ['etapa 0', {e: 'etapa', n: 0, v: 'v19'}],
