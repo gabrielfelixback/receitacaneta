@@ -4,8 +4,9 @@
   "private": true,
   "description": "Quiz de receitas para quem usa caneta emagrecedora, com backend no Supabase",
   "scripts": {
-    "test": "npm run test:backend && npm run test:quiz",
+    "test": "npm run test:backend && npm run test:contador && npm run test:quiz",
     "test:backend": "node --experimental-strip-types --test backend/testes/validar.test.ts",
+    "test:contador": "node testes/testar-contador.js",
     "test:quiz": "node --experimental-strip-types testes/testar-quiz.js"
   },
   "devDependencies": {

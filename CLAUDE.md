@@ -12,8 +12,10 @@ O dono do projeto fala português. Responda e escreva os textos do quiz em portu
 
 - `backend/`: Supabase. Migração com tabelas, função de registro e views do funil; Edge Function pública `quiz`; validação em `functions/_shared/validar.ts`. Detalhes em `backend/README.md`.
 - `quiz/index.html`: o quiz inteiro em um arquivo (HTML, CSS e JS, sem build). É o que vai para a hospedagem.
+- `functions/api/contagem.js` + `contador/`: contador agregado do funil no Cloudflare Pages (D1, binding `DB`). Só `{e, n, v}` (evento de lista fechada, etapa 1–14, versão); guarda totais por dia, versão, evento e etapa. Nunca mandar respostas, identificadores ou URL para ele. Os números são ocorrências, não pessoas. Detalhes em `contador/README.md`. A pasta `functions/` fica na raiz (não dentro de `quiz/`, que é a saída publicada). GA4 não é usado; o backend Supabase está desligado.
 - `DESIGN.md`: o visual (identidade além da caneta: cores, fontes, símbolo da cápsula, ícones). Leia antes de mexer no CSS.
-- `testes/testar-quiz.js`: percorre as 16 telas no jsdom em 3 cenários, confere resultado, eventos do backend (validados com o mesmo `validar.ts`) e checkout.
+- `testes/testar-quiz.js`: percorre as 16 telas no jsdom em 3 cenários, confere resultado, eventos do backend (validados com o mesmo `validar.ts`), contador (cada evento uma vez, sem respostas), Pixel e checkout.
+- `testes/testar-contador.js`: valida a função do contador com um D1 falso.
 
 ## Como o `quiz/index.html` está organizado
 
@@ -29,6 +31,7 @@ O dono do projeto fala português. Responda e escreva os textos do quiz em portu
 - Dados citados: perda de 3–8% de massa muscular por década após os 30 (Volpi 2004); ~40% do peso perdido como massa magra no STEP 1 (Wilding 2021); proteína de 1,2 a 1,6 g/kg/dia (com IMC ≥ 30, sobre o peso ajustado: peso no IMC 25 + 25% do excedente, igual ao app); faixas de IMC da OMS, sempre com a ressalva de que o IMC não separa músculo de gordura.
 - As barras do resultado são "pontuação do teste", não diagnóstico. Manter a legenda e o aviso final de material educativo.
 - Pixel do Meta: eventos com nomes neutros (`QuizInicio`, `QuizEtapa`, `QuizCompleto`) e nenhuma resposta enviada ao Meta.
+- Contador do funil: só eventos agregados com nomes neutros; não guarda respostas, IP, cookies ou identificadores. Ao mudar o fluxo, mantenha as 14 etapas contadas em `render()` e atualize `ETAPAS` em `functions/api/contagem.js` e o `CHECK` de `contador/esquema.sql`.
 
 ## Testar
 

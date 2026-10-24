@@ -25,7 +25,7 @@ Quiz de 16 telas (10 perguntas) que leva quem usa caneta emagrecedora a entender
 
 ## Ordem para colocar no ar
 
-1. **Backend**: siga `backend/README.md` (migração, segredos, deploy da função `quiz`).
+1. **Contador do funil**: siga `contador/README.md` (banco D1 de produção e de prévia, binding `DB` no Cloudflare Pages, validação na prévia). O backend Supabase em `backend/` **não está ativo** (`CONFIG.backendUrl` vazio) e não deve ser ligado sem rever a política de privacidade.
 2. **Front**: coloque as fotos em `quiz/img/` e ligue em `CONFIG.imagens` (as da idade já estão lá), preencha o `CONFIG` em `quiz/index.html` (`backendUrl`, `checkoutUrl`, `pixelId`, `provaIdade`, autor, depoimentos) e suba a pasta `quiz/` em Netlify, Vercel, Cloudflare Pages ou na sua hospedagem.
 3. Rode `npm test` antes de cada publicação.
 
