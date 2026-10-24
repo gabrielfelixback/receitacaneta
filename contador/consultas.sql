@@ -65,3 +65,16 @@ ORDER BY versao;
 
 -- Atenção: "checkout" é o clique para ir à Kiwify, não a compra. A compra é medida pela Kiwify.
 -- "upsell" e "downsell" são visitas a essas páginas (quem chegou depois de comprar ou de recusar o upsell).
+
+-- 5) Validação da prévia (rodar SÓ no banco quiz-contagem-previa).
+--    Os testes manuais usam a versão v0; o quiz usa a VERSAO do index.html; upsell/downsell usam v1.
+SELECT versao, evento, etapa, total FROM contagem ORDER BY versao, evento, etapa;
+
+--    Etapas de 1 a 14 que faltam ou não somam 1 numa versão (troque 'v0' por 'v19' para conferir o quiz).
+WITH RECURSIVE n(etapa) AS (SELECT 1 UNION ALL SELECT etapa + 1 FROM n WHERE etapa < 14)
+SELECT n.etapa, COALESCE(c.total, 0) AS total
+FROM n LEFT JOIN contagem c ON c.evento = 'etapa' AND c.etapa = n.etapa AND c.versao = 'v0'
+WHERE COALESCE(c.total, 0) <> 1;
+
+--    Limpar os testes manuais depois de conferir (SÓ na prévia; nunca no banco de produção).
+-- DELETE FROM contagem WHERE versao = 'v0';
