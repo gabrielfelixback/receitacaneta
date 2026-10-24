@@ -670,7 +670,8 @@ const CONFIG = {
   precoDe: 249,             // preço cheio mostrado riscado ("de R$ 249 por R$ 27,90"). null = soma dos valores dos entregáveis.
   checkoutUrl: 'https://pay.kiwify.com.br/3gLGyNe', // checkout da Kiwify. UTMs e fbclid vão junto.
   backendUrl: '',           // https://SEU_PROJETO.supabase.co/functions/v1/quiz  (veja backend/README.md)
-  pixelId: '',              // ID do Pixel do Meta. Só carrega no seu domínio.
+  pixelId: '1656573129190462', // ID do Pixel do Meta.
+  dominio: 'oalemdacaneta.com.br', // o Pixel só carrega neste domínio (e subdomínios), para a prévia e os testes não sujarem os dados.
   privacidadeUrl: 'privacidade.html', // política de privacidade (quiz/privacidade.html). Aparece na abertura e no rodapé do resultado.
   garantiaDias: 7,
   provaSocial: '',          // ex.: 'Mais de 3.200 pessoas já fizeram o teste'. Só com número real.
@@ -759,7 +760,7 @@ const CONFIG = {
 
 /* ===================================================================== */
 const SETUP = !CONFIG.checkoutUrl;
-const VERSAO = 'v17';
+const VERSAO = 'v18';
 const fmtBRL = (v) => new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(v);
 const $ = (s, r = document) => r.querySelector(s);
 const el = (tag, attrs = {}, ...kids) => {
@@ -928,7 +929,7 @@ $('#logo').innerHTML = `<span class="kick">O TESTE</span><span class="lrow">${ca
 /* ---------- Backend, Pixel e checkout ---------- */
 // Os nomes dos eventos do Pixel não citam saúde e nenhuma resposta vai para o Meta.
 const track = (ev, data, custom) => { try { if (window.fbq) window.fbq(custom ? 'trackCustom' : 'track', ev, data || {}); } catch (e) {} };
-if (CONFIG.pixelId) {
+if (CONFIG.pixelId && (!CONFIG.dominio || location.hostname === CONFIG.dominio || location.hostname.endsWith('.' + CONFIG.dominio))) {
   !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
   window.fbq('init', CONFIG.pixelId);
   window.fbq('track', 'PageView');
