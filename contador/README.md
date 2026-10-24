@@ -31,6 +31,22 @@ As versões: o quiz manda a `VERSAO` do `quiz/index.html` (hoje `v19`); upsell e
 
 **A infraestrutura da Cloudflare processa**, como em qualquer site hospedado nela, os dados técnicos da conexão (IP, tipo de navegador, cabeçalhos) para entregar as páginas, proteger o site e aplicar regras como o limite de pedidos. Isso acontece na camada de hospedagem, segundo a política da Cloudflare, e não vai para a tabela `contagem`.
 
+## Formato do corpo (o que a função aceita)
+
+`POST /api/contagem`, `Content-Type: text/plain` (ou `application/json`), mesma origem, corpo JSON com **chaves curtas**:
+
+| Chave | Valor | Obrigatória |
+| --- | --- | --- |
+| `e` | um dos 8 eventos: `visita`, `inicio`, `etapa`, `conclusao`, `oferta`, `checkout`, `upsell`, `downsell` | sempre |
+| `n` | inteiro de 1 a 14 | só quando `e` é `etapa`; proibida nos outros |
+| `v` | versão: `v` + 1 a 4 dígitos (ex.: `v19`) | sempre |
+
+Exemplos aceitos (204): `{"e":"visita","v":"v19"}` e `{"e":"etapa","n":3,"v":"v19"}`.
+
+Exemplos recusados (400): `{"evento":"visita","versao":"v19"}` (nomes longos), `{"e":"visita","v":"v19","etapa":0}` (campo a mais), `{evento:"visita"}` (não é JSON). Os nomes longos `evento`, `etapa` e `versao` são as **colunas da tabela**, não os campos do corpo.
+
+Para um teste manual sem sujar os números reais, use a versão `v0` e apague depois: no Console do navegador, na página do site, `fetch('/api/contagem', {method: 'POST', headers: {'Content-Type': 'text/plain'}, body: '{"e":"visita","v":"v0"}'}).then((r) => console.log(r.status))` deve mostrar `204`; no D1, `SELECT * FROM contagem WHERE versao = 'v0';` mostra a linha e `DELETE FROM contagem WHERE versao = 'v0';` a remove.
+
 ## Segurança da função (`functions/api/contagem.js`)
 
 | Situação | Resposta | Grava? |

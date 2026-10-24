@@ -76,6 +76,7 @@ const run = (sc) => new Promise((resolve) => {
 
 (async () => {
   const {validarRegistro} = await import('../backend/supabase/functions/_shared/validar.ts');
+  const contador = await import(require('url').pathToFileURL(path.join(__dirname, '..', 'functions', 'api', 'contagem.js')).href);
   for (const sc of scenarios) {
     const {errors, sent, contados, texts, w, d} = await run(sc);
     const all = texts.join(' | ');
@@ -119,6 +120,9 @@ const run = (sc) => new Promise((resolve) => {
     check(['visita', 'inicio', 'conclusao', 'oferta', 'checkout'].every((e) => conta(e) === 1), `[${sc.nome}] contador: visita, início, conclusão, oferta e checkout uma vez cada`);
     check(Array.from({length: 14}, (_, k) => conta('etapa', k + 1)).every((c) => c === 1) && conta('etapa') === 14, `[${sc.nome}] contador: etapas 1 a 14, uma vez cada (mesmo voltando)`);
     check(evs.every((x) => Object.keys(x).every((k) => ['e', 'n', 'v'].includes(k)) && x.v === w.eval('VERSAO')), `[${sc.nome}] contador manda só evento, etapa e versão (${evs.length} envios)`);
+    // contrato navegador × servidor: todo corpo que o quiz manda passa na validação da função publicada
+    const recusadosContador = contados.filter((b) => !contador.validar(b));
+    check(contados.length > 0 && !recusadosContador.length, `[${sc.nome}] a função aceita os ${contados.length} corpos que o quiz manda ${recusadosContador.join(' ')}`);
     const vazou = [sc.idade, sc.barriga, sc.sonho, sc.come, sc.caneta, sc.sentimento, ...sc.sintomas, '82', '164'].filter((v) => contados.join(' ').includes(`"${v}"`) || contados.join(' ').includes(`:${v}`));
     check(!vazou.length, `[${sc.nome}] nenhuma resposta, idade, peso ou sintoma no contador ${vazou.join(', ')}`);
     if (sc.contadorFalha) check(texts.length === 16 && !errors.length, `[${sc.nome}] com o contador fora do ar, o quiz vai até o fim sem erro`);
