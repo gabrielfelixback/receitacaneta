@@ -251,7 +251,7 @@ Depois, em **Custom domains**, adicione o domínio. Cada push na `main` publica 
   - cada livro numa caixa com capa e check;
   - "+6 materiais" num bloco escuro, com as capas em leque;
   - valor riscado e "% OFF";
-  - **6x sem juros** em destaque, com o valor à vista embaixo.
+  - **parcelado em destaque com o valor real da Kiwify** (6x de R$ 5,24, já com os juros dela), com o valor à vista e o total parcelado embaixo.
 
 **Replicar:** a parte que mais pesa na conversão é "o que ela recebe" escrito como **situação + ganho + personalização**, com as capas reais.
 
@@ -359,7 +359,7 @@ Feito por você no painel, com a orientação do Claude, uma etapa por vez:
 
 Quiz completo num navegador real (Chromium), com o código publicado:
 - zero erros de JavaScript e de mídia;
-- preço "6x R$ 4,65";
+- preço "6x R$ 5,24" (valor real do checkout) e "ou R$ 27,90 à vista";
 - Pixel disparando os eventos;
 - checkout indo para a Kiwify com as UTMs;
 - botões de 1 clique no upsell e no downsell;
@@ -386,7 +386,7 @@ Para ler os números:
 
 | Item | Importância |
 | --- | --- |
-| Confirmar na Kiwify o 6x sem juros que a página mostra | alta |
+| Manter o valor da parcela igual ao do checkout da Kiwify (`CONFIG.valorParcela`) se o preço ou os juros mudarem | alta |
 | Testar o upsell e o downsell de 1 clique com compra real e reembolso | alta |
 | `InitiateCheckout` em dobro (quiz + Kiwify) | média |
 | Aviso de cookies e revisão jurídica da política | média |
@@ -447,7 +447,7 @@ PRODUTO
 - Materiais do produto principal (nome, situação em que ela usa, o que muda) + capas: [ ]
 - Order bumps (não exibir na oferta): [ ]
 - Upsell e downsell (nome, preço, conteúdo, capa): [ ]
-- Preço: R$ [ ] | preço "de": R$ [ ] | parcelas sem juros na Kiwify: [ ] | garantia: [ ] dias
+- Preço: R$ [ ] | preço "de": R$ [ ] | parcelas e valor de cada uma no checkout da Kiwify: [ ] | garantia: [ ] dias
 - Link do checkout Kiwify: [ ]
 - ID do Pixel do Meta: [ ] | domínio: [ ]
 - Responsável e e-mail (política de privacidade): [ ]

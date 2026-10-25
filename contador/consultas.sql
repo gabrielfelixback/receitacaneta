@@ -7,7 +7,7 @@
 WITH f AS (
   SELECT evento, etapa, SUM(total) AS total
   FROM contagem
-  WHERE versao = 'v19' AND dia BETWEEN '2026-10-01' AND '2026-12-31'
+  WHERE versao = 'v20' AND dia BETWEEN '2026-10-01' AND '2026-12-31'
   GROUP BY evento, etapa
 ),
 base AS (SELECT total FROM f WHERE evento = 'inicio')
@@ -24,7 +24,7 @@ ORDER BY CASE evento
 WITH e AS (
   SELECT etapa, SUM(total) AS chegaram
   FROM contagem
-  WHERE versao = 'v19' AND evento = 'etapa' AND dia BETWEEN '2026-10-01' AND '2026-12-31'
+  WHERE versao = 'v20' AND evento = 'etapa' AND dia BETWEEN '2026-10-01' AND '2026-12-31'
   GROUP BY etapa
 )
 SELECT

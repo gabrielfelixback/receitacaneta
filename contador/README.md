@@ -19,7 +19,7 @@ A etapa 1 é a primeira pergunta, que já aparece na abertura; por isso `etapa 1
 
 **Os números são ocorrências, não pessoas únicas.** Dentro da mesma aba cada evento conta uma vez: voltar, avançar e recarregar não contam de novo. A mesma pessoa em outra aba, outro navegador ou outro dia conta outra vez. `checkout` é o clique para ir à Kiwify, não a compra: a compra é medida pela Kiwify.
 
-As versões: o quiz manda a `VERSAO` do `quiz/index.html` (hoje `v19`); upsell e downsell mandam `v1`; testes manuais devem usar `v0` (fácil de separar e apagar).
+As versões: o quiz manda a `VERSAO` do `quiz/index.html` (hoje `v20`; até 25/10 foi `v19`); upsell e downsell mandam `v1`; testes manuais devem usar `v0` (fácil de separar e apagar).
 
 ## Privacidade: o que a aplicação grava e o que a Cloudflare processa
 
