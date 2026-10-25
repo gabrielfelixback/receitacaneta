@@ -611,6 +611,7 @@ h2.sans,h1.sans{font-family:var(--sans);font-weight:500;letter-spacing:-.015em;l
 .offer .por{font-size:4.25rem;color:var(--floresta)}
 .offer .por .x{font-family:var(--sans);font-size:1.5rem;font-weight:700;margin-right:6px}
 .today .vista{font-size:.875rem;color:var(--musgo);margin-top:-2px}
+.today .total-cartao{font-size:.75rem;color:var(--musgo);margin-top:-4px}
 .today .save{font-size:.875rem;font-weight:600;color:var(--argila-ink)}
 /* materiais de apoio: lista compacta em duas colunas */
 .extras{border-top:1px solid var(--line-soft);padding-top:14px;display:flex;flex-direction:column;gap:10px}
@@ -666,7 +667,9 @@ const CONFIG = {
   marca: {nome: 'além da caneta'},
   produto: 'além da caneta · plano completo',
   preco: 27.90,
-  parcelas: 6,              // parcelas sem juros mostradas na oferta (27,90 ÷ 6 = 6x de R$ 4,65). 0 = mostra só o valor à vista.
+  // Parcelamento mostrado na oferta: copie do checkout da Kiwify (com os juros dela). parcelas: 0 = mostra só o valor à vista.
+  parcelas: 6,
+  valorParcela: 5.24,       // valor de cada parcela no checkout da Kiwify (6x de R$ 5,24)
   precoDe: 249,             // preço cheio mostrado riscado ("de R$ 249 por R$ 27,90"). null = soma dos valores dos entregáveis.
   checkoutUrl: 'https://pay.kiwify.com.br/3gLGyNe', // checkout da Kiwify. UTMs e fbclid vão junto.
   backendUrl: '',           // https://SEU_PROJETO.supabase.co/functions/v1/quiz  (veja backend/README.md)
@@ -763,7 +766,7 @@ const CONFIG = {
 
 /* ===================================================================== */
 const SETUP = !CONFIG.checkoutUrl;
-const VERSAO = 'v19';
+const VERSAO = 'v20';
 const fmtBRL = (v) => new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(v);
 const $ = (s, r = document) => r.querySelector(s);
 const el = (tag, attrs = {}, ...kids) => {
@@ -1631,7 +1634,7 @@ const renderResult = () => {
     setTimeout(() => { location.href = href; }, 250);
   };
   const n = CONFIG.parcelas || 0;
-  const parcela = n ? Math.round((CONFIG.preco * 100) / n) / 100 : CONFIG.preco;
+  const parcela = n ? CONFIG.valorParcela || Math.round((CONFIG.preco * 100) / n) / 100 : CONFIG.preco;
   const [reais, cents] = parcela.toFixed(2).split('.');
   const de = precoCheio();
   const off = Math.round((1 - CONFIG.preco / de) * 100);
@@ -1656,7 +1659,8 @@ const renderResult = () => {
       el('span', {class: 'off'}, `${off}% OFF HOJE`),
       H('span', `De <s>${fmtBRL(de)}</s> por apenas`, 'from'),
       H('span', `${n ? `<small class="x">${n}x</small>` : ''}<small>R$</small><span class="pn" data-de="${n ? de / n : de}" data-para="${parcela}">${reais},${cents}</span>`, 'por'),
-      n ? el('span', {class: 'vista'}, `sem juros, ou ${fmtBRL(CONFIG.preco)} à vista`) : null,
+      n ? el('span', {class: 'vista'}, `ou ${fmtBRL(CONFIG.preco)} à vista`) : null,
+      n ? el('span', {class: 'total-cartao'}, `Total no cartão: ${fmtBRL(Math.round(n * parcela * 100) / 100)}`) : null,
       el('span', {class: 'save'}, `Você economiza ${fmtBRL(de - CONFIG.preco)}`)),
     el('span', {class: 'sub'}, `${n ? 'Sem mensalidade' : 'Pagamento único'} · acesso imediato no seu e-mail`),
     el('a', {class: 'btn buy pulse', id: 'cta', href, onclick: onBuy}, 'Acessar meu plano completo', icon('arrow')),

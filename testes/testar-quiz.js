@@ -84,7 +84,8 @@ const run = (sc) => new Promise((resolve) => {
     check(!errors.length, `[${sc.nome}] sem erros de JavaScript ${errors.length ? '→ ' + errors.join(' || ') : ''}`);
     check(texts.length === 16, `[${sc.nome}] ${texts.length} telas percorridas (esperado 16)`);
     check(/\d+% das mulheres (entre|com) .+ que responderam nosso quiz/.test(texts[8] || ''), `[${sc.nome}] "caminho certo" depois da pergunta do prato, com o % da faixa`);
-    check(/6x\s*R\$\s*4,65/.test(result) && result.includes('ou R$ 27,90 à vista'), `[${sc.nome}] oferta mostra 6x de R$ 4,65 e o valor à vista`);
+    check(/6x\s*R\$\s*5,24/.test(result) && result.includes('ou R$ 27,90 à vista') && result.includes('Total no cartão: R$ 31,44'), `[${sc.nome}] oferta mostra 6x de R$ 5,24 (valor da Kiwify), o total parcelado e o valor à vista`);
+    check(!/sem juros/i.test(all) && !/4,65/.test(all), `[${sc.nome}] nenhum "sem juros" nem a parcela antiga de R$ 4,65`);
     check(!/NaN|undefined|null/.test(all), `[${sc.nome}] nenhuma tela com NaN, undefined ou null`);
     const perfil = (result.match(/Seu perfil: (.+?)(A caneta|Com a caneta|Com a fome|Você come|A vontade)/) || [])[1];
     check(!!perfil, `[${sc.nome}] resultado com perfil "${(perfil || '?').trim()}"`);
