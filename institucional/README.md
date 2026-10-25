@@ -1,11 +1,12 @@
 # Página institucional
 
-Página de conteúdo sobre o Além da Caneta. Mostra:
-- o problema: a fome baixa leva a pouca proteína e à perda de músculo;
+Página de conteúdo sobre o Além da Caneta, no mesmo visual da página de vendas que o dono desenhou (fundo creme, caneta animada, faixas, cartões). Mostra:
+- a dor de quem usa a caneta e por que ela acontece;
 - os estudos e a matéria da VEJA;
-- o método, com as 3 regras;
+- **o teste:** um celular com a primeira pergunta do quiz, os 4 passos do teste e os 5 perfis do resultado;
+- o Método 3P, a virada de chave e as trocas de receita;
 - os 10 materiais, com capa, situação de uso e o que muda;
-- para quem é;
+- para quem é, com o aviso de que a caneta segue como o médico passou;
 - as perguntas frequentes.
 
 **Não vende:** não tem preço, checkout nem Kiwify. Todos os botões levam ao teste em `https://oalemdacaneta.com.br/`, repassando as UTMs de quem chegou.
