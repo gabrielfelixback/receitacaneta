@@ -1,0 +1,917 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#F4F0E8">
+<title>além da caneta · O remédio cuida da fome. O resto é método.</title>
+<meta name="description" content="Método e receitas para quem usa caneta emagrecedora e come pouco: proteína em porções pequenas, geladas, doces e de lanche. Faça o teste gratuito e descubra o seu perfil.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317332B'/%3E%3Crect x='7' y='25' width='34' height='17' rx='8.5' fill='none' stroke='%23F4F0E8' stroke-width='3.6'/%3E%3Cline x1='29' y1='25' x2='29' y2='42' stroke='%23F4F0E8' stroke-width='3.6'/%3E%3Cpath d='M41 33.5 H45 C51 33.5 54 27 58 15' fill='none' stroke='%23D9A07E' stroke-width='3.6' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+:root{
+  --floresta:#17332B; --creme:#F4F0E8; --linho:#E4DDCF; --salvia:#B7C4B1; --musgo:#4A5E52; --argila:#B8744F;
+  --argila-d:#96583A; --card:#FBF9F4; --line:#DCD4C4; --line-2:#E9E3D7;
+  --serif:'Instrument Serif',Georgia,'Times New Roman',serif;
+  --sans:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --ease:cubic-bezier(.2,.75,.2,1);
+  color-scheme:light; box-sizing:border-box;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(78px + env(safe-area-inset-top,0px));-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--creme);color:var(--floresta);font-family:var(--sans);font-size:clamp(1rem,.96rem + .22vw,1.1rem);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;height:auto;display:block}
+main,footer{overflow-x:clip}
+h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;line-height:1.02;letter-spacing:-.01em}
+h1 em,h2 em,h3 em{font-style:italic}
+p{margin:0} a{color:inherit}
+:where(a,button,summary):focus-visible{outline:2px solid var(--argila-d);outline-offset:4px;border-radius:8px}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(18px,5vw,40px)}
+.sec{padding-block:clamp(76px,9vw,136px);position:relative}
+.linho{background:var(--linho)}
+.tag{display:inline-flex;align-items:center;gap:10px;font-weight:500;font-size:.9rem;color:var(--musgo);margin-bottom:22px}
+.tag i{width:22px;height:1.5px;background:var(--argila);display:block}
+.h2{font-size:clamp(2.4rem,1.3rem + 4vw,4.4rem);max-width:16ch}
+.lead{font-size:clamp(1.05rem,1rem + .35vw,1.24rem);color:var(--musgo);max-width:56ch;margin-top:22px}
+.center{text-align:center} .center .h2,.center .lead{margin-inline:auto} .center .tag{justify-content:center}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;background:var(--floresta);color:var(--creme);font-family:var(--sans);font-weight:600;font-size:clamp(1rem,.98rem + .25vw,1.12rem);text-decoration:none;padding:18px 30px;border-radius:999px;min-height:56px;position:relative;overflow:hidden;isolation:isolate;transition:transform .3s var(--ease),color .3s}
+.btn::before{content:"";position:absolute;inset:0;background:var(--argila-d);transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease);z-index:-1}
+.btn:hover::before{transform:scaleX(1)}
+.btn:hover{transform:translateY(-2px)}
+.btn .arr{width:28px;height:28px;border-radius:50%;background:var(--argila-d);display:grid;place-items:center;transition:transform .3s var(--ease),background .3s}
+.btn:hover .arr{background:var(--floresta);transform:translateX(3px)}
+.btn.clay{background:var(--argila-d)} .btn.clay::before{background:var(--floresta)} .btn.clay .arr{background:var(--floresta)} .btn.clay:hover .arr{background:var(--argila-d)}
+.fine{font-size:.9rem;color:var(--musgo)}
+
+/* reveal */
+.js .rv{opacity:0;transform:translateY(34px);transition:opacity 1s var(--ease),transform 1s var(--ease);transition-delay:var(--d,0s)}
+.js .rv.l{transform:translateX(-40px)} .js .rv.r{transform:translateX(40px)} .js .rv.s{transform:scale(.96)}
+.js .rv.in{opacity:1;transform:none}
+
+/* logo */
+.logo{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--floresta);min-width:150px}
+.logo svg{flex:none}
+.logo .wm{font-family:var(--serif);font-size:1.62rem;line-height:1;letter-spacing:-.01em;white-space:nowrap}
+.logo .wm em{font-style:italic}
+.sym-curve{stroke-dasharray:60;stroke-dashoffset:60;animation:draw 1.4s var(--ease) .3s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+
+/* topo */
+.ribbon{background:var(--floresta);color:var(--salvia);font-size:.84rem;text-align:center;padding:9px 16px;padding-top:calc(9px + env(safe-area-inset-top,0px))}
+.ribbon b{color:var(--creme);font-weight:500}
+.head{position:sticky;top:0;z-index:40;background:rgba(244,240,232,.86);backdrop-filter:saturate(1.3) blur(14px);-webkit-backdrop-filter:saturate(1.3) blur(14px);border-bottom:1px solid transparent;transition:border-color .3s}
+.head.scrolled{border-color:var(--line)}
+.head .row{display:flex;align-items:center;justify-content:space-between;gap:16px;height:76px}
+.nav{display:flex;gap:30px;font-weight:500;font-size:.95rem;color:var(--musgo)}
+.nav a{text-decoration:none;position:relative}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1.5px;background:var(--argila);transform:scaleX(0);transition:transform .35s var(--ease);transform-origin:left}
+.nav a:hover::after{transform:scaleX(1)}
+.head .btn{padding:10px 12px 10px 22px;min-height:48px;font-size:.96rem}
+@media(max-width:920px){.nav{display:none}}
+
+/* abertura */
+.hero{position:relative;overflow:hidden;padding-block:clamp(40px,6vw,86px) clamp(56px,7vw,100px)}
+.hgrid{position:relative;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:clamp(20px,4vw,60px);align-items:center}
+.hero h1{font-size:clamp(3rem,1.5rem + 5.6vw,5.9rem);line-height:.96;letter-spacing:-.02em}
+.hero h1 .w{display:inline-block;overflow:hidden;vertical-align:top;padding:0 .04em .1em 0;margin-bottom:-.1em}
+.hero h1 .w>span{display:inline-block;transform:translateY(110%);transition:transform 1.1s var(--ease);transition-delay:var(--d)}
+.hero.go h1 .w>span{transform:none}
+.hero .sub{font-size:clamp(1.08rem,1rem + .45vw,1.28rem);color:var(--musgo);max-width:48ch;margin-top:26px}
+.checks{list-style:none;margin:26px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
+.checks li{display:flex;align-items:center;gap:8px;font-weight:500;font-size:.93rem;background:var(--card);border:1px solid var(--line-2);padding:8px 14px 8px 9px;border-radius:999px}
+.checks .ck{width:22px;height:22px;border-radius:50%;background:var(--salvia);color:var(--floresta);display:grid;place-items:center}
+.ctarow{display:flex;flex-wrap:wrap;align-items:center;gap:16px 24px;margin-top:34px}
+.time-hint{display:flex;flex-direction:column;line-height:1.1}
+.time-hint b{font-family:var(--serif);font-weight:400;font-size:2rem}
+.time-hint span{color:var(--musgo);font-size:.86rem}
+.moments{display:flex;flex-wrap:wrap;gap:8px;margin-top:30px;align-items:center;font-size:.92rem;color:var(--musgo)}
+.moments .m{font-family:var(--serif);font-style:italic;font-size:1.12rem;color:var(--floresta);border-bottom:1.5px solid var(--salvia);padding:0 2px;margin-right:6px}
+
+.stage{position:relative;min-height:620px;display:grid;place-items:center}
+.disc{position:absolute;width:min(500px,92%);aspect-ratio:1;border-radius:50%;background:var(--linho)}
+.disc2{position:absolute;width:min(360px,68%);aspect-ratio:1;border-radius:50%;background:var(--salvia);opacity:.55}
+.orbit{position:absolute;width:min(560px,100%);aspect-ratio:1;border-radius:50%;border:1px dashed var(--salvia);animation:spin 70s linear infinite}
+.orbit .dot{position:absolute;top:-5px;left:50%;width:10px;height:10px;border-radius:50%;background:var(--argila)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.penart{position:absolute;left:-2%;top:2%;width:58%;height:auto;z-index:1;animation:float 7s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-24deg)}50%{transform:translateY(-14px) rotate(-21deg)}}
+.penart .o{stroke-dasharray:1400;stroke-dashoffset:1400;transition:stroke-dashoffset 2.4s var(--ease) .4s}
+.penart .c{stroke-dasharray:340;stroke-dashoffset:340;transition:stroke-dashoffset 1.6s var(--ease) 1.6s}
+.penart .f{opacity:0;transition:opacity 1s var(--ease) 1.2s}
+.hero.go .penart .o,.hero.go .penart .c{stroke-dashoffset:0}
+.hero.go .penart .f{opacity:1}
+
+/* as capas reais do produto, no lugar do celular */
+.books{position:relative;z-index:2;margin-left:30%;width:min(330px,64%);aspect-ratio:1/1.08}
+.books img{position:absolute;width:62%;aspect-ratio:2/3;object-fit:cover;border-radius:6px 14px 14px 6px;box-shadow:inset 5px 0 0 rgba(0,0,0,.1),0 30px 50px -24px rgba(23,51,43,.6);transition:transform 1.2s var(--ease)}
+.books img:nth-child(1){left:0;top:10%;transform:rotate(-12deg) translateX(30%)}
+.books img:nth-child(2){left:19%;top:0;z-index:2;transform:translateY(10px)}
+.books img:nth-child(3){right:0;top:10%;transform:rotate(12deg) translateX(-30%)}
+.hero.go .books img:nth-child(1){transform:rotate(-10deg)}
+.hero.go .books img:nth-child(2){transform:none;animation:float2 8s ease-in-out 1.2s infinite}
+.hero.go .books img:nth-child(3){transform:rotate(10deg)}
+@keyframes float2{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.fl{position:absolute;z-index:3;background:var(--card);border:1px solid var(--line-2);border-radius:18px;padding:10px 16px 10px 10px;box-shadow:0 22px 40px -22px rgba(23,51,43,.45);display:flex;align-items:center;gap:10px;line-height:1.15;font-weight:600;font-size:.88rem}
+.fl small{display:block;font-weight:400;font-size:.72rem;color:var(--musgo)}
+.fl .ic{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;flex:none}
+.fl.f1{top:8%;right:0;animation:bob 5s ease-in-out infinite}
+.fl.f2{bottom:10%;left:0;animation:bob 6s ease-in-out infinite .8s}
+.fl.f3{top:54%;right:-3%;animation:bob 5.5s ease-in-out infinite 1.6s}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@media(max-width:940px){.hgrid{grid-template-columns:1fr}.stage{min-height:520px}}
+@media(max-width:520px){.stage{min-height:430px}.fl{font-size:.78rem}.fl.f3{display:none}.books{margin-left:26%;width:70%}}
+
+/* faixas */
+.marq{overflow:hidden;border-block:1px solid var(--line);padding-block:22px}
+.marq .lbl{text-align:center;font-size:.86rem;color:var(--musgo);margin-bottom:12px}
+.track{display:flex;width:max-content;animation:mq 42s linear infinite}
+.track span{font-family:var(--serif);font-size:1.7rem;color:var(--musgo);white-space:nowrap;display:flex;align-items:center;gap:44px;padding-right:44px}
+.track span::after{content:"";width:34px;height:12px;border:1.5px solid var(--salvia);border-radius:8px}
+@keyframes mq{to{transform:translateX(-50%)}}
+.tape{background:var(--floresta);color:var(--creme);transform:rotate(-1.6deg);margin-block:-12px;position:relative;z-index:2;padding-block:18px;overflow:hidden}
+.tape .track{animation-duration:30s}
+.tape .track span{color:var(--creme);font-style:italic;font-size:1.9rem;gap:34px;padding-right:34px}
+.tape .track span::after{border-color:var(--argila);width:10px;height:10px;border-radius:50%;background:var(--argila)}
+.tape.s{background:var(--salvia);transform:rotate(1.2deg)} .tape.s .track{animation-direction:reverse}
+.tape.s .track span{color:var(--floresta)} .tape.s .track span::after{background:var(--floresta);border-color:var(--floresta)}
+
+/* dores */
+.pgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:56px}
+.pain{background:var(--card);border:1px solid var(--line-2);border-radius:24px;padding:28px;font-size:1.05rem;line-height:1.5;transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+.pain:hover{transform:translateY(-6px);box-shadow:0 28px 50px -30px rgba(23,51,43,.4)}
+.pain .x{width:42px;height:42px;border-radius:14px;background:var(--linho);color:var(--floresta);display:grid;place-items:center;margin-bottom:18px}
+@media(max-width:860px){.pgrid{grid-template-columns:1fr 1fr}} @media(max-width:560px){.pgrid{grid-template-columns:1fr}}
+.relief{margin-top:64px;text-align:center;font-family:var(--serif);font-size:clamp(2rem,1.3rem + 2.6vw,3.4rem);line-height:1.05}
+.relief span{font-style:italic;position:relative;white-space:nowrap}
+.relief svg{position:absolute;left:0;bottom:-.28em;width:100%;height:.4em;overflow:visible}
+.relief svg path{stroke-dasharray:420;stroke-dashoffset:420;transition:stroke-dashoffset 1.4s var(--ease) .4s}
+.relief.in svg path{stroke-dashoffset:0}
+@media(max-width:560px){.relief span{white-space:normal}}
+
+/* por que acontece */
+.split2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,72px);align-items:start}
+.nots p{display:flex;gap:16px;align-items:center;padding:22px 0;border-bottom:1px solid var(--line);font-family:var(--serif);font-size:clamp(1.35rem,1.1rem + .8vw,1.8rem);line-height:1.15}
+.nots p:first-child{border-top:1px solid var(--line)}
+.nots .no{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--argila);color:var(--argila-d);display:grid;place-items:center;flex:none}
+.nots em{color:var(--musgo)}
+@media(max-width:860px){.split2{grid-template-columns:1fr}}
+
+/* estudos (bloco escuro) */
+.invest{background:var(--floresta);color:var(--creme);border-radius:clamp(28px,4vw,44px);padding:clamp(28px,6vw,84px);position:relative;overflow:hidden}
+.invest .curve{position:absolute;right:-40px;top:40px;width:min(640px,70%);opacity:.9;pointer-events:none}
+.invest .curve path{stroke-dasharray:900;stroke-dashoffset:900;transition:stroke-dashoffset 2.4s var(--ease) .3s}
+.invest.in .curve path{stroke-dashoffset:0}
+.invest>*:not(.curve){position:relative;z-index:1}
+.invest .tag{color:var(--salvia)}
+.invest h2{font-size:clamp(2.3rem,1.3rem + 3.6vw,4.2rem);color:var(--creme);max-width:19ch}
+.invest h2 em{color:var(--salvia)}
+.invest .lead{color:#CBD3C6}
+.nums{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:44px}
+.num-c{border:1px solid rgba(183,196,177,.28);border-radius:24px;padding:28px}
+.num-c b{display:block;font-family:var(--serif);font-weight:400;font-size:clamp(3rem,2rem + 3vw,4.2rem);line-height:.95;color:var(--creme)}
+.num-c b em{color:var(--salvia)}
+.num-c p{color:#CBD3C6;margin-top:12px}
+.num-c small{display:block;margin-top:14px;font-size:.78rem;color:var(--salvia)}
+.press{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(20px,4vw,44px);align-items:center;margin-top:18px;background:var(--creme);color:var(--floresta);border-radius:24px;padding:clamp(18px,3vw,30px)}
+.press img{border-radius:14px;border:1px solid var(--line)}
+.press h3{font-size:clamp(1.6rem,1.3rem + 1vw,2.2rem);margin-bottom:10px}
+.press p{color:var(--musgo)}
+.press .src{font-size:.78rem;margin-top:12px;overflow-wrap:anywhere}
+.press .tag{color:var(--musgo)}
+@media(max-width:860px){.nums{grid-template-columns:1fr}.press{grid-template-columns:1fr}}
+
+/* o teste */
+.quiz{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(30px,6vw,90px);align-items:center;margin-top:56px}
+.qstage{position:relative;display:grid;place-items:center;min-height:560px}
+.qstage .disc{width:min(440px,96%)}
+.phone{position:relative;z-index:2;width:min(270px,72%);aspect-ratio:9/19;background:var(--floresta);border-radius:44px;padding:9px;box-shadow:0 50px 80px -34px rgba(23,51,43,.55);transform:rotate(-3deg)}
+.scr{width:100%;height:100%;border-radius:36px;overflow:hidden;background:#FFFFFF;display:flex;flex-direction:column;gap:9px;padding:14px 14px 16px}
+.island{width:36%;height:22px;background:var(--floresta);border-radius:12px;margin:0 auto 4px;flex:none}
+.scr .bar{height:5px;border-radius:5px;background:var(--line-2);overflow:hidden;flex:none}
+.scr .bar i{display:block;height:100%;width:8%;background:var(--argila);border-radius:5px;transition:width 1.6s var(--ease) .6s}
+.quiz.in .scr .bar i{width:22%}
+.scr .step{font-size:.6rem;color:var(--musgo);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.scr .mirror{border-radius:14px;background:var(--linho);height:76px;display:grid;place-items:center;flex:none}
+.scr .q{font-family:var(--serif);font-size:1.12rem;line-height:1.08;margin-top:2px}
+.scr .q em{font-style:italic;color:var(--argila-d)}
+.scr .op{border:1.5px solid var(--line-2);border-radius:12px;padding:8px 11px;font-size:.66rem;font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:8px;transition:background .4s,border-color .4s,color .4s}
+.scr .op::after{content:"";width:13px;height:13px;border-radius:50%;border:1.5px solid var(--line);flex:none}
+.quiz.in .scr .op.pick{background:var(--floresta);border-color:var(--floresta);color:var(--creme);transition-delay:1.8s}
+.quiz.in .scr .op.pick::after{background:var(--argila);border-color:var(--argila);transition:background .4s 1.8s}
+.scr .note{margin-top:auto;font-size:.56rem;color:var(--musgo);text-align:center}
+.qstage .fl.f1{top:10%;right:0}
+.qstage .fl.f2{bottom:10%;left:0}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.steps li{display:grid;grid-template-columns:64px 1fr;gap:18px;padding:22px 0;border-bottom:1px solid var(--line)}
+.steps li:first-child{border-top:1px solid var(--line)}
+.steps .n{width:56px;height:56px;border-radius:50%;border:1.5px solid var(--floresta);display:grid;place-items:center;font-family:var(--serif);font-style:italic;font-size:1.6rem}
+.steps li:last-child .n{background:var(--floresta);color:var(--creme)}
+.steps h3{font-size:1.6rem;margin-bottom:4px}
+.steps p{color:var(--musgo);font-size:.98rem}
+.quiz .after{display:flex;flex-wrap:wrap;gap:14px 20px;align-items:center;margin-top:32px}
+@media(max-width:900px){.quiz{grid-template-columns:1fr}.qstage{min-height:520px}}
+@media(max-width:420px){.steps li{grid-template-columns:48px 1fr;gap:14px}.steps .n{width:44px;height:44px;font-size:1.3rem}}
+
+/* perfis */
+.perfis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;margin-top:56px}
+.perfil{background:var(--card);border:1px solid var(--line-2);border-radius:24px;padding:24px 20px;display:flex;flex-direction:column;gap:12px;transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+.perfil:hover{transform:translateY(-6px);box-shadow:0 28px 50px -30px rgba(23,51,43,.4)}
+.perfil .ic{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--salvia);color:var(--floresta)}
+.perfil:nth-child(3) .ic{background:var(--floresta);color:var(--creme)}
+.perfil h3{font-size:1.5rem;font-style:italic;line-height:1.05}
+.perfil p{color:var(--musgo);font-size:.92rem;line-height:1.5}
+.perfil small{margin-top:auto;font-size:.78rem;color:var(--argila-d);font-weight:600}
+@media(max-width:1060px){.perfis{grid-template-columns:repeat(3,minmax(0,1fr))}} @media(max-width:700px){.perfis{grid-template-columns:1fr 1fr}} @media(max-width:460px){.perfis{grid-template-columns:1fr}}
+
+/* 3P */
+.p3{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:88px}
+.p3 .rail{position:absolute;top:0;left:10%;right:10%;height:40px;pointer-events:none}
+.p3 .rail path{stroke-dasharray:1200;stroke-dashoffset:1200;transition:stroke-dashoffset 2s var(--ease) .4s}
+.p3.in .rail path{stroke-dashoffset:0}
+.pp{position:relative;z-index:1;background:var(--card);border:1px solid var(--line-2);border-radius:28px;padding:30px 28px 34px;transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+.pp:hover{transform:translateY(-8px);box-shadow:0 30px 60px -34px rgba(23,51,43,.45)}
+.pp .num{width:92px;height:92px;border-radius:50%;background:var(--creme);border:1.5px solid var(--floresta);display:grid;place-items:center;font-family:var(--serif);font-style:italic;font-size:2.6rem;margin-top:-78px;margin-bottom:22px}
+.pp.hot{background:var(--floresta);color:var(--creme);border-color:var(--floresta)}
+.pp.hot .num{background:var(--floresta);border-color:var(--salvia);color:var(--creme)}
+.pp h3{font-size:1.9rem;margin-bottom:10px}
+.pp p{color:var(--musgo)} .pp.hot p{color:#CBD3C6}
+@media(max-width:860px){.p3{grid-template-columns:1fr;gap:70px}.p3 .rail{display:none}}
+
+/* virada */
+.shiftbox{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:center;margin-top:48px;text-align:left}
+.sb{border-radius:26px;padding:32px;font-family:var(--serif);font-size:clamp(1.5rem,1.2rem + 1vw,2.1rem);line-height:1.12}
+.sb small{display:block;font-family:var(--sans);font-size:.84rem;margin-bottom:14px}
+.sb.old{background:var(--card);border:1px solid var(--line-2);color:#8E978F}
+.sb.old .st{text-decoration:line-through;text-decoration-color:var(--argila);text-decoration-thickness:2px}
+.sb.old small{color:var(--musgo)}
+.sb.new{background:var(--floresta);color:var(--creme)}
+.sb.new small{color:var(--salvia)}
+.arrow{width:56px;height:56px;border-radius:50%;border:1.5px solid var(--floresta);display:grid;place-items:center;animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(184,116,79,.35)}50%{box-shadow:0 0 0 14px rgba(184,116,79,0)}}
+@media(max-width:760px){.shiftbox{grid-template-columns:1fr}.arrow{margin:auto;transform:rotate(90deg)}}
+
+/* trocas */
+.gut{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(24px,5vw,64px);align-items:center}
+.swaps{list-style:none;margin:30px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+.swaps li{display:grid;grid-template-columns:1fr 28px 1.2fr;gap:10px;align-items:center;background:var(--card);border:1px solid var(--line-2);border-radius:18px;padding:14px 16px;font-size:.95rem;line-height:1.35}
+.swaps .de{color:var(--musgo);text-decoration:line-through;text-decoration-color:var(--argila)}
+.swaps .para{font-weight:600}
+.swaps svg{color:var(--argila-d)}
+.gut-art{aspect-ratio:1;border-radius:50%;background:var(--salvia);display:grid;place-items:center;position:relative}
+.gut-art::before{content:"";position:absolute;inset:8%;border-radius:50%;border:1px dashed var(--floresta);opacity:.3;animation:spin 50s linear infinite}
+.gut-art .ic{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;width:66%;position:relative}
+.gut-art .c{background:var(--creme);border-radius:20px;padding:16px;font-family:var(--serif);font-size:1.25rem;display:flex;flex-direction:column;gap:10px}
+.gut-art .c span{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--floresta);color:var(--creme)}
+@media(max-width:860px){.gut{grid-template-columns:1fr}.gut-art{max-width:420px;width:100%;margin-inline:auto}}
+@media(max-width:420px){.gut-art .c{font-size:1.05rem;padding:12px}.swaps li{grid-template-columns:1fr;gap:4px}.swaps svg{transform:rotate(90deg)}}
+
+/* materiais */
+.dgrid{list-style:none;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:56px 0 0}
+.dl{background:var(--card);border:1px solid var(--line-2);border-radius:26px;padding:18px;display:flex;gap:20px;align-items:center;transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+.dl:hover{transform:translateY(-5px);box-shadow:0 28px 50px -32px rgba(23,51,43,.45)}
+.dl img{width:88px;aspect-ratio:2/3;object-fit:cover;border-radius:4px 10px 10px 4px;flex:none;box-shadow:inset 5px 0 0 rgba(0,0,0,.1),0 14px 24px -14px rgba(23,51,43,.55);transition:transform .5s var(--ease)}
+.dl:hover img{transform:rotate(-5deg) scale(1.05)}
+.dl .txt{flex:1;min-width:0}
+.dl h3{font-size:1.5rem;margin-bottom:2px}
+.dl .quando{font-family:var(--serif);font-style:italic;color:var(--argila-d);font-size:1.05rem;line-height:1.2;margin-bottom:6px}
+.dl p{font-size:.94rem;color:var(--musgo);line-height:1.5}
+.dl .flag{display:inline-block;font-size:.76rem;font-weight:600;color:var(--floresta);background:var(--salvia);padding:3px 10px;border-radius:999px;margin-bottom:8px}
+.dl.main{grid-column:1/-1;padding:28px;background:var(--creme);border-color:var(--line)}
+.dl.main img{width:124px}
+.dl.main h3{font-size:2.1rem}
+@media(max-width:760px){.dgrid{grid-template-columns:1fr}.dl.main{padding:18px}.dl.main img{width:96px}.dl.main h3{font-size:1.7rem}}
+.total{margin-top:22px;border-radius:26px;background:var(--floresta);color:var(--creme);padding:26px 32px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px}
+.total .t1{color:var(--salvia)}
+.total .t2{font-family:var(--serif);font-size:clamp(1.8rem,1.3rem + 1.4vw,2.5rem)}
+.total .t2 em{font-style:italic}
+
+/* benefícios */
+.bgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:56px}
+.bn{border-radius:28px;padding:30px 26px;background:var(--card);border:1px solid var(--line-2)}
+.bn:nth-child(2){background:var(--salvia);border-color:var(--salvia)}
+.bn:nth-child(4){background:var(--floresta);border-color:var(--floresta);color:var(--creme)}
+.bn .ic{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;margin-bottom:48px;border:1.5px solid currentColor}
+.bn h3{font-size:2rem;margin-bottom:6px;font-style:italic}
+.bn p{color:var(--musgo);font-size:.96rem}
+.bn:nth-child(2) p{color:var(--floresta)} .bn:nth-child(4) p{color:#CBD3C6}
+@media(max-width:960px){.bgrid{grid-template-columns:1fr 1fr}} @media(max-width:520px){.bgrid{grid-template-columns:1fr}}
+
+/* rotina antes e depois */
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:56px}
+.ba .c{border-radius:30px;padding:36px 32px}
+.ba .before{background:var(--card);border:1px solid var(--line-2)}
+.ba .after{background:var(--floresta);color:var(--creme)}
+.ba h3{font-size:2rem;margin-bottom:22px}
+.ba .before h3{color:var(--musgo)} .ba .after h3 em{color:var(--salvia)}
+.ba ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px}
+.ba li{display:flex;gap:12px;align-items:flex-start;font-size:1.04rem;line-height:1.45}
+.ba li::before{content:"";width:18px;height:8px;border-radius:5px;margin-top:9px;flex:none;border:1.5px solid}
+.ba .before li{color:var(--musgo)} .ba .before li::before{border-color:var(--line)}
+.ba .after li::before{border-color:var(--salvia)}
+@media(max-width:760px){.ba{grid-template-columns:1fr}.ba .c{padding:28px 24px}}
+
+/* história */
+.story{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(24px,5vw,72px);align-items:start}
+.story .txt{display:flex;flex-direction:column;gap:18px;font-size:1.08rem;color:var(--musgo)}
+.story .txt p:first-child{font-family:var(--serif);font-size:clamp(1.5rem,1.2rem + 1vw,2rem);line-height:1.2;color:var(--floresta)}
+@media(max-width:860px){.story{grid-template-columns:1fr}}
+
+/* depoimentos */
+.tmq{overflow:hidden;margin-top:56px;display:flex;flex-direction:column;gap:18px}
+.trow{display:flex;gap:18px;width:max-content;animation:mq 54s linear infinite}
+.tmq:hover .trow{animation-play-state:paused}
+.tmq.parado .trow{animation:none;width:auto;flex-wrap:wrap;justify-content:center;padding-inline:18px}
+.tc{width:350px;max-width:calc(100vw - 36px);flex:none;background:var(--card);border:1px solid var(--line-2);border-radius:26px;padding:26px;display:flex;flex-direction:column;gap:18px;margin:0}
+.tc .qm{font-family:var(--serif);font-style:italic;font-size:3.2rem;line-height:.5;color:var(--salvia);height:22px}
+.tc blockquote{margin:0;font-family:var(--serif);font-size:1.3rem;line-height:1.25}
+.tc img{border-radius:14px}
+.tc .who{display:flex;gap:10px;align-items:center;font-size:.86rem;color:var(--musgo);margin-top:auto}
+.tc cite{font-style:normal}
+.tc .av{width:38px;height:38px;border-radius:50%;background:var(--linho);display:grid;place-items:center;font-family:var(--serif);font-size:1.2rem;color:var(--floresta)}
+.tnote{text-align:center;margin-top:22px;padding-inline:18px}
+
+/* para quem */
+.fw{display:grid;grid-template-columns:1.3fr 1fr;gap:18px;margin-top:56px}
+.fw .yes{background:var(--card);border:1.5px solid var(--floresta);border-radius:30px;padding:36px}
+.fw .no{background:var(--creme);border-radius:30px;padding:36px}
+.fw h3{font-size:2rem;margin-bottom:22px}
+.fw ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.fw li{display:flex;gap:12px;align-items:flex-start;font-size:1.04rem}
+.fw .ck{width:24px;height:24px;border-radius:50%;background:var(--floresta);color:var(--creme);display:grid;place-items:center;flex:none;margin-top:2px}
+.fw .xx{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--musgo);color:var(--musgo);display:grid;place-items:center;flex:none;margin-top:2px}
+.fw .no li{color:var(--musgo)}
+.alert{margin-top:18px;border:1px solid var(--line);background:var(--card);border-radius:20px;padding:22px 24px;display:flex;gap:14px}
+.alert svg{color:var(--argila-d);flex:none;margin-top:2px}
+.alert b{font-weight:600;display:block;margin-bottom:4px}
+.alert p{font-size:.95rem;color:var(--musgo)}
+@media(max-width:760px){.fw{grid-template-columns:1fr}.fw .yes,.fw .no{padding:28px 24px}}
+
+/* dúvidas */
+.faqgrid{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(24px,5vw,72px);align-items:start}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;padding:24px 56px 24px 0;position:relative;font-family:var(--serif);font-size:1.5rem;line-height:1.15;min-height:44px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"";position:absolute;right:0;top:22px;width:36px;height:36px;border-radius:50%;border:1.5px solid var(--floresta);background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2317332B' stroke-width='2.6' stroke-linecap='round'%3E%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E") center/14px no-repeat;transition:transform .4s var(--ease),background-color .3s}
+.faq details[open] summary::after{transform:rotate(45deg);background-color:var(--salvia)}
+.faq details p{padding:0 0 24px;color:var(--musgo);max-width:60ch}
+.faq details[open] p{animation:fadein .45s var(--ease)}
+@keyframes fadein{from{opacity:0;transform:translateY(-6px)}}
+.faqside{position:sticky;top:116px}
+.faqside .btn{margin-top:32px}
+@media(max-width:860px){.faqgrid{grid-template-columns:1fr}.faqside{position:static}}
+
+/* fechamento */
+.close{border-radius:clamp(28px,4vw,44px);background:var(--floresta);color:var(--creme);padding:clamp(56px,8vw,110px) clamp(24px,5vw,72px);text-align:center;position:relative;overflow:hidden}
+.close .bigsym{display:block;margin:0 auto 36px;width:min(260px,60%)}
+.close .bigsym .cv{stroke-dasharray:200;stroke-dashoffset:200;transition:stroke-dashoffset 1.8s var(--ease) .5s}
+.close.in .bigsym .cv{stroke-dashoffset:0}
+.close h2{font-size:clamp(2.4rem,1.4rem + 4vw,4.8rem);max-width:17ch;margin:0 auto;color:var(--creme)}
+.close h2 em{color:var(--salvia)}
+.close .btn{margin-top:40px}
+.ps{margin:44px auto 0;text-align:left;max-width:620px;color:#CBD3C6;font-size:1rem;border-top:1px solid rgba(183,196,177,.25);padding-top:28px}
+.ps b{color:var(--creme);font-weight:600}
+.tagline{font-family:var(--serif);font-style:italic;color:var(--salvia);font-size:1.3rem;margin-top:36px}
+
+footer{padding-block:60px 44px;font-size:.86rem;color:var(--musgo);line-height:1.65}
+footer .frow{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;padding-bottom:28px;margin-bottom:28px;border-bottom:1px solid var(--line)}
+footer .frow .t{font-family:var(--serif);font-style:italic;font-size:1.2rem;color:var(--floresta)}
+footer p{margin-bottom:12px} footer b{color:var(--floresta);font-weight:600}
+
+.dock{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:50;display:none;background:rgba(251,249,244,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:24px;padding:10px 10px 10px 18px;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 20px 40px -18px rgba(23,51,43,.4);transform:translateY(140%);transition:transform .55s var(--ease)}
+.dock.show{transform:none}
+.dock .p{font-family:var(--serif);font-size:1.45rem;line-height:1}
+.dock .p small{display:block;font-family:var(--sans);font-size:.7rem;color:var(--musgo);margin-top:3px}
+.dock .btn{padding:10px 10px 10px 20px;min-height:50px;font-size:.96rem}
+@media(max-width:860px){.dock{display:flex}.head .btn{display:none}body{padding-bottom:92px}}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .rv{opacity:1;transform:none}
+  .hero h1 .w>span{transform:none}
+  .penart .o,.penart .c,.sym-curve,.relief svg path,.invest .curve path,.p3 .rail path,.close .bigsym .cv{stroke-dashoffset:0!important}
+  .penart .f{opacity:1}
+}
+</style>
+</head>
+<body>
+
+<div class="ribbon">Teste gratuito de 1 minuto · <b>Sem nome e sem e-mail</b></div>
+
+<header class="head" id="head">
+  <div class="wrap row">
+    <a class="logo" href="#topo" aria-label="além da caneta, início">
+      <svg width="62" height="26" viewBox="0 0 62 26" fill="none" aria-hidden="true"><rect x="1.5" y="10" width="22" height="12" rx="6" stroke="#17332B" stroke-width="2"/><line x1="15" y1="10" x2="15" y2="22" stroke="#17332B" stroke-width="2"/><path class="sym-curve" d="M23.5 16H38C47 16 52 11 60 3" stroke="#B8744F" stroke-width="2" stroke-linecap="round"/></svg>
+      <span class="wm"><em>além</em> da caneta</span>
+    </a>
+    <nav class="nav" aria-label="Seções"><a href="#teste">O teste</a><a href="#metodo">Método 3P</a><a href="#materiais">Os materiais</a><a href="#quem-somos" data-se="historia">Quem somos</a><a href="#faq">Dúvidas</a></nav>
+    <a class="btn" href="https://oalemdacaneta.com.br/" data-teste>Fazer o teste <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+  </div>
+</header>
+
+<main>
+<!-- ABERTURA -->
+<section class="hero" id="topo">
+  <div class="wrap hgrid">
+    <div>
+      <span class="tag rv"><i></i>O remédio cuida da fome. O resto é método.</span>
+      <h1 id="h1">Começou a caneta e ficou sem saber o que <em>comer?</em></h1>
+      <p class="sub rv" style="--d:.55s">O além da caneta é um método com receitas pequenas, geladas, doces e de lanche para quem usa caneta emagrecedora e quase não sente fome. A ideia é simples: fechar a proteína do dia sem forçar comida, para o corpo não perder músculo junto com o peso.</p>
+      <ul class="checks rv" style="--d:.7s">
+        <li><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Teste gratuito</li>
+        <li><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Resultado na hora</li>
+        <li><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Sem mexer no tratamento</li>
+      </ul>
+      <div class="ctarow rv" style="--d:.85s">
+        <a class="btn" href="https://oalemdacaneta.com.br/" data-teste>Fazer o teste gratuito <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <div class="time-hint"><b>1 min</b><span>sem nome, sem e-mail</span></div>
+      </div>
+      <div class="moments rv" style="--d:1s">Para quem <span class="m">acabou de começar</span><span class="m">já usa</span><span class="m">já parou</span></div>
+    </div>
+
+    <div class="stage rv s" style="--d:.2s" aria-hidden="true">
+      <div class="disc"></div><div class="disc2"></div>
+      <div class="orbit"><span class="dot"></span></div>
+      <svg class="penart" viewBox="0 0 300 420" fill="none">
+        <rect class="f" x="118" y="26" width="64" height="118" rx="30" fill="#17332B"/>
+        <rect class="f" x="112" y="140" width="76" height="210" rx="24" fill="#FBF9F4"/>
+        <rect class="f" x="132" y="176" width="36" height="84" rx="12" fill="#B7C4B1"/>
+        <rect class="o" x="118" y="26" width="64" height="118" rx="30" stroke="#17332B" stroke-width="3"/>
+        <rect class="o" x="112" y="140" width="76" height="210" rx="24" stroke="#17332B" stroke-width="3"/>
+        <rect class="o" x="132" y="176" width="36" height="84" rx="12" stroke="#17332B" stroke-width="2.4"/>
+        <line class="o" x1="112" y1="296" x2="188" y2="296" stroke="#17332B" stroke-width="3"/>
+        <g class="f" stroke="#4A5E52" stroke-width="2" stroke-linecap="round"><line x1="130" y1="306" x2="130" y2="340"/><line x1="143" y1="306" x2="143" y2="340"/><line x1="156" y1="306" x2="156" y2="340"/><line x1="169" y1="306" x2="169" y2="340"/></g>
+        <path class="c" d="M150 350V372C150 396 166 404 196 404H236C262 404 280 396 296 378" stroke="#B8744F" stroke-width="3.5" stroke-linecap="round"/>
+      </svg>
+      <div class="books">
+        <img src="img/capas/09.webp" alt="" width="320" height="480">
+        <img src="img/capas/01.webp" alt="" width="320" height="480">
+        <img src="img/capas/10.webp" alt="" width="320" height="480">
+      </div>
+      <div class="fl f1"><span class="ic" style="background:var(--floresta);color:var(--creme)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg></span><span>Teste de 1 minuto<small>descubra o seu perfil</small></span></div>
+      <div class="fl f2"><span class="ic" style="background:var(--salvia);color:var(--floresta)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-1.5zM4 19.5A2 2 0 0 1 6 18h12"/></svg></span><span>10 materiais<small>um para cada momento</small></span></div>
+      <div class="fl f3"><span class="ic" style="background:var(--linho);color:var(--floresta)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 19h16M7 15V9M12 15V5M17 15v-4"/></svg></span><span>A sua proteína<small>calculada no teste</small></span></div>
+    </div>
+  </div>
+</section>
+
+<div class="marq" aria-hidden="true">
+  <p class="lbl">Para quem usa qualquer caneta GLP-1</p>
+  <div class="track"><span>Mounjaro</span><span>Ozempic</span><span>Wegovy</span><span>Saxenda</span><span>Tirzepatida</span><span>Semaglutida</span><span>Liraglutida</span><span>Mounjaro</span><span>Ozempic</span><span>Wegovy</span><span>Saxenda</span><span>Tirzepatida</span><span>Semaglutida</span><span>Liraglutida</span></div>
+</div>
+
+<!-- DOR -->
+<section class="sec">
+  <div class="wrap">
+    <div class="center">
+      <span class="tag rv"><i></i>Se você usa a caneta, já viveu isso</span>
+      <h2 class="h2 rv" style="--d:.1s;max-width:18ch">A fome sumiu. E junto com ela, a certeza do que <em>comer.</em></h2>
+    </div>
+    <div class="pgrid">
+      <div class="pain rv"><div class="x"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>Passa a manhã inteira sem comer e, quando vê, o dia acabou só com um café.</div>
+      <div class="pain rv" style="--d:.08s"><div class="x"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v20M4.9 7l14.2 10M4.9 17 19.1 7"/></svg></div>Só desce coisa gelada: iogurte, açaí, sorvete, shake.</div>
+      <div class="pain rv" style="--d:.16s"><div class="x"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 14h16v3a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3zM6 14V9a6 6 0 0 1 12 0v5"/></svg></div>A vontade de doce bate toda noite e ocupa o lugar da comida.</div>
+      <div class="pain rv"><div class="x"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="7" width="16" height="10" rx="2"/><path d="M22 11v2M7 11v2"/></svg></div>Cansaço, desânimo e zero vontade de ir para a academia.</div>
+      <div class="pain rv" style="--d:.08s"><div class="x"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 9a3 3 0 1 1 4 2.8c-.8.4-1 1-1 1.7M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg></div>Não faz ideia se está comendo proteína suficiente.</div>
+      <div class="pain rv" style="--d:.16s"><div class="x"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></div>O ponteiro da balança desce, mas a barriga continua ali, e mais mole.</div>
+    </div>
+    <p class="relief rv">Você não está fazendo nada errado. Você só está <span><em>sem o manual.</em><svg viewBox="0 0 300 30" preserveAspectRatio="none" aria-hidden="true"><path d="M2 20C60 8 120 26 180 14S270 6 298 16" stroke="#B8744F" stroke-width="3" fill="none" stroke-linecap="round"/></svg></span></p>
+  </div>
+</section>
+
+<div class="tape" aria-hidden="true"><div class="track"><span>proteína primeiro</span><span>porções pequenas</span><span>gelado que nutre</span><span>doce com proteína</span><span>lanche de casa</span><span>proteína primeiro</span><span>porções pequenas</span><span>gelado que nutre</span><span>doce com proteína</span><span>lanche de casa</span></div></div>
+
+<!-- POR QUE ACONTECE -->
+<section class="sec linho" id="problema">
+  <div class="wrap split2">
+    <div>
+      <span class="tag rv"><i></i>Por que isso acontece</span>
+      <h2 class="h2 rv" style="--d:.1s">A caneta reduz a fome. Ela não decide o <em>resto.</em></h2>
+      <p class="lead rv" style="--d:.2s">Ela age no apetite e deixa a digestão mais lenta. Decide o quanto você come, nunca o que você come. Com o apetite lá embaixo, o que desce fácil quase nunca tem proteína, e sem proteína o corpo tira do próprio músculo junto com a gordura.</p>
+    </div>
+    <div class="nots">
+      <p class="rv r"><span class="no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></span>Não monta o seu prato.</p>
+      <p class="rv r" style="--d:.08s"><span class="no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></span>Não escolhe a sua proteína.</p>
+      <p class="rv r" style="--d:.16s"><span class="no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></span><span>Não protege o seu músculo <em>enquanto o corpo muda.</em></span></p>
+      <p class="rv r" style="--d:.24s"><span class="no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></span><span>Não troca o doce <em>pela versão que alimenta.</em></span></p>
+      <p class="rv r" style="--d:.32s"><span class="no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></span><span>Não te prepara <em>para o dia em que ela acabar.</em></span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ESTUDOS -->
+<section class="sec" style="padding-block:clamp(44px,5vw,76px)">
+  <div class="wrap">
+    <div class="invest rv s">
+      <svg class="curve" viewBox="0 0 640 260" fill="none" aria-hidden="true"><path d="M0 220H300C420 220 500 150 636 4" stroke="#B8744F" stroke-width="2" stroke-linecap="round"/></svg>
+      <span class="tag"><i></i>O que dizem os estudos</span>
+      <h2>Não é falta de força de vontade. <em>É fisiologia.</em></h2>
+      <p class="lead">Emagrecer com pouca proteína tem um preço que a balança não mostra: parte do que sai é músculo. É ele que dá força, disposição e firmeza para o corpo.</p>
+      <div class="nums">
+        <div class="num-c"><b>~40<em>%</em></b><p>do peso perdido com semaglutida, num dos maiores estudos com a caneta, foi massa magra, e não gordura.</p><small>Estudo STEP 1, composição corporal. Wilding J. et al., NEJM, 2021.</small></div>
+        <div class="num-c"><b>3–8<em>%</em></b><p>da massa muscular costuma ir embora a cada década depois dos 30 anos, mesmo sem dieta.</p><small>Volpi E. et al., Curr Opin Clin Nutr Metab Care, 2004.</small></div>
+        <div class="num-c"><b>1,2–1,6<em> g</em></b><p>de proteína por quilo de peso por dia é a faixa de referência para emagrecer preservando o músculo.</p><small>Com IMC acima de 30, a conta usa o peso ajustado, como no teste.</small></div>
+      </div>
+      <div class="press">
+        <img src="img/veja-materia.webp" alt="Matéria da VEJA: Popularização das canetas mobiliza mercado por soluções contra perda de massa muscular" width="862" height="748" loading="lazy">
+        <div>
+          <span class="tag"><i></i>Na imprensa</span>
+          <h3>A perda de músculo com as canetas <em>já virou assunto.</em></h3>
+          <p>Com a popularização das canetas, cresce a busca por soluções contra a perda de massa muscular. A nossa resposta começa no prato.</p>
+          <p class="src">Fonte: VEJA, 2 de outubro de 2026. veja.abril.com.br/saude/popularizacao-das-canetas-mobiliza-mercado-por-solucoes-contra-reducao-da-massa-muscular/</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- O TESTE -->
+<section class="sec" id="teste">
+  <div class="wrap">
+    <div class="center">
+      <span class="tag rv"><i></i>Comece pelo teste</span>
+      <h2 class="h2 rv" style="--d:.1s;max-width:17ch">Antes de qualquer receita, a gente entende <em>você.</em></h2>
+      <p class="lead rv" style="--d:.2s">Quem só belisca precisa de um caminho diferente de quem vive de doce. Por isso tudo começa com um teste rápido sobre a sua rotina com a caneta. No fim, você vê o seu perfil e a proteína que o seu corpo pede.</p>
+    </div>
+    <div class="quiz rv" id="quiz">
+      <div class="qstage" aria-hidden="true">
+        <div class="disc"></div><div class="disc2"></div>
+        <div class="phone">
+          <div class="scr">
+            <div class="island"></div>
+            <div class="bar"><i></i></div>
+            <span class="step">Pergunta 1</span>
+            <div class="mirror"><svg width="52" height="60" viewBox="0 0 56 64" fill="none"><ellipse cx="28" cy="30" rx="20" ry="27" stroke="#17332B" stroke-width="2.4"/><path d="M22 18c-3 4-4 9-3 14" stroke="#B8744F" stroke-width="2.4" stroke-linecap="round"/><path d="M28 57v5M18 62h20" stroke="#17332B" stroke-width="2.4" stroke-linecap="round"/></svg></div>
+            <p class="q">Seja sincera: quando você se olha no espelho, <em>o que sente?</em></p>
+            <span class="op">Vergonha do meu corpo</span>
+            <span class="op">Raiva de mim mesma</span>
+            <span class="op pick">Não me reconheço mais</span>
+            <span class="op">Eu nem me olho mais</span>
+            <span class="note">Sem nome, sem e-mail</span>
+          </div>
+        </div>
+        <div class="fl f1"><span class="ic" style="background:var(--floresta);color:var(--creme)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span>Cerca de 1 minuto<small>uma pergunta por tela</small></span></div>
+        <div class="fl f2"><span class="ic" style="background:var(--salvia);color:var(--floresta)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span><span>Respostas no seu celular<small>não vão para terceiros</small></span></div>
+      </div>
+      <div>
+        <ol class="steps">
+          <li class="rv" style="--d:.1s"><span class="n">1</span><div><h3>Você conta como se <em>sente</em></h3><p>O que sente no espelho, a sua idade, há quanto tempo usa a caneta e o tipo de barriga que mais incomoda.</p></div></li>
+          <li class="rv" style="--d:.2s"><span class="n">2</span><div><h3>Entende por que a barriga <em>não sai</em></h3><p>O teste mostra o que acontece com o músculo quando a fome some, com base nos estudos com a caneta.</p></div></li>
+          <li class="rv" style="--d:.3s"><span class="n">3</span><div><h3>Calcula a <em>sua</em> proteína</h3><p>Com o seu peso e a sua altura, o IMC aparece na hora e a meta de proteína é calculada para o seu corpo.</p></div></li>
+          <li class="rv" style="--d:.4s"><span class="n">4</span><div><h3>Recebe o seu <em>perfil</em></h3><p>A partir do que mais entra no seu prato, você vê qual dos 5 perfis é o seu e por onde começar.</p></div></li>
+        </ol>
+        <div class="after rv">
+          <a class="btn" href="https://oalemdacaneta.com.br/" data-teste>Começar o teste <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+          <span class="fine">O resultado é uma pontuação educativa, não um diagnóstico.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PERFIS -->
+<section class="sec linho">
+  <div class="wrap">
+    <div class="center">
+      <span class="tag rv"><i></i>Os 5 perfis do teste</span>
+      <h2 class="h2 rv" style="--d:.1s;max-width:18ch">Qual deles é o <em>seu?</em></h2>
+      <p class="lead rv" style="--d:.2s">Cada perfil tem um ponto de partida diferente. Ninguém precisa largar o que gosta: a receita é que muda.</p>
+    </div>
+    <div class="perfis">
+      <div class="perfil rv"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18M5 12a7 7 0 0 0 14 0"/></svg></span><h3>Apetite no modo economia</h3><p>A fome sumiu e o dia passa no belisco. Parte do que sai é músculo.</p><small>Começa pelas mini-refeições</small></div>
+      <div class="perfil rv" style="--d:.06s"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v20M4.9 7l14.2 10M4.9 17 19.1 7"/></svg></span><h3>Só desce gelado</h3><p>O corpo pede coisas frias e leves, que quase não têm proteína.</p><small>Começa pelos gelados que nutrem</small></div>
+      <div class="perfil rv" style="--d:.12s"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 14h16v3a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3zM6 14V9a6 6 0 0 1 12 0v5"/></svg></span><h3>Doce no lugar da comida</h3><p>Com a fome baixa, o doce entra fácil e ocupa o espaço do prato.</p><small>Começa pelos doces com proteína</small></div>
+      <div class="perfil rv" style="--d:.18s"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 11a8 6 0 0 1 16 0zM3 14h18M4 17h16a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3z"/></svg></span><h3>Fome de hambúrguer</h3><p>A vontade de lanche continua, mesmo com a caneta.</p><small>Começa pelos lanches de casa</small></div>
+      <div class="perfil rv" style="--d:.24s"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/></svg></span><h3>Prato encolhido</h3><p>Come comida de verdade, só que menos, e a proteína é o que sobra.</p><small>Começa pela ordem do prato</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- MÉTODO 3P -->
+<section class="sec" id="metodo">
+  <div class="wrap">
+    <div class="center">
+      <span class="tag rv"><i></i>O método</span>
+      <h2 class="h2 rv" style="--d:.1s;max-width:18ch">O Método 3P, feito para quem usa a <em>caneta.</em></h2>
+      <p class="lead rv" style="--d:.2s">Toda dieta que você já fez foi desenhada para lutar contra a fome. Com a caneta, a fome sumiu e as regras antigas passaram a jogar contra você. O Método 3P é a lógica nova, em três passos.</p>
+    </div>
+    <div class="p3 rv" id="p3">
+      <svg class="rail" viewBox="0 0 1000 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 20H1000" stroke="#B8744F" stroke-width="2" stroke-dasharray="6 8" fill="none"/></svg>
+      <div class="pp rv" style="--d:.1s"><div class="num">P1</div><h3>Priorizar <em>proteína</em></h3><p>Como fazer cada garfada contar quando o prato precisa ser pequeno, para proteger o músculo que te dá força e disposição.</p></div>
+      <div class="pp rv" style="--d:.3s"><div class="num">P2</div><h3>Planejar refeições <em>pequenas</em></h3><p>Uma estrutura simples para o dia não passar em branco: o que comer, quando e como, mesmo sem vontade nenhuma.</p></div>
+      <div class="pp hot rv" style="--d:.5s"><div class="num">P3</div><h3>Preparar a <em>transição</em></h3><p>Transformar o tratamento em hábitos que ficam, para a caneta sair da sua rotina e a rotina boa continuar.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- VIRADA -->
+<section class="sec linho">
+  <div class="wrap center">
+    <span class="tag rv"><i></i>A virada de chave</span>
+    <h2 class="h2 rv" style="--d:.1s;max-width:18ch">"Mas eu quase não estou com <em>fome…</em>"</h2>
+    <p class="lead rv" style="--d:.2s">É justamente por isso que você precisa saber o que colocar no prato. Quando o apetite diminui, a estratégia muda de lógica:</p>
+    <div class="shiftbox">
+      <div class="sb old rv l"><small>Antes você pensava</small><span class="st">"Preciso comer menos."</span></div>
+      <div class="arrow rv s" style="--d:.3s" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#17332B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      <div class="sb new rv r" style="--d:.45s"><small>Agora você pensa</small>"Como faço uma refeição pequena entregar o que o meu corpo precisa?"</div>
+    </div>
+  </div>
+</section>
+
+<!-- TROCAS -->
+<section class="sec">
+  <div class="wrap gut">
+    <div>
+      <span class="tag rv"><i></i>Prazer no cardápio</span>
+      <h2 class="h2 rv" style="--d:.1s">Você não precisa largar o que gosta. Só <em>trocar a receita.</em></h2>
+      <p class="lead rv" style="--d:.2s">Ninguém sustenta um método que tira o doce, o gelado e o lanche. Aqui eles continuam, na versão que alimenta: o mesmo prazer, agora com a proteína que o corpo precisa.</p>
+      <ul class="swaps">
+        <li class="rv"><span class="de">Bola de sorvete comum</span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="para">Sorvete de banana com amendoim e iogurte</span></li>
+        <li class="rv" style="--d:.08s"><span class="de">Brigadeiro de panela</span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="para">Brigadeiro com proteína, de colher</span></li>
+        <li class="rv" style="--d:.16s"><span class="de">Hambúrguer do delivery</span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="para">Hambúrguer de casa, no tamanho do apetite</span></li>
+      </ul>
+    </div>
+    <div class="gut-art rv r" aria-hidden="true">
+      <div class="ic">
+        <div class="c"><span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 2v20M4.9 7l14.2 10M4.9 17 19.1 7"/></svg></span><em>Gelados</em></div>
+        <div class="c"><span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 14h16v3a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3zM6 14V9a6 6 0 0 1 12 0v5"/></svg></span><em>Doces</em></div>
+        <div class="c"><span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 11a8 6 0 0 1 16 0zM3 14h18M4 17h16a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3z"/></svg></span><em>Lanches</em></div>
+        <div class="c"><span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 12h18M5 12a7 7 0 0 0 14 0"/></svg></span><em>Mini pratos</em></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="tape s" aria-hidden="true"><div class="track"><span>Método 3P</span><span>10 materiais</span><span>leia no celular</span><span>teste gratuito</span><span>Método 3P</span><span>10 materiais</span><span>leia no celular</span><span>teste gratuito</span></div></div>
+
+<!-- MATERIAIS -->
+<section class="sec linho" id="materiais">
+  <div class="wrap">
+    <div class="center">
+      <span class="tag rv"><i></i>O que preparamos</span>
+      <h2 class="h2 rv" style="--d:.1s;max-width:18ch">Um material para cada <em>momento difícil.</em></h2>
+      <p class="lead rv" style="--d:.2s">Cada material resolve uma situação real de quem usa a caneta: o dia sem fome, a vontade de doce, o enjoo, o mercado, o fim de semana.</p>
+    </div>
+    <ul class="dgrid" id="mats"></ul>
+    <div class="total rv"><span class="t1">Guias, receitas, lista de compras e acompanhamento</span><span class="t2">Por onde começar, <em>o teste mostra.</em></span></div>
+    <div class="center" style="margin-top:36px"><a class="btn rv" href="https://oalemdacaneta.com.br/" data-teste>Descobrir o meu perfil <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div>
+  </div>
+</section>
+
+<!-- BENEFÍCIOS -->
+<section class="sec">
+  <div class="wrap">
+    <div class="center">
+      <span class="tag rv"><i></i>O que muda no dia a dia</span>
+      <h2 class="h2 rv" style="--d:.1s;max-width:19ch">Menos dúvida no prato. Mais paz com a <em>comida.</em></h2>
+    </div>
+    <div class="bgrid">
+      <div class="bn rv"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z"/></svg></div><h3>Segurança</h3><p>Saber que está comendo o suficiente, e não só "menos".</p></div>
+      <div class="bn rv" style="--d:.1s"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"/></svg></div><h3>Clareza</h3><p>Acabou o "será que isso tá certo?" a cada refeição.</p></div>
+      <div class="bn rv" style="--d:.2s"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg></div><h3>Praticidade</h3><p>Receitas de liquidificador e pratos que ficam prontos em minutos.</p></div>
+      <div class="bn rv" style="--d:.3s"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></div><h3>Prazer</h3><p>Doce, gelado e lanche continuam no cardápio, sem culpa.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ROTINA -->
+<section class="sec linho">
+  <div class="wrap">
+    <div class="center">
+      <span class="tag rv"><i></i>Não é sobre dieta. É sobre a rotina.</span>
+      <h2 class="h2 rv" style="--d:.1s">Da confusão para a <em>organização.</em></h2>
+    </div>
+    <div class="ba">
+      <div class="c before rv l"><h3>Antes</h3><ul>
+        <li>"Não estou com fome, então não vou comer."</li>
+        <li>"Será que isso tem proteína suficiente?"</li>
+        <li>"Hoje vou pedir qualquer coisa."</li>
+        <li>"Não sei o que comprar no mercado."</li>
+        <li>"E quando eu parar?"</li></ul></div>
+      <div class="c after rv r" style="--d:.15s"><h3>Com o <em>método</em></h3><ul>
+        <li>"Com pouco apetite, tenho opções pequenas e certeiras."</li>
+        <li>"Sei o que vem primeiro no prato."</li>
+        <li>"Tenho um lanche de casa que eu gosto."</li>
+        <li>"Minha lista de compras já está pronta."</li>
+        <li>"Tenho uma rotina que continua depois da caneta."</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUEM SOMOS (aparece quando CONTEUDO.historia for preenchido) -->
+<section class="sec" id="quem-somos" hidden>
+  <div class="wrap story">
+    <div>
+      <span class="tag rv"><i></i>Quem somos</span>
+      <h2 class="h2 rv" id="historia-titulo" style="--d:.1s"></h2>
+    </div>
+    <div class="txt rv" id="historia" style="--d:.2s"></div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS (aparece quando houver depoimentos autorizados) -->
+<section class="sec" id="depoimentos" hidden>
+  <div class="wrap center">
+    <span class="tag rv"><i></i>Quem aplicou, conta</span>
+    <h2 class="h2 rv" style="--d:.1s;max-width:18ch">"Por que ninguém me falou isso <em>antes?</em>"</h2>
+  </div>
+  <div class="tmq" id="tmq"><div class="trow" id="deps"></div></div>
+  <p class="fine tnote">Depoimentos reais, publicados com autorização. A experiência de cada pessoa é individual.</p>
+</section>
+
+<!-- PARA QUEM -->
+<section class="sec linho">
+  <div class="wrap">
+    <div class="center">
+      <span class="tag rv"><i></i>Isso serve pra mim?</span>
+      <h2 class="h2 rv" style="--d:.1s">Serve, se você se reconhece <em>aqui.</em></h2>
+    </div>
+    <div class="fw">
+      <div class="yes rv l"><h3>É pra <em>você</em> se:</h3><ul>
+        <li><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Usa, vai começar ou já usou caneta emagrecedora</li>
+        <li><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Está sem apetite e não sabe o que comer</li>
+        <li><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Quer cuidar do músculo e da energia enquanto o peso cai</li>
+        <li><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Não quer cortar doce, gelado e lanche</li>
+        <li><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Quer praticidade, sem cardápio impossível</li></ul></div>
+      <div class="no rv r" style="--d:.15s"><h3>Não é pra você se:</h3><ul>
+        <li><span class="xx"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></span>Procura quem indique ou ajuste remédio</li>
+        <li><span class="xx"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></span>Quer dieta radical ou jejum extremo</li>
+        <li><span class="xx"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></span>Espera milagre sem mudar nada na rotina</li>
+        <li><span class="xx"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></span>Tem menos de 18 anos</li></ul></div>
+    </div>
+    <div class="alert rv">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+      <div><b>A caneta continua do jeito que o seu médico passou.</b><p>O método cuida do prato. Dose, troca ou suspensão de medicamento e efeitos colaterais fortes são sempre com o seu médico.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DÚVIDAS -->
+<section class="sec" id="faq">
+  <div class="wrap faqgrid">
+    <div class="faqside">
+      <span class="tag rv"><i></i>Dúvidas</span>
+      <h2 class="h2 rv" style="--d:.1s">Tudo o que você precisa <em>saber.</em></h2>
+      <a class="btn rv" style="--d:.2s" href="https://oalemdacaneta.com.br/" data-teste>Fazer o teste gratuito <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+      <p class="fine" style="margin-top:12px">Cerca de 1 minuto · Sem nome e sem e-mail</p>
+    </div>
+    <div class="faq rv" style="--d:.15s">
+      <details><summary>Como funciona o teste?</summary><p>São perguntas rápidas, uma por tela, sobre a sua rotina com a caneta. No fim, você vê o seu perfil, o seu IMC e a proteína que o seu corpo pede. É gratuito e não pedimos nome nem e-mail.</p></details>
+      <details><summary>O que acontece com as minhas respostas?</summary><p>Elas ficam no seu navegador e servem só para montar o seu resultado. Não enviamos as respostas para redes sociais nem para outras empresas. Os detalhes estão na política de privacidade.</p></details>
+      <details><summary>O resultado é um diagnóstico?</summary><p>Não. É uma pontuação educativa, feita a partir das suas respostas. Ela ajuda a entender a sua rotina, mas não substitui consulta com médico ou nutricionista.</p></details>
+      <details><summary>Isso é uma dieta?</summary><p>Não. É um método e um banco de receitas para organizar o prato quando a fome está baixa. Quantidades individuais você combina com a sua nutricionista.</p></details>
+      <details><summary>Preciso mudar alguma coisa na caneta?</summary><p>Não. Nada aqui mexe no seu tratamento. Dose, troca ou suspensão de medicamento são sempre com o seu médico.</p></details>
+      <details><summary>Serve para Mounjaro, Ozempic, Wegovy e Saxenda?</summary><p>Sim. O método trata da alimentação de quem usa canetas emagrecedoras, qualquer que seja a marca.</p></details>
+      <details><summary>Preciso comprar whey ou suplemento?</summary><p>Não é obrigatório. Muitas receitas usam ovos, frango, iogurte e queijo. Onde o whey entra, há a versão sem ele.</p></details>
+      <details><summary>E se eu já parei de usar a caneta?</summary><p>O método também serve para o depois: quando o apetite volta, as mesmas regras ajudam a manter a rotina.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- FECHAMENTO -->
+<section class="sec" style="padding-block:0 clamp(44px,5vw,76px)">
+  <div class="wrap">
+    <div class="close rv s">
+      <svg class="bigsym" viewBox="0 0 62 26" fill="none" aria-hidden="true"><rect x="1.5" y="10" width="22" height="12" rx="6" stroke="#F4F0E8" stroke-width="1.4"/><line x1="15" y1="10" x2="15" y2="22" stroke="#F4F0E8" stroke-width="1.4"/><path class="cv" d="M23.5 16H38C47 16 52 11 60 3" stroke="#B8744F" stroke-width="1.4" stroke-linecap="round"/></svg>
+      <h2>Descubra o que está travando a <em>sua barriga.</em></h2>
+      <a class="btn clay" href="https://oalemdacaneta.com.br/" data-teste>Fazer o teste agora <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+      <p class="ps"><b>P.S.</b> Você já decidiu cuidar de você quando começou a caneta. O teste leva cerca de 1 minuto e mostra o que o seu corpo está pedindo agora, para a balança e o espelho andarem juntos.</p>
+      <p class="tagline">O remédio cuida da fome. O resto é método.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="frow">
+      <a class="logo" href="#topo" aria-label="além da caneta, voltar ao topo"><svg width="62" height="26" viewBox="0 0 62 26" fill="none" aria-hidden="true"><rect x="1.5" y="10" width="22" height="12" rx="6" stroke="#17332B" stroke-width="2"/><line x1="15" y1="10" x2="15" y2="22" stroke="#17332B" stroke-width="2"/><path d="M23.5 16H38C47 16 52 11 60 3" stroke="#B8744F" stroke-width="2" stroke-linecap="round"/></svg><span class="wm"><em>além</em> da caneta</span></a>
+      <span class="t">O remédio cuida da fome. O resto é método.</span>
+    </div>
+    <p><b>Material educativo</b> sobre alimentação e organização de rotina, para maiores de 18 anos. Não substitui consulta, diagnóstico ou acompanhamento médico e nutricional. Não indicamos, prescrevemos nem orientamos o uso de qualquer medicamento: toda decisão sobre início, ajuste, troca ou interrupção de tratamento é com o seu médico. Os resultados variam de pessoa para pessoa.</p>
+    <p>Mounjaro®, Ozempic®, Wegovy® e Saxenda® são marcas registradas dos respectivos fabricantes, sem qualquer vínculo com este material.</p>
+    <p>Método Além da Caneta · Contato: <a href="mailto:contato@oalemdacaneta.com.br">contato@oalemdacaneta.com.br</a> · <a href="https://oalemdacaneta.com.br/privacidade.html">Política de privacidade</a></p>
+  </div>
+</footer>
+
+<div class="dock" id="dock">
+  <div class="p">Teste gratuito <small>cerca de 1 minuto</small></div>
+  <a class="btn" href="https://oalemdacaneta.com.br/" data-teste>Fazer o teste <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+</div>
+
+<script>
+/* =====================================================================
+   CONTEÚDO DA PÁGINA: só informações reais.
+   historia: o texto de quem criou o Além da Caneta e por quê (parágrafos).
+   depoimentos: só com autorização de cada aluna. Vazio = a seção não aparece.
+   ===================================================================== */
+const CONTEUDO = {
+  historia: {
+    titulo: '',       // ex.: 'Nasceu de uma <em>pergunta simples.</em>'
+    paragrafos: []    // ex.: ['Primeiro parágrafo...', 'Segundo parágrafo...']
+  },
+  depoimentos: [
+    // {texto: 'O que ela disse, com as palavras dela.', nome: 'Primeiro nome, idade', foto: ''}  // foto: print autorizado (opcional)
+  ],
+  // Os materiais do método (mesmos nomes e capas do produto). Sem preço: esta página é só conteúdo.
+  // [capa, nome, quando usar, o que muda, selo]. O primeiro aparece em destaque.
+  materiais: [
+    ['img/capas/01.webp', 'Método 3P', 'Para montar o prato com a fome baixa', 'O que comer primeiro, quanto e em que ordem, para a proteína nunca ficar para trás.', 'Guia principal'],
+    ['img/capas/09.webp', 'Gelados que Nutrem', 'Para os dias em que só desce coisa gelada', 'Shake, sorvete, picolé e smoothie que descem fácil e ainda fecham a proteína.', 'Receitas'],
+    ['img/capas/10.webp', 'Doces com Proteína', 'Para a vontade de doce que bate toda noite', 'Mousse, brigadeiro e bolo de caneca: o corpo ganha proteína, e não só açúcar.', 'Receitas'],
+    ['img/capas/11.webp', 'Lanches de Casa', 'Para não abrir mão do hambúrguer e da pizza', 'O fast-food na versão caseira, no tamanho do seu apetite.', 'Receitas'],
+    ['img/capas/12.webp', 'Mini Refeições', 'Para os dias em que a fome some', 'Pratinhos de poucas garfadas com a proteína garantida.', 'Receitas'],
+    ['img/capas/00.webp', 'Comece Aqui', 'Para começar hoje, sem se perder', 'O mapa do primeiro dia e respostas prontas para 50 situações da vida com a caneta.', ''],
+    ['img/capas/02.webp', 'SOS Não Tô Com Fome', 'Para abrir na hora em que nada desce', 'O passo a passo do dia difícil: enjoo, zero fome ou só uma coisa descendo.', ''],
+    ['img/capas/03.webp', 'Cardápio Sem Fome', '30 receitas pequenas, do café ao jantar', 'Abra, escolha e faça, sem perder tempo pensando no que comer.', ''],
+    ['img/capas/04.webp', 'Carrinho Pronto', 'Para resolver o mercado de uma vez', 'Lista de compras por semana e por orçamento.', ''],
+    ['img/capas/07.webp', 'Tracker de Evolução', 'Para enxergar o que o espelho ainda não mostra', '12 semanas, um minuto por dia, para acompanhar a evolução e não desistir no meio.', '']
+  ]
+};
+
+(function () {
+  const el = (tag, attrs = {}, ...filhos) => {
+    const n = document.createElement(tag);
+    Object.entries(attrs).forEach(([k, v]) => { if (v !== null && v !== undefined) n.setAttribute(k, v); });
+    filhos.flat().forEach((f) => { if (f !== null && f !== undefined && f !== '') n.append(f); });
+    return n;
+  };
+
+  // Materiais
+  document.getElementById('mats').append(...CONTEUDO.materiais.map(([capa, nome, quando, desc, selo], i) =>
+    el('li', {class: 'dl rv' + (i === 0 ? ' main s' : ''), style: i % 2 ? '--d:.1s' : null},
+      el('img', {src: capa, alt: `Capa do material ${nome}`, width: 320, height: 480, loading: 'lazy'}),
+      el('div', {class: 'txt'}, selo ? el('span', {class: 'flag'}, selo) : null, el('h3', {}, nome),
+        el('p', {class: 'quando'}, quando), el('p', {}, desc)))));
+
+  // História
+  const h = CONTEUDO.historia;
+  if (h.titulo && h.paragrafos.length) {
+    document.getElementById('historia-titulo').innerHTML = h.titulo;
+    document.getElementById('historia').append(...h.paragrafos.map((p) => el('p', {}, p)));
+    document.getElementById('quem-somos').hidden = false;
+  } else {
+    document.querySelectorAll('[data-se="historia"]').forEach((a) => a.remove());
+  }
+
+  // Depoimentos: com 3 ou mais, passam em fila contínua; com menos, ficam parados.
+  const deps = CONTEUDO.depoimentos;
+  if (deps.length) {
+    const cartao = (d, copia) => el('figure', copia ? {class: 'tc', 'aria-hidden': 'true'} : {class: 'tc dep'},
+      el('span', {class: 'qm', 'aria-hidden': 'true'}, '“'),
+      d.foto ? el('img', {src: d.foto, alt: copia ? '' : `Print do depoimento de ${d.nome}`, loading: 'lazy'}) : null,
+      el('blockquote', {}, d.texto),
+      el('figcaption', {class: 'who'}, el('span', {class: 'av', 'aria-hidden': 'true'}, d.nome.trim().charAt(0).toUpperCase()), el('cite', {}, d.nome)));
+    const fila = document.getElementById('deps');
+    fila.append(...deps.map((d) => cartao(d, false)));
+    if (deps.length >= 3) fila.append(...deps.map((d) => cartao(d, true)));
+    else document.getElementById('tmq').classList.add('parado');
+    document.getElementById('depoimentos').hidden = false;
+  }
+
+  // O link para o teste leva as UTMs de quem chegou aqui por anúncio.
+  const params = new URLSearchParams(location.search);
+  if ([...params.keys()].length) document.querySelectorAll('[data-teste]').forEach((a) => {
+    const u = new URL(a.href); params.forEach((v, k) => u.searchParams.set(k, v)); a.href = u.toString();
+  });
+
+  // Título entrando palavra por palavra
+  const t = document.getElementById('h1');
+  if (t) {
+    let i = 0;
+    const quebra = (node) => {
+      const out = document.createDocumentFragment();
+      node.childNodes.forEach((ch) => {
+        if (ch.nodeType === 3) {
+          ch.textContent.split(/(\s+)/).forEach((p) => {
+            if (!p) return;
+            if (/^\s+$/.test(p)) { out.appendChild(document.createTextNode(' ')); return; }
+            out.appendChild(el('span', {class: 'w'}, el('span', {style: `--d:${(0.1 + i++ * 0.06).toFixed(2)}s`}, p)));
+          });
+        } else { const c = ch.cloneNode(false); c.appendChild(quebra(ch)); out.appendChild(c); }
+      });
+      return out;
+    };
+    const f = quebra(t); t.textContent = ''; t.appendChild(f);
+  }
+  setTimeout(() => document.querySelector('.hero').classList.add('go'), 80);
+
+  // Entrada suave dos blocos
+  const els = document.querySelectorAll('.rv,.relief');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold: .14, rootMargin: '0px 0px -6% 0px'});
+    els.forEach((n) => io.observe(n));
+  } else els.forEach((n) => n.classList.add('in'));
+
+  // Borda no topo ao rolar e barra fixa no celular
+  const head = document.getElementById('head'), dock = document.getElementById('dock');
+  const onS = () => { const y = window.scrollY; head.classList.toggle('scrolled', y > 10); dock.classList.toggle('show', y > 560); };
+  window.addEventListener('scroll', onS, {passive: true}); onS();
+})();
+</script>
+</body>
+</html>
