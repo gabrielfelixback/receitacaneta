@@ -1,13 +1,50 @@
 -- Consultas do funil (Cloudflare › D1 › quiz-contagem › Console).
 -- Os números são OCORRÊNCIAS, não pessoas únicas: a mesma pessoa em outro navegador, aba
 -- ou dia conta de novo. Dentro da mesma aba, cada evento conta uma vez só.
--- Troque as datas e a versão nas cláusulas WHERE.
+-- Troque as datas e a versão nas cláusulas WHERE. Para ver só o tráfego real, some AND ambiente = 'producao'.
+
+-- 0) Funil de produção separado por origem (utm_source). Troque as datas se quiser outro período.
+--    Uma linha por passo; uma coluna de total por origem não cabe no SQL, então cada origem é uma linha
+--    com o total e o % sobre o início daquela mesma origem.
+WITH f AS (
+  SELECT origem, evento, etapa, SUM(total) AS total  -- o checkout soma os dois botões; o resumo 0b separa
+  FROM contagem
+  WHERE ambiente = 'producao' AND dia BETWEEN '2026-10-01' AND '2026-12-31'
+  GROUP BY origem, evento, etapa
+)
+SELECT
+  f.origem,
+  CASE f.evento WHEN 'etapa' THEN 'etapa ' || printf('%02d', f.etapa) ELSE f.evento END AS passo,
+  f.total,
+  ROUND(100.0 * f.total / NULLIF((SELECT b.total FROM f b WHERE b.origem = f.origem AND b.evento = 'inicio'), 0), 1) AS pct_do_inicio
+FROM f
+ORDER BY f.origem, CASE f.evento
+  WHEN 'visita' THEN 0 WHEN 'inicio' THEN 1 WHEN 'etapa' THEN 2 WHEN 'conclusao' THEN 3
+  WHEN 'oferta' THEN 4 WHEN 'ver_oferta' THEN 4.5 WHEN 'checkout' THEN 5 WHEN 'upsell' THEN 6 WHEN 'downsell' THEN 7 END, f.etapa;
+
+-- 0b) Resumo de produção por origem, uma linha por origem.
+SELECT
+  origem,
+  SUM(CASE WHEN evento = 'visita'    THEN total ELSE 0 END) AS visitas,
+  SUM(CASE WHEN evento = 'inicio'    THEN total ELSE 0 END) AS inicios,
+  SUM(CASE WHEN evento = 'conclusao' THEN total ELSE 0 END) AS conclusoes,
+  SUM(CASE WHEN evento = 'oferta'    THEN total ELSE 0 END) AS ofertas,
+  SUM(CASE WHEN evento = 'ver_oferta' THEN total ELSE 0 END) AS cliques_barra,
+  SUM(CASE WHEN evento = 'checkout' AND botao = 'cta'   THEN total ELSE 0 END) AS checkout_cta,
+  SUM(CASE WHEN evento = 'checkout' AND botao = 'cta-2' THEN total ELSE 0 END) AS checkout_cta2,
+  SUM(CASE WHEN evento = 'checkout'  THEN total ELSE 0 END) AS cliques_checkout,
+  ROUND(100.0 * SUM(CASE WHEN evento = 'checkout' THEN total ELSE 0 END)
+        / NULLIF(SUM(CASE WHEN evento = 'inicio' THEN total ELSE 0 END), 0), 1) AS pct_inicio_ate_checkout
+FROM contagem
+WHERE ambiente = 'producao' AND dia BETWEEN '2026-10-01' AND '2026-12-31'
+GROUP BY origem
+ORDER BY inicios DESC;
 
 -- 1) Funil de uma versão num período: total de cada passo e % sobre o início.
 WITH f AS (
   SELECT evento, etapa, SUM(total) AS total
   FROM contagem
-  WHERE versao = 'v20' AND dia BETWEEN '2026-10-01' AND '2026-12-31'
+  WHERE versao = 'v21' AND dia BETWEEN '2026-10-01' AND '2026-12-31'
   GROUP BY evento, etapa
 ),
 base AS (SELECT total FROM f WHERE evento = 'inicio')
@@ -18,13 +55,13 @@ SELECT
 FROM f
 ORDER BY CASE evento
   WHEN 'visita' THEN 0 WHEN 'inicio' THEN 1 WHEN 'etapa' THEN 2 WHEN 'conclusao' THEN 3
-  WHEN 'oferta' THEN 4 WHEN 'checkout' THEN 5 WHEN 'upsell' THEN 6 WHEN 'downsell' THEN 7 END, etapa;
+  WHEN 'oferta' THEN 4 WHEN 'ver_oferta' THEN 4.5 WHEN 'checkout' THEN 5 WHEN 'upsell' THEN 6 WHEN 'downsell' THEN 7 END, etapa;
 
 -- 2) Abandono etapa a etapa: quantas chegaram, quantas chegaram à seguinte e % que saiu ali.
 WITH e AS (
   SELECT etapa, SUM(total) AS chegaram
   FROM contagem
-  WHERE versao = 'v20' AND evento = 'etapa' AND dia BETWEEN '2026-10-01' AND '2026-12-31'
+  WHERE versao = 'v21' AND evento = 'etapa' AND dia BETWEEN '2026-10-01' AND '2026-12-31'
   GROUP BY etapa
 )
 SELECT

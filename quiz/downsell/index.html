@@ -192,7 +192,10 @@ new IntersectionObserver(function(e){s.classList.toggle('hide',e[0].isIntersecti
     var h = location.hostname;
     if (!/^https?:$/.test(location.protocol) || !(/(^|\.)oalemdacaneta\.com\.br$/.test(h) || /\.pages\.dev$/.test(h) || h === 'localhost' || h === '127.0.0.1')) return;
     try { if (sessionStorage.getItem('contagem:downsell')) return; sessionStorage.setItem('contagem:downsell', '1'); } catch (e) {}
-    var body = JSON.stringify({e: 'downsell', v: 'v1'});
+    var o = '';
+    try { o = sessionStorage.getItem('contagem:origem') || ''; } catch (e) {}
+    o = o || (new URLSearchParams(location.search).get('utm_source') || '').trim().toLowerCase().slice(0, 30) || 'direto';
+    var body = JSON.stringify({e: 'downsell', v: 'v1', o: o});
     if (navigator.sendBeacon && navigator.sendBeacon('/api/contagem', body)) return;
     fetch('/api/contagem', {method: 'POST', body: body, keepalive: true, credentials: 'omit'}).catch(function () {});
   } catch (e) {}

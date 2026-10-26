@@ -428,10 +428,7 @@ details p{margin-top:8px;color:var(--musgo);font-size:.9375rem}
 .sticky{position:fixed;left:0;right:0;bottom:0;background:rgba(255,253,249,.94);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:1px solid var(--line-soft);box-shadow:0 -8px 20px rgba(23,51,43,.08);padding-top:10px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));z-index:5;animation:up .5s var(--ease) both}
 @keyframes up{from{transform:translateY(100%)}to{transform:none}}
 .sticky .in{max-width:30rem;margin-inline:auto;display:flex;align-items:center;gap:12px}
-.sticky .p{display:flex;flex-direction:column;line-height:1.05}
-.sticky .p b{font-family:var(--serif);font-weight:400;font-size:1.625rem;white-space:nowrap;font-variant-numeric:tabular-nums}
-.sticky .p small{font-size:.72rem;color:var(--musgo)}
-.sticky .btn{min-height:52px;font-size:1rem}
+.sticky .btn{min-height:52px;font-size:1rem;flex:1}
 /* ===== Tema: a marca além da caneta no fundo branco =====
    Mesmas cores e fontes do guia; o creme vira o fundo dos blocos de apoio. A força vem de tamanho, contraste e
    dos blocos de destaque, não de trocar de identidade. */
@@ -616,18 +613,11 @@ h2.sans,h1.sans{font-family:var(--sans);font-weight:500;letter-spacing:-.015em;l
 /* materiais de apoio: lista compacta em duas colunas */
 .extras{border-top:1px solid var(--line-soft);padding-top:14px;display:flex;flex-direction:column;gap:10px}
 /* rodapé fixo em movimento */
-.sticky .p s{font-size:.75rem;color:var(--danger);font-weight:600}
-.sticky .p b{font-size:1.75rem;line-height:1}
-.sticky .p .off{display:inline-block;margin-left:6px;vertical-align:.4em;font-family:var(--sans);font-size:.6875rem;font-weight:700;color:#FFFFFF;background:var(--danger);border-radius:999px;padding:2px 7px;animation:pop 1.6s var(--ease) infinite}
-.sticky .btn{position:relative;overflow:hidden;animation:nudge 2.6s var(--ease) infinite}
-.sticky .btn::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.5) 50%,transparent 70%);transform:translateX(-120%);animation:shine 2.6s ease-in-out infinite;pointer-events:none}
-@keyframes shine{0%,45%{transform:translateX(-120%)}75%,100%{transform:translateX(120%)}}
-@keyframes nudge{0%,62%,100%{transform:none}70%{transform:scale(1.06) rotate(-1deg)}78%{transform:scale(1.04) rotate(1deg)}86%{transform:scale(1.02)}}
 @media (prefers-reduced-motion: reduce){
   .vsl-som,.pc-bar i,.provacard .pc-curve path,.voice .play.pulsa,.fila-in{animation:none}
   .fila{overflow-x:auto}
   .provacard .pc-curve path{stroke-dashoffset:0}
-  .screen,.pulse,.tip.swapin,.sticky,.sticky .btn,.sticky .btn::after,.today .off,.sticky .p .off,.ready .go span,.ready .mk2 path,.ready .lbl .ic,.ready h1 em{animation:none}
+  .screen,.pulse,.tip.swapin,.sticky,.today .off,.ready .go span,.ready .mk2 path,.ready .lbl .ic,.ready h1 em{animation:none}
   .ready .mk2 path{stroke-dashoffset:0}
   .progress .fill,.progress .cap,.score .track i,.gauge .track i{transition:none}
 }
@@ -654,8 +644,7 @@ h2.sans,h1.sans{font-family:var(--sans);font-weight:500;letter-spacing:-.015em;l
 
 <div class="sticky" id="sticky" hidden>
   <div class="in">
-    <span class="p"><s id="stickyDe"></s><b><span id="stickyPrice"></span><span class="off" id="stickyOff"></span></b></span>
-    <a class="btn buy" id="stickyCta" href="#">Acessar meu plano</a>
+    <a class="btn buy" id="stickyCta" href="#oferta">Ver meu plano completo</a>
   </div>
 </div>
 
@@ -766,7 +755,7 @@ const CONFIG = {
 
 /* ===================================================================== */
 const SETUP = !CONFIG.checkoutUrl;
-const VERSAO = 'v20';
+const VERSAO = 'v21';
 const fmtBRL = (v) => new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(v);
 const $ = (s, r = document) => r.querySelector(s);
 const el = (tag, attrs = {}, ...kids) => {
@@ -952,20 +941,27 @@ const send = (tipo, extra = {}) => {
   const body = JSON.stringify({sessao, tipo, versao: VERSAO, ...(tipo === 'inicio' ? {utm} : {}), ...extra});
   try { fetch(CONFIG.backendUrl, {method: 'POST', mode: 'no-cors', keepalive: true, headers: {'Content-Type': 'text/plain'}, body}).catch(() => {}); } catch (e) {}
 };
-// Contador agregado: {e: evento, n: etapa, v: versão} para /api/contagem. Cada evento conta uma vez por aba
+// Contador agregado: {e: evento, n: etapa, v: versão, o: origem} para /api/contagem. Cada evento conta uma vez por aba
 // (a marca fica no sessionStorage, que não sai do navegador). Falhas são ignoradas: o quiz nunca espera o contador.
 const contadorAtivo = () => {
   const h = location.hostname;
   return !!CONFIG.contadorUrl && /^https?:$/.test(location.protocol) && (h === CONFIG.dominio || h.endsWith('.' + CONFIG.dominio)
     || h.endsWith('.pages.dev') || h === 'localhost' || h === '127.0.0.1');
 };
+// Origem = utm_source (sem utm, "direto"). Fica no sessionStorage para o upsell e o downsell saberem de onde veio.
+const origemContador = (() => {
+  let o = (pageParams.get('utm_source') || '').trim().toLowerCase().slice(0, 30);
+  try { o = o || sessionStorage.getItem('contagem:origem') || ''; if (o) sessionStorage.setItem('contagem:origem', o); } catch (x) {}
+  return o || 'direto';
+})();
 const contados = new Set();
-const conta = (e, n) => {
-  const chave = n ? `${e}:${n}` : e;
+// b = id do botão que levou ao checkout (cta ou cta-2); só vai com o evento "checkout".
+const conta = (e, n, b) => {
+  const chave = [e, n, b].filter(Boolean).join(':');
   if (contados.has(chave) || !contadorAtivo()) return;
   contados.add(chave);
   try { if (sessionStorage.getItem('contagem:' + chave)) return; sessionStorage.setItem('contagem:' + chave, '1'); } catch (x) {}
-  const body = JSON.stringify(n ? {e, n, v: VERSAO} : {e, v: VERSAO});
+  const body = JSON.stringify({e, ...(n ? {n} : {}), v: VERSAO, o: origemContador, ...(b ? {b} : {})});
   try {
     if (navigator.sendBeacon && navigator.sendBeacon(CONFIG.contadorUrl, body)) return;
     fetch(CONFIG.contadorUrl, {method: 'POST', body, keepalive: true, credentials: 'omit'}).catch(() => {});
@@ -1630,7 +1626,7 @@ const renderResult = () => {
     if (!CONFIG.checkoutUrl) { setupMsg.hidden = false; setupMsg.scrollIntoView({behavior: 'smooth', block: 'center'}); return; }
     send('checkout', {etapa: QUESTION_IDX.length + 2, passo: 'checkout'});
     track('InitiateCheckout', {value: CONFIG.preco, currency: 'BRL'});
-    conta('checkout');
+    conta('checkout', 0, ev.currentTarget.id);
     setTimeout(() => { location.href = href; }, 250);
   };
   const n = CONFIG.parcelas || 0;
@@ -1663,7 +1659,7 @@ const renderResult = () => {
       n ? el('span', {class: 'total-cartao'}, `Total no cartão: ${fmtBRL(Math.round(n * parcela * 100) / 100)}`) : null,
       el('span', {class: 'save'}, `Você economiza ${fmtBRL(de - CONFIG.preco)}`)),
     el('span', {class: 'sub'}, `${n ? 'Sem mensalidade' : 'Pagamento único'} · acesso imediato no seu e-mail`),
-    el('a', {class: 'btn buy pulse', id: 'cta', href, onclick: onBuy}, 'Acessar meu plano completo', icon('arrow')),
+    el('a', {class: 'btn buy pulse', id: 'cta', href, onclick: onBuy}, `Quero meu plano · ${fmtBRL(CONFIG.preco)}`, icon('arrow')),
     el('div', {class: 'pay', 'aria-label': 'Formas de pagamento'}, H('span', ic('pix') + 'Pix'), H('span', ic('cartao') + 'Cartão'), H('span', ic('cadeado') + 'Compra segura')),
     el('div', {class: 'guarantee'}, H('span', sealSvg(CONFIG.garantiaDias)), el('span', {}, el('b', {}, `Garantia de ${CONFIG.garantiaDias} dias. `), 'Se não gostar, devolvemos 100% do valor.')),
     setupMsg));
@@ -1695,16 +1691,17 @@ const renderResult = () => {
     ['E se eu não gostar?', `Você tem ${CONFIG.garantiaDias} dias de garantia. É só pedir o reembolso e devolvemos 100% do valor.`]
   ];
   out.push(el('div', {class: 'sheet faq'}, H('h3', 'Perguntas <em>frequentes</em>'), faq.map(([q, r]) => el('details', {}, H('summary', `<span>${q}</span>${ic('plus')}`), el('p', {}, r)))));
-  out.push(el('a', {class: 'btn buy', id: 'cta-2', href, onclick: onBuy}, 'Acessar meu plano completo', icon('arrow')));
+  out.push(el('a', {class: 'btn buy', id: 'cta-2', href, onclick: onBuy}, `Quero meu plano · ${fmtBRL(CONFIG.preco)}`, icon('arrow')));
   out.push(H('p', 'Material educativo, para maiores de 18 anos. Não substitui consulta médica ou com nutricionista. Os resultados variam de pessoa para pessoa.' + (CONFIG.privacidadeUrl ? ` <a href="${CONFIG.privacidadeUrl}" target="_blank" rel="noopener">Política de privacidade</a>` : ''), 'fine'));
 
-  $('#stickyPrice').textContent = n ? `${n}x ${fmtBRL(parcela)}` : fmtBRL(CONFIG.preco);
-  $('#stickyDe').textContent = `De ${fmtBRL(de)}`;
-  $('#stickyOff').textContent = `-${off}%`;
-  const sc = $('#stickyCta');
-  sc.href = href;
-  sc.onclick = onBuy;
-  // A barra fixa de compra aparece quando a pessoa chega na foto do objetivo (sem foto, no Dia 1).
+  // A barra fixa não vende: leva até a oferta (só #cta e #cta-2 vão para a Kiwify).
+  $('#stickyCta').onclick = (ev) => {
+    ev.preventDefault();
+    conta('ver_oferta');
+    const alvo = document.querySelector('.offer');
+    if (alvo) alvo.scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth', block: 'start'});
+  };
+  // A barra fixa aparece quando a pessoa chega na foto do objetivo (sem foto, no Dia 1).
   sticky.hidden = true;
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {
