@@ -112,15 +112,25 @@ const run = (sc) => new Promise((resolve) => {
     const href = w.eval("CONFIG.checkoutUrl = 'https://pay.exemplo.com/abc?x=1'; checkoutHref()");
     check(href.includes('utm_source=fb') && href.includes('fbclid=abc') && href.includes('x=1'), `[${sc.nome}] checkout repassa UTMs e fbclid`);
     w.eval("location.assign = () => {}"); // o jsdom não navega; só queremos o evento
+    // barra fixa: não vende, só rola até a oferta e conta "ver_oferta"
+    const sb = d.getElementById('stickyCta');
+    check(sb.textContent.trim() === 'Ver meu plano completo' && sb.getAttribute('href') === '#oferta' && !/R\$|kiwify/i.test(d.getElementById('sticky').textContent + sb.href), `[${sc.nome}] barra fixa: "Ver meu plano completo", sem preço e sem link da Kiwify`);
+    let rolou = 0; w.HTMLElement.prototype.scrollIntoView = function () { if (this.classList.contains('offer')) rolou++; };
+    const enviadosAntes = sent.length, pixelAntes = ((w.fbq && w.fbq.queue) || []).length;
+    sb.click();
+    check(rolou === 1 && sent.length === enviadosAntes && ((w.fbq && w.fbq.queue) || []).length === pixelAntes, `[${sc.nome}] clique na barra rola até a oferta, sem checkout nem evento do Pixel`);
+    check(['cta', 'cta-2'].every((id) => /^Quero meu plano · R\$\s27,90/.test(d.getElementById(id).textContent) && d.getElementById(id).getAttribute('href') !== '#oferta'), `[${sc.nome}] botões da oferta: "Quero meu plano · R$ 27,90"`);
     d.getElementById('cta-2').click();
     check(sent.some((e) => e.tipo === 'checkout'), `[${sc.nome}] clique no checkout vai para o backend`);
     d.getElementById('cta').click(); // segundo clique: não conta de novo
     // contador agregado: cada evento uma vez, etapas 1 a 14, só {e, n, v} e nada das respostas
     const evs = contados.map((b) => JSON.parse(b));
     const conta = (e, n) => evs.filter((x) => x.e === e && (n === undefined || x.n === n)).length;
-    check(['visita', 'inicio', 'conclusao', 'oferta', 'checkout'].every((e) => conta(e) === 1), `[${sc.nome}] contador: visita, início, conclusão, oferta e checkout uma vez cada`);
+    check(['visita', 'inicio', 'conclusao', 'oferta', 'ver_oferta'].every((e) => conta(e) === 1), `[${sc.nome}] contador: visita, início, conclusão, oferta e ver_oferta uma vez cada`);
+    const cks = evs.filter((x) => x.e === 'checkout');
+    check(cks.length === 2 && cks.some((x) => x.b === 'cta') && cks.some((x) => x.b === 'cta-2') && !evs.some((x) => x.e !== 'checkout' && 'b' in x), `[${sc.nome}] contador: checkout uma vez por botão (cta e cta-2), com o id do botão`);
     check(Array.from({length: 14}, (_, k) => conta('etapa', k + 1)).every((c) => c === 1) && conta('etapa') === 14, `[${sc.nome}] contador: etapas 1 a 14, uma vez cada (mesmo voltando)`);
-    check(evs.every((x) => Object.keys(x).every((k) => ['e', 'n', 'v', 'o'].includes(k)) && x.v === w.eval('VERSAO') && typeof x.o === 'string'), `[${sc.nome}] contador manda só evento, etapa, versão e origem (${evs.length} envios)`);
+    check(evs.every((x) => Object.keys(x).every((k) => ['e', 'n', 'v', 'o', 'b'].includes(k)) && x.v === w.eval('VERSAO') && typeof x.o === 'string'), `[${sc.nome}] contador manda só evento, etapa, versão, origem e botão (${evs.length} envios)`);
     // contrato navegador × servidor: todo corpo que o quiz manda passa na validação da função publicada
     const recusadosContador = contados.filter((b) => !contador.validar(b));
     check(contados.length > 0 && !recusadosContador.length, `[${sc.nome}] a função aceita os ${contados.length} corpos que o quiz manda ${recusadosContador.join(' ')}`);

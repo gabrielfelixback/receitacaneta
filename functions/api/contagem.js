@@ -1,6 +1,7 @@
 // Contador agregado do funil do quiz (Cloudflare Pages Function → POST /api/contagem).
 //
-// Recebe só {e: evento, n: etapa, v: versão, o: origem} e soma +1 numa linha (dia, versão, evento, etapa, origem, ambiente) do D1.
+// Recebe só {e: evento, n: etapa, v: versão, o: origem, b: botão} e soma +1 numa linha (dia, versão, evento, etapa, origem, ambiente, botão) do D1.
+// botão = id do botão que levou ao checkout (cta ou cta-2); só no evento "checkout".
 // origem = utm_source da visita (normalizado; sem utm = "direto"); ambiente vem do servidor pelo hostname.
 // Não lê nem grava IP, navegador, cookies, URL ou respostas do quiz: a tabela só tem totais.
 // A infraestrutura da Cloudflare ainda processa os dados técnicos da conexão (como o IP) para entregar o pedido;
@@ -8,7 +9,8 @@
 //
 // Binding esperado: DB (D1). Sem o binding a função responde 503 e não grava nada; o quiz não depende da resposta.
 
-export const EVENTOS = ['visita', 'inicio', 'etapa', 'conclusao', 'oferta', 'checkout', 'upsell', 'downsell'];
+export const EVENTOS = ['visita', 'inicio', 'etapa', 'conclusao', 'oferta', 'ver_oferta', 'checkout', 'upsell', 'downsell'];
+export const BOTOES = ['cta', 'cta-2'];
 export const ETAPAS = 14;
 const MAX_CORPO = 128; // bytes; o maior corpo válido tem ~70
 const VERSAO = /^v\d{1,4}$/;
@@ -59,23 +61,25 @@ const mesmaOrigem = (request) => {
   return request.headers.get('Sec-Fetch-Site') === 'same-origin';
 };
 
-// Valida o corpo e devolve {evento, etapa, versao, origem} ou null. Qualquer campo a mais, tipo errado ou valor fora da lista = null.
+// Valida o corpo e devolve {evento, etapa, versao, origem, botao} ou null. Qualquer campo a mais, tipo errado ou valor fora da lista = null.
 export const validar = (texto) => {
   let d;
   try { d = JSON.parse(texto); } catch (e) { return null; }
   if (!d || typeof d !== 'object' || Array.isArray(d)) return null;
   const chaves = Object.keys(d);
-  if (chaves.some((k) => !['e', 'n', 'v', 'o'].includes(k))) return null;
+  if (chaves.some((k) => !['e', 'n', 'v', 'o', 'b'].includes(k))) return null;
   if (typeof d.e !== 'string' || !EVENTOS.includes(d.e)) return null;
   if (typeof d.v !== 'string' || !VERSAO.test(d.v)) return null;
   if ('o' in d && typeof d.o !== 'string') return null;
   const origem = normalizarOrigem(d.o);
+  if ('b' in d && (d.e !== 'checkout' || !BOTOES.includes(d.b))) return null; // botão só no checkout
+  const botao = d.b || '';
   if (d.e === 'etapa') {
     if (!Number.isInteger(d.n) || d.n < 1 || d.n > ETAPAS) return null;
-    return {evento: d.e, etapa: d.n, versao: d.v, origem};
+    return {evento: d.e, etapa: d.n, versao: d.v, origem, botao};
   }
   if ('n' in d) return null; // só "etapa" tem número
-  return {evento: d.e, etapa: 0, versao: d.v, origem};
+  return {evento: d.e, etapa: 0, versao: d.v, origem, botao};
 };
 
 const contar = async ({request, env}) => {
@@ -90,9 +94,9 @@ const contar = async ({request, env}) => {
   if (!env || !env.DB) return resposta(503);
   try {
     await env.DB.prepare(
-      'INSERT INTO contagem (dia, versao, evento, etapa, origem, ambiente, total) VALUES (?1, ?2, ?3, ?4, ?5, ?6, 1) ' +
-      'ON CONFLICT (dia, versao, evento, etapa, origem, ambiente) DO UPDATE SET total = total + 1'
-    ).bind(diaBrasil(), ev.versao, ev.evento, ev.etapa, ev.origem, ambienteDe(request.url)).run();
+      'INSERT INTO contagem (dia, versao, evento, etapa, origem, ambiente, botao, total) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, 1) ' +
+      'ON CONFLICT (dia, versao, evento, etapa, origem, ambiente, botao) DO UPDATE SET total = total + 1'
+    ).bind(diaBrasil(), ev.versao, ev.evento, ev.etapa, ev.origem, ambienteDe(request.url), ev.botao).run();
   } catch (e) {
     return resposta(500); // sem detalhes do erro na resposta e sem registrar o pedido
   }

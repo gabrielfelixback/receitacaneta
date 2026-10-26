@@ -11,7 +11,8 @@ Mede o abandono do quiz com **contagens agregadas**: quantas vezes cada passo ac
 | `etapa` (1 a 14) | chegou na etapa (alcance, não resposta) | `quiz/index.html` |
 | `conclusao` | terminou o carregamento depois da etapa 14 | `quiz/index.html` |
 | `oferta` | o resultado com a oferta apareceu | `quiz/index.html` |
-| `checkout` | clicou para ir à Kiwify (qualquer um dos 3 botões) | `quiz/index.html` |
+| `ver_oferta` | clicou na barra fixa "Ver meu plano completo" (rola até a oferta, não vai à Kiwify) | `quiz/index.html` |
+| `checkout` | clicou para ir à Kiwify (só os botões da oferta, `#cta` e `#cta-2`; a coluna `botao` diz qual) | `quiz/index.html` |
 | `upsell` | a página de upsell abriu | `quiz/upsell/index.html` |
 | `downsell` | a página de downsell abriu | `quiz/downsell/index.html` |
 
@@ -23,7 +24,7 @@ As versões: o quiz manda a `VERSAO` do `quiz/index.html` (hoje `v20`; até 25/1
 
 ## Privacidade: o que a aplicação grava e o que a Cloudflare processa
 
-**A aplicação (o contador) grava no D1** apenas a tabela `contagem`: `dia` (calculado no servidor, horário de Brasília), `versao`, `evento`, `etapa`, `origem`, `ambiente` e `total`. Nada mais.
+**A aplicação (o contador) grava no D1** apenas a tabela `contagem`: `dia` (calculado no servidor, horário de Brasília), `versao`, `evento`, `etapa`, `origem`, `ambiente`, `botao` e `total`. Nada mais.
 
 - **`origem`**: o `utm_source` com que a pessoa chegou, em minúsculas (sem utm = `direto`; fora do padrão `a-z 0-9 . _ -` ou com mais de 30 letras = `outro`). O quiz guarda essa origem no `sessionStorage` para o upsell e o downsell. Linhas de antes da migração ficam como `antigo`.
 - **`ambiente`**: calculado no servidor pelo endereço do pedido. `producao` só em `oalemdacaneta.com.br`; prévias, `*.pages.dev` e testes locais são `teste`.
@@ -44,10 +45,11 @@ O banco que já tinha a tabela antiga precisa da `contador/migracao-origem.sql`,
 
 | Chave | Valor | Obrigatória |
 | --- | --- | --- |
-| `e` | um dos 8 eventos: `visita`, `inicio`, `etapa`, `conclusao`, `oferta`, `checkout`, `upsell`, `downsell` | sempre |
+| `e` | um dos 9 eventos: `visita`, `inicio`, `etapa`, `conclusao`, `oferta`, `ver_oferta`, `checkout`, `upsell`, `downsell` | sempre |
 | `n` | inteiro de 1 a 14 | só quando `e` é `etapa`; proibida nos outros |
 | `v` | versão: `v` + 1 a 4 dígitos (ex.: `v19`) | sempre |
 | `o` | origem (`utm_source`); texto, normalizado pela função | não (sem ela = `direto`) |
+| `b` | botão do clique: `cta` ou `cta-2` | só no `checkout` (opcional); proibida nos outros |
 
 Exemplos aceitos (204): `{"e":"visita","v":"v19"}` e `{"e":"etapa","n":3,"v":"v19"}`.
 
