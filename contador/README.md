@@ -23,13 +23,20 @@ As versões: o quiz manda a `VERSAO` do `quiz/index.html` (hoje `v20`; até 25/1
 
 ## Privacidade: o que a aplicação grava e o que a Cloudflare processa
 
-**A aplicação (o contador) grava no D1** apenas a tabela `contagem`: `dia` (calculado no servidor, horário de Brasília), `versao`, `evento`, `etapa` e `total`. Nada mais.
+**A aplicação (o contador) grava no D1** apenas a tabela `contagem`: `dia` (calculado no servidor, horário de Brasília), `versao`, `evento`, `etapa`, `origem`, `ambiente` e `total`. Nada mais.
 
-**Vai do navegador para o contador:** `{"e": "etapa", "n": 7, "v": "v19"}`. A função não lê nem grava IP, navegador, cookies, identificador de pessoa, origem da visita, UTMs, URL ou respostas do quiz, e não escreve logs.
+- **`origem`**: o `utm_source` com que a pessoa chegou, em minúsculas (sem utm = `direto`; fora do padrão `a-z 0-9 . _ -` ou com mais de 30 letras = `outro`). O quiz guarda essa origem no `sessionStorage` para o upsell e o downsell. Linhas de antes da migração ficam como `antigo`.
+- **`ambiente`**: calculado no servidor pelo endereço do pedido. `producao` só em `oalemdacaneta.com.br`; prévias, `*.pages.dev` e testes locais são `teste`.
+
+**Vai do navegador para o contador:** `{"e": "etapa", "n": 7, "v": "v20", "o": "facebook"}`. Das UTMs, só o `utm_source` vai. A função não lê nem grava IP, navegador, cookies, identificador de pessoa, outras UTMs, URL ou respostas do quiz, e não escreve logs.
 
 **No navegador:** para não repetir a contagem, a aba anota em `sessionStorage` (`contagem:etapa:7` etc.) o que já foi contado. Não é cookie, não é enviado e some ao fechar a aba.
 
 **A infraestrutura da Cloudflare processa**, como em qualquer site hospedado nela, os dados técnicos da conexão (IP, tipo de navegador, cabeçalhos) para entregar as páginas, proteger o site e aplicar regras como o limite de pedidos. Isso acontece na camada de hospedagem, segundo a política da Cloudflare, e não vai para a tabela `contagem`.
+
+## Migração: origem e ambiente (out 2026)
+
+O banco que já tinha a tabela antiga precisa da `contador/migracao-origem.sql`, rodada linha por linha no Console do D1 **logo depois** que o deploy com o código novo terminar (entre o deploy e a migração, as contagens dão erro 500 e se perdem). No banco da prévia, troque `'producao'` por `'teste'` na linha do `INSERT`.
 
 ## Formato do corpo (o que a função aceita)
 
@@ -40,6 +47,7 @@ As versões: o quiz manda a `VERSAO` do `quiz/index.html` (hoje `v20`; até 25/1
 | `e` | um dos 8 eventos: `visita`, `inicio`, `etapa`, `conclusao`, `oferta`, `checkout`, `upsell`, `downsell` | sempre |
 | `n` | inteiro de 1 a 14 | só quando `e` é `etapa`; proibida nos outros |
 | `v` | versão: `v` + 1 a 4 dígitos (ex.: `v19`) | sempre |
+| `o` | origem (`utm_source`); texto, normalizado pela função | não (sem ela = `direto`) |
 
 Exemplos aceitos (204): `{"e":"visita","v":"v19"}` e `{"e":"etapa","n":3,"v":"v19"}`.
 

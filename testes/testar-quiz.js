@@ -120,7 +120,7 @@ const run = (sc) => new Promise((resolve) => {
     const conta = (e, n) => evs.filter((x) => x.e === e && (n === undefined || x.n === n)).length;
     check(['visita', 'inicio', 'conclusao', 'oferta', 'checkout'].every((e) => conta(e) === 1), `[${sc.nome}] contador: visita, início, conclusão, oferta e checkout uma vez cada`);
     check(Array.from({length: 14}, (_, k) => conta('etapa', k + 1)).every((c) => c === 1) && conta('etapa') === 14, `[${sc.nome}] contador: etapas 1 a 14, uma vez cada (mesmo voltando)`);
-    check(evs.every((x) => Object.keys(x).every((k) => ['e', 'n', 'v'].includes(k)) && x.v === w.eval('VERSAO')), `[${sc.nome}] contador manda só evento, etapa e versão (${evs.length} envios)`);
+    check(evs.every((x) => Object.keys(x).every((k) => ['e', 'n', 'v', 'o'].includes(k)) && x.v === w.eval('VERSAO') && typeof x.o === 'string'), `[${sc.nome}] contador manda só evento, etapa, versão e origem (${evs.length} envios)`);
     // contrato navegador × servidor: todo corpo que o quiz manda passa na validação da função publicada
     const recusadosContador = contados.filter((b) => !contador.validar(b));
     check(contados.length > 0 && !recusadosContador.length, `[${sc.nome}] a função aceita os ${contados.length} corpos que o quiz manda ${recusadosContador.join(' ')}`);

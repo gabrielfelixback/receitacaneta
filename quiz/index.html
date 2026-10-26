@@ -952,20 +952,26 @@ const send = (tipo, extra = {}) => {
   const body = JSON.stringify({sessao, tipo, versao: VERSAO, ...(tipo === 'inicio' ? {utm} : {}), ...extra});
   try { fetch(CONFIG.backendUrl, {method: 'POST', mode: 'no-cors', keepalive: true, headers: {'Content-Type': 'text/plain'}, body}).catch(() => {}); } catch (e) {}
 };
-// Contador agregado: {e: evento, n: etapa, v: versão} para /api/contagem. Cada evento conta uma vez por aba
+// Contador agregado: {e: evento, n: etapa, v: versão, o: origem} para /api/contagem. Cada evento conta uma vez por aba
 // (a marca fica no sessionStorage, que não sai do navegador). Falhas são ignoradas: o quiz nunca espera o contador.
 const contadorAtivo = () => {
   const h = location.hostname;
   return !!CONFIG.contadorUrl && /^https?:$/.test(location.protocol) && (h === CONFIG.dominio || h.endsWith('.' + CONFIG.dominio)
     || h.endsWith('.pages.dev') || h === 'localhost' || h === '127.0.0.1');
 };
+// Origem = utm_source (sem utm, "direto"). Fica no sessionStorage para o upsell e o downsell saberem de onde veio.
+const origemContador = (() => {
+  let o = (pageParams.get('utm_source') || '').trim().toLowerCase().slice(0, 30);
+  try { o = o || sessionStorage.getItem('contagem:origem') || ''; if (o) sessionStorage.setItem('contagem:origem', o); } catch (x) {}
+  return o || 'direto';
+})();
 const contados = new Set();
 const conta = (e, n) => {
   const chave = n ? `${e}:${n}` : e;
   if (contados.has(chave) || !contadorAtivo()) return;
   contados.add(chave);
   try { if (sessionStorage.getItem('contagem:' + chave)) return; sessionStorage.setItem('contagem:' + chave, '1'); } catch (x) {}
-  const body = JSON.stringify(n ? {e, n, v: VERSAO} : {e, v: VERSAO});
+  const body = JSON.stringify(n ? {e, n, v: VERSAO, o: origemContador} : {e, v: VERSAO, o: origemContador});
   try {
     if (navigator.sendBeacon && navigator.sendBeacon(CONFIG.contadorUrl, body)) return;
     fetch(CONFIG.contadorUrl, {method: 'POST', body, keepalive: true, credentials: 'omit'}).catch(() => {});

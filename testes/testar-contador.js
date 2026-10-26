@@ -44,11 +44,12 @@ const pedido = (body, {method = 'POST', origin = 'https://oalemdacaneta.com.br',
   }
   check(etapasOk, 'etapas 1 a 14 válidas: 204 e gravam o número certo');
 
-  // O que é gravado: só dia, versão, evento e etapa; o dia vem do servidor (horário de Brasília).
+  // O que é gravado: só dia, versão, evento, etapa, origem e ambiente; o dia vem do servidor (horário de Brasília).
   {
     const {db} = await chama(pedido(JSON.stringify({e: 'inicio', v: 'v19'})));
     const g = db.gravado[0];
-    check(g.args.length === 4 && /^\d{4}-\d{2}-\d{2}$/.test(g.args[0]), `grava só 4 valores (dia, versão, evento, etapa): ${JSON.stringify(g.args)}`);
+    check(g.args.length === 6 && /^\d{4}-\d{2}-\d{2}$/.test(g.args[0]), `grava só 6 valores (dia, versão, evento, etapa, origem, ambiente): ${JSON.stringify(g.args)}`);
+    check(/ON CONFLICT \(dia, versao, evento, etapa, origem, ambiente\)/.test(g.sql), 'a chave da soma inclui origem e ambiente');
     check(/ON CONFLICT .* DO UPDATE SET total = total \+ 1/.test(g.sql), 'soma +1 na linha existente (agregado)');
     check(fn.diaBrasil(Date.UTC(2026, 9, 25, 2, 30)) === '2026-10-24', 'dia em horário de Brasília: 02:30 UTC de 25/10 conta em 24/10');
   }
@@ -140,6 +141,27 @@ const pedido = (body, {method = 'POST', origin = 'https://oalemdacaneta.com.br',
     check(r3.status === 204 && d3.gravado.length === 1, 'sem Origin, mas Sec-Fetch-Site same-origin: aceito');
     const {res: r4} = await chama(pedido(corpo, {origin: 'null'}));
     check(r4.status === 403, 'Origin "null": 403');
+  }
+
+  // Origem (utm_source normalizado) e ambiente (pelo hostname, no servidor).
+  {
+    const grava = async (body, url) => { const db = bancoFalso(); const r = new Request(url || URL_FN, {method: 'POST', headers: {'Content-Type': 'text/plain', Origin: new URL(url || URL_FN).origin}, body: JSON.stringify(body)}); const res = await fn.onRequest({request: r, env: {DB: db}}); return {res, a: db.gravado[0] && db.gravado[0].args}; };
+    let x = await grava({e: 'inicio', v: 'v20', o: 'facebook'});
+    check(x.res.status === 204 && x.a[4] === 'facebook' && x.a[5] === 'producao', 'origem "facebook" em oalemdacaneta.com.br: grava facebook / producao');
+    x = await grava({e: 'inicio', v: 'v20'});
+    check(x.a[4] === 'direto', 'sem origem: grava "direto"');
+    x = await grava({e: 'inicio', v: 'v20', o: '  Instagram '});
+    check(x.a[4] === 'instagram', 'origem em maiúsculas e com espaço: normalizada');
+    x = await grava({e: 'inicio', v: 'v20', o: 'joao@email.com'});
+    check(x.a[4] === 'outro', 'origem fora do padrão (ex.: e-mail): grava "outro", nunca o texto');
+    x = await grava({e: 'inicio', v: 'v20', o: 'a'.repeat(40)});
+    check(x.a[4] === 'outro', 'origem longa: "outro"');
+    x = await grava({e: 'inicio', v: 'v20', o: 5});
+    check(x.res.status === 400 && !x.a, 'origem que não é texto: 400');
+    x = await grava({e: 'inicio', v: 'v20', o: 'fb'}, 'https://receitacaneta.pages.dev/api/contagem');
+    check(x.a[5] === 'teste', '*.pages.dev: ambiente "teste"');
+    x = await grava({e: 'inicio', v: 'v20', o: 'fb'}, 'https://www.oalemdacaneta.com.br/api/contagem');
+    check(x.a[5] === 'teste', 'outro hostname (www): "teste"');
   }
 
   // Banco: sem binding → 503; falha do D1 → 500 sem vazar o erro.

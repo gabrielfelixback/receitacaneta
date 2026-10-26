@@ -1,7 +1,8 @@
 // Contador agregado do funil do quiz (Cloudflare Pages Function → POST /api/contagem).
 //
-// Recebe só {e: evento, n: etapa, v: versão} e soma +1 numa linha (dia, versão, evento, etapa) do D1.
-// Não lê nem grava IP, navegador, cookies, origem da visita, URL ou respostas do quiz: a tabela só tem totais.
+// Recebe só {e: evento, n: etapa, v: versão, o: origem} e soma +1 numa linha (dia, versão, evento, etapa, origem, ambiente) do D1.
+// origem = utm_source da visita (normalizado; sem utm = "direto"); ambiente vem do servidor pelo hostname.
+// Não lê nem grava IP, navegador, cookies, URL ou respostas do quiz: a tabela só tem totais.
 // A infraestrutura da Cloudflare ainda processa os dados técnicos da conexão (como o IP) para entregar o pedido;
 // isso é da hospedagem, não desta função.
 //
@@ -9,8 +10,19 @@
 
 export const EVENTOS = ['visita', 'inicio', 'etapa', 'conclusao', 'oferta', 'checkout', 'upsell', 'downsell'];
 export const ETAPAS = 14;
-const MAX_CORPO = 128; // bytes; o maior corpo válido tem ~35
+const MAX_CORPO = 128; // bytes; o maior corpo válido tem ~70
 const VERSAO = /^v\d{1,4}$/;
+const ORIGEM = /^[a-z0-9._-]{1,30}$/;
+export const DOMINIO_PRODUCAO = 'oalemdacaneta.com.br';
+
+// "producao" só no domínio oficial; prévias, *.pages.dev e localhost contam como "teste".
+export const ambienteDe = (url) => (new URL(url).hostname === DOMINIO_PRODUCAO ? 'producao' : 'teste');
+
+// utm_source em minúsculas; vazio vira "direto" e qualquer coisa fora do padrão vira "outro" (não guarda texto livre).
+export const normalizarOrigem = (o) => {
+  const t = String(o || '').trim().toLowerCase();
+  return !t ? 'direto' : ORIGEM.test(t) ? t : 'outro';
+};
 
 const resposta = (status, extra = {}) => new Response(null, {status, headers: {'Cache-Control': 'no-store', ...extra}});
 
@@ -47,21 +59,23 @@ const mesmaOrigem = (request) => {
   return request.headers.get('Sec-Fetch-Site') === 'same-origin';
 };
 
-// Valida o corpo e devolve {evento, etapa, versao} ou null. Qualquer campo a mais, tipo errado ou valor fora da lista = null.
+// Valida o corpo e devolve {evento, etapa, versao, origem} ou null. Qualquer campo a mais, tipo errado ou valor fora da lista = null.
 export const validar = (texto) => {
   let d;
   try { d = JSON.parse(texto); } catch (e) { return null; }
   if (!d || typeof d !== 'object' || Array.isArray(d)) return null;
   const chaves = Object.keys(d);
-  if (chaves.some((k) => !['e', 'n', 'v'].includes(k))) return null;
+  if (chaves.some((k) => !['e', 'n', 'v', 'o'].includes(k))) return null;
   if (typeof d.e !== 'string' || !EVENTOS.includes(d.e)) return null;
   if (typeof d.v !== 'string' || !VERSAO.test(d.v)) return null;
+  if ('o' in d && typeof d.o !== 'string') return null;
+  const origem = normalizarOrigem(d.o);
   if (d.e === 'etapa') {
     if (!Number.isInteger(d.n) || d.n < 1 || d.n > ETAPAS) return null;
-    return {evento: d.e, etapa: d.n, versao: d.v};
+    return {evento: d.e, etapa: d.n, versao: d.v, origem};
   }
   if ('n' in d) return null; // só "etapa" tem número
-  return {evento: d.e, etapa: 0, versao: d.v};
+  return {evento: d.e, etapa: 0, versao: d.v, origem};
 };
 
 const contar = async ({request, env}) => {
@@ -76,9 +90,9 @@ const contar = async ({request, env}) => {
   if (!env || !env.DB) return resposta(503);
   try {
     await env.DB.prepare(
-      'INSERT INTO contagem (dia, versao, evento, etapa, total) VALUES (?1, ?2, ?3, ?4, 1) ' +
-      'ON CONFLICT (dia, versao, evento, etapa) DO UPDATE SET total = total + 1'
-    ).bind(diaBrasil(), ev.versao, ev.evento, ev.etapa).run();
+      'INSERT INTO contagem (dia, versao, evento, etapa, origem, ambiente, total) VALUES (?1, ?2, ?3, ?4, ?5, ?6, 1) ' +
+      'ON CONFLICT (dia, versao, evento, etapa, origem, ambiente) DO UPDATE SET total = total + 1'
+    ).bind(diaBrasil(), ev.versao, ev.evento, ev.etapa, ev.origem, ambienteDe(request.url)).run();
   } catch (e) {
     return resposta(500); // sem detalhes do erro na resposta e sem registrar o pedido
   }
